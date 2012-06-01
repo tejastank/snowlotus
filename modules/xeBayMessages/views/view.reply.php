@@ -35,7 +35,7 @@
  ********************************************************************************/
 
 require_once('include/MVC/View/SugarView.php');
-require_once('eBayApi/AddMemberMessageAAQToPartner.php');
+require_once('eBayApi/AddMemberMessageRTQ.php');
 
 class xeBayMessagesViewReply extends SugarView {
 
@@ -53,17 +53,16 @@ class xeBayMessagesViewReply extends SugarView {
 		if (empty($response))
 			header("Location: index.php?module=xeBayMessages&action=index");
 
-		$x = new AddMemberMessageAAQToPartner();
-		$res = $x->addMemberMessage(array(
-			'AccountID' => $account->id,
-			'AuthToken' => $account->ebay_auth_token,
-			'ItemID' => $this->bean->item_id,
-			'Body' => $response,
-			'QuestionType' => $this->bean->question_type,
-			'RecipientID' => $this->bean->sender_id,
-			'Subject' => $subject,
-			)
-		);
+        $x = new AddMemberMessageRTQ();
+        $res = $x->addMemberMessage(array(
+            'AccountID' => $account->id,
+            'AuthToken' => $account->ebay_auth_token,
+            'ItemID' => $this->bean->item_id,
+            'Body' => $response,
+            'ParentMessageID' => $this->bean->message_id,
+            'RecipientID' => $this->bean->sender_id,
+            )
+        );
 		if ($res == true) {
 			if ($this->bean->replied != true)
 				$this->bean->replied_status_update($this->bean->id, 1);

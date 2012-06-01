@@ -1,5 +1,4 @@
 <?php
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,6 +34,45 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+require_once('include/MVC/View/SugarView.php');
+require_once('eBayApi/AddMemberMessageAAQToPartner.php');
 
-$action_view_map['check'] = 'check';
-$action_view_map['reply'] = 'reply';
+class xeBayOrdersViewSend extends SugarView {
+
+	function xeBayOrdersViewSend()
+    {
+ 		parent::SugarView();
+	}
+	
+    function process()
+    {
+		$account = BeanFactory::getBean('xeBayAccounts', $this->bean->xebayaccount_id);
+		$subject = $_REQUEST['subject'];
+		$message = $_REQUEST['message'];
+		$questionType = $_REQUEST['question_type'];
+        $itemID = $_REQUEST['item_id'];
+
+		if (empty($message) || empty($subject) || empty($itemID))
+			header("Location: index.php?module=xeBayOrders&action=index");
+
+        $x = new AddMemberMessageAAQToPartner();
+        $res = $x->addMemberMessage(array(
+            'AccountID' => $account->id,
+            'AuthToken' => $account->ebay_auth_token,
+            'ItemID' => $itemID,
+            'Body' => $message,
+            'QuestionType' => $questionType,
+            'RecipientID' => $this->bean->buyer_user_id,
+            'Subject' => $subject,
+            )
+        );
+		parent::process();
+	}
+	
+	function display()
+	{
+		// sugar_cleanup(true);
+	}
+}
+
+?>

@@ -41,3 +41,4 @@ $action_view_map['importorder'] = 'importorder';
 $action_view_map['printall'] = 'printall';
 $action_view_map['exportall'] = 'exportall';
 $action_view_map['completeall'] = 'completeall';
+$action_view_map['send'] = 'send';

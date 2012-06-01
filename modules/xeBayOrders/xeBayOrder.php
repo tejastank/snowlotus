@@ -618,6 +618,21 @@ class xeBayOrder extends Basic {
 			}
 		}
 	}
+
+	function get_salutation()
+	{
+		return "Hi {$this->buyer_user_id},";
+	}
+
+	function get_template()
+	{
+		return "";
+	}
+
+	function get_signature()
+	{
+		return "Your sincerely.\n- {$this->xebayaccount_name}";
+	}
 }
 
 function getHandledStatusDropDown()

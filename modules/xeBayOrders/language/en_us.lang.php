@@ -127,4 +127,11 @@ $mod_strings = array (
   'LBL_EXPORT_ALL' => 'Export All',
   'LBL_EXPRESS_CARRIER' => 'Express Carrier',
   'LBL_IMPORT_TITLE' => 'Import Orders',
+  'LBL_SUBJECT' => 'Subject',
+  'LBL_QUESTION_TYPE' => 'Question Type',
+  'LBL_QUESTION_TYPE_CUSTOMIZEDSUBJECT' => 'CustomizedSubject',
+  'LBL_QUESTION_TYPE_GENERAL' => 'General',
+  'LBL_QUESTION_TYPE_MULTIPLEITEMSHIPPING' => 'MultipleItemShipping',
+  'LBL_QUESTION_TYPE_PAYMENT' => 'Payment',
+  'LBL_QUESTION_TYPE_SHIPPING' => 'Shipping',
 );
