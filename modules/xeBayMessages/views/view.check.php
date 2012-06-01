@@ -1,5 +1,4 @@
 <?php
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,6 +34,56 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+require_once('include/MVC/View/SugarView.php');
+require_once('eBayApi/GetMemberMessages.php');
 
-$action_view_map['check'] = 'check';
-$action_view_map['reply'] = 'reply';
+class xeBayMessagesViewCheck extends SugarView {
+
+	function xeBayMessagesViewCheck()
+    {
+ 		parent::SugarView();
+	}
+	
+    function process()
+    {
+		$numberOfDays = isset($_REQUEST['number_of_days']) ? $_REQUEST['number_of_days'] : 1;
+		$startCreationTime = date("c", time() - $numberOfDays * 24 * 60 * 60);
+		$endCreationTime = date("c", time());
+        $messageStatus = $_REQUEST['message_status'];
+
+        set_time_limit(60 * 10);
+
+		if (!empty($_REQUEST['ebay_account_name'])) {
+			$name = $_REQUEST['ebay_account_name'];
+			$bean = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $bean->get_accounts($name);
+		}
+
+        $x = new GetMemberMessages();
+		foreach ($accounts as $id => $authToken) {
+			$result = $x->retrieveMemberMessages(array(
+					'AccountID' => $id,
+					'AuthToken' => $authToken,
+					'MailMessageType' => 'All',
+                    'MessageStatus' => $messageStatus,
+					'StartCreationTime' => $startCreationTime,
+					'EndCreationTime' => $endCreationTime,
+					'pagination' => array(
+						'EntriesPerPage' => '100',
+						'PageNumber' => '1')
+					)
+				);
+		}
+
+		// parent::process();
+        $this->display();
+	}
+	
+	function display()
+	{
+		// sugar_cleanup(true);
+        header("Location: index.php?module=xeBayMessages&action=index");
+	}
+}
+
+?>

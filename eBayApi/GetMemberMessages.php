@@ -75,8 +75,10 @@ class GetMemberMessages extends eBayApiEnvironment
 
         $req = new GetMemberMessagesRequestType();
         $req->setMailMessageType($params['MailMessageType']);
-		// $req->setStartCreationTime($params['StartCreationTime']);
-		// $req->setEndCreationTime($params['EndCreationTime']);
+        if (!empty($params['MessageStatus']))
+            $req->setMessageStatus($params['MessageStatus']);
+        $req->setStartCreationTime($params['StartCreationTime']);
+        $req->setEndCreationTime($params['EndCreationTime']);
 
         $pagination = new PaginationType();
         $pagination->setEntriesPerPage($params['pagination']['EntriesPerPage']);
@@ -92,7 +94,7 @@ class GetMemberMessages extends eBayApiEnvironment
 				foreach ($memberMessages as &$memberMessage) {
 					$question = $memberMessage->getQuestion();
 					$messageID = $question->getMessageID();
-					$duplicated = $bean->retrieve_by_string_fields(array('message_id'=>$messageID));
+					$duplicated = $bean->retrieve_by_string_fields(array('message_id'=>$messageID), true, false);
 
 					$bean->xebayaccount_id = $account_id;
 

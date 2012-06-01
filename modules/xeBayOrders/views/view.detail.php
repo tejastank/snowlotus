@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -36,5 +37,52 @@
  ********************************************************************************/
 
 
-$action_view_map['check'] = 'check';
-$action_view_map['reply'] = 'reply';
+require_once('include/MVC/View/views/view.detail.php');
+
+class xeBayOrdersViewDetail extends ViewDetail
+{
+	function xeBayOrdersViewDetail()
+	{
+ 		parent::ViewDetail();
+ 	}
+
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+	function display()
+	{
+		global $app_strings, $app_list_strings;
+		global $mod_strings;
+
+		parent::display();
+
+		$smarty = new Sugar_Smarty();
+		$smarty->assign('APP', $app_strings);
+		$smarty->assign('MOD', $mod_strings);
+		$smarty->assign('RECORD', $this->bean->id);
+
+		$popup_request_data = array(
+			'call_back_function' => 'set_return',
+			'form_name' => 'xeBayOrderSend',
+			'field_to_name_array' => array(
+				'description' => 'message',
+			),
+		);
+		$json = getJSONobj();
+		$smarty->assign('ENCODED_TEMPLATES_POPUP_REQUEST_DATA', $json->encode($popup_request_data));
+		$smarty->assign("TEMPLATE_SELECT", SugarThemeRegistry::current()->getImage('id-ff-select','',null,null,'.png',$mod_strings['LBL_SELECT']));
+		$smarty->assign("TEMPLATE_CLEAR", SugarThemeRegistry::current()->getImage('id-ff-clear','',null,null,'.gif',$mod_strings['LBL_ID_FF_CLEAR']));
+
+        // $smarty->assign('SUBJECT', '');
+		$smarty->assign('SALUTATION', str_replace("\n", "<br>", $this->bean->get_salutation()));
+		$smarty->assign('SIGNATURE', str_replace("\n", "<br>", $this->bean->get_signature()));
+        $smarty->display("modules/xeBayOrders/tpls/send.tpl");
+ 	}
+}
+
+?>

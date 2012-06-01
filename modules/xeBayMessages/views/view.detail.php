@@ -78,7 +78,6 @@ class xeBayMessagesViewDetail extends ViewDetail
 		$smarty->assign("TEMPLATE_SELECT", SugarThemeRegistry::current()->getImage('id-ff-select','',null,null,'.png',$mod_strings['LBL_SELECT']));
 		$smarty->assign("TEMPLATE_CLEAR", SugarThemeRegistry::current()->getImage('id-ff-clear','',null,null,'.gif',$mod_strings['LBL_ID_FF_CLEAR']));
 
-		$smarty->assign('SUBJECT', $this->bean->title);
 		$smarty->assign('SALUTATION', str_replace("\n", "<br>", $this->bean->get_salutation()));
 		$smarty->assign('RESPONSE', $this->bean->get_template());
 		$smarty->assign('SIGNATURE', str_replace("\n", "<br>", $this->bean->get_signature()));
