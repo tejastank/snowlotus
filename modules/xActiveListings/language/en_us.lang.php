@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,78 +34,46 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
+$mod_strings = array (
+  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
+  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
+  'LBL_ID' => 'ID',
+  'LBL_DATE_ENTERED' => 'Date Created',
+  'LBL_DATE_MODIFIED' => 'Date Modified',
+  'LBL_MODIFIED' => 'Modified By',
+  'LBL_MODIFIED_ID' => 'Modified By Id',
+  'LBL_MODIFIED_NAME' => 'Modified By Name',
+  'LBL_CREATED' => 'Created By',
+  'LBL_CREATED_ID' => 'Created By Id',
+  'LBL_DESCRIPTION' => 'Description',
+  'LBL_DELETED' => 'Deleted',
+  // 'LBL_NAME' => 'Active Listings',
+  'LBL_NAME' => 'Item Title',
+  'LBL_CREATED_USER' => 'Created by User',
+  'LBL_MODIFIED_USER' => 'Modified by User',
+  'LBL_LIST_NAME' => 'Name',
+  'LBL_LIST_FORM_TITLE' => 'ActiveListing List',
+  'LBL_MODULE_NAME' => 'ActiveListing',
+  'LBL_MODULE_TITLE' => 'ActiveListing',
+  'LBL_HOMEPAGE_TITLE' => 'My ActiveListing',
+  'LNK_NEW_RECORD' => 'Create ActiveListing',
+  'LNK_LIST' => 'View ActiveListing',
+  'LNK_IMPORT_XACTIVELISTINGS' => 'Import Active Listing From eBay',
+  'LNK_TEST_XACTIVELISTINGS' => 'Test',
+  'LBL_SEARCH_FORM_TITLE' => 'Search ActiveListing',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
+  'LBL_XACTIVELISTINGS_SUBPANEL_TITLE' => 'ActiveListing',
+  'LBL_NEW_FORM_TITLE' => 'New ActiveListing',
+  'LBL_HITCOUNT' => 'Hitcount',
+  'LBL_ITEM_ID' => 'Item ID',
+  'LBL_CURRENCY_ID' => 'Currency',
+  'LBL_PRICE' => 'Price',
+  'LBL_ENDTIME' => 'Endtime',
+  'LBL_VIEW_ITEM_URL' => 'View Item URL',
+  'LBL_LISTING_TYPE' => 'Listing Type',
+  'LBL_QUANTITY' => 'Quantity',
+  'LBL_SKU' => 'SKU',
+  'LBL_PICTURE' => 'Picture',
+  'LBL_RELATED_TO' => 'Related to',
 );
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
-?>

@@ -1,5 +1,5 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,77 +36,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
-);
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
-?>
+global $mod_strings, $app_strings, $sugar_config;
+ 
+// if(ACLController::checkAccess('xActiveListings', 'edit', true))$module_menu[]=Array("index.php?module=xActiveListings&action=EditView&return_module=xActiveListings&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateCategories", 'xActiveListings');
+if(ACLController::checkAccess('xActiveListings', 'list', true))$module_menu[]=Array("index.php?module=xActiveListings&action=index&return_module=xActiveListings&return_action=DetailView", $mod_strings['LNK_LIST'],"Categories", 'xActiveListings');
+if(ACLController::checkAccess('xActiveListings', 'import', true))$module_menu[]=Array("index.php?module=xActiveListings&action=Import&return_module=xActiveListings&return_action=index", $mod_strings['LNK_IMPORT_XACTIVELISTINGS'],"Import", 'xActiveListings');
+if(ACLController::checkAccess('xActiveListings', 'test', true))$module_menu[]=Array("index.php?module=xActiveListings&action=Test&return_module=xActiveListings&return_action=index", $mod_strings['LNK_TEST_XACTIVELISTINGS'],"Test", 'xActiveListings');

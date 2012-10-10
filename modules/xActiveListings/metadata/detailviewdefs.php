@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,78 +34,69 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+$viewdefs['xActiveListings']['DetailView'] = array(
+	'templateMeta' => array(
+		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
+		'maxColumns' => '2',
+		'widths' => array(
+			array('label' => '10', 'field' => '30'),
+			array('label' => '10', 'field' => '30')
+		 ),
+	),
 
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
+	'panels' =>array (
+		array (
+			array(
+				'name' => 'item_id',
+				'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$fields.item_id.value}4040.jpg" alt="" /></a>',
+				'label' => 'LBL_PICTURE',
+			),
+			'item_id',
+		),
+		array (
+			array(
+				'name' => 'name',
+				'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank">{$fields.name.value}</a>',
+				'label' => 'LBL_NAME',
+			),
+			'endtime',
+		),
+		array (
+			array(
+				'name' => 'price',
+				'customCode' => '{$fields.currency_id.value}&nbsp{$fields.price.value}',
+				'label' => 'LBL_PRICE',
+			),
+			'quantity',
+		),
+		array (
+			'listing_type',
+			'hitcount'
+		),
+		array (
+			'sku',
+			array(
+				'name' => 'parent_name',
+				// 'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
+				'label' => 'LBL_RELATED_TO'
+			),
+		),
+		array (
+			array (
+				'name' => 'date_entered',
+				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+				'label' => 'LBL_DATE_ENTERED',
+			),
+			array (
+				'name' => 'date_modified',
+				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+				'label' => 'LBL_DATE_MODIFIED',
+			),
+		),
+		array (
+			'description',
+			'assigned_user_name',
+		),
+	)
 );
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
 ?>

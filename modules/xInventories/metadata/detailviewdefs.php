@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,78 +34,65 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+$viewdefs['xInventories']['DetailView'] = array(
+	'templateMeta' => array(
+		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
+		'maxColumns' => '2',
+		'widths' => array(
+			array('label' => '10', 'field' => '30'),
+			array('label' => '10', 'field' => '30')
+		 ),
+	),
 
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
+	'panels' =>array (
+		array (
+			'name',
+			'category_name',
+		),
+		array (
+			'subtitle',
+		),
+		array (
+			'sku',
+			'goods_allocation',
+		),
+		array (
+			array(
+				'name' => "price",
+				'displayParams' => array('precision'=>2),
+			),
+		),
+		array (
+			'quantity',
+			'inventory_cap',
+		),
+		array (
+			'',
+			'inventory_floor',
+		),
+		array (
+			'description',
+		),
+		array (
+			'body_html',
+			// array (
+				// 'name' => 'body_html',
+				// 'customCode' => '',
+				// 'label' => 'LBL_BODY',
+			// ),
+		),
+		array (
+			array (
+				'name' => 'date_entered',
+				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+				'label' => 'LBL_DATE_ENTERED',
+			),
+			array (
+				'name' => 'date_modified',
+				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+				'label' => 'LBL_DATE_MODIFIED',
+			),
+		),
+	)
 );
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
 ?>

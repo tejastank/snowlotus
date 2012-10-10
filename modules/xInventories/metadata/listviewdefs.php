@@ -38,75 +38,43 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
+$listViewDefs['xInventories'] = array(
+	'NAME' => array(
+		'width' => '36', 
+		'label' => 'LBL_NAME', 
+		'default' => true,
+		'link' => true
+	),
+	'SKU' => array(
+		'width' => '36', 
+		'label' => 'LBL_SKU', 
+		'default' => true,
+	),
+	'CATEGORY_NAME' => array(
+		'width' => '24', 
+		'label' => 'LBL_CATEGORY', 
+		'module' => 'xCategories',
+        'id' => 'CATEGORY_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'category_id',
+		),
+	),
+	'PRICE' => array(
+		'width' => '14', 
+		'label' => 'LBL_PRICE', 
+		'default' => true,
+	),
+	'QUANTITY' => array(
+		'width' => '14', 
+		'label' => 'LBL_QUANTITY', 
+		'default' => true
+	),
+	'GOODS_ALLOCATION'=> array(
+		'width' => '16', 
+		'label' => 'LBL_GOODS_ALLOCATION', 
+		'default' => true,
+	),
 );
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
 ?>

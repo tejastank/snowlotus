@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,78 +36,64 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+/*********************************************************************************
 
+ * Description: Controller for the Import module
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ ********************************************************************************/
 
+require_once("include/MVC/Controller/SugarController.php");
+require_once('eBayApi/GetSellerList.php');
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
-);
+class xActiveListingsController extends SugarController
+{
+    function action_test()
+    {
+		echo "<h1>Test</h1>";
+		$inventory = BeanFactory::getBean('xInventories');
+		$skus = array(
+			"DarkRed Bowknot Dust proof",
+			"DarkRed Bowknot Dust proof nonexist",
+			"Nokia Lumia 800 Yellow Mesh Case Cover",
+			"SonyEricsson_MT27i_Mesh_Case_Cover_SkyBlue",
+			"Apple iPhone4s Yellow Mesh Case Cover",
+			"apple iphone4s Yellow Mesh Case Cover",
+		);
+		foreach ($skus as &$sku) {
+			$len = strlen($sku);
+			$inv = $inventory->retrieve_by_string_fields(array('sku' => $sku));
+			if($inv != null) {
+				echo "<h1>retrieve ($sku)<$len>, $inv->id ok </h1>";
+			} else {
+				echo "<h1>retrieve ($sku)<$len> failed </h1>";
+			}
+		}
+    }
 
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
+    function action_Import()
+    {
+		$GLOBALS['db']->query("DELETE FROM notes WHERE notes.parent_type = 'xActiveListings'");
+		$GLOBALS['db']->query($GLOBALS['db']->truncateTableSQL('xactivelistings'));
+
+		$endTimeFrom = date("c", time() + 3 * 24 * 60 * 60);
+		$endTimeTo = date("c", time() + 60 * 24 * 60 * 60);
+		$endTimeFrom = "2012-07-01T00:00:00";
+		$endTimeTo = "2012-08-01T00:00:00";
+
+		$sellerList = new GetSellerList;
+
+		// $sellerList->dispatchCall(array(
+			// 'EndTimeFrom' => $endTimeFrom,
+			// 'EndTimeTo' => $endTimeTo,
+		// ));
+
+		$sellerList->getActiveListing(array(
+			'EndTimeFrom' => $endTimeFrom,
+			'EndTimeTo' => $endTimeTo,
+		));
+
+		$this->view = 'import';
+    }
 }
 ?>

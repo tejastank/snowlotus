@@ -107,6 +107,9 @@ $app_list_strings = array (
 
     'OAuthKeys' => 'OAuth Consumer Keys',
     'OAuthTokens' => 'OAuth Tokens',
+    'xInventories' => 'Inventory',
+    'xCategories' => 'Category',
+    'xActiveListings' => 'Active Listings',
   ),
 
   'moduleListSingular' =>
@@ -2029,6 +2032,7 @@ $app_strings = array (
     'LBL_TABGROUP_OTHER' => 'Other',
     'LBL_TABGROUP_REPORTS' => 'Reports',
     'LBL_TABGROUP_SALES' => 'Sales',
+    'LBL_TABGROUP_SONWLOTUS' => 'SnowLotus',
     'LBL_TABGROUP_SUPPORT' => 'Support',
     'LBL_TABGROUP_TOOLS' => 'Tools',
     'LBL_TASKS'=>'Tasks',

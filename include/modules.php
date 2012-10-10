@@ -313,6 +313,18 @@ $objectList['Cases'] =  'Case';
 $objectList['Groups'] =  'User';
 $objectList['Users'] =  'User';
 
+$moduleList[] = 'xInventories';
+$beanList['xInventories'] = 'xInventory';
+$beanFiles['xInventory'] = 'modules/xInventories/xInventory.php';
+
+$moduleList[] = 'xCategories';
+$beanList['xCategories'] = 'xCategory';
+$beanFiles['xCategory'] = 'modules/xCategories/xCategory.php';
+
+$moduleList[] = 'xActiveListings';
+$beanList['xActiveListings'] = 'xActiveListing';
+$beanFiles['xActiveListing'] = 'modules/xActiveListings/xActiveListing.php';
+
 if (file_exists('include/modules_override.php'))
 {
     include('include/modules_override.php');

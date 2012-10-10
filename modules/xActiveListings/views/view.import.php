@@ -36,77 +36,34 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+/**
+ * xActiveListingsViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
+ 
+require_once('include/MVC/View/SugarView.php');
+// require_once('eBayApi/GeteBayOfficialTime.php');
 
+class xActiveListingsViewImport extends SugarView 
+{
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+		// $eBayOfficialTime = new GeteBayOfficialTime;
+		// $eBayOfficialTime->dispatchCall(array());
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-        	"xCategories",
-        	"xActiveListings",
-        )
-    ),
-);
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
+		$ss = new Sugar_Smarty();
+		$ss->assign('current_date', "09/26/2012");
+		$ss->assign('start_weekday',$GLOBALS['current_user']->get_first_day_of_week());
+		$ss->assign('cal_img',SugarThemeRegistry::current()->getImageURL("jscalendar.gif",false));
+		echo $ss->fetch("modules/xActiveListings/tpls/import.tpl");
+ 	}
 }
-?>
