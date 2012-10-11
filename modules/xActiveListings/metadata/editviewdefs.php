@@ -45,12 +45,63 @@ $viewdefs['xActiveListings']['EditView'] = array(
  
 	'panels' => array (
 		'default' => array (
-			array (
-				'name',
-				'assigned_user_name',
+			array(
+				array(
+					'name' => 'item_id',
+					'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$fields.item_id.value}4040.jpg" alt="" /></a>',
+					'label' => 'LBL_PICTURE',
+				),
+				array(
+					'name' => 'item_id',
+					'customCode' => '{$fields.item_id.value}',
+				),
 			),
 			array (
-				'description',
+				array(
+					'name' => 'name',
+					'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank">{$fields.name.value}</a>',
+					'label' => 'LBL_NAME',
+					// 'displayParams' => array(
+						// 'size'=>78,
+						// 'field' => array(
+							// 'readonly' => 'readonly',
+						// ),
+					// ),
+				),
+				array(
+					'name' => 'endtime',
+					'customCode' => '{$fields.endtime.value}',
+				),
+			),
+			array (
+				array(
+					'name' => 'price',
+					'customCode' => '{$fields.currency_id.value}&nbsp{$fields.price.value}',
+					'label' => 'LBL_PRICE',
+					'displayParams' => array(
+						'field' => array(
+							'readonly' => 'readonly',
+						),
+					),
+				),
+				array(
+					'name' => 'listing_type',
+					'customCode' => '{$fields.listing_type.value}',
+				),
+			),
+			array (
+				array(
+					'name' => 'sku',
+					'displayParams' => array(
+						'size'=>78,
+					),
+				),
+				array(
+					'name' => 'parent_name',
+					// 'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
+					'customCode' => '{$fields.parent_name.value}',
+					'label' => 'LBL_RELATED_TO',
+				),
 			),
 		),
 	),

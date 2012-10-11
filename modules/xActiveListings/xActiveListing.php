@@ -66,6 +66,8 @@ class xActiveListing extends Basic {
 	var $listing_type;
 	var $quantity;
 	var $sku;
+	var $parent_id;
+	var $parent_type;
 
 	function xActiveListing()
 	{
@@ -78,6 +80,23 @@ class xActiveListing extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+    function save($check_notify = FALSE)
+	{
+		$inventory = BeanFactory::getBean('xInventories');
+		$this->parent_id = '';
+		$this->parent_type = '';
+		$sku = $this->sku;
+		if (!empty($sku)) {
+			$inv = $inventory->retrieve_by_string_fields(array('sku' => $sku));
+			$len = strlen($sku);
+			if($inv != null) {
+				$this->parent_id = $inv->id;
+				$this->parent_type = 'xInventories';
+			}
+		}
+		parent::save(check_notify);
 	}
 
 	function get_list_view_data()

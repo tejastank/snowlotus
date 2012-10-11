@@ -95,5 +95,15 @@ class xActiveListingsController extends SugarController
 
 		$this->view = 'import';
     }
+
+    function action_Update()
+    {
+		$bean = BeanFactory::getBean('xActiveListings');
+		$inventory = BeanFactory::getBean('xInventories');
+		$note = BeanFactory::getBean('Notes');
+
+		$item_list = $bean->get_full_list();
+		$this->view = 'update';
+	}
 }
 ?>

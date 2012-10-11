@@ -135,18 +135,8 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->view_item_url = $item->getListingDetails()->getViewItemURL();
 					$bean->listing_type = $item->getListingType();
 					$bean->quantity = $item->getQuantity();
-					$sku = $bean->sku = $item->getSKU();
+					$bean->sku = $item->getSKU();
 					$name = $bean->name = $item->getTitle();
-					unset($bean->parent_id);
-					unset($bean->parent_type);
-					if (!empty($sku)) {
-						$inv = $inventory->retrieve_by_string_fields(array('sku' => $sku));
-						$len = strlen($sku);
-						if($inv != null) {
-							$bean->parent_id = $inv->id;
-							$bean->parent_type = 'xInventories';
-						}
-					}
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
 					$id = $bean->save();
