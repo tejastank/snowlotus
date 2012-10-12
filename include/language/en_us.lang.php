@@ -108,6 +108,7 @@ $app_list_strings = array (
     'OAuthKeys' => 'OAuth Consumer Keys',
     'OAuthTokens' => 'OAuth Tokens',
     'xInventories' => 'Inventory',
+    'xPinnedItems' => 'Pinned Items',
     'xCategories' => 'Category',
     'xActiveListings' => 'Active Listings',
     'xXxxs' => 'Xxx',

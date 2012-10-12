@@ -34,52 +34,8 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Title',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Inventory List',
-  'LBL_MODULE_NAME' => 'Inventory',
-  'LBL_MODULE_TITLE' => 'Inventory',
-  'LBL_HOMEPAGE_TITLE' => 'My Inventory',
-  'LNK_NEW_RECORD' => 'Create Inventory',
-  'LNK_LIST' => 'View Inventory',
-  'LNK_IMPORT_XINVENTORIES' => 'Import Inventory',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Inventory',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XINVENTORIES_SUBPANEL_TITLE' => 'Inventory',
-  'LBL_NEW_FORM_TITLE' => 'New Inventory',
-  'LNK_IMPORT_XINVENTORIES' => 'Import Inventory',
-  'LBL_XINVENTORIES_SUBPANEL_TITLE' => 'Inventory',
-  'LBL_SUBTITLE' => 'Subtitle',
-  'LBL_CATEGORY' => 'Category',
-  'LBL_PRICE' => 'Price',
-  'LBL_WEIGHT' => 'Weight',
-  'LBL_WEIGHT_UNIT' => 'Unit',
-  'LBL_QUANTITY' => 'Quantity',
-  'LBL_INVENTORY_CAP' => 'Inventory Cap',
-  'LBL_INVENTORY_FLOOR' => 'Inventory Floor',
-  'LBL_GOODS_ALLOCATION' => 'Goods Allocation',
-  'LBL_SKU' => 'SKU',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_BODY' => 'Html Description',
-  'LBL_PLAIN_TEXT'=>'Plain Text Description',
-  'LBL_BODY_TEMPLATE' => 'Template',
-  'LBL_DESC_AS_TEXT' => 'Text Only',
-  'LNK_PINNED_ITEM_LIST' => 'View Pinned Items',
-  'LNK_NEW_PINNED_ITEM' => 'Create Pinned Item',
-);
+/**
+ * This file adds support for studio
+ */
+
+?>

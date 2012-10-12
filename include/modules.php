@@ -317,6 +317,10 @@ $moduleList[] = 'xInventories';
 $beanList['xInventories'] = 'xInventory';
 $beanFiles['xInventory'] = 'modules/xInventories/xInventory.php';
 
+$moduleList[] = 'xPinnedItems';
+$beanList['xPinnedItems'] = 'xPinnedItem';
+$beanFiles['xPinnedItem'] = 'modules/xPinnedItems/xPinnedItem.php';
+
 $moduleList[] = 'xCategories';
 $beanList['xCategories'] = 'xCategory';
 $beanFiles['xCategory'] = 'modules/xCategories/xCategory.php';
