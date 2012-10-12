@@ -79,6 +79,8 @@ class GetSellerList extends eBayApiEnvironment
 
 	public function getActiveListing($params)
 	{
+		$result = true;
+
 		$bean = BeanFactory::getBean('xActiveListings');
 		$inventory = BeanFactory::getBean('xInventories');
 		$note = BeanFactory::getBean('Notes');
@@ -159,9 +161,12 @@ class GetSellerList extends eBayApiEnvironment
 				}
 			} else {
             	$this->dumpObject($res);
+				$result = false;
 				break;
 			}
 		} while ($hasMoreItems);
+
+		return $result;
 	}
 }
 

@@ -73,10 +73,16 @@ class xActiveListingsController extends SugarController
 
     function action_Import()
     {
+		$this->view = 'import';
+    }
+
+    function action_Result()
+	{
 		$GLOBALS['db']->query("DELETE FROM notes WHERE notes.parent_type = 'xActiveListings'");
 		$GLOBALS['db']->query($GLOBALS['db']->truncateTableSQL('xactivelistings'));
 
-		$endTimeFrom = date("c", time() + 3 * 24 * 60 * 60);
+		$timeLeft = isset($_REQUEST['time_left']) ? $_REQUEST['time_left'] : 1;
+		$endTimeFrom = date("c", time() + $timeLeft * 24 * 60 * 60);
 		$endTimeTo = date("c", time() + 60 * 24 * 60 * 60);
 		$endTimeFrom = "2012-07-01T00:00:00";
 		$endTimeTo = "2012-08-01T00:00:00";
@@ -88,13 +94,18 @@ class xActiveListingsController extends SugarController
 			// 'EndTimeTo' => $endTimeTo,
 		// ));
 
-		$sellerList->getActiveListing(array(
+		$result = $sellerList->getActiveListing(array(
 			'EndTimeFrom' => $endTimeFrom,
 			'EndTimeTo' => $endTimeTo,
 		));
 
-		$this->view = 'import';
-    }
+		if ($result === true)
+			$GLOBALS['message'] = "Import active listing from ebay succeed!";
+		else
+			$GLOBALS['message'] = "Import active listing from ebay falied!";
+
+		$this->view = 'result';
+	}
 
     function action_Update()
     {

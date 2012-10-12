@@ -48,7 +48,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * */
  
 require_once('include/MVC/View/SugarView.php');
-// require_once('eBayApi/GeteBayOfficialTime.php');
 
 class xActiveListingsViewImport extends SugarView 
 {
@@ -57,13 +56,8 @@ class xActiveListingsViewImport extends SugarView
      */
     public function display()
     {
-		// $eBayOfficialTime = new GeteBayOfficialTime;
-		// $eBayOfficialTime->dispatchCall(array());
-
 		$ss = new Sugar_Smarty();
-		$ss->assign('current_date', "09/26/2012");
-		$ss->assign('start_weekday',$GLOBALS['current_user']->get_first_day_of_week());
-		$ss->assign('cal_img',SugarThemeRegistry::current()->getImageURL("jscalendar.gif",false));
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
 		echo $ss->fetch("modules/xActiveListings/tpls/import.tpl");
  	}
 }

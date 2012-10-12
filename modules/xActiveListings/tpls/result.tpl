@@ -44,28 +44,9 @@
 <input type="hidden" name="module" value="xActiveListings">
 <input type="hidden" name="action" value="Result">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td>
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td align="left" scope="row" colspan="4" style="padding-left: 10px;">
-				{$MOD.LBL_IMPORT_DESCRIPTION_PREFIX}
-				<select name='time_left' id='time_left' title=''>
-					<option value='1'>1</option>
-					<option value='3'>3</option>
-					<option value='5'>5</option>
-					<option value='7'>7</option>
-					<option value='15'>15</option>
-				</select>
-				{$MOD.LBL_IMPORT_DESCRIPTION_SUFFIX}
-				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import">
-			</td>
-			<td align="left" scope="row" colspan="1">
-			</td>
-        </tr>
-	</table>
-</td>
-</tr>
+	<tr>
+		<td><h2>{$MESSAGE}</h2></td>
+	</tr>
 </table>
 
 <script>

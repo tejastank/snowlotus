@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -33,42 +34,31 @@
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
-
-*}
 
-{$INSTRUCTION}
 
-<div class="hr"></div>
+/**
+ * xActiveListingsViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
+ 
+require_once('include/MVC/View/SugarView.php');
 
-<form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
-<input type="hidden" name="module" value="xActiveListings">
-<input type="hidden" name="action" value="Result">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td>
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td align="left" scope="row" colspan="4" style="padding-left: 10px;">
-				{$MOD.LBL_IMPORT_DESCRIPTION_PREFIX}
-				<select name='time_left' id='time_left' title=''>
-					<option value='1'>1</option>
-					<option value='3'>3</option>
-					<option value='5'>5</option>
-					<option value='7'>7</option>
-					<option value='15'>15</option>
-				</select>
-				{$MOD.LBL_IMPORT_DESCRIPTION_SUFFIX}
-				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import">
-			</td>
-			<td align="left" scope="row" colspan="1">
-			</td>
-        </tr>
-	</table>
-</td>
-</tr>
-</table>
-
-<script>
-{$JAVASCRIPT}
-</script>  
-</form>
+class xActiveListingsViewResult extends SugarView 
+{
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+		$ss = new Sugar_Smarty();
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+		$ss->assign("MESSAGE", $GLOBALS['message']);
+		echo $ss->fetch("modules/xActiveListings/tpls/result.tpl");
+ 	}
+}
