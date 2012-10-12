@@ -325,6 +325,10 @@ $moduleList[] = 'xActiveListings';
 $beanList['xActiveListings'] = 'xActiveListing';
 $beanFiles['xActiveListing'] = 'modules/xActiveListings/xActiveListing.php';
 
+$moduleList[] = 'xXxxs';
+$beanList['xXxxs'] = 'xXxx';
+$beanFiles['xXxx'] = 'modules/xXxxs/xXxx.php';
+
 if (file_exists('include/modules_override.php'))
 {
     include('include/modules_override.php');

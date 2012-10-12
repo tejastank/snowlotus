@@ -110,6 +110,7 @@ $app_list_strings = array (
     'xInventories' => 'Inventory',
     'xCategories' => 'Category',
     'xActiveListings' => 'Active Listings',
+    'xXxxs' => 'Xxx',
   ),
 
   'moduleListSingular' =>
