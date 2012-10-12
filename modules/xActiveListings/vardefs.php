@@ -136,6 +136,7 @@ $dictionary['xActiveListing'] = array(
 			'vname'=>'LBL_RELATED_TO',
 			'type'=>'parent',
 			'source'=>'non-db',
+			'options'=> 'xinventories_type_display',
 		),
 	),
 	'relationships'=>array (

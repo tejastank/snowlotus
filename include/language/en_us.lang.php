@@ -500,6 +500,7 @@ $app_list_strings = array (
 
     'Tasks' => 'Task',
 
+    'xInventories' => 'Inventory',
   ),
 
   'record_type_display_notes' =>
@@ -519,6 +520,13 @@ $app_list_strings = array (
 
     'Meetings' => 'Meeting',
     'Calls' => 'Call',
+
+    'xInventories' => 'Inventory',
+  ),
+
+  'xinventories_type_display' =>
+  array (
+    'xInventories' => 'Inventory',
   ),
 
   'parent_type_display' =>
@@ -539,6 +547,7 @@ $app_list_strings = array (
 
     'Prospects' => 'Target',
 
+    'xInventories' => 'Inventory',
   ),
 
   'issue_priority_default_key' => 'Medium',
