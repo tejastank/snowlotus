@@ -45,30 +45,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once("include/MVC/Controller/SugarController.php");
 require_once('eBayApi/GetSellerList.php');
+require_once('eBayApi/ReviseItem.php');
+require_once('eBayApi/ReviseFixedPriceItem.php');
 
 class xActiveListingsController extends SugarController
 {
     function action_test()
     {
-		echo "<h1>Test</h1>";
-		$inventory = BeanFactory::getBean('xInventories');
-		$skus = array(
-			"DarkRed Bowknot Dust proof",
-			"DarkRed Bowknot Dust proof nonexist",
-			"Nokia Lumia 800 Yellow Mesh Case Cover",
-			"SonyEricsson_MT27i_Mesh_Case_Cover_SkyBlue",
-			"Apple iPhone4s Yellow Mesh Case Cover",
-			"apple iphone4s Yellow Mesh Case Cover",
-		);
-		foreach ($skus as &$sku) {
-			$len = strlen($sku);
-			$inv = $inventory->retrieve_by_string_fields(array('sku' => $sku));
-			if($inv != null) {
-				echo "<h1>retrieve ($sku)<$len>, $inv->id ok </h1>";
-			} else {
-				echo "<h1>retrieve ($sku)<$len> failed </h1>";
-			}
-		}
+		$endTimeFrom = date("c", time() + 1 * 24 * 60 * 60);
+		$endTimeTo = date("c", time() + 60 * 24 * 60 * 60);
+
+		$sellerList = new GetSellerList;
+
+		$sellerList->dispatchCall(array(
+			'EndTimeFrom' => $endTimeFrom,
+			'EndTimeTo' => $endTimeTo,
+		));
     }
 
     function action_Import()
@@ -76,7 +68,7 @@ class xActiveListingsController extends SugarController
 		$this->view = 'import';
     }
 
-    function action_Result()
+    function action_ImportFinal()
 	{
 		$GLOBALS['db']->query("DELETE FROM notes WHERE notes.parent_type = 'xActiveListings'");
 		$GLOBALS['db']->query($GLOBALS['db']->truncateTableSQL('xactivelistings'));
@@ -84,15 +76,10 @@ class xActiveListingsController extends SugarController
 		$timeLeft = isset($_REQUEST['time_left']) ? $_REQUEST['time_left'] : 1;
 		$endTimeFrom = date("c", time() + $timeLeft * 24 * 60 * 60);
 		$endTimeTo = date("c", time() + 60 * 24 * 60 * 60);
-		$endTimeFrom = "2012-07-01T00:00:00";
-		$endTimeTo = "2012-08-01T00:00:00";
+		// $endTimeFrom = "2012-07-01T00:00:00";
+		// $endTimeTo = "2012-08-01T00:00:00";
 
 		$sellerList = new GetSellerList;
-
-		// $sellerList->dispatchCall(array(
-			// 'EndTimeFrom' => $endTimeFrom,
-			// 'EndTimeTo' => $endTimeTo,
-		// ));
 
 		$result = $sellerList->getActiveListing(array(
 			'EndTimeFrom' => $endTimeFrom,
@@ -104,17 +91,52 @@ class xActiveListingsController extends SugarController
 		else
 			$GLOBALS['message'] = "Import active listing from ebay falied!";
 
-		$this->view = 'result';
+		$this->view = 'importfinal';
 	}
 
     function action_Update()
+    {
+		$this->view = 'update';
+	}
+
+    function action_UpdateFinal()
     {
 		$bean = BeanFactory::getBean('xActiveListings');
 		$inventory = BeanFactory::getBean('xInventories');
 		$note = BeanFactory::getBean('Notes');
 
 		$item_list = $bean->get_full_list();
-		$this->view = 'update';
+
+		$ri = new ReviseItem;
+		$rfpi = new ReviseFixedPriceItem;
+
+		set_time_limit(60 * 10);
+
+		// foreach ($item_list as &$item) {
+			// if (empty($item->variation)) {
+				// $ri->ryi(array(
+					// 'ItemID' => $item->item_id,
+					// 'Description' => $item->name,
+					// 'SKU' => $item->sku,
+				// ));
+			// } else {
+				// $rfpi->ryi(array(
+					// 'ItemID' => $item->item_id,
+					// 'Description' => $item->name,
+					// 'SKU' => $item->sku,
+				// ));
+			// }
+		// }
+
+		{
+			$scope = $_REQUEST['scope'];
+			echo "<pre>";
+			print_r($scope);
+			echo "</pre>";
+		}
+		$GLOBALS['message'] = "Revise ebay listings succeed!";
+
+		$this->view = 'updatefinal';
 	}
 }
 ?>

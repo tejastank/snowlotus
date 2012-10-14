@@ -13,8 +13,8 @@ class eBayApiEnvironment extends EbatNs_Environment
 {
     public function __construct()
     {
-		parent::__construct(0, 'config/ebay.config.php');
-		// parent::__construct(0, 'config/ebay.config.sandbox.php');
+		// parent::__construct(0, 'config/ebay.config.php');
+		parent::__construct(0, 'config/ebay.config.sandbox.php');
     }
 }
 

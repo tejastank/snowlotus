@@ -1,5 +1,4 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,72 +33,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
+
+*}
 
+{$INSTRUCTION}
 
+<div class="hr"></div>
 
+<form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
+<input type="hidden" name="module" value="xActiveListings">
+<input type="hidden" name="action" value="Result">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td><h2>{$MESSAGE}</h2></td>
+	</tr>
+</table>
 
-$listViewDefs['xActiveListings'] = array(
-	'ITEM_ID' => array(
-		'width' => '12', 
-		'label' => 'LBL_PICTURE', 
-		'default' => true,
-		'customCode' => '<a title="{$ITEM_ID}" href="{$VIEW_ITEM_URL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEM_ID}6464.jpg" alt="" /></a>',
-		'sortable' => false,
-    	'related_fields' => array(
-			'0' => 'view_item_url',
-		),
-	),
-	'NAME' => array(
-		'width' => '80', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => true,
-		'sortable' => false
-	), 
-	'PARENT_NAME' => array (
-		'width' => '50',
-		'label' => 'LBL_LIST_RELATED_TO',
-		'dynamic_module' => 'PARENT_TYPE',
-		'id' => 'PARENT_ID',
-		'link' => true,
-		'default' => true,
-		'sortable' => false,
-		'ACLTag' => 'PARENT',
-		'related_fields' => 
-		array (
-			0 => 'parent_id',
-			1 => 'parent_type',
-		),
-	),
-	'LISTING_TYPE' => array(
-		'width' => '18', 
-		'label' => 'LBL_LISTING_TYPE', 
-		'default' => true,
-		'customCode' => '{$LISTING_TYPE_ICON}',
-	),
-	'PRICE' => array(
-		'width' => '14', 
-		'label' => 'LBL_PRICE', 
-		'default' => true,
-		'customCode' => '{$CURRENCY_ID}&nbsp{$PRICE}',
-    	'related_fields' => array(
-			'0' => 'currency_id',
-		),
-	),
-	'QUANTITY' => array(
-		'width' => '14', 
-		'label' => 'LBL_QUANTITY', 
-		'default' => true,
-	),
-	'HITCOUNT' => array(
-		'width' => '18', 
-		'label' => 'LBL_HITCOUNT', 
-		'default' => true,
-	),
-	'VARIATION' => array(
-		'width' => '18', 
-		'label' => 'LBL_VARIATION', 
-		'default' => true,
-	),
-);
-?>
+<script>
+{$JAVASCRIPT}
+</script>  
+</form>

@@ -36,70 +36,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+/**
+ * xActiveListingsViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
+ 
+require_once('include/MVC/View/SugarView.php');
 
-
-$listViewDefs['xActiveListings'] = array(
-	'ITEM_ID' => array(
-		'width' => '12', 
-		'label' => 'LBL_PICTURE', 
-		'default' => true,
-		'customCode' => '<a title="{$ITEM_ID}" href="{$VIEW_ITEM_URL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEM_ID}6464.jpg" alt="" /></a>',
-		'sortable' => false,
-    	'related_fields' => array(
-			'0' => 'view_item_url',
-		),
-	),
-	'NAME' => array(
-		'width' => '80', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => true,
-		'sortable' => false
-	), 
-	'PARENT_NAME' => array (
-		'width' => '50',
-		'label' => 'LBL_LIST_RELATED_TO',
-		'dynamic_module' => 'PARENT_TYPE',
-		'id' => 'PARENT_ID',
-		'link' => true,
-		'default' => true,
-		'sortable' => false,
-		'ACLTag' => 'PARENT',
-		'related_fields' => 
-		array (
-			0 => 'parent_id',
-			1 => 'parent_type',
-		),
-	),
-	'LISTING_TYPE' => array(
-		'width' => '18', 
-		'label' => 'LBL_LISTING_TYPE', 
-		'default' => true,
-		'customCode' => '{$LISTING_TYPE_ICON}',
-	),
-	'PRICE' => array(
-		'width' => '14', 
-		'label' => 'LBL_PRICE', 
-		'default' => true,
-		'customCode' => '{$CURRENCY_ID}&nbsp{$PRICE}',
-    	'related_fields' => array(
-			'0' => 'currency_id',
-		),
-	),
-	'QUANTITY' => array(
-		'width' => '14', 
-		'label' => 'LBL_QUANTITY', 
-		'default' => true,
-	),
-	'HITCOUNT' => array(
-		'width' => '18', 
-		'label' => 'LBL_HITCOUNT', 
-		'default' => true,
-	),
-	'VARIATION' => array(
-		'width' => '18', 
-		'label' => 'LBL_VARIATION', 
-		'default' => true,
-	),
-);
-?>
+class xActiveListingsViewImportfinal extends SugarView 
+{
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+		$ss = new Sugar_Smarty();
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+		$ss->assign("MESSAGE", $GLOBALS['message']);
+		echo $ss->fetch("modules/xActiveListings/tpls/importfinal.tpl");
+ 	}
+}

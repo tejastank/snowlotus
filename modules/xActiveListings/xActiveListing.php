@@ -66,6 +66,7 @@ class xActiveListing extends Basic {
 	var $listing_type;
 	var $quantity;
 	var $sku;
+	var $variation;
 	var $parent_id;
 	var $parent_type;
 

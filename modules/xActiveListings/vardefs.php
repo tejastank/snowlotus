@@ -48,7 +48,7 @@ $dictionary['xActiveListing'] = array(
 			'name' => 'item_id',
 			'vname' => 'LBL_ITEM_ID',
 			'type' => 'varchar',
-			'len' => '15',
+			'len' => '20',
 			'importable' => 'required',
             'required' => true
 		),
@@ -104,6 +104,12 @@ $dictionary['xActiveListing'] = array(
 			'len' => '80',
 			'importable' => 'required',
             'required' => true
+		),
+		'variation' => array(
+			'name' => 'variation',
+			'vname' => 'LBL_VARIATION',
+			'type' => 'bool',
+			'default' => false,
 		),
 		'notes' => array (
 			'name' => 'notes',

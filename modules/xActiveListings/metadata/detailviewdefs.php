@@ -94,7 +94,7 @@ $viewdefs['xActiveListings']['DetailView'] = array(
 			),
 		),
 		array (
-			'description',
+			'variation',
 			'assigned_user_name',
 		),
 	)

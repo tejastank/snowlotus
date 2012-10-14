@@ -58,6 +58,7 @@ class xActiveListingsViewImport extends SugarView
     {
 		$ss = new Sugar_Smarty();
         $ss->assign("MOD", $GLOBALS['mod_strings']);
+        $ss->assign("INSTRUCTION", "<h1>Import active listings from ebay</h1>");
 		echo $ss->fetch("modules/xActiveListings/tpls/import.tpl");
  	}
 }

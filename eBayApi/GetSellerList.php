@@ -34,13 +34,13 @@ class GetSellerList extends eBayApiEnvironment
         $req = new GetSellerListRequestType();
 		// $req->setErrorLanguage('zh_HK');
 		$req->setDetailLevel('ReturnAll');
-		// $req->setIncludeVariations(true);
+		$req->setIncludeVariations(true);
 		$req->setEndTimeFrom($params['EndTimeFrom']);
 		$req->setEndTimeTo($params['EndTimeTo']);
 		
-		$pageNumber = 2;
+		$pageNumber = 1;
 		$pagination = new PaginationType();
-		$pagination->setEntriesPerPage(5);
+		$pagination->setEntriesPerPage(20);
 		$pagination->setPageNumber($pageNumber);
 		$req->setPagination($pagination);
 		$outputSelector = array(
@@ -57,7 +57,7 @@ class GetSellerList extends eBayApiEnvironment
 			'ItemArray.Item.Quantity',
 			'ItemArray.Item.SKU', /* may be not set */
 			'ItemArray.Item.Title',
-			// 'ItemArray.Item.Variations',
+			'ItemArray.Item.Variations',
 			'ItemsPerPage',
 			'PageNumber',
 			'ReturnedItemCountActual',
@@ -99,7 +99,7 @@ class GetSellerList extends eBayApiEnvironment
 			'ItemArray.Item.Quantity',
 			'ItemArray.Item.SKU', /* may be not set */
 			'ItemArray.Item.Title',
-			// 'ItemArray.Item.Variations',
+			'ItemArray.Item.Variations',
 			'ItemsPerPage',
 			'PageNumber',
 			'ReturnedItemCountActual',
@@ -108,7 +108,7 @@ class GetSellerList extends eBayApiEnvironment
         $req = new GetSellerListRequestType();
 		// $req->setErrorLanguage('zh_HK');
 		$req->setDetailLevel('ReturnAll');
-		// $req->setIncludeVariations(true);
+		$req->setIncludeVariations(true);
 		$req->setEndTimeFrom($params['EndTimeFrom']);
 		$req->setEndTimeTo($params['EndTimeTo']);
 		$req->setOutputSelector($outputSelector);
@@ -139,6 +139,8 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->quantity = $item->getQuantity();
 					$bean->sku = $item->getSKU();
 					$name = $bean->name = $item->getTitle();
+					$variations = $item->getVariations();
+					$bean->variation = !empty($variations);
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
 					$id = $bean->save();

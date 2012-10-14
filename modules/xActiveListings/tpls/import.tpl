@@ -38,11 +38,11 @@
 
 {$INSTRUCTION}
 
-<div class="hr"></div>
+<div class="hr"><hr /></div>
 
 <form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
 <input type="hidden" name="module" value="xActiveListings">
-<input type="hidden" name="action" value="Result">
+<input type="hidden" name="action" value="ImportFinal">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td>
@@ -59,8 +59,6 @@
 				</select>
 				{$MOD.LBL_IMPORT_DESCRIPTION_SUFFIX}
 				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import">
-			</td>
-			<td align="left" scope="row" colspan="1">
 			</td>
         </tr>
 	</table>

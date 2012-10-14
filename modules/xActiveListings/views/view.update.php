@@ -37,7 +37,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 /**
- * xActiveListingsViewImport.php
+ * xActiveListingsViewUpdate.php
  * 
  * This class overrides SugarView and provides an implementation for the ValidPortalUsername
  * method used for checking whether or not an existing portal user_name has already been assigned.
@@ -48,7 +48,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * */
  
 require_once('include/MVC/View/SugarView.php');
-// require_once('eBayApi/GeteBayOfficialTime.php');
 
 class xActiveListingsViewUpdate extends SugarView 
 {
@@ -57,13 +56,9 @@ class xActiveListingsViewUpdate extends SugarView
      */
     public function display()
     {
-		// $eBayOfficialTime = new GeteBayOfficialTime;
-		// $eBayOfficialTime->dispatchCall(array());
-
 		$ss = new Sugar_Smarty();
-		$ss->assign('current_date', "09/26/2012");
-		$ss->assign('start_weekday',$GLOBALS['current_user']->get_first_day_of_week());
-		$ss->assign('cal_img',SugarThemeRegistry::current()->getImageURL("jscalendar.gif",false));
-		echo $ss->fetch("modules/xActiveListings/tpls/import.tpl");
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+        $ss->assign("INSTRUCTION", "<h1>Revise ebay listings</h1>");
+		echo $ss->fetch("modules/xActiveListings/tpls/update.tpl");
  	}
 }
