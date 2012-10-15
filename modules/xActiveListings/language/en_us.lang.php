@@ -74,6 +74,7 @@ $mod_strings = array (
   'LBL_ENDTIME' => 'Endtime',
   'LBL_VIEW_ITEM_URL' => 'View Item URL',
   'LBL_LISTING_TYPE' => 'Listing Type',
+  'LBL_BID_COUNT' => 'Bid Count',
   'LBL_QUANTITY' => 'Quantity',
   'LBL_SKU' => 'SKU',
   'LBL_PICTURE' => 'Picture',
@@ -85,4 +86,5 @@ $mod_strings = array (
   'LBL_LISTING_TYPE_FIXEDPRICE' => 'Fixed price',
   'LBL_REVISE_SCOPE' => 'Revise scope',
   'LBL_REVISE' => 'Revise',
+  'LBL_DOWNLOAD_FILE_EXCHANGE' => "Download FileExchange File",
 );

@@ -63,7 +63,7 @@
 			</td>
         </tr>
         <tr>
-			<td><br /></td>
+			<td>&nbsp;</td>
         </tr>
         <tr>
             <td scope="row" colspan="4">
@@ -81,8 +81,11 @@
 			</td>
         </tr>
         <tr>
+			<td>&nbsp;</td>
+        </tr>
+        <tr>
             <td>
-				<input title="{$MOD.LBL_REVISE}"  class="button" type="submit" name="button" value="  {$MOD.LBL_REVISE}  " id="revise">
+				{$FILE_EXCHANGE_URL} &nbsp; <input title="{$MOD.LBL_REVISE}"  class="button" type="submit" name="button" value="  {$MOD.LBL_REVISE}  " id="revise">
 			</td>
         </tr>
 	</table>

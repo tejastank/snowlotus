@@ -56,9 +56,12 @@ class xActiveListingsViewUpdate extends SugarView
      */
     public function display()
     {
+        global $mod_strings, $app_list_strings, $app_strings;
+
 		$ss = new Sugar_Smarty();
         $ss->assign("MOD", $GLOBALS['mod_strings']);
         $ss->assign("INSTRUCTION", "<h1>Revise ebay listings</h1>");
+		$ss->assign("FILE_EXCHANGE_URL", "<a href=\"javascript: void(0);\" onclick=\"window.location.href='index.php?entryPoint=export&module=xActiveListings&action=index&all=true'\" >".$mod_strings['LBL_DOWNLOAD_FILE_EXCHANGE']."</a>");
 		echo $ss->fetch("modules/xActiveListings/tpls/update.tpl");
  	}
 }

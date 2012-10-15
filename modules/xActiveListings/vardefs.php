@@ -86,6 +86,12 @@ $dictionary['xActiveListing'] = array(
 			'importable' => 'required',
             'required' => true
 		),
+		'bid_count' => array(
+			'name' => 'bid_count',
+			'vname' => 'LBL_BID_COUNT',
+			'type' => 'int',
+			'default' => 0,
+		),
 		'quantity' => array(
 			'name' => 'quantity',
 			'vname' => 'LBL_QUANTITY',

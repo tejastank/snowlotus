@@ -81,5 +81,10 @@ class xInventory extends Basic {
 
 		return $field_list;
 	}
+
+	function get_description()
+	{
+		return $this->name;
+	}
 }
 ?>

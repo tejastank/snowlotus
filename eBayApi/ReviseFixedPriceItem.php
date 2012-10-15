@@ -40,12 +40,19 @@ class ReviseFixedPriceItem extends eBayApiEnvironment
 
 	public function ryi($params)
 	{
+		$scope = $params['scope'];
+
         $req = new ReviseFixedPriceItemRequestType();
         
         $item = new ItemType();
         $item->setItemID($params['ItemID']);
-        $item->setDescription($params['Description']);
-		// $item->setSKU($params['SKU']);
+
+		if (in_array('description', $scope))
+        	$item->setDescription($params['Description']);
+
+		if (in_array('sku', $scope))
+			$item->setSKU($params['SKU']);
+
         $req->setItem($item);
 		
         $res = $this->proxy->ReviseItem($req);

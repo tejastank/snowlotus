@@ -101,40 +101,73 @@ class xActiveListingsController extends SugarController
 
     function action_UpdateFinal()
     {
-		$bean = BeanFactory::getBean('xActiveListings');
-		$inventory = BeanFactory::getBean('xInventories');
-		$note = BeanFactory::getBean('Notes');
+		$format = isset($_REQUEST['format']) ? $_REQUEST['format'] : array();
+		$scope = isset($_REQUEST['scope']) ? $_REQUEST['scope'] : array();
 
-		$item_list = $bean->get_full_list();
+		if (!empty($format) && !empty($scope)) {
+			if (0) {
+				echo "<pre>";
+				print_r($format);
+				print_r($scope);
+				echo "</pre>";
+			}
 
-		$ri = new ReviseItem;
-		$rfpi = new ReviseFixedPriceItem;
+			$bean = BeanFactory::getBean('xActiveListings');
+			$inventory = BeanFactory::getBean('xInventories');
+			$note = BeanFactory::getBean('Notes');
 
-		set_time_limit(60 * 10);
+			$item_list = $bean->get_full_list();
 
-		// foreach ($item_list as &$item) {
-			// if (empty($item->variation)) {
-				// $ri->ryi(array(
-					// 'ItemID' => $item->item_id,
-					// 'Description' => $item->name,
-					// 'SKU' => $item->sku,
-				// ));
-			// } else {
-				// $rfpi->ryi(array(
-					// 'ItemID' => $item->item_id,
-					// 'Description' => $item->name,
-					// 'SKU' => $item->sku,
-				// ));
-			// }
-		// }
+			$ri = new ReviseItem;
+			$rfpi = new ReviseFixedPriceItem;
 
-		{
-			$scope = $_REQUEST['scope'];
-			echo "<pre>";
-			print_r($scope);
-			echo "</pre>";
+			set_time_limit(60 * 10);
+
+			$count = 0;
+
+			foreach ($item_list as &$item) {
+				if (empty($item->variation)) {
+					switch ($item->listing_type) {
+					case 'Chinese':
+						if (in_array('auction', $format)) {
+							if ($item->bid_count > 0)
+								continue;
+						} else {
+							continue;
+						}
+						break;
+					case 'FixedPriceItem':
+						if (in_array('fixedprice', $format)) {
+						} else {
+							continue;
+						}
+						break;
+					default:
+						continue;
+					}
+					$ri->ryi(array(
+						'ItemID' => $item->item_id,
+						'Description' => $item->name,
+						'SKU' => $item->sku,
+						'scope'=> $scope,
+					));
+					$count++;
+				} else {
+					if (in_array('fixedprice', $format)) {
+						$rfpi->ryi(array(
+							'ItemID' => $item->item_id,
+							'Description' => $item->name,
+							'SKU' => $item->sku,
+							'scope'=> $scope,
+						));
+						$count++;
+					}
+				}
+			}
+			$GLOBALS['message'] = "Revised $count listings succeed!";
+		} else {
+			$GLOBALS['message'] = "Did not make any change!";
 		}
-		$GLOBALS['message'] = "Revise ebay listings succeed!";
 
 		$this->view = 'updatefinal';
 	}

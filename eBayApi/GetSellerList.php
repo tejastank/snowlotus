@@ -55,6 +55,7 @@ class GetSellerList extends eBayApiEnvironment
 			'ItemArray.Item.ListingDetails.ListingType',
 			'ItemArray.Item.PictureDetails.PictureURL',
 			'ItemArray.Item.Quantity',
+			'ItemArray.Item.SellingStatus.BidCount',
 			'ItemArray.Item.SKU', /* may be not set */
 			'ItemArray.Item.Title',
 			'ItemArray.Item.Variations',
@@ -97,6 +98,7 @@ class GetSellerList extends eBayApiEnvironment
 			'ItemArray.Item.ListingType',
 			'ItemArray.Item.PictureDetails.PictureURL',
 			'ItemArray.Item.Quantity',
+			'ItemArray.Item.SellingStatus.BidCount',
 			'ItemArray.Item.SKU', /* may be not set */
 			'ItemArray.Item.Title',
 			'ItemArray.Item.Variations',
@@ -136,6 +138,9 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->endtime = $item->getListingDetails()->getEndTime();
 					$bean->view_item_url = $item->getListingDetails()->getViewItemURL();
 					$bean->listing_type = $item->getListingType();
+					if ($bean->listing_type == 'PersonalOffer')
+						continue;
+					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
 					$bean->sku = $item->getSKU();
 					$name = $bean->name = $item->getTitle();

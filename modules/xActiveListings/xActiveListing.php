@@ -64,6 +64,7 @@ class xActiveListing extends Basic {
 	var $endtime;
 	var $view_item_url;
 	var $listing_type;
+	var $bid_count;
 	var $quantity;
 	var $sku;
 	var $variation;
