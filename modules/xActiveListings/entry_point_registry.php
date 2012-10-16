@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -33,67 +34,15 @@
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
-
-*}
 
-{$INSTRUCTION}
+/*********************************************************************************
 
-<div class="hr"><hr /></div>
+ * Description:  Defines the English language pack for the base application.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
 
-<form enctype="multipart/form-data" name="update" method="POST" action="index.php" id="update">
-<input type="hidden" name="module" value="xActiveListings">
-<input type="hidden" name="action" value="UpdateFinal">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td style="padding: 10px;">
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td scope="row" colspan="4">
-				<h3>{$MOD.LBL_LISTING_TYPE}</h3>
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="auction" name="format[]" value="auction" title="" tabindex="" checked>&nbsp;{$MOD.LBL_LISTING_TYPE_AUCTION}
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="fixedprice" name="format[]" value="fixedprice" title="" tabindex="">&nbsp;{$MOD.LBL_LISTING_TYPE_FIXEDPRICE}
-			</td>
-        </tr>
-        <tr>
-			<td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td scope="row" colspan="4">
-				<h3>{$MOD.LBL_REVISE_SCOPE}</h3>
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="description" name="scope[]" value="description" title="" tabindex="" checked>&nbsp;{$MOD.LBL_DESCRIPTION}
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="sku" name="scope[]" value="sku" title="" tabindex="">&nbsp;{$MOD.LBL_SKU}
-			</td>
-        </tr>
-        <tr>
-			<td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>
-				{$FILE_EXCHANGE_URL} &nbsp; <input title="{$MOD.LBL_REVISE}"  class="button" type="submit" name="button" value="  {$MOD.LBL_REVISE}  " id="revise">
-			</td>
-        </tr>
-	</table>
-</td>
-</tr>
-</table>
+$entry_point_registry['FileExchange'] = array('file' => 'modules/xActiveListings/FileExchange.php', 'auth' => true);
 
-<script>
-{$JAVASCRIPT}
-</script>  
-</form>
+?>

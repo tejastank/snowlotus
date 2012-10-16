@@ -59,9 +59,59 @@ class xActiveListingsViewUpdate extends SugarView
         global $mod_strings, $app_list_strings, $app_strings;
 
 		$ss = new Sugar_Smarty();
-        $ss->assign("MOD", $GLOBALS['mod_strings']);
-        $ss->assign("INSTRUCTION", "<h1>Revise ebay listings</h1>");
-		$ss->assign("FILE_EXCHANGE_URL", "<a href=\"javascript: void(0);\" onclick=\"window.location.href='index.php?entryPoint=export&module=xActiveListings&action=index&all=true'\" >".$mod_strings['LBL_DOWNLOAD_FILE_EXCHANGE']."</a>");
+		$ss->assign("MOD", $GLOBALS['mod_strings']);
+		$ss->assign("INSTRUCTION", "<h1>Revise ebay listings</h1>");
+      // $ss->assign("FILE_EXCHANGE_URL", "<a href=\"javascript: void(0);\" onclick=\"window.location.href='index.php?entryPoint=FileExchange&module=xActiveListings&action=index&all=true'\" >".$mod_strings['LBL_DOWNLOAD_FILE_EXCHANGE']."</a>");
+		$ss->assign("FILE_EXCHANGE_URL", "<a href=\"javascript: void(0);\" onclick=FileExchange()>".$mod_strings['LBL_DOWNLOAD_FILE_EXCHANGE']."</a>");
+      $javascript = <<<EOQ
+function FileExchange()
+{
+   var href="index.php?entryPoint=FileExchange&module=xActiveListings&action=index&all=true";
+   var format=document.getElementsByName("format[]");
+   var scope=document.getElementsByName("scope[]");
+   var format_flag=false;
+   var scope_flag=false;
+   for (var i=0;i<format.length;i++)
+   {
+      if(format[i].checked==true)
+      {
+         if (format[i].value=="auction")
+         {
+            format_flag = true;
+            href = href.concat("&auction=true");
+         }
+         if (format[i].value=="fixedprice")
+         {
+            format_flag = true;
+            href = href.concat("&fixedprice=true");
+         }
+      }
+   }
+   for (var i=0;i<scope.length;i++)
+   {
+      if(scope[i].checked==true)
+      {
+         if (scope[i].value=="description")
+         {
+            scope_flag = true;
+            href = href.concat("&description=true");
+         }
+         if (scope[i].value=="sku")
+         {
+            scope_flag = true;
+            href = href.concat("&sku=true");
+         }
+      }
+   }
+   if ((format_flag==false)||(scope=false))
+   {
+      alert("You must check correct options!");
+      return;
+   }
+   window.location.href=href;
+}
+EOQ;
+      $ss->assign("JAVASCRIPT", $javascript);
 		echo $ss->fetch("modules/xActiveListings/tpls/update.tpl");
  	}
 }

@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -33,67 +34,32 @@
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
-
-*}
 
-{$INSTRUCTION}
+//Bug 30094, If zlib is enabled, it can break the calls to header() due to output buffering. This will only work php5.2+
+ini_set('zlib.output_compression', 'Off');
 
-<div class="hr"><hr /></div>
+ob_start();
 
-<form enctype="multipart/form-data" name="update" method="POST" action="index.php" id="update">
-<input type="hidden" name="module" value="xActiveListings">
-<input type="hidden" name="action" value="UpdateFinal">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td style="padding: 10px;">
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td scope="row" colspan="4">
-				<h3>{$MOD.LBL_LISTING_TYPE}</h3>
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="auction" name="format[]" value="auction" title="" tabindex="" checked>&nbsp;{$MOD.LBL_LISTING_TYPE_AUCTION}
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="fixedprice" name="format[]" value="fixedprice" title="" tabindex="">&nbsp;{$MOD.LBL_LISTING_TYPE_FIXEDPRICE}
-			</td>
-        </tr>
-        <tr>
-			<td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td scope="row" colspan="4">
-				<h3>{$MOD.LBL_REVISE_SCOPE}</h3>
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="description" name="scope[]" value="description" title="" tabindex="" checked>&nbsp;{$MOD.LBL_DESCRIPTION}
-			</td>
-        </tr>
-        <tr>
-            <td style="padding: 10px;">
-				<input type="checkbox" id="sku" name="scope[]" value="sku" title="" tabindex="">&nbsp;{$MOD.LBL_SKU}
-			</td>
-        </tr>
-        <tr>
-			<td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>
-				{$FILE_EXCHANGE_URL} &nbsp; <input title="{$MOD.LBL_REVISE}"  class="button" type="submit" name="button" value="  {$MOD.LBL_REVISE}  " id="revise">
-			</td>
-        </tr>
-	</table>
-</td>
-</tr>
-</table>
+global $app_list_strings;
 
-<script>
-{$JAVASCRIPT}
-</script>  
-</form>
+// $content = export(clean_string($_REQUEST['module']));
+$content = "hello world";
+
+date_default_timezone_set("Asia/Shanghai");
+$filename = "FileExchange_" . date("YmdHis");
+///////////////////////////////////////////////////////////////////////////////
+////	BUILD THE EXPORT FILE
+ob_clean();
+header("Pragma: cache");
+header("Content-type: application/octet-stream; charset=".$GLOBALS['locale']->getExportCharset());
+header("Content-Disposition: attachment; filename={$filename}.csv");
+header("Content-transfer-encoding: binary");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+header("Last-Modified: " . TimeDate::httpTime() );
+header("Cache-Control: post-check=0, pre-check=0", false );
+header("Content-Length: ".mb_strlen($GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset())));
+
+print $GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset());
+
+sugar_cleanup(true);
+?>
