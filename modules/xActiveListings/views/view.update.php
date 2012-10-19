@@ -110,6 +110,11 @@ function FileExchange()
    }
    window.location.href=href;
 }
+
+function ReviseConfirm()
+{
+   return confirm("Do you want to revise active listings now ?");
+}
 EOQ;
       $ss->assign("JAVASCRIPT", $javascript);
 		echo $ss->fetch("modules/xActiveListings/tpls/update.tpl");

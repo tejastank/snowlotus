@@ -85,7 +85,7 @@
         </tr>
         <tr>
             <td>
-				{$FILE_EXCHANGE_URL} &nbsp; <input title="{$MOD.LBL_REVISE}"  class="button" type="submit" name="button" value="  {$MOD.LBL_REVISE}  " id="revise">
+				{$FILE_EXCHANGE_URL} &nbsp; <input title="{$MOD.LBL_REVISE}"  class="button" type="submit" name="button" value="  {$MOD.LBL_REVISE}  " id="revise" onclick="return ReviseConfirm()" >
 			</td>
         </tr>
 	</table>
