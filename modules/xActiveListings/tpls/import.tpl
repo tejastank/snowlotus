@@ -58,7 +58,7 @@
 					<option value='15'>15</option>
 				</select>
 				{$MOD.LBL_IMPORT_DESCRIPTION_SUFFIX}
-				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import">
+				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import" onclick="return ImportConfirm()">
 			</td>
         </tr>
 	</table>

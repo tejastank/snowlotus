@@ -103,7 +103,7 @@ function FileExchange()
          }
       }
    }
-   if ((format_flag==false)||(scope=false))
+   if ((format_flag==false)||(scope_flag==false))
    {
       alert("You must check correct options!");
       return;
@@ -113,6 +113,43 @@ function FileExchange()
 
 function ReviseConfirm()
 {
+   var format=document.getElementsByName("format[]");
+   var scope=document.getElementsByName("scope[]");
+   var format_flag=false;
+   var scope_flag=false;
+   for (var i=0;i<format.length;i++)
+   {
+      if(format[i].checked==true)
+      {
+         if (format[i].value=="auction")
+         {
+            format_flag = true;
+         }
+         if (format[i].value=="fixedprice")
+         {
+            format_flag = true;
+         }
+      }
+   }
+   for (var i=0;i<scope.length;i++)
+   {
+      if(scope[i].checked==true)
+      {
+         if (scope[i].value=="description")
+         {
+            scope_flag = true;
+         }
+         if (scope[i].value=="sku")
+         {
+            scope_flag = true;
+         }
+      }
+   }
+   if ((format_flag==false)||(scope_flag==false))
+   {
+      alert("You must check correct options!");
+      return false;
+   }
    return confirm("Do you want to revise active listings now ?");
 }
 EOQ;

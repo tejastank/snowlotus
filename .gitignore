@@ -11,6 +11,9 @@
 # Ignore upload files
 /upload
 
+# Ignore PHPExcel files
+/PHPExcel
+
 # The silent upgrade scripts aren't needed.
 silentUpgrade*.php
 # Logs files can safely be ignored.
