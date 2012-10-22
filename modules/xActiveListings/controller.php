@@ -63,6 +63,16 @@ class xActiveListingsController extends SugarController
 		));
     }
 
+    function action_Reassociate()
+    {
+		$bean = BeanFactory::getBean('xActiveListings');
+		$item_list = $bean->get_full_list();
+
+		foreach ($item_list as &$item) {
+			$item->save();
+		}
+    }
+
     function action_Import()
     {
 		$this->view = 'import';
@@ -116,7 +126,22 @@ class xActiveListingsController extends SugarController
 			$inventory = BeanFactory::getBean('xInventories');
 			$note = BeanFactory::getBean('Notes');
 
-			$item_list = $bean->get_full_list();
+			$auction_list = array();
+			$fixedpirce_list = array();
+			
+			if (in_array('auction', $format))
+				$auction_list = $bean->get_full_list("", "listing_type='Chinese'");
+			
+			if (in_array('fixedprice', $format))
+				$fixedprice_list = $bean->get_full_list("", "listing_type='FixedPriceItem'");
+			
+			if (empty($auction_list))
+				$auction_list = array();
+			
+			if (empty($fixedprice_list))
+				$fixedprice_list = array();
+			
+			$item_list = array_merge($auction_list, $fixedprice_list);
 
 			$ri = new ReviseItem;
 			$rfpi = new ReviseFixedPriceItem;
@@ -127,24 +152,8 @@ class xActiveListingsController extends SugarController
 
 			foreach ($item_list as &$item) {
 				if (empty($item->variation)) {
-					switch ($item->listing_type) {
-					case 'Chinese':
-						if (in_array('auction', $format)) {
-							if ($item->bid_count > 0)
-								continue;
-						} else {
-							continue;
-						}
-						break;
-					case 'FixedPriceItem':
-						if (in_array('fixedprice', $format)) {
-						} else {
-							continue;
-						}
-						break;
-					default:
+					if ($item->bid_count > 0)
 						continue;
-					}
 					$ri->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->name,
@@ -153,15 +162,13 @@ class xActiveListingsController extends SugarController
 					));
 					$count++;
 				} else {
-					if (in_array('fixedprice', $format)) {
-						$rfpi->ryi(array(
-							'ItemID' => $item->item_id,
-							'Description' => $item->name,
-							'SKU' => $item->sku,
-							'scope'=> $scope,
-						));
-						$count++;
-					}
+					$rfpi->ryi(array(
+						'ItemID' => $item->item_id,
+						'Description' => $item->name,
+						'SKU' => $item->sku,
+						'scope'=> $scope,
+					));
+					$count++;
 				}
 			}
 			$GLOBALS['message'] = "Revised $count listings succeed!";

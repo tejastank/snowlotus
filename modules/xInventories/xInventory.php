@@ -84,7 +84,7 @@ class xInventory extends Basic {
 
 	function get_description()
 	{
-		return $this->name;
+		return $this->name . $this->sku . 'inventory';
 	}
 }
 ?>

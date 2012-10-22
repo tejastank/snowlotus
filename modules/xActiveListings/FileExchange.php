@@ -56,19 +56,33 @@ if (!empty($_REQUEST['description']))
 if (!empty($_REQUEST['sku']))
    $scope['sku'] = true;
 
-$column_head = array('auction', 'itemId');
+$column_head = array('Action(SiteID=US|Country=CN)', 'ItemID');
 
 if ($scope['description'])
-   $column_head[] = 'description';
-
+   $column_head[] = 'Description'; 
 if ($scope['sku'])
-   $column_head[] = 'sku';
+   $column_head[] = 'CustomLabel';
 
 $bean = BeanFactory::getBean('xActiveListings');
 $inventory = BeanFactory::getBean('xInventories');
 $note = BeanFactory::getBean('Notes');
 
-$item_list = $bean->get_full_list();
+$auction_list = array();
+$fixedpirce_list = array();
+
+if ($format['auction'])
+   $auction_list = $bean->get_full_list("", "listing_type='Chinese'");
+
+if ($format['fixedprice'])
+   $fixedprice_list = $bean->get_full_list("", "listing_type='FixedPriceItem'");
+
+if (empty($auction_list))
+   $auction_list = array();
+
+if (empty($fixedprice_list))
+   $fixedprice_list = array();
+
+$item_list = array_merge($auction_list, $fixedprice_list);
 
 /** Include PHPExcel */
 require_once 'PHPExcel/Classes/PHPExcel.php';
@@ -93,22 +107,17 @@ foreach ($column_head as &$title) {
 
 $row = 2;
 foreach ($item_list as &$item) {
-   switch ($item->listing_type) {
-   case 'Chinese':
-      if (!$format['auction'])
-         continue;
-   case 'FixedPriceItem':
-      if (!$format['fixedprice'])
-         continue;
-   default:
-         continue;
-   }
    $metadatas = array("revised", $item->item_id);
-   if ($scope['description'])
-      $metadatas[] = $item->name;
+   if ($scope['description']) {
+      $inv = $inventory->retrieve($item->parent_id);
+      if ($inv) 
+         $metadatas[] = $inv->get_description();
+      else 
+         $metadatas[] = $item->name;
+   }
    if ($scope['sku'])
       $metadatas[] = $item->sku;
-
+	
    $column = 0;
    foreach ($metadatas as &$data) {
    $objPHPExcel->setActiveSheetIndex(0)

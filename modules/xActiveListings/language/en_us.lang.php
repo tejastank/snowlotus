@@ -59,6 +59,7 @@ $mod_strings = array (
   'LBL_HOMEPAGE_TITLE' => 'My Active Listing',
   'LNK_NEW_RECORD' => 'Create Active Listing',
   'LNK_LIST' => 'View Active Listing',
+  'LNK_REASSOCIATE_XACTIVELISTINGS' => 'Reassociate Active Listing',
   'LNK_IMPORT_XACTIVELISTINGS' => 'Import Active Listing',
   'LNK_UPDATE_XACTIVELISTINGS' => 'Update Active Listing',
   'LNK_TEST_XACTIVELISTINGS' => 'Test',
