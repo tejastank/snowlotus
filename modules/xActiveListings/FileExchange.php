@@ -40,26 +40,98 @@ ini_set('zlib.output_compression', 'Off');
 
 ob_start();
 
-global $app_list_strings;
-
-// $content = export(clean_string($_REQUEST['module']));
-$content = "hello world";
-
 date_default_timezone_set("Asia/Shanghai");
 $filename = "FileExchange_" . date("YmdHis");
-///////////////////////////////////////////////////////////////////////////////
-////	BUILD THE EXPORT FILE
-ob_clean();
-header("Pragma: cache");
-header("Content-type: application/octet-stream; charset=".$GLOBALS['locale']->getExportCharset());
-header("Content-Disposition: attachment; filename={$filename}.csv");
-header("Content-transfer-encoding: binary");
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-header("Last-Modified: " . TimeDate::httpTime() );
-header("Cache-Control: post-check=0, pre-check=0", false );
-header("Content-Length: ".mb_strlen($GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset())));
 
-print $GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset());
+$format = array("auction" => false, "fixedprice" => false);
+$scope = array("description" => false, "sku" => false);
+
+if (!empty($_REQUEST['auction']))
+   $format['auction'] = true;
+if (!empty($_REQUEST['fixedprice']))
+   $format['fixedprice'] = true;
+
+if (!empty($_REQUEST['description']))
+   $scope['description'] = true;
+if (!empty($_REQUEST['sku']))
+   $scope['sku'] = true;
+
+$column_head = array('auction', 'itemId');
+
+if ($scope['description'])
+   $column_head[] = 'description';
+
+if ($scope['sku'])
+   $column_head[] = 'sku';
+
+$bean = BeanFactory::getBean('xActiveListings');
+$inventory = BeanFactory::getBean('xInventories');
+$note = BeanFactory::getBean('Notes');
+
+$item_list = $bean->get_full_list();
+
+/** Include PHPExcel */
+require_once 'PHPExcel/Classes/PHPExcel.php';
+
+// Create new PHPExcel object
+$objPHPExcel = new PHPExcel();
+
+// Set document properties
+$objPHPExcel->getProperties()->setCreator("xlongfeng")
+							 ->setLastModifiedBy("xlongfeng")
+							 ->setTitle("eBay File exchange")
+							 ->setSubject("eBay File exchange")
+							 ->setDescription("eBay File exchange")
+							 ->setKeywords("eBay File exchange")
+							 ->setCategory("eBay");
+
+$column = 0;
+foreach ($column_head as &$title) {
+   $objPHPExcel->setActiveSheetIndex(0)
+               ->setCellValueByColumnAndRow($column++, 1, $title);
+}
+
+$row = 2;
+foreach ($item_list as &$item) {
+   switch ($item->listing_type) {
+   case 'Chinese':
+      if (!$format['auction'])
+         continue;
+   case 'FixedPriceItem':
+      if (!$format['fixedprice'])
+         continue;
+   default:
+         continue;
+   }
+   $metadatas = array("revised", $item->item_id);
+   if ($scope['description'])
+      $metadatas[] = $item->name;
+   if ($scope['sku'])
+      $metadatas[] = $item->sku;
+
+   $column = 0;
+   foreach ($metadatas as &$data) {
+   $objPHPExcel->setActiveSheetIndex(0)
+               ->setCellValueByColumnAndRow($column++, $row, $data);
+   }
+   $row++;
+}
+
+// Rename worksheet
+$objPHPExcel->getActiveSheet()->setTitle('FileExchange');
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+$objPHPExcel->setActiveSheetIndex(0);
+
+ob_clean();
+
+// Redirect output to a client’s web browser (CSV)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header("Content-Disposition: attachment; filename={$filename}.csv");
+header('Cache-Control: max-age=0');
+
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+$objWriter->save('php://output');
 
 sugar_cleanup(true);
 ?>
