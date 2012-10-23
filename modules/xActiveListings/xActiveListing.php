@@ -71,6 +71,9 @@ class xActiveListing extends Basic {
 	var $parent_id;
 	var $parent_type;
 
+	const shopwindow_top_item_limit = 6;
+	static $shopwindow_top_html;
+
 	function xActiveListing()
 	{
 		parent::Basic();
@@ -119,6 +122,65 @@ class xActiveListing extends Basic {
 		}
 
 		return $field_list;
+	}
+
+	function get_valid_listing($item_id)
+	{
+		$activeListingBean = BeanFactory::getBean('xActiveListings');
+
+		$fields = array(
+			'id' => $item_id,
+			'listing_type' => 'FixedPirceItem',
+		);
+
+		$activeListing = $activeListingBean->retrieve_by_string_fields($fields);
+
+		// if ($activeListing !== null) {
+			// if ($activeListing->endtime > 7)
+		// }
+
+		return $activeListing;
+
+	}
+
+	static function build_shop_window_top()
+	{
+		$inventoryBean = BeanFactory::getBean('xInventories');
+		$pinnedItemBean = BeanFactory::getBean('xPinnedItems');
+		$activeListingBean = BeanFactory::getBean('xActiveListings');
+		$note = BeanFactory::getBean('Notes');
+
+		$pinnedItems = $pinnedItemBean->get_full_list();
+
+		$shop_window_items = array();
+
+		$count = 0;
+
+		foreach ($pinnedItems as &$item) {
+			$inventory = $inventoryBean->retrieve($item->parent_id);
+			$activeListing = $activeListingBean->get_valid_listing($item->parent_id);
+			if (($inventory !== null ) && ($activeListing !== null)) {
+				$shop_window_items[] = array(
+					'itemID' => $activeListing->item_id,
+					'currencyID' => $activeListing->currency_id,
+					'price' => $activeListing->price,
+					'viewItemUrl' => $activeListing->view_item_url,
+				);
+
+				$count++;
+
+				if ($count == shopwindow_top_item_limit)
+					break;
+			}
+		}
+
+		if (count(shop_window_items) < shopwindow_top_item_limit) {
+		}
+	}
+
+	function get_description()
+	{
+		return "hello world";
 	}
 }
 ?>

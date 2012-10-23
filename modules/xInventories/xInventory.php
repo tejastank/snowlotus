@@ -61,6 +61,7 @@ class xInventory extends Basic {
 	var $category_name;
 	var $goods_allocation;
 	var $sku;
+	var $body_html;
 
 	function xInventory()
 	{
@@ -82,9 +83,14 @@ class xInventory extends Basic {
 		return $field_list;
 	}
 
-	function get_description()
+	function get_body_html()
 	{
-		return $this->name . $this->sku . 'inventory';
+		return $this->body_html;
+	}
+
+	function get_subtitle()
+	{
+		return $this->subtitle;
 	}
 }
 ?>

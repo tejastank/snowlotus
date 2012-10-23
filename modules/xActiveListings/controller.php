@@ -156,7 +156,7 @@ class xActiveListingsController extends SugarController
 						continue;
 					$ri->ryi(array(
 						'ItemID' => $item->item_id,
-						'Description' => $item->name,
+						'Description' => $item->get_description(),
 						'SKU' => $item->sku,
 						'scope'=> $scope,
 					));
@@ -164,7 +164,7 @@ class xActiveListingsController extends SugarController
 				} else {
 					$rfpi->ryi(array(
 						'ItemID' => $item->item_id,
-						'Description' => $item->name,
+						'Description' => $item->get_description(),
 						'SKU' => $item->sku,
 						'scope'=> $scope,
 					));

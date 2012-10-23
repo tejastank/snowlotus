@@ -64,8 +64,6 @@ if ($scope['sku'])
    $column_head[] = 'CustomLabel';
 
 $bean = BeanFactory::getBean('xActiveListings');
-$inventory = BeanFactory::getBean('xInventories');
-$note = BeanFactory::getBean('Notes');
 
 $auction_list = array();
 $fixedpirce_list = array();
@@ -108,13 +106,8 @@ foreach ($column_head as &$title) {
 $row = 2;
 foreach ($item_list as &$item) {
    $metadatas = array("revised", $item->item_id);
-   if ($scope['description']) {
-      $inv = $inventory->retrieve($item->parent_id);
-      if ($inv) 
-         $metadatas[] = $inv->get_description();
-      else 
-         $metadatas[] = $item->name;
-   }
+   if ($scope['description'])
+      $metadatas[] = $item->get_description();
    if ($scope['sku'])
       $metadatas[] = $item->sku;
 	
