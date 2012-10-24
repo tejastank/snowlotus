@@ -71,8 +71,9 @@ class xActiveListing extends Basic {
 	var $parent_id;
 	var $parent_type;
 
-	const shopwindow_top_item_limit = 6;
-	static $shopwindow_top_html;
+	const shopwindow_stick_limit = 6;
+	const shopwindow_correlation_limit = 9;
+	const shopwindow_random_limit = 12;
 
 	function xActiveListing()
 	{
@@ -140,10 +141,21 @@ class xActiveListing extends Basic {
 		// }
 
 		return $activeListing;
-
 	}
 
-	static function build_shop_window_top()
+    function build_shopwindow_html($items, $row, $column)
+    {
+        $count = count($items);
+        $html = "desc $count $row x $column: ";
+
+        foreach ($items as &$item) {
+            $html = $html . "~" . $item['title'] . "~";
+        }
+
+        return $html;
+    }
+
+	function build_shopwindow_stick()
 	{
 		$inventoryBean = BeanFactory::getBean('xInventories');
 		$pinnedItemBean = BeanFactory::getBean('xPinnedItems');
@@ -159,9 +171,10 @@ class xActiveListing extends Basic {
 		foreach ($pinnedItems as &$item) {
 			$inventory = $inventoryBean->retrieve($item->parent_id);
 			$activeListing = $activeListingBean->get_valid_listing($item->parent_id);
-			if (($inventory !== null ) && ($activeListing !== null)) {
+			if (($inventory !== null) && ($activeListing !== null)) {
 				$shop_window_items[] = array(
 					'itemID' => $activeListing->item_id,
+                    'title' => empty($inventory->subtitle) ? $activeListing->name : $inventory->subtitle,
 					'currencyID' => $activeListing->currency_id,
 					'price' => $activeListing->price,
 					'viewItemUrl' => $activeListing->view_item_url,
@@ -169,18 +182,99 @@ class xActiveListing extends Basic {
 
 				$count++;
 
-				if ($count == shopwindow_top_item_limit)
+				if ($count == self::shopwindow_stick_limit)
 					break;
 			}
 		}
 
-		if (count(shop_window_items) < shopwindow_top_item_limit) {
+		if (count($shop_window_items) < self::shopwindow_stick_limit) {
 		}
+
+        return $this->build_shopwindow_html($shop_window_items, 1, self::shopwindow_stick_limit);
+	}
+
+	function build_shopwindow_correlation()
+	{
+		$inventoryBean = BeanFactory::getBean('xInventories');
+		$activeListingBean = BeanFactory::getBean('xActiveListings');
+		$randomItems = $activeListingBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->id'");
+
+		$shop_window_items = array();
+
+		$count = 0;
+
+		foreach ($randomItems as &$item) {
+			$inventory = $inventoryBean->retrieve($item->parent_id);
+			if ($inventory !== null) {
+				$shop_window_items[] = array(
+					'itemID' => $item->item_id,
+                    'title' => empty($inventory->subtitle) ? $item->name : $inventory->subtitle,
+					'currencyID' => $item->currency_id,
+					'price' => $item->price,
+					'viewItemUrl' => $item->view_item_url,
+				);
+
+				$count++;
+
+				if ($count == self::shopwindow_correlation_limit)
+					break;
+			}
+		}
+
+		if (count($shop_window_items) < self::shopwindow_correlation_limit) {
+		}
+
+        return $this->build_shopwindow_html($shop_window_items, self::shopwindow_correlation_limit, 1);
+	}
+
+	function build_shopwindow_random()
+	{
+		$inventoryBean = BeanFactory::getBean('xInventories');
+		$activeListingBean = BeanFactory::getBean('xActiveListings');
+		$randomItems = $activeListingBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->id'");
+
+		$shop_window_items = array();
+
+		$count = 0;
+
+		foreach ($randomItems as &$item) {
+			$inventory = $inventoryBean->retrieve($item->parent_id);
+			if ($inventory !== null) {
+				$shop_window_items[] = array(
+					'itemID' => $item->item_id,
+                    'title' => empty($inventory->subtitle) ? $item->name : $inventory->subtitle,
+					'currencyID' => $item->currency_id,
+					'price' => $item->price,
+					'viewItemUrl' => $item->view_item_url,
+				);
+
+				$count++;
+
+				if ($count == self::shopwindow_random_limit)
+					break;
+			}
+		}
+
+		if (count($shop_window_items) < self::shopwindow_random_limit) {
+		}
+
+        return $this->build_shopwindow_html($shop_window_items, 3, 4);
 	}
 
 	function get_description()
 	{
-		return "hello world";
+        $inventoryBean = BeanFactory::getBean('xInventories');
+        $note = BeanFactory::getBean('Notes');
+ 
+        $ss = new Sugar_Smarty();
+        $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_stick());
+        $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
+        $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
+        $desc = $ss->fetch("modules/xActiveListings/tpls/default.tpl");
+ 
+        unset($ss);
+ 
+        return $desc;
 	}
 }
 ?>
