@@ -47,21 +47,21 @@ $format = array("auction" => false, "fixedprice" => false);
 $scope = array("description" => false, "sku" => false);
 
 if (!empty($_REQUEST['auction']))
-   $format['auction'] = true;
+    $format['auction'] = true;
 if (!empty($_REQUEST['fixedprice']))
-   $format['fixedprice'] = true;
+    $format['fixedprice'] = true;
 
 if (!empty($_REQUEST['description']))
-   $scope['description'] = true;
+    $scope['description'] = true;
 if (!empty($_REQUEST['sku']))
-   $scope['sku'] = true;
+    $scope['sku'] = true;
 
 $column_head = array('Action(SiteID=US|Country=CN)', 'ItemID');
 
 if ($scope['description'])
-   $column_head[] = 'Description'; 
+    $column_head[] = 'Description'; 
 if ($scope['sku'])
-   $column_head[] = 'CustomLabel';
+    $column_head[] = 'CustomLabel';
 
 $bean = BeanFactory::getBean('xActiveListings');
 
@@ -69,16 +69,16 @@ $auction_list = array();
 $fixedpirce_list = array();
 
 if ($format['auction'])
-   $auction_list = $bean->get_full_list("", "listing_type='Chinese'");
+    $auction_list = $bean->get_full_list("", "listing_type='Chinese'");
 
 if ($format['fixedprice'])
-   $fixedprice_list = $bean->get_full_list("", "listing_type='FixedPriceItem'");
+    $fixedprice_list = $bean->get_full_list("", "listing_type='FixedPriceItem'");
 
 if (empty($auction_list))
-   $auction_list = array();
+    $auction_list = array();
 
 if (empty($fixedprice_list))
-   $fixedprice_list = array();
+    $fixedprice_list = array();
 
 $item_list = array_merge($auction_list, $fixedprice_list);
 
@@ -99,24 +99,24 @@ $objPHPExcel->getProperties()->setCreator("xlongfeng")
 
 $column = 0;
 foreach ($column_head as &$title) {
-   $objPHPExcel->setActiveSheetIndex(0)
-               ->setCellValueByColumnAndRow($column++, 1, $title);
+    $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValueByColumnAndRow($column++, 1, $title);
 }
 
 $row = 2;
 foreach ($item_list as &$item) {
-   $metadatas = array("revised", $item->item_id);
-   if ($scope['description'])
-      $metadatas[] = $item->get_description();
-   if ($scope['sku'])
-      $metadatas[] = $item->sku;
+    $metadatas = array("revised", $item->item_id);
+    if ($scope['description'])
+        $metadatas[] = $item->get_description();
+    if ($scope['sku'])
+        $metadatas[] = $item->sku;
 	
-   $column = 0;
-   foreach ($metadatas as &$data) {
-   $objPHPExcel->setActiveSheetIndex(0)
-               ->setCellValueByColumnAndRow($column++, $row, $data);
-   }
-   $row++;
+    $column = 0;
+    foreach ($metadatas as &$data) {
+    $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValueByColumnAndRow($column++, $row, $data);
+    }
+    $row++;
 }
 
 // Rename worksheet
