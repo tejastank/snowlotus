@@ -71,3 +71,6 @@ cscope.*
 # Windows
 Thumbs.db
 Desktop.ini
+
+#MindManager
+~*
