@@ -261,16 +261,46 @@ class xActiveListing extends Basic {
         return $this->build_shopwindow_html($shop_window_items, 3, 4);
 	}
 
-	function get_description()
+	function build_image_gallery()
+	{
+        $note = BeanFactory::getBean('Notes');
+		return "build_image_gallery";
+	}
+
+	function _get_description()
 	{
         $inventoryBean = BeanFactory::getBean('xInventories');
-        $note = BeanFactory::getBean('Notes');
+    	$inv = $inventoryBean->retrieve($this->parent_id);
+		$desc = $this->name;
+		if ($inv) {
+			$body_html = $inv->body_html;
+			if (!empty($body_html))
+				$desc = html_entity_decode($body_html);
+		}
+		return $desc;
+	}
+
+	function get_description()
+	{
+		$strips = array(
+			"\t" => "",
+			"\n" => "",
+			"\r" => "",
+			"\0" => "",
+			"\x0B" => "",
+		);
  
         $ss = new Sugar_Smarty();
+        $ss->left_delimiter = '{{';
+        $ss->right_delimiter = '}}';
+		$ss->assign("TITLE", $this->name);
+		$ss->assign("GALLERY", $this->build_image_gallery());
+		$ss->assign("DESCRIPTION", $this->_get_description());
         $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_stick());
         $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
         $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
-        $desc = $ss->fetch("modules/xActiveListings/tpls/default.tpl");
+        $desc = $ss->fetch("modules/xActiveListings/tpls/default.html");
+		$desc = strtr($desc, $strips);
  
         unset($ss);
  
