@@ -82,7 +82,7 @@ class CHtml
 	 */
 	public static function encode($text)
 	{
-		return htmlspecialchars($text,ENT_QUOTES,Yii::app()->charset);
+		return htmlspecialchars($text,ENT_QUOTES);
 	}
 
 	/**
@@ -113,9 +113,9 @@ class CHtml
 		foreach($data as $key=>$value)
 		{
 			if(is_string($key))
-				$key=htmlspecialchars($key,ENT_QUOTES,Yii::app()->charset);
+				$key=htmlspecialchars($key,ENT_QUOTES);
 			if(is_string($value))
-				$value=htmlspecialchars($value,ENT_QUOTES,Yii::app()->charset);
+				$value=htmlspecialchars($value,ENT_QUOTES);
 			else if(is_array($value))
 				$value=self::encodeArray($value);
 			$d[$key]=$value;

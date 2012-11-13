@@ -34,6 +34,8 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+require_once 'CHtml.php';
+
 class xActiveListing extends Basic {
 	var $new_schema = true;
 	var $module_dir = 'xActiveListings';
@@ -146,11 +148,61 @@ class xActiveListing extends Basic {
     function build_shopwindow_html($items, $row, $column)
     {
         $count = count($items);
-        $html = "desc $count $row x $column: ";
 
-        foreach ($items as &$item) {
-            $html = $html . "~" . $item['title'] . "~";
+		if ($count == 0)
+			return "";
+
+		$html = CHtml::openTag("table", array('class'=>'shopwindow'));
+
+		for ($i = 0; $i < $row; $i++) {
+			$html .= CHtml::openTag("tr");
+			for ($j = 0; $j < $column; $j++) {
+				$html .= CHtml::openTag("td", array('class'=>'item'));
+				$item = $items[$i * $column + $j];
+				if (empty($item))
+					break 2;
+				$itemId = $item['itemID'];
+				$linkBody = CHtml::openTag("ul");
+
+				$linkBody .= CHtml::openTag("li", array('class'=>'item-image'));
+				$linkBody .= CHtml::image("http://thumbs3.ebaystatic.com/pict/$itemId"."8080.jpg");
+				$linkBody .= CHtml::closeTag("li");
+
+				$linkBody .= CHtml::openTag("li", array('class'=>'item-title'));
+				$linkBody .= CHtml::encode($item['title']);
+				$linkBody .= CHtml::closeTag("li");
+
+				$linkBody .= CHtml::openTag("li");
+				{
+					$linkBody .= CHtml::openTag("ul", array('class'=>'item-price'));
+					$linkBody .= CHtml::openTag("li");
+					if ($item['listingType'] != 'FixedPriceItem')
+						$linkBody .= CHtml::image('http://q.ebaystatic.com/aw/pics/icon/iconAuction_16x16.gif');
+					else
+						$linkBody .= CHtml::image('http://q.ebaystatic.com/aw/pics/bin_15x54.gif');
+					$linkBody .= CHtml::closeTag("li");
+					$linkBody .= CHtml::openTag("li");
+					$linkBody .= CHtml::encode($item['currencyID']);
+					$linkBody .= CHtml::closeTag("li");
+					$linkBody .= CHtml::openTag("li");
+					$linkBody .= CHtml::encode($item['price']);
+					$linkBody .= CHtml::closeTag("li");
+					$linkBody .= CHtml::closeTag("ul");
+				}
+				$linkBody .= CHtml::closeTag("li");
+
+				$linkBody .= CHtml::closeTag("ul");
+
+				// $html .= CHtml::link($linkBody, "http://www.ebay.com/itm/$itemId",
+						// array('title'=>'click to view', 'target'=>'_blank'));
+				$html .= CHtml::link($linkBody, $item['viewItemUrl'],
+						array('title'=>'click to view', 'target'=>'_blank'));
+				$html .= CHtml::closeTag("td");
+			}
+			$html .= CHtml::closeTag("tr");
         }
+
+		$html .= CHtml::closeTag("table");
 
         return $html;
     }
@@ -175,6 +227,7 @@ class xActiveListing extends Basic {
 				$shop_window_items[] = array(
 					'itemID' => $activeListing->item_id,
                     'title' => empty($inventory->subtitle) ? $activeListing->name : $inventory->subtitle,
+					'listingType' => $activeListing->listing_type,
 					'currencyID' => $activeListing->currency_id,
 					'price' => $activeListing->price,
 					'viewItemUrl' => $activeListing->view_item_url,
@@ -209,6 +262,7 @@ class xActiveListing extends Basic {
 				$shop_window_items[] = array(
 					'itemID' => $item->item_id,
                     'title' => empty($inventory->subtitle) ? $item->name : $inventory->subtitle,
+					'listingType' => $item->listing_type,
 					'currencyID' => $item->currency_id,
 					'price' => $item->price,
 					'viewItemUrl' => $item->view_item_url,
@@ -243,6 +297,7 @@ class xActiveListing extends Basic {
 				$shop_window_items[] = array(
 					'itemID' => $item->item_id,
                     'title' => empty($inventory->subtitle) ? $item->name : $inventory->subtitle,
+					'listingType' => $item->listing_type,
 					'currencyID' => $item->currency_id,
 					'price' => $item->price,
 					'viewItemUrl' => $item->view_item_url,
@@ -264,7 +319,31 @@ class xActiveListing extends Basic {
 	function build_image_gallery()
 	{
         $note = BeanFactory::getBean('Notes');
-		return "build_image_gallery";
+		$images = $note->get_full_list("", "parent_type='xActiveListings' AND parent_id='$this->id'");
+
+		if (count($images) == 0)
+			return "";
+
+		$html = CHtml::openTag('div', array('id'=>'gallery'));
+		$html .= CHtml::image($images[0], '', array("class"=>"default", 'width'=>450, 'height'=>450));
+		$html .= CHtml::openTag('ul');
+		foreach ($images as &$image) {
+			$html .= CHtml::openTag('li');
+			$linkBody = CHtml::image($images->description, '', array('width'=>50, 'height'=>50));
+			$linkBody .= CHtml::openTag('b');
+			$linkBody .= CHtml::openTag('span');
+			$linkBody .= CHtml::closeTag('span');
+			$linkBody .= CHtml::openTag('i');
+			$linkBody .= CHtml::image($images->description, '', array('width'=>450, 'height'=>450));
+			$linkBody .= CHtml::closeTag('i');
+			$linkBody .= CHtml::closeTag('b');
+			$html .= CHtml::link($linkBody, '#x');
+			$html .= CHtml::closeTag('li');
+		}
+		$html .= CHtml::closeTag('ul');
+		$html .= CHtml::closeTag('div');
+
+		return $html;
 	}
 
 	function _get_description()
@@ -296,6 +375,7 @@ class xActiveListing extends Basic {
 		$ss->assign("TITLE", $this->name);
 		$ss->assign("GALLERY", $this->build_image_gallery());
 		$ss->assign("DESCRIPTION", $this->_get_description());
+		$ss->assign("PACKAGE_INCLUDED", "");
         $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_stick());
         $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
         $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
@@ -303,6 +383,8 @@ class xActiveListing extends Basic {
 		$desc = strtr($desc, $strips);
  
         unset($ss);
+
+		file_put_contents($this->item_id . ".html", $desc);
  
         return $desc;
 	}

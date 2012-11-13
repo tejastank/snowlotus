@@ -148,7 +148,7 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->variation = !empty($variations);
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
-					$id = $bean->save();
+					$bean->save();
 
 					$pictureURL = $item->getPictureDetails()->getPictureURL();
 					if (empty($pictureURL))
@@ -157,7 +157,7 @@ class GetSellerList extends eBayApiEnvironment
 					foreach ($pictureURL as &$url) {
 						$note->id = create_guid();
 						$note->new_with_id = true;
-						$note->parent_id = $id;
+						$note->parent_id = $bean->id;
 						$note->parent_type = 'xActiveListings'; 
 						$note_name = str_replace(' ', '-', strtolower(trim($sku ? $sku : $name)));
 						$note->name = "xactivelistings-" . $note_name . "-$count";
