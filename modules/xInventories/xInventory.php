@@ -60,7 +60,6 @@ class xInventory extends Basic {
 	var $category_id;
 	var $category_name;
 	var $goods_allocation;
-	var $sku;
 	var $body_html;
 
 	function xInventory()

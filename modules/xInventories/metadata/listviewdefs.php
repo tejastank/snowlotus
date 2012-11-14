@@ -45,7 +45,7 @@ $listViewDefs['xInventories'] = array(
 		'default' => true,
 		'link' => true
 	),
-	'SKU' => array(
+	'ID' => array(
 		'width' => '36', 
 		'label' => 'LBL_SKU', 
 		'default' => true,

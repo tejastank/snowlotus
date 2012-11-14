@@ -68,10 +68,8 @@ class xActiveListing extends Basic {
 	var $listing_type;
 	var $bid_count;
 	var $quantity;
-	var $sku;
 	var $variation;
-	var $parent_id;
-	var $parent_type;
+	var $inventory_id;
 
 	const shopwindow_stick_limit = 6;
 	const shopwindow_correlation_limit = 9;
@@ -88,23 +86,6 @@ class xActiveListing extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
-	}
-
-    function save($check_notify = FALSE)
-	{
-		$inventory = BeanFactory::getBean('xInventories');
-		$this->parent_id = '';
-		$this->parent_type = '';
-		$sku = $this->sku;
-		if (!empty($sku)) {
-			$inv = $inventory->retrieve_by_string_fields(array('sku' => $sku));
-			$len = strlen($sku);
-			if($inv != null) {
-				$this->parent_id = $inv->id;
-				$this->parent_type = 'xInventories';
-			}
-		}
-		parent::save(check_notify);
 	}
 
 	function get_list_view_data()
@@ -221,8 +202,8 @@ class xActiveListing extends Basic {
 		$count = 0;
 
 		foreach ($pinnedItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->parent_id);
-			$activeListing = $activeListingBean->get_valid_listing($item->parent_id);
+			$inventory = $inventoryBean->retrieve($item->inventory_id);
+			$activeListing = $activeListingBean->get_valid_listing($item->inventory_id);
 			if (($inventory !== null) && ($activeListing !== null)) {
 				$shop_window_items[] = array(
 					'itemID' => $activeListing->item_id,
@@ -257,7 +238,7 @@ class xActiveListing extends Basic {
 		$count = 0;
 
 		foreach ($randomItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->parent_id);
+			$inventory = $inventoryBean->retrieve($item->inventory_id);
 			if ($inventory !== null) {
 				$shop_window_items[] = array(
 					'itemID' => $item->item_id,
@@ -292,7 +273,7 @@ class xActiveListing extends Basic {
 		$count = 0;
 
 		foreach ($randomItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->parent_id);
+			$inventory = $inventoryBean->retrieve($item->inventory_id);
 			if ($inventory !== null) {
 				$shop_window_items[] = array(
 					'itemID' => $item->item_id,
@@ -349,7 +330,7 @@ class xActiveListing extends Basic {
 	function _get_description()
 	{
         $inventoryBean = BeanFactory::getBean('xInventories');
-    	$inv = $inventoryBean->retrieve($this->parent_id);
+    	$inv = $inventoryBean->retrieve($this->inventory_id);
 		$desc = $this->name;
 		if ($inv) {
 			$body_html = $inv->body_html;

@@ -123,8 +123,8 @@ class xActiveListingsController extends SugarController
 			}
 
 			$bean = BeanFactory::getBean('xActiveListings');
-			$inventory = BeanFactory::getBean('xInventories');
-			$note = BeanFactory::getBean('Notes');
+			// $inventory = BeanFactory::getBean('xInventories');
+			// $note = BeanFactory::getBean('Notes');
 
 			$auction_list = array();
 			$fixedpirce_list = array();
@@ -157,7 +157,7 @@ class xActiveListingsController extends SugarController
 					$ri->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->get_description(),
-						'SKU' => $item->sku,
+						'SKU' => $item->inventory_id,
 						'scope'=> $scope,
 					));
 					$count++;
@@ -165,7 +165,7 @@ class xActiveListingsController extends SugarController
 					$rfpi->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->get_description(),
-						'SKU' => $item->sku,
+						'SKU' => $item->inventory_id,
 						'scope'=> $scope,
 					));
 					$count++;

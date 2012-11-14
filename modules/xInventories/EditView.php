@@ -161,7 +161,6 @@ $xtpl->assign("JSLANG", $jsLang);
 $xtpl->assign("ID", $focus->id);
 if(isset($focus->name)) $xtpl->assign("NAME", $focus->name); else $xtpl->assign("NAME", "");
 if(isset($focus->subtitle)) $xtpl->assign("SUBTITLE", $focus->subtitle); else $xtpl->assign("SUBTITLE", "");
-if(isset($focus->sku)) $xtpl->assign("SKU", $focus->sku); else $xtpl->assign("SKU", "");
 if(isset($focus->goods_allocation)) $xtpl->assign("GOODS_ALLOCATION", $focus->goods_allocation); else $xtpl->assign("GOODS_ALLOCATION", ""); 
 
 //Bug45632

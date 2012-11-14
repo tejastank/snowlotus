@@ -53,7 +53,10 @@ $viewdefs['xInventories']['DetailView'] = array(
 			'subtitle',
 		),
 		array (
-			'sku',
+			array (
+				'name' => 'id',
+				'label' => 'LBL_SKU',
+			),
 			'goods_allocation',
 		),
 		array (

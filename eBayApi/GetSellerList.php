@@ -142,7 +142,7 @@ class GetSellerList extends eBayApiEnvironment
 						continue;
 					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
-					$bean->sku = $item->getSKU();
+					$bean->inventory_id = $item->getSKU();
 					$name = $bean->name = $item->getTitle();
 					$variations = $item->getVariations();
 					$bean->variation = !empty($variations);
@@ -159,7 +159,7 @@ class GetSellerList extends eBayApiEnvironment
 						$note->new_with_id = true;
 						$note->parent_id = $bean->id;
 						$note->parent_type = 'xActiveListings'; 
-						$note_name = str_replace(' ', '-', strtolower(trim($sku ? $sku : $name)));
+						$note_name = str_replace(' ', '-', strtolower(trim($name)));
 						$note->name = "xactivelistings-" . $note_name . "-$count";
 						$count++;
 						$note->description = $url;

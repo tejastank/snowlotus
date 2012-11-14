@@ -91,16 +91,12 @@ $viewdefs['xActiveListings']['EditView'] = array(
 			),
 			array (
 				array(
-					'name' => 'sku',
-					'displayParams' => array(
-						'size'=>78,
-					),
-				),
-				array(
-					'name' => 'parent_name',
-					// 'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
-					'customCode' => '{$fields.parent_name.value}',
+					'name' => 'inventory_name',
 					'label' => 'LBL_RELATED_TO',
+					'displayParams' => array(
+						'size' => 64,
+						'readOnly' => 'readOnly',
+					),
 				),
 			),
 		),

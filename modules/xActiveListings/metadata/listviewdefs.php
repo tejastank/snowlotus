@@ -56,19 +56,15 @@ $listViewDefs['xActiveListings'] = array(
         'link' => true,
 		'sortable' => false
 	), 
-	'PARENT_NAME' => array (
+	'INVENTORY_NAME' => array (
 		'width' => '50',
 		'label' => 'LBL_LIST_RELATED_TO',
-		'dynamic_module' => 'PARENT_TYPE',
-		'id' => 'PARENT_ID',
-		'link' => true,
+		'module' => 'xInventories',
+		'id' => 'INVENTORY_ID',
 		'default' => true,
-		'sortable' => false,
-		'ACLTag' => 'PARENT',
 		'related_fields' => 
 		array (
-			0 => 'parent_id',
-			1 => 'parent_type',
+			0 => 'inventory_id',
 		),
 	),
 	'LISTING_TYPE' => array(

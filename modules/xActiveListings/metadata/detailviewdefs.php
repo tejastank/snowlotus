@@ -74,12 +74,7 @@ $viewdefs['xActiveListings']['DetailView'] = array(
 			'hitcount'
 		),
 		array (
-			'sku',
-			array(
-				'name' => 'parent_name',
-				// 'customLabel' => '{sugar_translate label=\'LBL_MODULE_NAME\' module=$fields.parent_type.value}',
-				'label' => 'LBL_RELATED_TO'
-			),
+			'inventory_name',
 		),
 		array (
 			array (

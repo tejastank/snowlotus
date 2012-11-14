@@ -126,14 +126,6 @@ $dictionary['xInventory'] = array(
 	    	'len'=>5,
 			'audited' => true,
 		),
-		'sku'=>
-		array(
-			'name'=>'sku',
-	    	'vname'=> 'LBL_SKU',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>50,
-		),
 		'description'=>
 		array (
 			'name' => 'description',
