@@ -40,18 +40,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $listViewDefs['xInventories'] = array(
 	'NAME' => array(
-		'width' => '36', 
+		'width' => '24', 
 		'label' => 'LBL_NAME', 
 		'default' => true,
 		'link' => true
 	),
+	'SUBTITLE' => array(
+		'width' => '24', 
+		'label' => 'LBL_SUBTITLE', 
+		'default' => true,
+	),
 	'ID' => array(
-		'width' => '36', 
+		'width' => '24', 
 		'label' => 'LBL_SKU', 
 		'default' => true,
 	),
 	'CATEGORY_NAME' => array(
-		'width' => '24', 
+		'width' => '16', 
 		'label' => 'LBL_CATEGORY', 
 		'module' => 'xCategories',
         'id' => 'CATEGORY_ID',
@@ -62,17 +67,17 @@ $listViewDefs['xInventories'] = array(
 		),
 	),
 	'PRICE' => array(
-		'width' => '14', 
+		'width' => '8', 
 		'label' => 'LBL_PRICE', 
 		'default' => true,
 	),
 	'QUANTITY' => array(
-		'width' => '14', 
+		'width' => '8', 
 		'label' => 'LBL_QUANTITY', 
 		'default' => true
 	),
 	'GOODS_ALLOCATION'=> array(
-		'width' => '16', 
+		'width' => '8', 
 		'label' => 'LBL_GOODS_ALLOCATION', 
 		'default' => true,
 	),
