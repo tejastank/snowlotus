@@ -72,7 +72,7 @@ class xActiveListing extends Basic {
 	var $inventory_id;
 
 	const shopwindow_stick_limit = 6;
-	const shopwindow_correlation_limit = 9;
+	const shopwindow_correlation_limit = 10;
 	const shopwindow_random_limit = 12;
 
 	function xActiveListing()
@@ -113,8 +113,8 @@ class xActiveListing extends Basic {
 		$activeListingBean = BeanFactory::getBean('xActiveListings');
 
 		$fields = array(
-			'id' => $item_id,
-			'listing_type' => 'FixedPirceItem',
+			'inventory_id' => $item_id,
+			'listing_type' => 'FixedPriceItem',
 		);
 
 		$activeListing = $activeListingBean->retrieve_by_string_fields($fields);
@@ -193,17 +193,16 @@ class xActiveListing extends Basic {
 		$inventoryBean = BeanFactory::getBean('xInventories');
 		$pinnedItemBean = BeanFactory::getBean('xPinnedItems');
 		$activeListingBean = BeanFactory::getBean('xActiveListings');
-		$note = BeanFactory::getBean('Notes');
 
-		$pinnedItems = $pinnedItemBean->get_full_list();
+		$pinnedItems = $pinnedItemBean->get_full_list("", "parent_id<>'$this->id'");
 
 		$shop_window_items = array();
 
 		$count = 0;
 
 		foreach ($pinnedItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->inventory_id);
-			$activeListing = $activeListingBean->get_valid_listing($item->inventory_id);
+			$inventory = $inventoryBean->retrieve($item->parent_id);
+			$activeListing = $activeListingBean->get_valid_listing($item->parent_id);
 			if (($inventory !== null) && ($activeListing !== null)) {
 				$shop_window_items[] = array(
 					'itemID' => $activeListing->item_id,
@@ -231,7 +230,8 @@ class xActiveListing extends Basic {
 	{
 		$inventoryBean = BeanFactory::getBean('xInventories');
 		$activeListingBean = BeanFactory::getBean('xActiveListings');
-		$randomItems = $activeListingBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->id'");
+		$randomItems = $activeListingBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->item_id'");
+		shuffle($randomItems);
 
 		$shop_window_items = array();
 
@@ -266,7 +266,8 @@ class xActiveListing extends Basic {
 	{
 		$inventoryBean = BeanFactory::getBean('xInventories');
 		$activeListingBean = BeanFactory::getBean('xActiveListings');
-		$randomItems = $activeListingBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->id'");
+		$randomItems = $activeListingBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->item_id'");
+		shuffle($randomItems);
 
 		$shop_window_items = array();
 
@@ -306,16 +307,16 @@ class xActiveListing extends Basic {
 			return "";
 
 		$html = CHtml::openTag('div', array('id'=>'gallery'));
-		$html .= CHtml::image($images[0], '', array("class"=>"default", 'width'=>450, 'height'=>450));
+		$html .= CHtml::image($images[0]->description, '', array("class"=>"default", 'width'=>450, 'height'=>450));
 		$html .= CHtml::openTag('ul');
 		foreach ($images as &$image) {
 			$html .= CHtml::openTag('li');
-			$linkBody = CHtml::image($images->description, '', array('width'=>50, 'height'=>50));
+			$linkBody = CHtml::image($image->description, '', array('width'=>50, 'height'=>50));
 			$linkBody .= CHtml::openTag('b');
 			$linkBody .= CHtml::openTag('span');
 			$linkBody .= CHtml::closeTag('span');
 			$linkBody .= CHtml::openTag('i');
-			$linkBody .= CHtml::image($images->description, '', array('width'=>450, 'height'=>450));
+			$linkBody .= CHtml::image($image->description, '', array('width'=>450, 'height'=>450));
 			$linkBody .= CHtml::closeTag('i');
 			$linkBody .= CHtml::closeTag('b');
 			$html .= CHtml::link($linkBody, '#x');
