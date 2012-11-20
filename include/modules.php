@@ -313,6 +313,14 @@ $objectList['Cases'] =  'Case';
 $objectList['Groups'] =  'User';
 $objectList['Users'] =  'User';
 
+$moduleList[] = 'xeBayOrders';
+$beanList['xeBayOrders'] = 'xeBayOrder';
+$beanFiles['xeBayOrder'] = 'modules/xeBayOrders/xeBayOrder.php';
+
+$moduleList[] = 'xeBayTransactions';
+$beanList['xeBayTransactions'] = 'xeBayTransaction';
+$beanFiles['xeBayTransaction'] = 'modules/xeBayTransactions/xeBayTransaction.php';
+
 $moduleList[] = 'xInventories';
 $beanList['xInventories'] = 'xInventory';
 $beanFiles['xInventory'] = 'modules/xInventories/xInventory.php';
