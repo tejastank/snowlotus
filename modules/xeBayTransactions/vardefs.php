@@ -39,6 +39,104 @@ $dictionary['xeBayTransaction'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'order_id'=>
+		array(
+			'name'=>'order_id',
+			'vname'=>'LBL_ORDER_ID',
+			'type' => 'id',
+		),
+		'combine_order_id'=>
+		array(
+			'name'=>'combine_order_id',
+			'vname'=>'LBL_COMBINE_ORDER_ID',
+			'type' => 'id',
+		),
+		'actual_handling_cost_currency_id' => array(
+			'name' => 'actual_handling_cost_currency_id',
+			'vname' => 'LBL_ACTUAL_HANDLING_COST_CURRENCY_ID',
+			'type' => 'varchar',
+			'len' => '3',
+		),
+		'actual_handling_cost_value' => array(
+			'name' => 'actual_handling_cost_value',
+			'vname' => 'LBL_ACTUAL_HANDLING_COST_VALUE',
+			'type' => 'double',
+		),
+		'actual_shipping_cost_currency_id' => array(
+			'name' => 'actual_shipping_cost_currency_id',
+			'vname' => 'LBL_ACTUAL_SHIPPING_COST_CURRENCY_ID',
+			'type' => 'varchar',
+			'len' => '3',
+		),
+		'actual_shipping_cost_value' => array(
+			'name' => 'actual_shipping_cost_value',
+			'vname' => 'LBL_ACTUAL_SHIPPING_COST_VALUE',
+			'type' => 'double',
+		),
+		'create_time'=>
+		array(
+			'name'=>'create_time',
+	    	'vname'=> 'LBL_CREATE_TIME',
+	    	'type'=>'name',
+			'dbType' => 'datetime',
+		),
+		'item_item_id' => array(
+			'name' => 'item_item_id',
+			'vname' => 'LBL_ITEM_ID',
+			'type' => 'varchar',
+			'len' => '20',
+		),
+		'item_site' => array(
+			'name' => 'item_site',
+			'vname' => 'LBL_ITEM_SITE',
+			'type' => 'varchar',
+			'len' => '20',
+		),
+		'item_sku' => array(
+			'name' => 'item_sku',
+			'vname' => 'LBL_ITEM_SKU',
+			'type' => 'varchar',
+			'len' => '50',
+		),
+		'orderline_item_id' => array(
+			'name' => 'orderline_item_id',
+			'vname' => 'LBL_ORDERLINE_ITEM_ID',
+			'type' => 'varchar',
+			'len' => '50',
+		),
+		'quantity_purchased' => array(
+			'name' => 'quantity_purchased',
+			'vname' => 'LBL_QUANTITY_PURCHASED',
+			'type' => 'int',
+		),
+		'transaction_id' => array(
+			'name' => 'transaction_id',
+			'vname' => 'LBL_TRANSACTION_ID',
+			'type' => 'varchar',
+			'len' => '19',
+		),
+		'shipping_details_selling_manager_sales_record_number' => array(
+			'name' => 'shipping_details_selling_manager_sales_record_number',
+			'vname' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER',
+			'type' => 'int',
+		),
+		'transaction_price_currency_id' => array(
+			'name' => 'transaction_price_currency_id',
+			'vname' => 'LBL_TRANSACTION_PRICE_CURRENCY_ID',
+			'type' => 'varchar',
+			'len' => '3',
+		),
+		'transaction_price_value' => array(
+			'name' => 'transaction_price_value',
+			'vname' => 'TRANSACTION_PRICE_VALUE',
+			'type' => 'double',
+		),
+		'variation_sku' => array(
+			'name' => 'variation_sku',
+			'vname' => 'LBL_VARIATION_SKU',
+			'type' => 'varchar',
+			'len' => '50',
+		),
 	),
 	'relationships'=>array (
 	),

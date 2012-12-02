@@ -34,104 +34,106 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$dictionary['xeBayOrder'] = array(
-	'table'=>'xebayorders',
+$dictionary['xeBayShipToAddress'] = array(
+	'table'=>'xebayshiptoaddresses',
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-		'order_id'=>
+		'name'=>
 		array(
-			'name'=>'order_id',
-	    	'vname'=> 'LBL_ORDER_ID',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>64,
-		),
-		'order_status'=>
-		array(
-			'name'=>'order_status',
-	    	'vname'=> 'LBL_ORDER_STATUS',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>16,
-		),
-		'buyer_user_id'=>
-		array(
-			'name'=>'buyer_user_id',
-	    	'vname'=> 'LBL_BUYER_USER_ID',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>32,
-		),
-		'subtotal_currency_id' => array(
-			'name' => 'subtotal_currency_id',
-			'vname' => 'LBL_SUBTOTAL_CURRENCY_ID',
-			'type' => 'varchar',
-			'len' => '3',
-		),
-		'subtotal_value' => array(
-			'name' => 'subtotal_value',
-			'vname' => 'LBL_SUBTOTAL_VALUE',
-			'type' => 'double',
-		),
-		'total_currency_id' => array(
-			'name' => 'total_currency_id',
-			'vname' => 'LBL_TOTAL_CURRENCY_ID',
-			'type' => 'varchar',
-			'len' => '3',
-		),
-		'total_value' => array(
-			'name' => 'total_value',
-			'vname' => 'LBL_TOTAL_VALUE',
-			'type' => 'double',
-		),
-		'create_time'=>
-		array(
-			'name'=>'create_time',
-	    	'vname'=> 'LBL_CREATE_TIME',
-	    	'type'=>'name',
-			'dbType' => 'datetime',
-		),
-		'paid_time'=>
-		array(
-			'name'=>'paid_time',
-	    	'vname'=> 'LBL_PAID_TIME',
-	    	'type'=>'name',
-			'dbType' => 'datetime',
-		),
-		'shipped_time'=>
-		array(
-			'name'=>'shipped_time',
-	    	'vname'=> 'LBL_SHIPPED_TIME',
-	    	'type'=>'name',
-			'dbType' => 'datetime',
-		),
-		'ship_to_address_id'=>
-		array(
-			'name'=>'ship_to_address_id',
-			'vname'=>'LBL_SHIP_TO_ADDRESS_ID',
-			'type' => 'id',
-		),
-		'shipping_details_selling_manager_sales_record_number' => array(
-			'name' => 'shipping_details_selling_manager_sales_record_number',
-			'vname' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER',
-			'type' => 'int',
-		),
-		'eias_token'=>
-		array(
-			'name'=>'eias_token',
-	    	'vname'=> 'LBL_EIAS_TOKEN',
+			'name'=>'name',
+	    	'vname'=> 'LBL_NAME',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>128,
 		),
-		'payment_hold_status'=>
+		'street1'=>
 		array(
-			'name'=>'payment_hold_status',
-	    	'vname'=> 'LBL_PAYMENT_HOLD_STATUS',
+			'name'=>'street1',
+	    	'vname'=> 'LBL_STREET1',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>512,
+		),
+		'street2'=>
+		array(
+			'name'=>'street2',
+	    	'vname'=> 'LBL_STREET2',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>512,
+		),
+		'city_name'=>
+		array(
+			'name'=>'city_name',
+	    	'vname'=> 'LBL_CITY_NAME',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>128,
+		),
+		'state_or_province'=>
+		array(
+			'name'=>'state_or_province',
+	    	'vname'=> 'LBL_STATE_OR_PROVINCE',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>128,
+		),
+		'country'=>
+		array(
+			'name'=>'country',
+	    	'vname'=> 'LBL_COUNTRY',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>12,
+		),
+		'country_name'=>
+		array(
+			'name'=>'country_name',
+	    	'vname'=> 'LBL_COUNTRY_NAME',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>128,
+		),
+		'phone'=>
+		array(
+			'name'=>'phone',
+	    	'vname'=> 'LBL_PHONE',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>128,
+		),
+		'postal_code'=>
+		array(
+			'name'=>'postal_code',
+	    	'vname'=> 'LBL_POSTAL_CODE',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>24,
+		),
+		'address_id'=>
+		array(
+			'name'=>'address_id',
+	    	'vname'=> 'LBL_ADDRESS_ID',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>16,
+		),
+		'address_owner'=>
+		array(
+			'name'=>'address_owner',
+	    	'vname'=> 'LBL_ADDRESS_OWNER',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>12,
+		),
+		'external_address_id'=>
+		array(
+			'name'=>'external_address_id',
+	    	'vname'=> 'LBL_EXTERNAL_ADDRESS_ID',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>16,
 		),
 	),
 	'relationships'=>array (
@@ -144,5 +146,4 @@ if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }
 
-VardefManager::createVardef('xeBayOrders','xeBayOrder', array('basic','assignable'));
-
+VardefManager::createVardef('xeBayShipToAddresses','xeBayShipToAddress', array('basic','assignable'));
