@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,33 +35,30 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'eBayOrder',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'eBayOrder List',
-  'LBL_MODULE_NAME' => 'eBayOrder',
-  'LBL_MODULE_TITLE' => 'eBayOrder',
-  'LBL_HOMEPAGE_TITLE' => 'My Order',
-  'LNK_NEW_RECORD' => 'Create Order',
-  'LNK_LIST' => 'View Orders',
-  'LNK_IMPORT_XEBAYORDERS' => 'Import Orders',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Order',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
-  'LBL_NEW_FORM_TITLE' => 'New Order',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',);
+
+/**
+ * xeBayOrdersViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
+ 
+require_once('include/MVC/View/SugarView.php');
+
+class xeBayOrdersViewImportfinal extends SugarView 
+{
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+		$ss = new Sugar_Smarty();
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+		$ss->assign("MESSAGE", $GLOBALS['message']);
+		echo $ss->fetch("modules/xeBayOrders/tpls/importfinal.tpl");
+ 	}
+}

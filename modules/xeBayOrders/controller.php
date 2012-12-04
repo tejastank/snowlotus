@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,33 +36,46 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'eBayOrder',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'eBayOrder List',
-  'LBL_MODULE_NAME' => 'eBayOrder',
-  'LBL_MODULE_TITLE' => 'eBayOrder',
-  'LBL_HOMEPAGE_TITLE' => 'My Order',
-  'LNK_NEW_RECORD' => 'Create Order',
-  'LNK_LIST' => 'View Orders',
-  'LNK_IMPORT_XEBAYORDERS' => 'Import Orders',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Order',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
-  'LBL_NEW_FORM_TITLE' => 'New Order',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',);
+/*********************************************************************************
+
+ * Description: Controller for the Import module
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ ********************************************************************************/
+
+require_once("include/MVC/Controller/SugarController.php");
+require_once('eBayApi/GetSellerList.php');
+require_once('eBayApi/ReviseItem.php');
+require_once('eBayApi/ReviseFixedPriceItem.php');
+
+class xeBayOrdersController extends SugarController
+{
+    function action_Import()
+    {
+		$this->view = 'import';
+    }
+
+    function action_ImportFinal()
+	{
+		$timeLeft = isset($_REQUEST['time_left']) ? $_REQUEST['time_left'] : 1;
+		$endTimeFrom = date("c", time() + $timeLeft * 24 * 60 * 60);
+		$endTimeTo = date("c", time() + 60 * 24 * 60 * 60);
+		// $endTimeFrom = "2012-07-01T00:00:00";
+		// $endTimeTo = "2012-08-01T00:00:00";
+
+		// $sellerList = new GetSellerList;
+
+		// $result = $sellerList->getActiveListing(array(
+			// 'EndTimeFrom' => $endTimeFrom,
+			// 'EndTimeTo' => $endTimeTo,
+		// ));
+
+		if ($result === true)
+			$GLOBALS['message'] = "Import active listing from ebay succeed!";
+		else
+			$GLOBALS['message'] = "Import active listing from ebay falied!";
+
+		$this->view = 'importfinal';
+	}
+}
+?>
