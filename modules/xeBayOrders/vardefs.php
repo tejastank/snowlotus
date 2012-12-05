@@ -39,6 +39,12 @@ $dictionary['xeBayOrder'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'buyer_checkout_message'=>
+		array(
+			'name'=>'buyer_checkout_message',
+			'vname'=>'LBL_BUYER_CHECKOUT_MESSAGE',
+			'type'=>'text',
+		),
 		'order_id'=>
 		array(
 			'name'=>'order_id',

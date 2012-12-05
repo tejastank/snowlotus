@@ -57,6 +57,22 @@ class xeBayOrder extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $buyer_checkout_message;
+	var $order_id;
+	var $order_status;
+	var $buyer_user_id;
+	var $subtotal_currency_id;
+	var $subtotal_value;
+	var $total_currency_id;
+	var $total_value;
+	var $create_time;
+	var $paid_time;
+	var $shipped_time;
+	var $ship_to_address_id;
+	var $shipping_details_selling_manager_sales_record_number;
+	var $eias_token;
+	var $payment_hold_status;
+
 	function xeBayOrder()
 	{
 		parent::Basic();

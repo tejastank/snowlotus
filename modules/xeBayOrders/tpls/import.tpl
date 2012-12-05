@@ -49,15 +49,16 @@
 	<table border="0" cellspacing="0" cellpadding="0" width="100%">
         <tr>
             <td align="left" scope="row" colspan="4" style="padding-left: 10px;">
-				{$MOD.LBL_IMPORT_DESCRIPTION_PREFIX}
-				<select name='time_left' id='time_left' title=''>
+				{$MOD.LBL_GETORDERS_DESCRIPTION_PREFIX}
+				<select name='number_of_days' id='number_of_days' title=''>
 					<option value='1'>1</option>
 					<option value='3'>3</option>
 					<option value='5'>5</option>
 					<option value='7'>7</option>
 					<option value='15'>15</option>
+					<option value='30'>30</option>
 				</select>
-				{$MOD.LBL_IMPORT_DESCRIPTION_SUFFIX}
+				{$MOD.LBL_GETORDERS_DESCRIPTION_SUFFIX}
 				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import" onclick="return ImportConfirm()">
 			</td>
         </tr>

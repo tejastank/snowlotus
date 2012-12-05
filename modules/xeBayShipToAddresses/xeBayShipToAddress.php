@@ -57,6 +57,18 @@ class xeBayShipToAddress extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $street1;
+	var $street2;
+	var $city_name;
+	var $state_or_province;
+	var $country;
+	var $country_name;
+	var $phone;
+	var $postal_code;
+	var $address_id;
+	var $address_owner;
+	var $external_address_id;
+
 	function xeBayShipToAddress()
 	{
 		parent::Basic();

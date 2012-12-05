@@ -63,4 +63,8 @@ $mod_strings = array (
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
   'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
   'LBL_NEW_FORM_TITLE' => 'New Order',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',);
+  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
+  'LBL_GETORDERS_DESCRIPTION_PREFIX' => 'Please specify the number of days ',
+  'LBL_GETORDERS_DESCRIPTION_SUFFIX' => 'in the past to search for orders',
+  'LBL_IMPORT' => 'Import',
+);

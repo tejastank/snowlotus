@@ -44,12 +44,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once("include/MVC/Controller/SugarController.php");
-require_once('eBayApi/GetSellerList.php');
-require_once('eBayApi/ReviseItem.php');
-require_once('eBayApi/ReviseFixedPriceItem.php');
+require_once('eBayApi/GetOrders.php');
 
 class xeBayOrdersController extends SugarController
 {
+    function action_test()
+    {
+		$numberOfDays = 7;
+
+		$orders = new GetOrders;
+
+		$result = $orders->dispatchCall(array(
+			'NumberOfDays' => $numberOfDays,
+			'OrderRole' => 'Seller',
+			'OrderStatus' => 'Active',
+			// 'OrderStatus' => 'Completed',
+		));
+    }
+
     function action_Import()
     {
 		$this->view = 'import';
@@ -57,23 +69,21 @@ class xeBayOrdersController extends SugarController
 
     function action_ImportFinal()
 	{
-		$timeLeft = isset($_REQUEST['time_left']) ? $_REQUEST['time_left'] : 1;
-		$endTimeFrom = date("c", time() + $timeLeft * 24 * 60 * 60);
-		$endTimeTo = date("c", time() + 60 * 24 * 60 * 60);
-		// $endTimeFrom = "2012-07-01T00:00:00";
-		// $endTimeTo = "2012-08-01T00:00:00";
+		$numberOfDays = isset($_REQUEST['number_of_days']) ? $_REQUEST['number_of_days'] : 1;
 
-		// $sellerList = new GetSellerList;
+		$orders = new GetOrders;
 
-		// $result = $sellerList->getActiveListing(array(
-			// 'EndTimeFrom' => $endTimeFrom,
-			// 'EndTimeTo' => $endTimeTo,
-		// ));
+		$result = $orders->retrieveOrders(array(
+			'NumberOfDays' => $numberOfDays,
+			'OrderRole' => 'Seller',
+			// 'OrderStatus' => 'Shipped',
+			'OrderStatus' => 'Completed',
+		));
 
 		if ($result === true)
-			$GLOBALS['message'] = "Import active listing from ebay succeed!";
+			$GLOBALS['message'] = "Get orders from ebay succeed!";
 		else
-			$GLOBALS['message'] = "Import active listing from ebay falied!";
+			$GLOBALS['message'] = "Get orders from ebay falied!";
 
 		$this->view = 'importfinal';
 	}

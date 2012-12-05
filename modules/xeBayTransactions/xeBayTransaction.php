@@ -57,6 +57,24 @@ class xeBayTransaction extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $order_id;
+	var $combine_order_id;
+	var $actual_handling_cost_currency_id;
+	var $actual_handling_cost_value;
+	var $actual_shipping_cost_currency_id;
+	var $actual_shipping_cost_value;
+	var $create_time;
+	var $item_item_id;
+	var $item_site;
+	var $item_sku;
+	var $orderline_item_id;
+	var $quantity_purchased;
+	var $transaction_id;
+	var $shipping_details_selling_manager_sales_record_number;
+	var $transaction_price_currency_id;
+	var $transaction_price_value;
+	var $variation_sku;
+
 	function xeBayTransaction()
 	{
 		parent::Basic();
