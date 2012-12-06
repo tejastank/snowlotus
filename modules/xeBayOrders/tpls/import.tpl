@@ -41,7 +41,7 @@
 <div class="hr"><hr /></div>
 
 <form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
-<input type="hidden" name="module" value="xActiveListings">
+<input type="hidden" name="module" value="xeBayOrders">
 <input type="hidden" name="action" value="ImportFinal">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>

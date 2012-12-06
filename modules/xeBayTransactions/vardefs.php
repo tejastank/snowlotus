@@ -73,10 +73,10 @@ $dictionary['xeBayTransaction'] = array(
 			'vname' => 'LBL_ACTUAL_SHIPPING_COST_VALUE',
 			'type' => 'double',
 		),
-		'create_time'=>
+		'create_date'=>
 		array(
-			'name'=>'create_time',
-	    	'vname'=> 'LBL_CREATE_TIME',
+			'name'=>'create_date',
+	    	'vname'=> 'LBL_CREATE_DATE',
 	    	'type'=>'name',
 			'dbType' => 'datetime',
 		),

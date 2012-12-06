@@ -62,7 +62,7 @@ class xeBayOrdersViewImport extends SugarView
       	$javascript = <<<EOQ
 function ImportConfirm()
 {
-		return confirm("Do you want to import active listings now ?");
+		return confirm("Do you want to import orders now ?");
 }
 EOQ;
       	$ss->assign("JAVASCRIPT", $javascript);

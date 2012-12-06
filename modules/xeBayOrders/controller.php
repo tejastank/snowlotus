@@ -56,9 +56,8 @@ class xeBayOrdersController extends SugarController
 
 		$result = $orders->dispatchCall(array(
 			'NumberOfDays' => $numberOfDays,
-			'OrderRole' => 'Seller',
-			'OrderStatus' => 'Active',
-			// 'OrderStatus' => 'Completed',
+			// 'OrderStatus' => 'Active',
+			'OrderStatus' => 'Completed',
 		));
     }
 
@@ -75,7 +74,6 @@ class xeBayOrdersController extends SugarController
 
 		$result = $orders->retrieveOrders(array(
 			'NumberOfDays' => $numberOfDays,
-			'OrderRole' => 'Seller',
 			// 'OrderStatus' => 'Shipped',
 			'OrderStatus' => 'Completed',
 		));

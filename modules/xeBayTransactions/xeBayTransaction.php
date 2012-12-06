@@ -63,7 +63,7 @@ class xeBayTransaction extends Basic {
 	var $actual_handling_cost_value;
 	var $actual_shipping_cost_currency_id;
 	var $actual_shipping_cost_value;
-	var $create_time;
+	var $create_date;
 	var $item_item_id;
 	var $item_site;
 	var $item_sku;

@@ -53,6 +53,12 @@ $dictionary['xeBayOrder'] = array(
 			'dbType' => 'varchar',
 	    	'len'=>64,
 		),
+		'checkout_status_last_modified_time'=>
+		array(
+			'name'=>'checkout_status_last_modified_time',
+	    	'vname'=> 'LBL_CHECKOUT_STATUS_LAST_MODIFIED_TIME',
+	    	'type'=>'datetime',
+		),
 		'order_status'=>
 		array(
 			'name'=>'order_status',

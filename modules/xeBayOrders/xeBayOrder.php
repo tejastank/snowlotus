@@ -59,6 +59,7 @@ class xeBayOrder extends Basic {
 
 	var $buyer_checkout_message;
 	var $order_id;
+	var $checkout_status_last_modified_time;
 	var $order_status;
 	var $buyer_user_id;
 	var $subtotal_currency_id;
@@ -84,6 +85,14 @@ class xeBayOrder extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+    function save($check_notify = FALSE)
+	{
+		if (!empty($this->shipped_time))
+			$this->local_order_status = 'Shipped';
+
+		parent::save(check_notify);
 	}
 }
 ?>
