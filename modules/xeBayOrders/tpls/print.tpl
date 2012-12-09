@@ -1,4 +1,4 @@
-<?php
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -33,42 +33,32 @@
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
+
+*}
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'eBayOrder',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'eBayOrder List',
-  'LBL_MODULE_NAME' => 'eBayOrder',
-  'LBL_MODULE_TITLE' => 'eBayOrder',
-  'LBL_HOMEPAGE_TITLE' => 'My Order',
-  'LNK_NEW_RECORD' => 'Create Order',
-  'LNK_LIST' => 'View Orders',
-  'LNK_LIST_UNHANDLED' => 'View Unhandled Orders',
-  'LNK_IMPORT_XEBAYORDERS' => 'Import Orders',
-  'LNK_PRINT_XEBAYORDERS' => 'Print Orders',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Order',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
-  'LBL_NEW_FORM_TITLE' => 'New Order',
-  'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
-  'LBL_GETORDERS_DESCRIPTION_PREFIX' => 'Please specify the number of days ',
-  'LBL_GETORDERS_DESCRIPTION_SUFFIX' => 'in the past to search for orders',
-  'LBL_IMPORT' => 'Import',
-  'LBL_PRINT' => 'Print',
-  'LBL_PRINT_INSTRUCTION' => 'Start to print unhandled orders',
-);
+{$INSTRUCTION}
+
+<div class="hr"><hr /></div>
+
+<form enctype="multipart/form-data" name="print" method="POST" action="index.php" id="print">
+<input type="hidden" name="module" value="xeBayOrders">
+<input type="hidden" name="action" value="PrintFinal">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+	<table border="0" cellspacing="0" cellpadding="0" width="100%">
+        <tr>
+            <td align="left" scope="row" colspan="4" style="padding-left: 10px;">
+				{$MOD.LBL_PRINT_INSTRUCTION}
+				<input title="{$MOD.LBL_PRINT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_PRINT}  " id="print" onclick="return PrintConfirm()">
+			</td>
+        </tr>
+	</table>
+</td>
+</tr>
+</table>
+
+<script>
+{$JAVASCRIPT}
+</script>  
+</form>

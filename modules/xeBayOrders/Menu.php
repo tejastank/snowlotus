@@ -37,9 +37,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 global $mod_strings, $app_strings, $sugar_config;
+
+$lbl_list_unhandled = $mod_strings['LNK_LIST_UNHANDLED'] . '(83)';
  
 if(ACLController::checkAccess('xeBayOrders', 'list', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayOrders", 'xeBayOrders');
+if(ACLController::checkAccess('xeBayOrders', 'listUnhandled', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $lbl_list_unhandled,"eBayOrders", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'import', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=Import&eturn_module=xeBayOrders&return_action=index", $mod_strings['LNK_IMPORT_XEBAYORDERS'],"Import", 'xeBayOrders');
+if(ACLController::checkAccess('xeBayOrders', 'print', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=Print&eturn_module=xeBayOrders&return_action=index", $mod_strings['LNK_PRINT_XEBAYORDERS'],"Print", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'edit', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=EditView&return_module=xeBayOrders&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayOrders", 'xeBayOrders');
 //if(ACLController::checkAccess('xeBayOrders', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xeBayOrders&return_module=xeBayOrders&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'test', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=Test&return_module=xeBayOrders&return_action=index", 'test',"Test", 'xeBayOrders');

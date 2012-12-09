@@ -85,5 +85,22 @@ class xeBayOrdersController extends SugarController
 
 		$this->view = 'importfinal';
 	}
+
+    function action_Print()
+    {
+		$this->view = 'print';
+    }
+
+    function action_PrintFinal()
+	{
+		// $this->view = 'printfinal';
+		$ss = new Sugar_Smarty();
+        $ss->left_delimiter = '{{';
+        $ss->right_delimiter = '}}';
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+        $ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
+		echo $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics.html");
+		exit;
+	}
 }
 ?>
