@@ -90,6 +90,8 @@ class GetOrders extends eBayApiEnvironment
 						if ($oldOrder->checkout_status_last_modified_time != $checkoutStatusLastModifiedTime) {
 							$oldOrder->checkout_status_last_modified_time = $order->getCheckoutStatus()->getLastModifiedTime();
 							$oldOrder->shipped_time = $order->getShippedTime();
+							if (!empty($oldOrder->shipped_time))
+								$oldOrder->handled_status = 'handled';
 							$oldOrder->set_local_shipped_status();
 							$oldOrder->save();
 						}
@@ -120,6 +122,7 @@ class GetOrders extends eBayApiEnvironment
 						$shipToAddress->save();
 					}
 
+					$bean->handled_status = 'unhandled';
 					$bean->buyer_checkout_message = $order->getBuyerCheckoutMessage();
 					$bean->order_id = $order->getOrderID();
 					$bean->checkout_status_last_modified_time = $order->getCheckoutStatus()->getLastModifiedTime();
@@ -132,6 +135,8 @@ class GetOrders extends eBayApiEnvironment
 					$bean->create_time = $order->getCreatedTime();
 					$bean->paid_time = $order->getPaidTime();
 					$bean->shipped_time = $order->getShippedTime();
+					if (!empty($bean->shipped_time))
+						$bean->handled_status = 'handled';
 					$bean->ship_to_address_id = $shipToAddress->id;
 					$bean->shipping_details_selling_manager_sales_record_number = $order->getShippingDetails()->getSellingManagerSalesRecordNumber();
 					$bean->eias_token = $order->getEIASToken();

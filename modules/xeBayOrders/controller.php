@@ -100,7 +100,7 @@ class xeBayOrdersController extends SugarController
         $ss->assign("MOD", $GLOBALS['mod_strings']);
         $ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
 		echo $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics.html");
-		exit;
+		sugar_cleanup(true);
 	}
 }
 ?>

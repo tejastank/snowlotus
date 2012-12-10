@@ -57,6 +57,7 @@ class xeBayOrder extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $handled_status;
 	var $buyer_checkout_message;
 	var $order_id;
 	var $checkout_status_last_modified_time;

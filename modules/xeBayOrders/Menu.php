@@ -38,10 +38,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
 
-$lbl_list_unhandled = $mod_strings['LNK_LIST_UNHANDLED'] . '(83)';
+$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'unhandled' AND deleted = 0");
+$assoc = $GLOBALS['db']->fetchByAssoc($result);
+$lbl_list_unhandled = $mod_strings['LNK_LIST_UNHANDLED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+
+$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'handled' AND deleted = 0");
+$assoc = $GLOBALS['db']->fetchByAssoc($result);
+$lbl_list_handled = $mod_strings['LNK_LIST_HANDLED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+
+$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'suspended' AND deleted = 0");
+$assoc = $GLOBALS['db']->fetchByAssoc($result);
+$lbl_list_suspended = $mod_strings['LNK_LIST_SUSPENDED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+
+$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE deleted = 1");
+$assoc = $GLOBALS['db']->fetchByAssoc($result);
+$lbl_list_deleted = $mod_strings['LNK_LIST_DELETED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
  
 if(ACLController::checkAccess('xeBayOrders', 'list', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayOrders", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'listUnhandled', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $lbl_list_unhandled,"eBayOrders", 'xeBayOrders');
+if(ACLController::checkAccess('xeBayOrders', 'listHandled', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $lbl_list_handled,"eBayOrders", 'xeBayOrders');
+if(ACLController::checkAccess('xeBayOrders', 'listSuspended', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $lbl_list_suspended,"eBayOrders", 'xeBayOrders');
+if(ACLController::checkAccess('xeBayOrders', 'listDeleted', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $lbl_list_deleted,"eBayOrders", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'import', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=Import&eturn_module=xeBayOrders&return_action=index", $mod_strings['LNK_IMPORT_XEBAYORDERS'],"Import", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'print', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=Print&eturn_module=xeBayOrders&return_action=index", $mod_strings['LNK_PRINT_XEBAYORDERS'],"Print", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'edit', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=EditView&return_module=xeBayOrders&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayOrders", 'xeBayOrders');

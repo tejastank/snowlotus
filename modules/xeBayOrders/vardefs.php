@@ -39,6 +39,15 @@ $dictionary['xeBayOrder'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'handled_status'=>
+		array(
+			'name'=>'handled_status',
+	    	'vname'=> 'LBL_HANDLED_STATUS',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>16,
+			'comment' => 'values: unhandled, handled, suspended',
+		),
 		'buyer_checkout_message'=>
 		array(
 			'name'=>'buyer_checkout_message',
