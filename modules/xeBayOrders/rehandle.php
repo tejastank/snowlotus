@@ -1,4 +1,5 @@
-<?PHP
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,73 +35,16 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-class xeBayOrder extends Basic {
-	var $new_schema = true;
-	var $module_dir = 'xeBayOrders';
-	var $object_name = 'xeBayOrder';
-	var $table_name = 'xebayorders';
-	var $importable = true;
-	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
-	var $id;
-	var $name;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $modified_by_name;
-	var $created_by;
-	var $created_by_name;
-	var $description;
-	var $deleted;
-	var $created_by_link;
-	var $modified_user_link;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $assigned_user_link;
 
-	var $handled_status;
-	var $buyer_checkout_message;
-	var $order_id;
-	var $checkout_status_last_modified_time;
-	var $order_status;
-	var $buyer_user_id;
-	var $subtotal_currency_id;
-	var $subtotal_value;
-	var $total_currency_id;
-	var $total_value;
-	var $create_time;
-	var $paid_time;
-	var $shipped_time;
-	var $ship_to_address_id;
-	var $shipping_details_selling_manager_sales_record_number;
-	var $eias_token;
-	var $payment_hold_status;
-
-	function xeBayOrder()
-	{
-		parent::Basic();
-	}
-	
-	function bean_implements($interface)
-	{
-		switch ($interface) {
-			case 'ACL': return true;
-		}
-		return false;
-	}
-
-    function save($check_notify = FALSE)
-	{
-		if (!empty($this->shipped_time))
-			$this->local_order_status = 'Shipped';
-
-		parent::save(check_notify);
-	}
-
-	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false)
-	{
-		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'deleted')
-			$show_deleted = 1;
-		return parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, $return_array,$parentbean, $singleSelect, $ifListForExport);
+if (isset($_REQUEST['uid'])) {
+	$ids = explode(',', $_REQUEST['uid']);
+	$bean = BeanFactory::getBean('xeBayOrders');
+	foreach ($ids as &$id) {
+        $bean->retrieve($id);
+		$bean->handled_status = 'unhandled';
+		$bean->save();
 	}
 }
-?>
+
+$url = "index.php?module=xeBayOrders&action=ListView&filter=unhandled";
+SugarApplication::redirect($url);

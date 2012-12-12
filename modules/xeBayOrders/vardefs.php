@@ -37,7 +37,6 @@
 $dictionary['xeBayOrder'] = array(
 	'table'=>'xebayorders',
 	'audited'=>true,
-	'duplicate_merge'=>true,
 	'fields'=>array (
 		'handled_status'=>
 		array(

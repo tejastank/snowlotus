@@ -74,4 +74,10 @@ $mod_strings = array (
   'LBL_IMPORT' => 'Import',
   'LBL_PRINT' => 'Print',
   'LBL_PRINT_INSTRUCTION' => 'Start to print unhandled orders',
+  'LBL_SUSPEND' => 'Suspend',
+  'LBL_REHANDLE' => 'Rehandle',
+  'LBL_RESUME' => 'Resume',
+  'LBL_SUSPEND_CONFIRMATION' => 'Are you sure you want to suspend the ',
+  'LBL_REHANDLE_CONFIRMATION' => 'Are you sure you want to rehandle the ', 
+  'LBL_RESUME_CONFIRMATION' => 'Are you sure you want to resume the ',
 );
