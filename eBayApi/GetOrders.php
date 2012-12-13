@@ -92,7 +92,6 @@ class GetOrders extends eBayApiEnvironment
 							$oldOrder->shipped_time = $order->getShippedTime();
 							if (!empty($oldOrder->shipped_time))
 								$oldOrder->handled_status = 'handled';
-							$oldOrder->set_local_shipped_status();
 							$oldOrder->save();
 						}
 						continue;

@@ -35,19 +35,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (isset($_REQUEST['uid'])) {
+	$ids = explode(',', $_REQUEST['uid']);
+	$bean = BeanFactory::getBean('xeBayOrders');
+	foreach ($ids as &$id) {
+        $bean->retrieve($id);
+		$bean->print_status = true;
+		$bean->save();
+	}
+}
 
-$entry_point_registry['shippingMark'] = array('file' => 'modules/xeBayOrders/shippingMark.php', 'auth' => true);
-$entry_point_registry['print'] = array('file' => 'modules/xeBayOrders/print.php', 'auth' => true);
-$entry_point_registry['suspend'] = array('file' => 'modules/xeBayOrders/suspend.php', 'auth' => true);
-$entry_point_registry['redeliver'] = array('file' => 'modules/xeBayOrders/redeliver.php', 'auth' => true);
-$entry_point_registry['unhandledMark'] = array('file' => 'modules/xeBayOrders/unhandledMark.php', 'auth' => true);
-$entry_point_registry['resume'] = array('file' => 'modules/xeBayOrders/resume.php', 'auth' => true);
-
-?>
+$bean->print_orders($ids);

@@ -58,6 +58,8 @@ class xeBayOrder extends Basic {
 	var $assigned_user_link;
 
 	var $handled_status;
+	var $print_status;
+	var $redeliver_count;
 	var $buyer_checkout_message;
 	var $order_id;
 	var $checkout_status_last_modified_time;
@@ -75,6 +77,9 @@ class xeBayOrder extends Basic {
 	var $eias_token;
 	var $payment_hold_status;
 
+	var $shipping_address;
+	var $transactions = array();
+
 	function xeBayOrder()
 	{
 		parent::Basic();
@@ -86,6 +91,21 @@ class xeBayOrder extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+    function retrieve($id = -1, $encode=true, $deleted=true)
+	{
+		parent:retrieve($id, $encode, $deleted);
+
+		$shipToAddress = BeanFactory::getBean('xeBayShipToAddresses');
+		$orderTransaction = BeanFactory::getBean('xeBayTransactions');
+
+		if (!empty($this->ship_to_address_id))
+			$this->shipping_address = $shipToAddress->retrieve($this->ship_to_address_id);
+		else
+			unset($this->shipping_address);
+
+		$this->transactions = $orderTransaction->get_full_list("", "order_id='$this->id'");
 	}
 
     function save($check_notify = FALSE)
@@ -101,6 +121,17 @@ class xeBayOrder extends Basic {
 		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'deleted')
 			$show_deleted = 1;
 		return parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, $return_array,$parentbean, $singleSelect, $ifListForExport);
+	}
+
+	function print_orders($ids)
+	{
+		$ss = new Sugar_Smarty();
+        $ss->left_delimiter = '{{';
+        $ss->right_delimiter = '}}';
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+        $ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
+		echo $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics.html");
+		sugar_cleanup(true);
 	}
 }
 ?>

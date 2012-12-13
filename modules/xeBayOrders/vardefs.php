@@ -47,6 +47,20 @@ $dictionary['xeBayOrder'] = array(
 	    	'len'=>16,
 			'comment' => 'values: unhandled, handled, suspended',
 		),
+		'print_status'=>
+		array(
+			'name'=>'print_status',
+	    	'vname'=> 'LBL_PRINT_STATUS',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'redeliver_count'=>
+		array(
+			'name'=>'redeliver_count',
+	    	'vname'=> 'LBL_REDELIVER_COUNT',
+	    	'type'=>'int',
+			'default'=>0,
+		),
 		'buyer_checkout_message'=>
 		array(
 			'name'=>'buyer_checkout_message',

@@ -48,56 +48,54 @@ class xeBayOrdersViewList extends ViewList
 			$this->where = "handled_status='unhandled'";
 		parent::listViewPrepare();
 	}
+
 	function listViewProcess()
+ 	{
+		parent::listViewProcess();
+	}
+
+	public function buildLinks($confirmation, $entryPoint, $label)
+	{
+		global $app_strings, $mod_strings;
+
+		$js = <<<EOF
+if (confirm('{$mod_strings[$confirmation]}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
+	return sListView.send_form(true, 'xeBayOrders', 'index.php?entryPoint={$entryPoint}', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
+}
+return false;
+EOF;
+
+		$js = str_replace(array("\r","\n"),'',$js);
+
+		return "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings[$label]}</a>";
+	}
+
+ 	public function preDisplay()
  	{
 		// echo "<pre>";
 		// print_r($_REQUEST);
 		// print_r($this->params);
 		// print_r($this->where);
 		// echo "</pre>";
-		parent::listViewProcess();
-	}
- 	public function preDisplay()
- 	{
  		parent::preDisplay();
-
-		global $app_strings, $mod_strings;
 
 		$this->showMassupdateFields = false;
 
 		$items = array();
 
-		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'unhandled') {
-			$js = <<<EOF
-if (confirm('{$mod_strings['LBL_SUSPEND_CONFIRMATION']}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
-	return sListView.send_form(true, 'xeBayOrders', 'index.php?entryPoint=suspend', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
-}
-return false;
-EOF;
-        	$js = str_replace(array("\r","\n"),'',$js);
-			$items[] = "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings['LBL_SUSPEND']}</a>";
+		if (empty($_REQUEST['filter']) || (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'unhandled')) {
+			$items[] = $this->buildLinks('LBL_SHIPPING_MARK_CONFIRMATION', 'shippingMark', 'LBL_SHIPPING_MARK');
+			$items[] = $this->buildLinks('LBL_PRINT_CONFIRMATION', 'print', 'LBL_PRINT');
+			$items[] = $this->buildLinks('LBL_SUSPEND_CONFIRMATION', 'suspend', 'LBL_SUSPEND');
 		}
 
 		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'handled') {
-			$js = <<<EOF
-if (confirm('{$mod_strings['LBL_REHANDLE_CONFIRMATION']}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
-	return sListView.send_form(true, 'xeBayOrders', 'index.php?entryPoint=rehandle', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
-}
-return false;
-EOF;
-        	$js = str_replace(array("\r","\n"),'',$js);
-			$items[] = "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings['LBL_REHANDLE']}</a>";
+			$items[] = $this->buildLinks('LBL_REDELIVER_CONFIRMATION', 'redeliver', 'LBL_REDELIVER');
+			$items[] = $this->buildLinks('LBL_UNHANDLED_MARK_CONFIRMATION', 'unhandledMark', 'LBL_MARK_AS_UNHANDLED');
 		}
 
 		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'suspended') {
-			$js = <<<EOF
-if (confirm('{$mod_strings['LBL_RESUME_CONFIRMATION']}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
-	return sListView.send_form(true, 'xeBayOrders', 'index.php?entryPoint=resume', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
-}
-return false;
-EOF;
-        	$js = str_replace(array("\r","\n"),'',$js);
-			$items[] = "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings['LBL_RESUME']}</a>";
+			$items[] = $this->buildLinks('LBL_RESUME_CONFIRMATION', 'resume', 'LBL_RESUME');
 		}
 
 		$this->lv->actionsMenuExtraItems = $items;
