@@ -167,8 +167,22 @@ $dictionary['xeBayOrder'] = array(
 			'dbType' => 'varchar',
 	    	'len'=>24,
 		),
+		'transactions'=>
+		array(
+			'name'=>'transactions',
+			'vname'=>'LBL_TRANSACTIONS',
+			'type'=>'link',
+			'relationship' => 'order_transactions',
+			'module'=>'xeBayTransactions',
+			'bean_name'=>'xeBayTransaction',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
+		'order_transactions'=> array(
+			'lhs_module'=> 'xeBayOrders', 'lhs_table'=> 'xebayorders', 'lhs_key' => 'id',
+			'rhs_module'=> 'xeBayTransactions', 'rhs_table'=> 'xebaytransactions', 'rhs_key' => 'order_id',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

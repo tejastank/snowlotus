@@ -39,17 +39,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['xeBayOrders'] = array(
-	'NAME' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
+	'SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER' => array(
+		'width' => '4', 
+		'label' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER', 
 		'default' => true,
         'link' => true),         
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-	
+	'BUYER_USER_ID' => array(
+		'width' => '24', 
+		'label' => 'LBL_BUYER_USER_ID', 
+		'customCode' => '{$ORDER_DETAILS}',
+    	'related_fields' => array(
+		),
+		'default' => true),         
+	'SUBTOTAL_VALUE' => array(
+		'width' => '4', 
+		'label' => 'LBL_SUBTOTAL_VALUE', 
+		'customCode' => '{$SUBTOTAL_CURRENCY_ID}&nbsp{$SUBTOTAL_VALUE}',
+    	'related_fields' => array(
+			'0' => 'subtotal_currency_id',
+		),
+		'default' => true),         
+	'total_value' => array(
+		'width' => '4', 
+		'label' => 'LBL_TOTAL_VALUE', 
+		'customCode' => '{$TOTAL_CURRENCY_ID}&nbsp{$SUBTOTAL_VALUE}',
+    	'related_fields' => array(
+			'0' => 'total_currency_id',
+		),
+		'default' => true),         
 );
 ?>

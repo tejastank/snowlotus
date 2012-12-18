@@ -95,7 +95,7 @@ class xeBayOrder extends Basic {
 
     function retrieve($id = -1, $encode=true, $deleted=true)
 	{
-		parent:retrieve($id, $encode, $deleted);
+		parent::retrieve($id, $encode, $deleted);
 
 		$shipToAddress = BeanFactory::getBean('xeBayShipToAddresses');
 		$orderTransaction = BeanFactory::getBean('xeBayTransactions');
@@ -121,6 +121,25 @@ class xeBayOrder extends Basic {
 		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'deleted')
 			$show_deleted = 1;
 		return parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, $return_array,$parentbean, $singleSelect, $ifListForExport);
+	}
+
+	function get_list_view_data()
+	{
+		$field_list = $this->get_list_view_array();
+
+		$order_details .= '<p>';
+		$order_details .= $field_list['BUYER_USER_ID'];
+		$order_details .= '</p>';
+		$order_details .= '<table>';
+		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
+		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
+		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
+		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
+		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
+		$order_details .= '</table>';
+		$field_list['ORDER_DETAILS'] = $order_details;
+
+		return $field_list;
 	}
 
 	function print_orders($ids)

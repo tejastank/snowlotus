@@ -64,4 +64,7 @@ $mod_strings = array (
   'LBL_XEBAYTRANSACTIONS_SUBPANEL_TITLE' => 'eBayTransaction',
   'LBL_NEW_FORM_TITLE' => 'New eBayTransaction',
   'LNK_IMPORT_XEBAYTRANSACTIONS' => 'Import eBayTransaction',
-  'LBL_XEBAYTRANSACTIONS_SUBPANEL_TITLE' => 'eBayTransaction',);
+  'LBL_XEBAYTRANSACTIONS_SUBPANEL_TITLE' => 'eBayTransaction',
+  'LBL_CREATE_DATE' => 'Create Date',
+  'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER' => 'Record number',
+);

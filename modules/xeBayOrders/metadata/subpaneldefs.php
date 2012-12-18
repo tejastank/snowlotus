@@ -36,43 +36,25 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xeBayTransactions'),
-	),
 
-	'where' => '',
+$layout_defs['xeBayOrders'] = array(
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
 
-	'list_fields' => array(
-		'shipping_details_selling_manager_sales_record_number'=>array(
-	 		'vname' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER',
-	 		'width' => '10%',
-		),
-		'name'=>array(
-	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
-		),
-		'create_date'=>array(
-	 		'vname' => 'LBL_CREATE_DATE',
-	 		'width' => '15%',
-		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '45%',
-		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xeBayTransactions',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xeBayTransactions',
-			'width' => '5%',
+		'transactions' => array(
+			'order' => 100,
+			'sort_order' => 'desc',
+			'sort_by' => 'shipping_details_selling_manager_sales_record_number',
+			'module' => 'xeBayTransactions',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'transactions',
+			'add_subpanel_data' => 'order_id',
+			'title_key' => 'LBL_TRANSACTIONS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
+			),
 		),
 	),
 );
-
 ?>
