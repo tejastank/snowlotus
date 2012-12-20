@@ -42,7 +42,6 @@ class xeBayOrder extends Basic {
 	var $importable = true;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 	var $id;
-	var $name;
 	var $date_entered;
 	var $date_modified;
 	var $modified_user_id;
@@ -69,15 +68,25 @@ class xeBayOrder extends Basic {
 	var $subtotal_value;
 	var $total_currency_id;
 	var $total_value;
-	var $create_time;
 	var $paid_time;
 	var $shipped_time;
-	var $ship_to_address_id;
-	var $shipping_details_selling_manager_sales_record_number;
+	var $sales_record_number;
 	var $eias_token;
 	var $payment_hold_status;
 
-	var $shipping_address;
+	var $name;
+	var $street1;
+	var $street2;
+	var $city_name;
+	var $state_or_province;
+	var $country;
+	var $country_name;
+	var $phone;
+	var $postal_code;
+	var $address_id;
+	var $address_owner;
+	var $external_address_id;
+
 	var $transactions = array();
 
 	function xeBayOrder()
@@ -93,20 +102,12 @@ class xeBayOrder extends Basic {
 		return false;
 	}
 
-    function retrieve($id = -1, $encode=true, $deleted=true)
-	{
-		parent::retrieve($id, $encode, $deleted);
-
-		$shipToAddress = BeanFactory::getBean('xeBayShipToAddresses');
-		$orderTransaction = BeanFactory::getBean('xeBayTransactions');
-
-		if (!empty($this->ship_to_address_id))
-			$this->shipping_address = $shipToAddress->retrieve($this->ship_to_address_id);
-		else
-			unset($this->shipping_address);
-
-		$this->transactions = $orderTransaction->get_full_list("", "order_id='$this->id'");
-	}
+	// function retrieve($id = -1, $encode=true, $deleted=true)
+	// {
+		// parent::retrieve($id, $encode, $deleted);
+		// $orderTransaction = BeanFactory::getBean('xeBayTransactions');
+		// $this->transactions = $orderTransaction->get_full_list("", "order_id='$this->id'");
+	// }
 
     function save($check_notify = FALSE)
 	{
@@ -126,6 +127,8 @@ class xeBayOrder extends Basic {
 	function get_list_view_data()
 	{
 		$field_list = $this->get_list_view_array();
+		// echo "<pre>" . print_r($field_list) . "</pre>";
+		// echo "<pre>" . print_r($this->transactions) . "</pre>";
 
 		$order_details .= '<p>';
 		$order_details .= $field_list['BUYER_USER_ID'];

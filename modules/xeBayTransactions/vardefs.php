@@ -73,13 +73,6 @@ $dictionary['xeBayTransaction'] = array(
 			'vname' => 'LBL_ACTUAL_SHIPPING_COST_VALUE',
 			'type' => 'double',
 		),
-		'create_date'=>
-		array(
-			'name'=>'create_date',
-	    	'vname'=> 'LBL_CREATE_DATE',
-	    	'type'=>'name',
-			'dbType' => 'datetime',
-		),
 		'item_item_id' => array(
 			'name' => 'item_item_id',
 			'vname' => 'LBL_ITEM_ID',
@@ -92,11 +85,44 @@ $dictionary['xeBayTransaction'] = array(
 			'type' => 'varchar',
 			'len' => '20',
 		),
-		'item_sku' => array(
-			'name' => 'item_sku',
-			'vname' => 'LBL_ITEM_SKU',
+		'name' => array(
+			'name' => 'name',
+			'vname' => 'LBL_NAME',
 			'type' => 'varchar',
-			'len' => '50',
+			'len' => '80',
+			'importable' => 'required',
+            'required' => true
+		),
+		'item_view_item_url' => array(
+			'name' => 'item_view_item_url',
+			'vname' => 'LBL_ITEM_VIEW_ITEM_URL',
+			'type' => 'url',
+			'len' => '255',
+		),
+		'item_sku' => array(
+			'name'=>'item_sku',
+			'vname'=>'LBL_ITEM_SKU',
+			'type'=>'id',
+		),
+		'inventory_name' => array(
+			'name'=> 'inventory_name',
+			'rname' => 'name',
+			'vname'=>'LBL_RELATED_TO',
+			'id_name'=>'item_sku',
+			'type'=>'relate',
+			'link'=>'inventory_link',
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xinventories',
+			'module' => 'xInventories',
+		),
+		'inventory_link'=>
+		array(
+			'name' => 'inventory_link',
+			'type' => 'link',
+			'relationship' => 'xinventory_transaction',
+			'vname' => 'LBL_RELATED_TO',
+			'source'=>'non-db',
 		),
 		'orderline_item_id' => array(
 			'name' => 'orderline_item_id',
@@ -115,30 +141,29 @@ $dictionary['xeBayTransaction'] = array(
 			'type' => 'varchar',
 			'len' => '19',
 		),
-		'shipping_details_selling_manager_sales_record_number' => array(
-			'name' => 'shipping_details_selling_manager_sales_record_number',
-			'vname' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER',
+		'sales_record_number' => array(
+			'name' => 'sales_record_number',
+			'vname' => 'LBL_SALES_RECORD_NUMBER',
 			'type' => 'int',
+			'comment' => 'shipping details selling manager sales record number',
 		),
-		'transaction_price_currency_id' => array(
-			'name' => 'transaction_price_currency_id',
-			'vname' => 'LBL_TRANSACTION_PRICE_CURRENCY_ID',
+		'price_currency_id' => array(
+			'name' => 'price_currency_id',
+			'vname' => 'LBL_PRICE_CURRENCY_ID',
 			'type' => 'varchar',
 			'len' => '3',
 		),
-		'transaction_price_value' => array(
-			'name' => 'transaction_price_value',
-			'vname' => 'TRANSACTION_PRICE_VALUE',
+		'price_value' => array(
+			'name' => 'price_value',
+			'vname' => 'LBL_PRICE_VALUE',
 			'type' => 'double',
-		),
-		'variation_sku' => array(
-			'name' => 'variation_sku',
-			'vname' => 'LBL_VARIATION_SKU',
-			'type' => 'varchar',
-			'len' => '50',
 		),
 	),
 	'relationships'=>array (
+		'xinventory_transaction' => array(
+			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBayTransactions', 'rhs_table'=> 'xebaytransactions', 'rhs_key' => 'item_sku',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

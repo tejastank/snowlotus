@@ -50,7 +50,7 @@ class xeBayOrdersController extends SugarController
 {
     function action_test()
     {
-		$numberOfDays = 7;
+		$numberOfDays = 30;
 
 		$orders = new GetOrders;
 

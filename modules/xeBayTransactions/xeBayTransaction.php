@@ -63,17 +63,17 @@ class xeBayTransaction extends Basic {
 	var $actual_handling_cost_value;
 	var $actual_shipping_cost_currency_id;
 	var $actual_shipping_cost_value;
-	var $create_date;
 	var $item_item_id;
+	var $item_view_item_url;
 	var $item_site;
 	var $item_sku;
+	var $inventory_name;
 	var $orderline_item_id;
 	var $quantity_purchased;
 	var $transaction_id;
-	var $shipping_details_selling_manager_sales_record_number;
-	var $transaction_price_currency_id;
-	var $transaction_price_value;
-	var $variation_sku;
+	var $sales_record_number;
+	var $price_currency_id;
+	var $price_value;
 
 	function xeBayTransaction()
 	{
@@ -86,6 +86,15 @@ class xeBayTransaction extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+	function get_list_view_data()
+	{
+		$field_list = $this->get_list_view_array();
+
+		$field_list['NAME'] = '<a target="_blank" href="' . $field_list['ITEM_VIEW_ITEM_URL'] . '">' . $field_list['NAME'] . "</a>";
+
+		return $field_list;
 	}
 }
 ?>

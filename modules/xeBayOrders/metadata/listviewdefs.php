@@ -39,9 +39,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['xeBayOrders'] = array(
-	'SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER' => array(
+	'SALES_RECORD_NUMBER' => array(
 		'width' => '4', 
-		'label' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER', 
+		'label' => 'LBL_SALES_RECORD_NUMBER', 
 		'default' => true,
         'link' => true),         
 	'BUYER_USER_ID' => array(

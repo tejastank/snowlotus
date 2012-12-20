@@ -52,7 +52,6 @@ class GetOrders extends eBayApiEnvironment
 		$result = true;
 
 		$bean = BeanFactory::getBean('xeBayOrders');
-		$shipToAddress = BeanFactory::getBean('xeBayShipToAddresses');
 		$orderTransaction = BeanFactory::getBean('xeBayTransactions');
 
         $req = new GetOrdersRequestType();
@@ -97,30 +96,6 @@ class GetOrders extends eBayApiEnvironment
 						continue;
 					}
 
-					$addressId = $order->getShippingAddress()->getAddressID();
-					if (empty($addressId))
-						continue;
-
-					$shipAddress = $shipToAddress->retrieve_by_string_fields(array('address_id'=>$addressId));
-					if ($shipAddress === null) {
-						$shippingAddress = $order->getShippingAddress();
-						$shipToAddress->name = $shippingAddress->getName();
-						$shipToAddress->street1 = $shippingAddress->getStreet1();
-						$shipToAddress->street2 = $shippingAddress->getStreet2();
-						$shipToAddress->city_name = $shippingAddress->getCityName();
-						$shipToAddress->state_or_province = $shippingAddress->getStateOrProvince();
-						$shipToAddress->country = $shippingAddress->getCountry();
-						$shipToAddress->country_name = $shippingAddress->getCountryName();
-						$shipToAddress->phone = $shippingAddress->getPhone();
-						$shipToAddress->postal_code = $shippingAddress->getPostalCode();
-						$shipToAddress->address_id = $shippingAddress->getAddressID();
-						$shipToAddress->address_owner = $shippingAddress->getAddressOwner();
-						$shipToAddress->external_address_id = $shippingAddress->getExternalAddressID();
-						$shipToAddress->id = create_guid();
-						$shipToAddress->new_with_id = true;
-						$shipToAddress->save();
-					}
-
 					$bean->handled_status = 'unhandled';
 					$bean->buyer_checkout_message = $order->getBuyerCheckoutMessage();
 					$bean->order_id = $order->getOrderID();
@@ -131,15 +106,29 @@ class GetOrders extends eBayApiEnvironment
 					$bean->subtotal_value = $order->getSubtotal()->getTypeValue();
 					$bean->total_currency_id = $order->getTotal()->getTypeAttribute('currencyID');
 					$bean->total_value = $order->getTotal()->getTypeValue();
-					$bean->create_time = $order->getCreatedTime();
+					$bean->date_entered = $order->getCreatedTime();
 					$bean->paid_time = $order->getPaidTime();
 					$bean->shipped_time = $order->getShippedTime();
 					if (!empty($bean->shipped_time))
 						$bean->handled_status = 'handled';
-					$bean->ship_to_address_id = $shipToAddress->id;
-					$bean->shipping_details_selling_manager_sales_record_number = $order->getShippingDetails()->getSellingManagerSalesRecordNumber();
+					$bean->sales_record_number = $order->getShippingDetails()->getSellingManagerSalesRecordNumber();
 					$bean->eias_token = $order->getEIASToken();
 					$bean->payment_hold_status = $order->getPaymentHoldStatus();
+
+					$shippingAddress = $order->getShippingAddress();
+					$bean->name = $shippingAddress->getName();
+					$bean->street1 = $shippingAddress->getStreet1();
+					$bean->street2 = $shippingAddress->getStreet2();
+					$bean->city_name = $shippingAddress->getCityName();
+					$bean->state_or_province = $shippingAddress->getStateOrProvince();
+					$bean->country = $shippingAddress->getCountry();
+					$bean->country_name = $shippingAddress->getCountryName();
+					$bean->phone = $shippingAddress->getPhone();
+					$bean->postal_code = $shippingAddress->getPostalCode();
+					$bean->address_id = $shippingAddress->getAddressID();
+					$bean->address_owner = $shippingAddress->getAddressOwner();
+					$bean->external_address_id = $shippingAddress->getExternalAddressID();
+
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
 					$bean->save();
@@ -152,21 +141,24 @@ class GetOrders extends eBayApiEnvironment
 						$orderTransaction->actual_handling_cost_value = $transaction->getActualHandlingCost()->getTypeValue();
 						$orderTransaction->actual_shipping_cost_currency_id = $transaction->getActualShippingCost()->getTypeAttribute('currencyID');
 						$orderTransaction->actual_shipping_cost_value = $transaction->getActualShippingCost()->getTypeValue();
-						$orderTransaction->create_date = $transaction->getCreatedDate();
+						$orderTransaction->date_entered = $transaction->getCreatedDate();
 						$orderTransaction->item_item_id = $transaction->getItem()->getItemID();
 						$orderTransaction->item_site = $transaction->getItem()->getSite();
+						$orderTransaction->name =  $transaction->getItem()->getTitle();
+						$orderTransaction->item_view_item_url = 'http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=' . $orderTransaction->item_item_id;
 						$orderTransaction->item_sku = $transaction->getItem()->getSKU();
 						$orderTransaction->orderline_item_id = $transaction->getOrderLineItemID();
 						$orderTransaction->quantity_purchased = $transaction->getQuantityPurchased();
 						$orderTransaction->transaction_id = $transaction->getTransactionID();
-						$orderTransaction->shipping_details_selling_manager_sales_record_number = $transaction->getShippingDetails()->getSellingManagerSalesRecordNumber();
-						$orderTransaction->transaction_price_currency_id = $transaction->getTransactionPrice()->getTypeAttribute('currencyID');
-						$orderTransaction->transaction_price_value = $transaction->getTransactionPrice()->getTypeValue();
-						$orderTransaction->variation_sku = '';
+						$orderTransaction->sales_record_number = $transaction->getShippingDetails()->getSellingManagerSalesRecordNumber();
+						$orderTransaction->price_currency_id = $transaction->getTransactionPrice()->getTypeAttribute('currencyID');
+						$orderTransaction->price_value = $transaction->getTransactionPrice()->getTypeValue();
 
 						$variation = $transaction->getVariation();
 						if (!empty($variation)) {
-							$orderTransaction->variation_sku = $variation->getSKU();
+							$orderTransaction->item_sku = $variation->getSKU();
+							$orderTransaction->name = $variation->getVariationTitle();
+							$orderTransaction->item_view_item_url = $variation->getVariationViewItemURL();
 						}
 
 						$orderTransaction->id = create_guid();

@@ -39,28 +39,45 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $subpanel_layout = array(
 	'top_buttons' => array(
 		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xeBayTransactions'),
 	),
 
 	'where' => '',
 
 	'list_fields' => array(
-		'shipping_details_selling_manager_sales_record_number'=>array(
-	 		'vname' => 'LBL_SHIPPING_DETAILS_SELLING_MANAGER_SALES_RECORD_NUMBER',
+		'sales_record_number'=>array(
+			'vname' => 'LBL_SALES_RECORD_NUMBER',
+			'widget_class' => 'SubPanelDetailViewLink',
 	 		'width' => '10%',
 		),
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
+	 		'width' => '60%',
 		),
-		'create_date'=>array(
-	 		'vname' => 'LBL_CREATE_DATE',
-	 		'width' => '15%',
+		'item_view_item_url'=>array(
+			'usage'=>'query_only',
+		),
+		'inventory_name'=>array(
+	 		'vname' => 'LBL_RELATED_TO',
+			'widget_class' => 'SubPanelDetailViewLink',
+		 	'target_record_key' => 'item_sku',
+			'target_module' => 'xInventories',
+	 		'width' => '40%',
+		),
+		'price_currency_id'=>array(
+			'vname' => 'LBL_PRICE_CURRENCY_ID',
+	 		'width' => '10%',
+		),
+		'price_value' => array(
+			'vname' => 'LBL_PRICE_VALUE',
+	 		'width' => '10%',
+		),
+		'quantity_purchased' => array(
+			'vname' => 'LBL_QUANTITY_PURCHASED',
+	 		'width' => '10%',
 		),
 		'date_modified'=>array(
 	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '45%',
+	 		'width' => '20%',
 		),
 		'edit_button'=>array(
 			'widget_class' => 'SubPanelEditButton',

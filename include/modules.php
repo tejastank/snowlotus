@@ -317,10 +317,6 @@ $moduleList[] = 'xeBayOrders';
 $beanList['xeBayOrders'] = 'xeBayOrder';
 $beanFiles['xeBayOrder'] = 'modules/xeBayOrders/xeBayOrder.php';
 
-$moduleList[] = 'xeBayShipToAddresses';
-$beanList['xeBayShipToAddresses'] = 'xeBayShipToAddress';
-$beanFiles['xeBayShipToAddress'] = 'modules/xeBayShipToAddresses/xeBayShipToAddress.php';
-
 $moduleList[] = 'xeBayTransactions';
 $beanList['xeBayTransactions'] = 'xeBayTransaction';
 $beanFiles['xeBayTransaction'] = 'modules/xeBayTransactions/xeBayTransaction.php';
