@@ -45,7 +45,7 @@ $listViewDefs['xeBayOrders'] = array(
 		'default' => true,
         'link' => true),         
 	'BUYER_USER_ID' => array(
-		'width' => '24', 
+		'width' => '25', 
 		'label' => 'LBL_BUYER_USER_ID', 
 		'customCode' => '{$ORDER_DETAILS}',
     	'related_fields' => array(
@@ -58,14 +58,26 @@ $listViewDefs['xeBayOrders'] = array(
     	'related_fields' => array(
 			'0' => 'subtotal_currency_id',
 		),
-		'default' => true),         
-	'total_value' => array(
+		'default' => false),         
+	'TOTAL_VALUE' => array(
 		'width' => '4', 
 		'label' => 'LBL_TOTAL_VALUE', 
-		'customCode' => '{$TOTAL_CURRENCY_ID}&nbsp{$SUBTOTAL_VALUE}',
+		'customCode' => '{$TOTAL_CURRENCY_ID}&nbsp{$TOTAL_VALUE}',
     	'related_fields' => array(
 			'0' => 'total_currency_id',
 		),
+		'default' => true),         
+	'COUNTRY_NAME' => array(
+		'width' => '4', 
+		'label' => 'LBL_COUNTRY', 
+		'default' => true),         
+	'BUYER_CHECKOUT_MESSAGE' => array(
+		'width' => '4', 
+		'label' => 'LBL_BUYER_CHECKOUT_MESSAGE', 
+		'default' => true),         
+	'PRINT_STATUS' => array(
+		'width' => '4', 
+		'label' => 'LBL_PRINT_STATUS', 
 		'default' => true),         
 );
 ?>

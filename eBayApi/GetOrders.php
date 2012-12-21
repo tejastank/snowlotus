@@ -155,7 +155,7 @@ class GetOrders extends eBayApiEnvironment
 						$orderTransaction->price_value = $transaction->getTransactionPrice()->getTypeValue();
 
 						$variation = $transaction->getVariation();
-						if (!empty($variation)) {
+						if (!empty($variation) && is_array($variation)) {
 							$orderTransaction->item_sku = $variation->getSKU();
 							$orderTransaction->name = $variation->getVariationTitle();
 							$orderTransaction->item_view_item_url = $variation->getVariationViewItemURL();

@@ -36,24 +36,34 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+$subpanel_layout = array(
+	'where' => '',
 
-$layout_defs['xeBayOrders'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-
-		'transactions' => array(
-			'order' => 100,
-			'sort_order' => 'desc',
-			'sort_by' => 'sales_record_number',
-			'module' => 'xeBayTransactions',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'transactions',
-			'add_subpanel_data' => 'order_id',
-			'title_key' => 'LBL_TRANSACTIONS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-			),
+	'list_fields' => array(
+		'sales_record_number'=>array(
+			'vname' => 'LBL_SALES_RECORD_NUMBER',
+			'widget_class' => 'SubPanelDetailViewLink',
+	 		'width' => '10%',
+		),
+		'name'=>array(
+	 		'vname' => 'LBL_NAME',
+	 		'width' => '50%',
+		),
+		'item_view_item_url'=>array(
+			'usage'=>'query_only',
+		),
+		'inventory_name'=>array(
+	 		'vname' => 'LBL_RELATED_TO',
+			'widget_class' => 'SubPanelDetailViewLink',
+		 	'target_record_key' => 'item_sku',
+			'target_module' => 'xInventories',
+	 		'width' => '40%',
+		),
+		'quantity_purchased' => array(
+			'vname' => 'LBL_QUANTITY_PURCHASED',
+	 		'width' => '10%',
 		),
 	),
 );
+
 ?>

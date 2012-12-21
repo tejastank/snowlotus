@@ -1,5 +1,4 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+<!--
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,25 +34,25 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+-->
 
-
-$layout_defs['xeBayOrders'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-
-		'transactions' => array(
-			'order' => 100,
-			'sort_order' => 'desc',
-			'sort_by' => 'sales_record_number',
-			'module' => 'xeBayTransactions',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'transactions',
-			'add_subpanel_data' => 'order_id',
-			'title_key' => 'LBL_TRANSACTIONS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-			),
-		),
-	),
-);
-?>
+<!-- BEGIN: dyn_list_view -->
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+<tbody>
+<!-- BEGIN: row -->
+<tr height="20" class="{ROW_COLOR}S1" >
+<!-- BEGIN: cell -->
+<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
+<!-- END: cell -->
+</tr>
+<!-- END: row -->
+<!-- BEGIN: nodata -->
+<tr height='20' class='{ROW_COLOR}S1'>
+    <td colspan='{COL_COUNT}'>
+        <em>{APP.LBL_NO_DATA}</em>
+    </td>
+</tr>	
+<!-- END: nodata -->
+</tbody>
+</table>
+<!-- END: dyn_list_view -->

@@ -126,21 +126,42 @@ class xeBayOrder extends Basic {
 
 	function get_list_view_data()
 	{
-		$field_list = $this->get_list_view_array();
-		// echo "<pre>" . print_r($field_list) . "</pre>";
-		// echo "<pre>" . print_r($this->transactions) . "</pre>";
+        global $app_strings;
+        global $mod_strings;
 
-		$order_details .= '<p>';
+		$field_list = $this->get_list_view_array();
+
+		$bean = BeanFactory::getBean('xeBayOrders');
+		$bean->retrieve($field_list['ID']);
+
+		require_once('include/SubPanel/SubPanelDefinitions.php');
+		$subpanel_definitions=new SubPanelDefinitions($bean);
+		$subpanel_definitions->layout_defs['subpanel_setup']['transactions']['subpanel_name'] = "ForOrderSimple";
+		$thisPanel=$subpanel_definitions->load_subpanel("transactions");
+        ob_start();
+        include_once('include/SubPanel/SubPanel.php');
+        $subpanel_object = new SubPanel('xeBayOrders', $field_list['ID'], 'all', $thisPanel);
+        $subpanel_object->setTemplateFile('modules/xeBayTransactions/SubPanelDynamic.html');
+		$subpanel_object->display();
+        $subpanel_data = ob_get_contents();
+        @ob_end_clean();
+
+		$order_details .= '<p style="margin: 8px 0px 8px 0px;">';
 		$order_details .= $field_list['BUYER_USER_ID'];
 		$order_details .= '</p>';
-		$order_details .= '<table>';
-		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
-		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
-		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
-		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
-		$order_details .= '<tr><th>123</th><th>abc</th><th>xlongfengabc</th><th>rrrabc</th>';
-		$order_details .= '</table>';
+		$order_details .= $subpanel_data;
 		$field_list['ORDER_DETAILS'] = $order_details;
+
+		if (!empty($field_list['BUYER_CHECKOUT_MESSAGE'])) {
+        	$message = "<img alt='{$app_strings['LBL_INFOINLINE']}' style='padding: 0px 5px 0px 2px' border='0' onclick=\"SUGAR.util.getStaticAdditionalDetails(this,'";
+			$message .= str_replace(array("&#039;"), array("\'"), $field_list['BUYER_CHECKOUT_MESSAGE']);
+			// $message .= $field_list['BUYER_CHECKOUT_MESSAGE'];
+        	$message .= "','<div style=\'float:left\'>{$mod_strings['LBL_BUYER_CHECKOUT_MESSAGE']}</div><div style=\'float: right\'>";
+        	$closeVal = "false";
+        	$message .= "',".$closeVal.")\" src='".SugarThemeRegistry::current()->getImageURL('Emails.gif')."' class='info'>";
+
+			$field_list['BUYER_CHECKOUT_MESSAGE'] = $message;
+		}
 
 		return $field_list;
 	}

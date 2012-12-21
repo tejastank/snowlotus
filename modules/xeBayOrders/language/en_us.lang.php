@@ -85,9 +85,11 @@ $mod_strings = array (
   'LBL_UNHANDLED_MARK_CONFIRMATION' => 'Are you sure you want to unhandled mark on the ', 
   'LBL_REDELIVER_CONFIRMATION' => 'Are you sure you want to redeliver the ', 
   'LBL_RESUME_CONFIRMATION' => 'Are you sure you want to resume the ',
-  'LBL_SALES_RECORD_NUMBER' => 'Record number',
+  'LBL_SALES_RECORD_NUMBER' => 'Number',
   'LBL_BUYER_USER_ID' => 'Buyer Email/User ID',
   'LBL_SUBTOTAL_VALUE' => 'Sale price',
   'LBL_TOTAL_VALUE' => 'Total price',
   'LBL_TRANSACTIONS_SUBPANEL_TITLE' => 'Transactions',
+  'LBL_BUYER_CHECKOUT_MESSAGE' => 'Message',
+  'LBL_PRINT_STATUS' => 'Print status',
 );
