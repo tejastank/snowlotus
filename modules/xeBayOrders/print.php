@@ -39,11 +39,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 if (isset($_REQUEST['uid'])) {
 	$ids = explode(',', $_REQUEST['uid']);
 	$bean = BeanFactory::getBean('xeBayOrders');
-	foreach ($ids as &$id) {
-        $bean->retrieve($id);
-		$bean->print_status = true;
-		$bean->save();
-	}
+	$bean->print_orders($ids);
 }
 
-$bean->print_orders($ids);

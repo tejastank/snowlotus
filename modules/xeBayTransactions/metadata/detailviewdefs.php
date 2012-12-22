@@ -36,7 +36,7 @@
 
 $viewdefs['xeBayTransactions']['DetailView'] = array(
 	'templateMeta' => array(
-		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
+		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE',)),
 		'maxColumns' => '2',
 		'widths' => array(
 			array('label' => '10', 'field' => '30'),
@@ -50,6 +50,13 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 			'assigned_user_name',
 		),
 		array (
+			'inventory_name',
+			'quantity_purchased',
+		),
+		array (
+			'description',
+		),
+		array (
 			array (
 				'name' => 'date_entered',
 				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
@@ -60,9 +67,6 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
 				'label' => 'LBL_DATE_MODIFIED',
 			),
-		),
-		array (
-			'description',
 		),
 	)
 );

@@ -91,7 +91,7 @@ $dictionary['xeBayTransaction'] = array(
 			'type' => 'varchar',
 			'len' => '80',
 			'importable' => 'required',
-            'required' => true
+            'required' => true,
 		),
 		'item_view_item_url' => array(
 			'name' => 'item_view_item_url',

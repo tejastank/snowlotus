@@ -153,14 +153,18 @@ class xeBayOrder extends Basic {
 		$field_list['ORDER_DETAILS'] = $order_details;
 
 		if (!empty($field_list['BUYER_CHECKOUT_MESSAGE'])) {
-        	$message = "<img alt='{$app_strings['LBL_INFOINLINE']}' style='padding: 0px 5px 0px 2px' border='0' onclick=\"SUGAR.util.getStaticAdditionalDetails(this,'";
+        	$message = "<img alt='{$mod_strings['LBL_MESSAGE']}' style='padding: 0px 5px 0px 2px' border='0' onclick=\"SUGAR.util.getStaticAdditionalDetails(this,'";
 			$message .= str_replace(array("&#039;"), array("\'"), $field_list['BUYER_CHECKOUT_MESSAGE']);
 			// $message .= $field_list['BUYER_CHECKOUT_MESSAGE'];
-        	$message .= "','<div style=\'float:left\'>{$mod_strings['LBL_BUYER_CHECKOUT_MESSAGE']}</div><div style=\'float: right\'>";
+        	$message .= "','<div style=\'float:left\'>{$mod_strings['LBL_MESSAGE']}</div><div style=\'float: right\'>";
         	$closeVal = "false";
-        	$message .= "',".$closeVal.")\" src='".SugarThemeRegistry::current()->getImageURL('Emails.gif')."' class='info'>";
+        	$message .= "',".$closeVal.")\" src='".SugarThemeRegistry::current()->getImageURL('AlertEmailTemplates.gif')."' class='info'>";
 
 			$field_list['BUYER_CHECKOUT_MESSAGE'] = $message;
+		}
+
+		if ($field_list['PRINT_STATUS']) {
+			$field_list['PRINT_STATUS_ICON'] = "<img alt='Print status' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Print_Email.gif')."'>";
 		}
 
 		return $field_list;
@@ -171,9 +175,47 @@ class xeBayOrder extends Basic {
 		$ss = new Sugar_Smarty();
         $ss->left_delimiter = '{{';
         $ss->right_delimiter = '}}';
-        $ss->assign("MOD", $GLOBALS['mod_strings']);
-        $ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
+
+		$bean = BeanFactory::getBean('xeBayOrders');
+		$count = 1;
+		$ids[1] = $ids[0];
+		// $ids[2] = $ids[0];
+		// $ids[3] = $ids[0];
+		// $ids[4] = $ids[0];
+		// $ids[5] = $ids[0];
+		// $ids[6] = $ids[0];
+		// $ids[7] = $ids[0];
+		// $ids[8] = $ids[0];
+		// $ids[9] = $ids[0];
+		// $ids[10] = $ids[0];
+		// $ids[11] = $ids[0];
+
+		$ss->assign("MOD", $GLOBALS['mod_strings']);
+		$ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
+		$orders = "";
+		foreach ($ids as &$id) {
+    	    $bean->retrieve($id);
+			$bean->print_status = true;
+			$bean->save();
+
+			$bean->load_relationship('transactions');
+			$transactions = $bean->transactions->getBeans();
+
+        	$ss->assign("NAME", $bean->name);
+			$ss->assign("STREET1", $bean->street1);
+			$ss->assign("STREET2", $bean->street2);
+			$ss->assign("CITY_NAME", $bean->city_name);
+			$ss->assign("STATE_OR_PROVINCE", $bean->state_or_province);
+			$ss->assign("POSTAL_CODE", $bean->postal_code);
+        	$ss->assign("COUNTRY_NAME", $bean->country_name);
+			$ss->assign("PHONE", $bean->phone);
+			if (($count++ % 4) == 0)
+				$ss->assign("PAGE_BREAK", "page-break-before:always;page-break-inside:avoid;font-size:0;");
+			$orders .= $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics-order.html");
+		}
+		$ss->assign("ORDERS", $orders);
 		echo $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics.html");
+
 		sugar_cleanup(true);
 	}
 }

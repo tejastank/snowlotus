@@ -46,8 +46,48 @@ $viewdefs['xeBayOrders']['DetailView'] = array(
 
 	'panels' =>array (
 		array (
-			'name',
+			'buyer_user_id',
 			'assigned_user_name',
+		),
+		array (
+			'name',
+		),
+		array (
+			'street1',
+			'handled_status',
+		),
+		array (
+			'street2',
+			'print_status',
+		),
+		array (
+			'city_name',
+			array (
+				'name' => 'subtotal_value',
+				'customCode' => '{$fields.subtotal_currency_id.value}&nbsp;{$fields.subtotal_value.value}',
+			),
+		),
+		array (
+			'state_or_province',
+			array (
+				'name' => 'total_value',
+				'customCode' => '{$fields.total_currency_id.value}&nbsp;{$fields.total_value.value}',
+			),
+		),
+		array (
+			'postal_code',
+		),
+		array (
+			'country_name',
+		),
+		array (
+			'phone',
+		),
+		array (
+			'buyer_checkout_message',
+		),
+		array (
+			'description',
 		),
 		array (
 			array (
@@ -60,9 +100,6 @@ $viewdefs['xeBayOrders']['DetailView'] = array(
 				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
 				'label' => 'LBL_DATE_MODIFIED',
 			),
-		),
-		array (
-			'description',
 		),
 	)
 );

@@ -45,8 +45,33 @@ $viewdefs['xeBayTransactions']['QuickCreate'] = array(
 	'panels' =>array (
 		'default' => array (
 			array (
-				'name',
+				array(
+					'name' => 'order_id',
+					'customCode' => '{$fields.order_id.value}',
+					'displayParams' => array(
+						'readOnly' => 'readOnly',
+					),
+				),
+			),
+			array (
+				array(
+					'name' => 'name',
+					'displayParams' => array(
+						'size'=>78,
+					),
+				),
 				'assigned_user_name',
+			),
+			array (
+				array(
+					'name' => 'inventory_name',
+					'label' => 'LBL_RELATED_TO',
+					'displayParams' => array(
+						'size' => 64,
+						'readOnly' => 'readOnly',
+					),
+				),
+				'quantity_purchased',
 			),
 		),
 	),

@@ -46,8 +46,48 @@ $viewdefs['xeBayOrders']['EditView'] = array(
 	'panels' => array (
 		'default' => array (
 			array (
-				'name',
+				'buyer_user_id',
 				'assigned_user_name',
+			),
+			array (
+				'name',
+			),
+			array (
+				'street1',
+				'handled_status',
+			),
+			array (
+				'street2',
+				'print_status',
+			),
+			array (
+				'city_name',
+				array (
+					'name' => 'subtotal_value',
+					'customCode' => '{$fields.subtotal_currency_id.value}&nbsp;{$fields.subtotal_value.value}',
+				),
+			),
+			array (
+				'state_or_province',
+				array (
+					'name' => 'total_value',
+					'customCode' => '{$fields.total_currency_id.value}&nbsp;{$fields.total_value.value}',
+				),
+			),
+			array (
+				'postal_code',
+			),
+			array (
+				'country_name',
+			),
+			array (
+				'phone',
+			),
+			array (
+				array (
+					'name' => 'buyer_checkout_message',
+					'customCode' => '{$fields.buyer_checkout_message.value}',
+				),
 			),
 			array (
 				'description',

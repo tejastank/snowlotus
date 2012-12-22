@@ -39,11 +39,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['xeBayTransactions'] = array(
+	'SALES_RECORD_NUMBER' => array(
+		'width' => '8', 
+		'label' => 'LBL_SALES_RECORD_NUMBER', 
+		'default' => true,
+        'link' => true),
 	'NAME' => array(
 		'width' => '32', 
 		'label' => 'LBL_NAME', 
+    	'related_fields' => array(
+			'0' => 'item_view_item_url',
+		),
+		'default' => true),
+	'INVENTORY_NAME' => array (
+		'width' => '32',
+		'label' => 'LBL_LIST_RELATED_TO',
+		'module' => 'xInventories',
+		'id' => 'ITEM_SKU',
 		'default' => true,
-        'link' => true),         
+		'related_fields' => 
+		array (
+			0 => 'item_sku',
+		),
+	),
 	'ASSIGNED_USER_NAME' => array(
 		'width' => '9', 
 		'label' => 'LBL_ASSIGNED_TO_NAME',
