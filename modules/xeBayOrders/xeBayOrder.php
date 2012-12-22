@@ -178,17 +178,6 @@ class xeBayOrder extends Basic {
 
 		$bean = BeanFactory::getBean('xeBayOrders');
 		$count = 1;
-		$ids[1] = $ids[0];
-		// $ids[2] = $ids[0];
-		// $ids[3] = $ids[0];
-		// $ids[4] = $ids[0];
-		// $ids[5] = $ids[0];
-		// $ids[6] = $ids[0];
-		// $ids[7] = $ids[0];
-		// $ids[8] = $ids[0];
-		// $ids[9] = $ids[0];
-		// $ids[10] = $ids[0];
-		// $ids[11] = $ids[0];
 
 		$ss->assign("MOD", $GLOBALS['mod_strings']);
 		$ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
@@ -210,7 +199,10 @@ class xeBayOrder extends Basic {
         	$ss->assign("COUNTRY_NAME", $bean->country_name);
 			$ss->assign("PHONE", $bean->phone);
 			if (($count++ % 4) == 0)
-				$ss->assign("PAGE_BREAK", "page-break-before:always;page-break-inside:avoid;font-size:0;");
+				$ss->assign("PAGE_BREAK", '<div style="clear:both;height:0.5cm;overflow:hidden;page-break-before:always;page-break-inside:avoid;font-size:0;"></div>');
+			else
+				$ss->assign("PAGE_BREAK", '');
+  
 			$orders .= $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics-order.html");
 		}
 		$ss->assign("ORDERS", $orders);
