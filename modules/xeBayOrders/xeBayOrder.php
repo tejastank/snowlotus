@@ -189,17 +189,50 @@ class xeBayOrder extends Basic {
 
 			$bean->load_relationship('transactions');
 			$transactions = $bean->transactions->getBeans();
+			if (empty($transactions))
+				continue;
+
+			$customs_declaration = "";
+			$transaction_count = 0;
+			$total_weight = 0.0;
+			$order_blank = "";
+			foreach ($transactions as &$transaction) {
+				if ($transaction_count++ < 4) {
+					$customs_declaration .= $transaction->customs_declaration . "&nbsp;x" . $transaction->quantity_purchased . "<br/>";
+				}
+				$total_weight += $transaction->weight * $transaction->quantity_purchased;
+				$ss->assign("NO", $transaction_count);
+				$ss->assign("INVENTORY_NAME", $transaction->inventory_name);
+				$ss->assign("QUANTITY", $transaction->quantity_purchased);
+				$ss->assign("GOODS_ALLOCATION", $transaction->goods_allocation);
+				$order_blank .= $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics-order-blank.html");
+			}
 
         	$ss->assign("NAME", $bean->name);
 			$ss->assign("STREET1", $bean->street1);
 			$ss->assign("STREET2", $bean->street2);
-			$ss->assign("CITY_NAME", $bean->city_name);
-			$ss->assign("STATE_OR_PROVINCE", $bean->state_or_province);
+			if (!empty($bean->city_name))
+				$ss->assign("CITY_NAME", $bean->city_name . ',&nbsp;');
+			else
+				$ss->assign("CITY_NAME", '');
+			if (!empty($bean->state_or_province))
+				$ss->assign("STATE_OR_PROVINCE", $bean->state_or_province . ',&nbsp;');
+			else
+				$ss->assign("STATE_OR_PROVINCE", '');
 			$ss->assign("POSTAL_CODE", $bean->postal_code);
         	$ss->assign("COUNTRY_NAME", $bean->country_name);
 			$ss->assign("PHONE", $bean->phone);
+
+			$ss->assign("CONTENTS", $customs_declaration);
+			$ss->assign("VALUE", $bean->total_currency_id . "&nbsp" . $bean->total_value);
+			$ss->assign("TOTAL_VALUE", $bean->total_currency_id . "&nbsp" . $bean->total_value);
+			$ss->assign("WEIGHT", $total_weight);
+			$ss->assign("TOTAL_WEIGHT", $total_weight);
+			$ss->assign("SALES_RECORD_NUMBER", $bean->sales_record_number);
+			$ss->assign("ORDER_BLANK", $order_blank);
+
 			if (($count++ % 4) == 0)
-				$ss->assign("PAGE_BREAK", '<div style="clear:both;height:0.5cm;overflow:hidden;page-break-before:always;page-break-inside:avoid;font-size:0;"></div>');
+				$ss->assign("PAGE_BREAK", '<div style="clear:both;height:0.1cm;overflow:hidden;page-break-before:always;page-break-inside:avoid;font-size:0;"></div>');
 			else
 				$ss->assign("PAGE_BREAK", '');
   

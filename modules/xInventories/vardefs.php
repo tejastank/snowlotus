@@ -85,18 +85,29 @@ $dictionary['xInventory'] = array(
 	    	'type'=>'double',
 			'audited' => true,
 		),
+		'width'=>
+		array(
+			'name'=>'width',
+	    	'vname'=> 'LBL_WIDTH',
+	    	'type'=>'float',
+		),
+		'height'=>
+		array(
+			'name'=>'height',
+	    	'vname'=> 'LBL_HEIGHT',
+	    	'type'=>'float',
+		),
+		'deep'=>
+		array(
+			'name'=>'deep',
+	    	'vname'=> 'LBL_DEEP',
+	    	'type'=>'float',
+		),
 		'weight'=>
 		array(
 			'name'=>'weight',
 	    	'vname'=> 'LBL_WEIGHT',
 	    	'type'=>'float',
-		),
-		'weight_unit'=>
-		array(
-			'name'=>'weight_unit',
-	    	'vname'=> 'LBL_WEIGHT_UNIT',
-	    	'type'=>'enum',
-			'options'=>'weight_unit_dom',
 		),
 		'quantity'=>
 		array(

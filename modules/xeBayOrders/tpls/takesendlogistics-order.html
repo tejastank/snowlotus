@@ -1,4 +1,5 @@
-  <div style="width:16.5cm;height:8.9cm;float:left;margin-top:0px;margin-bottom:16px;overflow:hidden;">
+  <div style="width:16.5cm;height:11.5cm;float:left;margin-top:0px;margin-bottom:16px;overflow:hidden;">
+    <!--地址标签-->
     <div style="float:left;height:8.8cm;width:8.5cm" class="order">
       <div style="float:left;height:1.4cm;width:8.4cm;border:1px dotted #000;margin-left:2px;display:inline;">
         <table style="border-collapse:collapse;width:7.4cm;height:1.2cm;border:0px solid #000;margin:auto;margin-top:3px" align="center">
@@ -18,13 +19,12 @@
           </tbody>
         </table>
       </div>
-      <!--地址标签-->
       <div class="borderDashed" style="float:left;height:7.26cm;width:8.4cm;margin-left:2px;margin-top:5px;display:inline;overflow:hidden">
         <div style="height:0.2cm;width:8.8cm;overflow:hidden;text-align:center;font-size:7pt;word-wrap:break-word;border:0;">&nbsp; </div>
-        <p style="padding-left:10px;font-size:9pt;font-weight:600;padding-top:3px;"><span style="float:right;margin-right:1.0cm;font-size:9pt;">101</span>From: xlongfeng</p>
+		<p style="padding-left:10px;font-size:9pt;font-weight:600;padding-top:3px;"><span style="float:right;margin-right:1.0cm;font-size:9pt;">{{$SALES_RECORD_NUMBER}}</span>From: xlongfeng</p>
         <p style="padding-left:10px;font-size:8pt;line-height:12px;">Room 20, 5/Floor, Thriving industrial<br>
           Centre 26-38 Sha Tsui Road, Tsuen wan,<br>
-          N.T. Hongkong &nbsp 00852-39625088
+          N.T. Hongkong &nbsp; 00852-39625088
         </p>
         <p style="padding:0px 10px;font-size:8pt;line-height:16px;"></p>
 		<p style="padding-left:10px;font-size:9pt;font-weight:600;line-height:20px;margin-top:1px;">Send To: <span style="font-weight:600;font-size:10pt;">{{$NAME}}</span></p>
@@ -32,14 +32,14 @@
         <div style="text-align:center;line-height:20px;">
 		  <p style="font-weight:600;font-size:10pt;">{{$STREET1}}</p>
 		  <p style="font-weight:600;font-size:10pt;">{{$STREET2}}</p>
-		  <p style="font-weight:600;margin-bottom:2px;font-size:10pt;">{{$CITY_NAME}}, {{$STATE_OR_PROVINCE}}, {{$POSTAL_CODE}}</p>
+		  <p style="font-weight:600;margin-bottom:2px;font-size:10pt;">{{$CITY_NAME}}{{$STATE_OR_PROVINCE}}{{$POSTAL_CODE}}</p>
 		  <p style="font-weight:600;font-size:9pt;margin-bottom:2px">{{$COUNTRY_NAME}}&nbsp;<span style="font-size:10pt"></span> <span style="border-top:3px solid #000;border-bottom:3px solid #000;font-weight:600;font-size:9pt;"> </span> </p>
 		  <p style="font-size:9pt;">Tel: {{$PHONE}}</p>
           <p style="font-weight:bold;text-align:right;margin-top:15px;margin-right:20px;font-size:10pt">HK 平郵</p>
         </div>
       </div>
     </div>
-    <!--地址标签-->
+    <!-- 报关单 -->
     <div style="float:left;margin-top:0cm; position:relative;left:0.2cm;width:7.6cm;height:8.9cm;border:0px solid #000;overflow:hidden" class="hkbamall">
       <div style="margin-top:0cm;width:7.4cm;height:8.8cm;border:1px solid #000;overflow:hidden">
         <div style=" padding:2px 3px;">
@@ -99,9 +99,9 @@
                     Value</td>
                 </tr>
                 <tr style="height:1.3cm;">
-                  <td align="center" valign="middle" style="width:4cm;word-break:break-all;word-wrap:break-word;"><font style="font-size:6pt;height:1.3cm">Multi-color Mesh Hard Rubber Case Cover for Samsung Galaxy Gio S5660 red </font></td>
-                  <td align="center" valign="middle"><font style="font-size:6pt;height:1.3cm"> 0.200</font></td>
-                  <td align="center" valign="middle"><font style="font-size:6pt;height:1.3cm">$10.00</font></td>
+				  <td valign="middle" style="width:4cm;word-break:break-all;word-wrap:break-word;"><font style="font-size:6pt;height:1.3cm">{{$CONTENTS}}</font></td>
+                  <td align="center" valign="middle"><font style="font-size:6pt;height:1.3cm">{{$WEIGHT}}</font></td>
+                  <td align="center" valign="middle"><font style="font-size:6pt;height:1.3cm">{{$VALUE}}</font></td>
                 </tr>
                 <tr style="height:1.3cm;">
                   <td valign="top" style="width:4cm;"><div style="width:100%;border:1px solid #000;height:1.3cm;">
@@ -112,12 +112,12 @@
                     Total weight<br>
                     (公斤 kg)<br>
                     <br>
-                    <font style="font-size:8pt">0.200</font></td>
+					<font style="font-size:8pt">{{$TOTAL_WEIGHT}}</font></td>
                   <td valign="top" align="center">(7)總共價值<br>
                     Total Value<br>
                     <br>
                     <br>
-                    <font style="font-size:8pt">$10.00</font></td>
+					<font style="font-size:8pt">{{$TOTAL_VALUE}}</font></td>
                 </tr>
               </tbody>
             </table>
@@ -139,7 +139,28 @@
         </div>
       </div>
     </div>
-    <!--订单信息--> 
+	<div style="clear:both;"></div>
+    <!-- 配货信息 -->
+	<div style="float:left;margin-top:0.05cm;margin-bottom:0.1cm;border:0px solid #000;width:16.1cm;height:2.5cm;overflow:hidden;font-size:12px;margin-left:5px;display:block;">
+	<!-- <p style="border-bottom:1px #cccccc solid"> -->
+	<!-- <span style="width:7cm;display:inline-block">销售编号|+销售编号+|：{{$SALES_RECORD_NUMBER}}</span> -->
+	<!-- <span style="width:5cm;display:inline-block">|+订单号+|</span> -->
+	<!-- </p> -->
+	<p style="border-right: 1px #cccccc solid; border-bottom:1px #cccccc solid;float:left;width:8cm">
+	<span style="width:0.8cm;display:inline-block">序号<!--序号--></span>
+	<span style="width:5.0cm;display:inline-block">描述<!--描述--></span>
+	<span style="width:0.8cm;display:inline-block">数量<!--数量--></span>
+	<span style="width:0.8cm;display:inline-block">货位<!--货位--></span>
+	</p>
+	<p style="border-right: 1px #cccccc solid; border-bottom:1px #cccccc solid;float:left;width:8cm">
+	<span style="width:0.8cm;display:inline-block">序号<!--序号--></span>
+	<span style="width:5.0cm;display:inline-block">描述<!--描述--></span>
+	<span style="width:0.8cm;display:inline-block">数量<!--数量--></span>
+	<span style="width:0.8cm;display:inline-block">货位<!--货位--></span>
+	</p>
+	{{$ORDER_BLANK}}
+	</div> 
+	
   </div>
   <div style="float:left;height:0.1cm;*height:0.3cm;overflow:hidden;font-size:0;border-bottom:0px dotted #000;"></div>
   {{$PAGE_BREAK}}

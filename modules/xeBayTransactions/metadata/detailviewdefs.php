@@ -50,8 +50,26 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 			'assigned_user_name',
 		),
 		array (
-			'inventory_name',
+			array (
+				'name' => 'price_value',
+				'customCode' => '{$fields.price_currency_id.value}&nbsp;{$fields.price_value.value}',
+			),
 			'quantity_purchased',
+		),
+		array (
+			'inventory_name',
+			'customs_declaration'
+		),
+		array (
+			'goods_allocation',
+		),
+		array (
+			'width',
+			'height',
+		),
+		array (
+			'deep',
+			'weight',
 		),
 		array (
 			'description',

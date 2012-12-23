@@ -68,6 +68,12 @@ class xeBayTransaction extends Basic {
 	var $item_site;
 	var $item_sku;
 	var $inventory_name;
+	var $customs_declaration;
+	var $width;
+	var $height;
+	var $deep;
+	var $weight;
+	var $goods_allocation;
 	var $orderline_item_id;
 	var $quantity_purchased;
 	var $transaction_id;
