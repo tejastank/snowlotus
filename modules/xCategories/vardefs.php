@@ -39,8 +39,22 @@ $dictionary['xCategory'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'inventories'=>
+		array(
+			'name'=>'inventories',
+			'vname'=>'LBL_INVENTORIES',
+			'type'=>'link',
+			'relationship' => 'category_inventories',
+			'module'=>'xInventories',
+			'bean_name'=>'xInventory',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
+		'category_inventories'=> array(
+			'lhs_module'=> 'xCategories', 'lhs_table'=> 'xcategories', 'lhs_key' => 'id',
+			'rhs_module'=> 'xInventories', 'rhs_table'=> 'xinventories', 'rhs_key' => 'category_id',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,
