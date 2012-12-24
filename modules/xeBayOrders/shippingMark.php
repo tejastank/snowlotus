@@ -39,12 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 if (isset($_REQUEST['uid'])) {
 	$ids = explode(',', $_REQUEST['uid']);
 	$bean = BeanFactory::getBean('xeBayOrders');
-	foreach ($ids as &$id) {
-        $bean->retrieve($id);
-		$bean->handled_status = 'handled';
-		$bean->save();
-	}
+	$bean->end_of_sale($ids);
 }
 
 $url = "index.php?module=xeBayOrders&action=ListView&filter=handled";
-SugarApplication::redirect($url);
+// SugarApplication::redirect($url);

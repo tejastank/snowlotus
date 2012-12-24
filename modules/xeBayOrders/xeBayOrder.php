@@ -34,6 +34,8 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+require_once('eBayApi/CompleteSale.php');
+
 class xeBayOrder extends Basic {
 	var $new_schema = true;
 	var $module_dir = 'xeBayOrders';
@@ -87,7 +89,7 @@ class xeBayOrder extends Basic {
 	var $address_owner;
 	var $external_address_id;
 
-	var $transactions = array();
+	var $transactions;
 
 	function xeBayOrder()
 	{
@@ -100,21 +102,6 @@ class xeBayOrder extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
-	}
-
-	// function retrieve($id = -1, $encode=true, $deleted=true)
-	// {
-		// parent::retrieve($id, $encode, $deleted);
-		// $orderTransaction = BeanFactory::getBean('xeBayTransactions');
-		// $this->transactions = $orderTransaction->get_full_list("", "order_id='$this->id'");
-	// }
-
-    function save($check_notify = FALSE)
-	{
-		if (!empty($this->shipped_time))
-			$this->local_order_status = 'Shipped';
-
-		parent::save(check_notify);
 	}
 
 	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false)
@@ -242,6 +229,34 @@ class xeBayOrder extends Basic {
 		echo $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics.html");
 
 		sugar_cleanup(true);
+	}
+
+	function end_of_sale($ids)
+	{
+		$bean = BeanFactory::getBean('xeBayOrders');
+		$complete_sale = new CompleteSale;
+
+		foreach ($ids as &$id) {
+    	    $bean->retrieve($id);
+			$bean->handled_status = 'handled';
+
+			$bean->load_relationship('transactions');
+			$transactions = $bean->transactions->getBeans();
+			if (empty($transactions))
+				continue;
+
+			foreach ($transactions as &$transaction) {
+				if ($transaction->sales_record_number < 100)
+					continue;
+				$params['TargetUser'] = $bean->buyer_user_id;
+				$params['OrderID'] = $bean->order_id; 
+        		$params['ItemID'] = $transaction->item_item_id;
+        		$params['TransactionID'] = $transaction->transaction_id;
+				$res = $complete_sale->endOfSale($params);
+			}
+
+			$bean->save();
+		}
 	}
 }
 ?>
