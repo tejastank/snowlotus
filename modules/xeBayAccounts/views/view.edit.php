@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,81 +36,49 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+require_once('eBayApi/eBayApiEnvironment.php');
 
+class xeBayAccountsViewEdit extends ViewEdit
+{
+    function display($showTitle = true, $ajaxSave = false)
+ 	{
+        global $mod_strings, $app_list_strings, $app_strings;
 
+		$javascript = <<<EOQ
+<script type="text/javascript">
+function connect_now()
+{
+	var name = document.getElementById("name").value;
+	if (name == "") {
+		alert("{$mod_strings['LBL_MISS_NAME']}");
+		return false;
+	}
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-			"xCategories",
-			"xActiveListings",
-			"xeBayAccounts",
-			"xeBayOrders",
-            "xXxxs",
-        )
-    ),
-);
+	var session_id = document.getElementById("session_id").value;
+	if (session_id == "") {
+		SUGAR.ajaxUI.showLoadingPanel();
 
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
+		var _form = document.getElementById("EditView");
+
+		_form.action.value='connectnow';
+		_form.return_action.value='EditView';
+
+		if(check_form('EditView')){
+			SUGAR.ajaxUI.submitForm(_form);
+		}
+	}
+
+	return false;
 }
-?>
+</script>
+EOQ;
+		echo $javascript;
+		if (!empty($this->bean->session_id)) {
+			$ebay = new eBayApiEnvironment();
+			$url = $ebay->getSignInURL($this->bean->session_id);
+			echo "<iframe class='teamNoticeBox' title='{$url}' src='{$url}' width='100%' height='480px'></iframe>";
+		}
+
+ 		parent::display($showTitle, $ajaxSave);
+	}
+}

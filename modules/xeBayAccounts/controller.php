@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,81 +36,59 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+/*********************************************************************************
 
+ * Description: Controller for the Import module
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ ********************************************************************************/
 
+require_once("include/MVC/Controller/SugarController.php");
+require_once('eBayApi/GetSessionID.php');
+require_once('eBayApi/FetchToken.php');
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-			"xCategories",
-			"xActiveListings",
-			"xeBayAccounts",
-			"xeBayOrders",
-            "xXxxs",
-        )
-    ),
-);
+class xeBayAccountsController extends SugarController
+{
+	public function pre_save()
+	{
+		if (!empty($_REQUEST['session_id'])) {
+			$x = new FetchToken();
+			$res = $x->dispatchCall(array('SessionID' => $_REQUEST['session_id']));
+			if ($res !== false) {
+				$this->bean->ebay_auth_token = $res['AuthToken'];
+				$this->bean->hard_expiration_time = $res['ExpireTime'];
+			} else {
+				sugar_cleanup(true);
+			}
+		}
 
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
+		parent::pre_save();
+	}
+
+    function action_connectnow()
+    {
+		$module = (!empty($this->return_module) ? $this->return_module : $this->module);
+		$action = (!empty($this->return_action) ? $this->return_action : 'DetailView');
+
+		$url = "index.php?module=".$module."&action=".$action;
+
+		if(!empty($_REQUEST['record']))
+			$url .= "&record=".$_REQUEST['record'];
+
+		$x = new GetSessionID();
+		$session_id = $x->dispatchCall();
+
+		if ($session_id === false)
+		{
+			sugar_cleanup(true);
+		}
+
+		if (!empty($_REQUEST['name']))
+			$url .= "&name=".$_REQUEST['name'];
+
+		$url .= "&session_id=".$session_id;
+
+		$this->set_redirect($url);
+    }
 }
 ?>

@@ -313,6 +313,10 @@ $objectList['Cases'] =  'Case';
 $objectList['Groups'] =  'User';
 $objectList['Users'] =  'User';
 
+$moduleList[] = 'xeBayAccounts';
+$beanList['xeBayAccounts'] = 'xeBayAccount';
+$beanFiles['xeBayAccount'] = 'modules/xeBayAccounts/xeBayAccount.php';
+
 $moduleList[] = 'xeBayOrders';
 $beanList['xeBayOrders'] = 'xeBayOrder';
 $beanFiles['xeBayOrder'] = 'modules/xeBayOrders/xeBayOrder.php';

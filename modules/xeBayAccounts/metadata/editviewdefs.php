@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,81 +34,35 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-			"xCategories",
-			"xActiveListings",
-			"xeBayAccounts",
-			"xeBayOrders",
-            "xXxxs",
-        )
-    ),
+$viewdefs['xeBayAccounts']['EditView'] = array(
+	'templateMeta' => array(
+		'form' => array(
+			'hidden' => array(
+				'<input type="hidden" name="session_id" id="session_id" value="{if isset($smarty.request.session_id)}{$smarty.request.session_id}{else}{$bean->session_id}{/if}">',
+			),
+			'buttons' => array('SAVE', 'CANCEL',
+				array (
+					'customCode' => '<input title="{$MOD.LBL_CONNECT_NOW}" id="CONNECT_NOW" accessKey="" class="button primary" onclick="return connect_now()" type="button" name="button" value="{$MOD.LBL_CONNECT_NOW}">',
+				),
+			),
+		),
+		'maxColumns' => '2', 
+		'widths' => array(
+						array('label' => '10', 'field' => '30'), 
+						array('label' => '10', 'field' => '30')
+					),                                                                                                                                    
+	),
+ 
+	'panels' => array (
+		'default' => array (
+			array (
+				'name',
+				'assigned_user_name',
+			),
+			array (
+				'description',
+			),
+		),
+	),
 );
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
 ?>

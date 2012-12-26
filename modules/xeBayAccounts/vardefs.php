@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,81 +34,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-            "xInventories",
-			"xCategories",
-			"xActiveListings",
-			"xeBayAccounts",
-			"xeBayOrders",
-            "xXxxs",
-        )
-    ),
+$dictionary['xeBayAccount'] = array(
+	'table'=>'xebayaccounts',
+	'audited'=>true,
+	'duplicate_merge'=>true,
+	'fields'=>array (
+		'ebay_auth_token'=>
+		array (
+			'name' => 'ebay_auth_token',
+			'vname' => 'LBL_EBAY_AUTH_TOKEN',
+			'type' => 'text',
+		),
+		'hard_expiration_time'=>
+		array (
+			'name' => 'hard_expiration_time',
+			'vname' => 'LBL_HARD_EXPIRATION_TIME',
+	    	'type'=>'datetime',
+		),
+	),
+	'relationships'=>array (
+	),
+	'optimistic_locking'=>true,
+	'unified_search'=>true,
 );
 
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
 }
-?>
+
+VardefManager::createVardef('xeBayAccounts','xeBayAccount', array('basic','assignable'));
