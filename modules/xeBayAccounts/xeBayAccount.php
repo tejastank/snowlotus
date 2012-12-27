@@ -86,5 +86,24 @@ class xeBayAccount extends Basic {
 
 		parent::fill_in_additional_detail_fields();
 	}
+
+	function get_accounts($name)
+	{
+		$accounts = array();
+
+		if ($name == 'All') {
+			$resp = $this->get_list("", "ebay_auth_token<>''", 0, -1, -1, 0, false, array('id', 'ebay_auth_token'));
+		} else {
+			$resp = $this->get_list("", "name='$name'", 0, -1, -1, 0, false, array('id', 'ebay_auth_token'));
+		}
+
+		if ($resp['row_count'] > 0) {
+			foreach ($resp['list'] as &$account) {
+				$accounts[$account->id] = $account->ebay_auth_token;
+			}
+		}
+
+		return $accounts;
+	}
 }
 ?>

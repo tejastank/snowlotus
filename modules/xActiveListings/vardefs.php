@@ -39,6 +39,12 @@ $dictionary['xActiveListing'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'ebay_account_id'=>
+		array(
+			'name'=>'ebay_account_id',
+			'vname'=>'LBL_EBAY_ACCOUNT_ID',
+			'type' => 'id',
+		),
 		'hitcount' => array(
 			'name' => 'hitcount',
 			'vname' => 'LBL_HITCOUNT',

@@ -59,6 +59,7 @@ class xActiveListing extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $ebay_account_id;
 	var $hitcount;
 	var $item_id;
 	var $currency_id;

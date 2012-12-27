@@ -61,6 +61,12 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'int',
 			'default'=>0,
 		),
+		'ebay_account_id'=>
+		array(
+			'name'=>'ebay_account_id',
+			'vname'=>'LBL_EBAY_ACCOUNT_ID',
+			'type' => 'id',
+		),
 		'buyer_checkout_message'=>
 		array(
 			'name'=>'buyer_checkout_message',

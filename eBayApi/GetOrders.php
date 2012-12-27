@@ -50,6 +50,8 @@ class GetOrders extends eBayApiEnvironment
 	public function retrieveOrders($params)
 	{
 		$result = true;
+		$account_id = $params['AccountID'];
+		$this->session->setRequestToken($params['AuthToken']);
 
 		$bean = BeanFactory::getBean('xeBayOrders');
 		$orderTransaction = BeanFactory::getBean('xeBayTransactions');
@@ -97,6 +99,7 @@ class GetOrders extends eBayApiEnvironment
 					}
 
 					$bean->handled_status = 'unhandled';
+					$bean->ebay_account_id = $account_id;
 					$bean->buyer_checkout_message = $order->getBuyerCheckoutMessage();
 					$bean->order_id = $order->getOrderID();
 					$bean->checkout_status_last_modified_time = $order->getCheckoutStatus()->getLastModifiedTime();

@@ -43,27 +43,36 @@
 <form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
 <input type="hidden" name="module" value="xActiveListings">
 <input type="hidden" name="action" value="ImportFinal">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td>
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td align="left" scope="row" colspan="4" style="padding-left: 10px;">
-				{$MOD.LBL_IMPORT_DESCRIPTION_PREFIX}
-				<select name='time_left' id='time_left' title=''>
-					<option value='1'>1</option>
-					<option value='3'>3</option>
-					<option value='5'>5</option>
-					<option value='7'>7</option>
-					<option value='15'>15</option>
-				</select>
-				{$MOD.LBL_IMPORT_DESCRIPTION_SUFFIX}
-				<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import" onclick="return ImportConfirm()">
-			</td>
-        </tr>
-	</table>
-</td>
-</tr>
+<table width="100%" style="border:2px solid #4e8ccf;margin-top:10px;" cellspacing="10" cellpadding="0">
+	<tr>
+		<td width="50%" align="right">
+			{$MOD.LBL_EBAY_ACCOUNT}
+		</td>
+		<td width="50%" align="left">
+			{$EBAY_ACCOUNT_OPTIONS}
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			{$MOD.LBL_NUMBER_OF_DAYS}
+		</td>
+		<td align="left">
+			<select name='time_left' id='time_left' title=''>
+				<option value='1'>1</option>
+				<option value='3'>3</option>
+				<option value='5'>5</option>
+				<option value='7'>7</option>
+				<option value='15'>15</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+		</td>
+		<td align="left">
+			<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import" onclick="return ImportConfirm()">
+		</td>
+	</tr>
 </table>
 
 <script>

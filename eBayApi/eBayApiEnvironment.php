@@ -35,15 +35,15 @@ class eBayApiEnvironment extends EbatNs_Environment
 
     public function setup()
 	{
-		if ($this->session->getTokenMode() == 1) {
-			if (!empty($_REQUEST['ebay_account_name'])) {
-				$name = $_REQUEST['ebay_account_name'];
-				$bean = BeanFactory::getBean('xeBayAccounts');
-				if ($bean->retrieve_by_string_fields(array('name' => $name))) {
-					$this->session->setRequestToken($bean->ebay_auth_token);
-				}
-			}
-		}
+		// if ($this->session->getTokenMode() == 1) {
+			// if (!empty($_REQUEST['ebay_account_name'])) {
+				// $name = $_REQUEST['ebay_account_name'];
+				// $bean = BeanFactory::getBean('xeBayAccounts');
+				// if ($bean->retrieve_by_string_fields(array('name' => $name))) {
+					// $this->session->setRequestToken($bean->ebay_auth_token);
+				// }
+			// }
+		// }
 	}
 
     public function init($logLevel = 0, $configFile)

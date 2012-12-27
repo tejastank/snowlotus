@@ -72,11 +72,23 @@ class xeBayOrdersController extends SugarController
 
 		$orders = new GetOrders;
 
-		$result = $orders->retrieveOrders(array(
-			'NumberOfDays' => $numberOfDays,
-			// 'OrderStatus' => 'Shipped',
-			'OrderStatus' => 'Completed',
-		));
+		$accounts = array();
+
+		if (!empty($_REQUEST['ebay_account_name'])) {
+			$name = $_REQUEST['ebay_account_name'];
+			$bean = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $bean->get_accounts($name);
+		}
+
+		foreach ($accounts as $id => $authToken) {
+			$result = $orders->retrieveOrders(array(
+				'NumberOfDays' => $numberOfDays,
+				// 'OrderStatus' => 'Shipped',
+				'OrderStatus' => 'Completed',
+				'AccountID' => $id,
+				'AuthToken' => $authToken,
+			));
+		}
 
 		if ($result === true)
 			$GLOBALS['message'] = "Get orders from ebay succeed!";

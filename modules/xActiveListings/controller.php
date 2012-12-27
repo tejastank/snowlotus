@@ -81,10 +81,22 @@ class xActiveListingsController extends SugarController
 
 		$sellerList = new GetSellerList;
 
-		$result = $sellerList->getActiveListing(array(
-			'EndTimeFrom' => $endTimeFrom,
-			'EndTimeTo' => $endTimeTo,
-		));
+		$accounts = array();
+
+		if (!empty($_REQUEST['ebay_account_name'])) {
+			$name = $_REQUEST['ebay_account_name'];
+			$bean = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $bean->get_accounts($name);
+		}
+
+		foreach ($accounts as $id => $authToken) {
+			$result = $sellerList->getActiveListing(array(
+				'EndTimeFrom' => $endTimeFrom,
+				'EndTimeTo' => $endTimeTo,
+				'AccountID' => $id,
+				'AuthToken' => $authToken,
+			));
+		}
 
 		if ($result === true)
 			$GLOBALS['message'] = "Import active listing from ebay succeed!";
@@ -138,9 +150,13 @@ class xActiveListingsController extends SugarController
 
 			set_time_limit(60 * 10);
 
+			$ebayAccount = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $ebayAccount->get_accounts('All');
+
 			$count = 0;
 
 			foreach ($item_list as &$item) {
+				$authToken = $accounts[$item->ebay_account_id];
 				if (empty($item->variation)) {
 					if ($item->bid_count > 0)
 						continue;
@@ -149,6 +165,7 @@ class xActiveListingsController extends SugarController
 						'Description' => $item->get_description(),
 						'SKU' => $item->inventory_id,
 						'scope'=> $scope,
+						'AuthToken' => $authToken,
 					));
 					$count++;
 				} else {
@@ -157,6 +174,7 @@ class xActiveListingsController extends SugarController
 						'Description' => $item->get_description(),
 						'SKU' => $item->inventory_id,
 						'scope'=> $scope,
+						'AuthToken' => $authToken,
 					));
 					$count++;
 				}

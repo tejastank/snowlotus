@@ -40,6 +40,8 @@ class ReviseFixedPriceItem extends eBayApiEnvironment
 
 	public function ryi($params)
 	{
+		$this->session->setRequestToken($params['AuthToken']);
+
 		$scope = $params['scope'];
 
         $req = new ReviseFixedPriceItemRequestType();

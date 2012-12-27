@@ -61,6 +61,8 @@ class xeBayOrder extends Basic {
 	var $handled_status;
 	var $print_status;
 	var $redeliver_count;
+
+	var $ebay_account_id;
 	var $buyer_checkout_message;
 	var $order_id;
 	var $checkout_status_last_modified_time;
@@ -236,6 +238,9 @@ class xeBayOrder extends Basic {
 		$bean = BeanFactory::getBean('xeBayOrders');
 		$complete_sale = new CompleteSale;
 
+		$ebayAccount = BeanFactory::getBean('xeBayAccounts');
+		$accounts = $ebayAccount->get_accounts('All');
+
 		foreach ($ids as &$id) {
     	    $bean->retrieve($id);
 			$bean->handled_status = 'handled';
@@ -245,6 +250,8 @@ class xeBayOrder extends Basic {
 			if (empty($transactions))
 				continue;
 
+			$authToken = $account[$bean->ebay_account_id];
+	
 			foreach ($transactions as &$transaction) {
 				if ($transaction->sales_record_number < 100)
 					continue;
@@ -252,6 +259,7 @@ class xeBayOrder extends Basic {
 				$params['OrderID'] = $bean->order_id; 
         		$params['ItemID'] = $transaction->item_item_id;
         		$params['TransactionID'] = $transaction->transaction_id;
+				$params['AuthToken'] = $authToken;
 				$res = $complete_sale->endOfSale($params);
 			}
 

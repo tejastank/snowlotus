@@ -64,8 +64,8 @@ class xeBayOrdersViewImport extends SugarView
 		$resp = $bean->get_list("", "ebay_auth_token<>''", 0, -1, -1, 0, false, array('name'));
 		if ($resp['row_count'] > 0) {
 			$ebay_account_options =  "<select name='ebay_account_name' id='ebay_account_name' title=''>";
-			// if ($resp['row_count'] > 1)
-				// $ebay_account_options .= "<option value='All'>All</option>";
+			if ($resp['row_count'] > 1)
+				$ebay_account_options .= "<option value='All'>All</option>";
 			foreach($resp['list'] as &$account) {
 				$name = $account->name;
 				$ebay_account_options .= "<option value='$name'>$name</option>";

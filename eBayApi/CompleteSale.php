@@ -51,6 +51,7 @@ class CompleteSale extends eBayApiEnvironment
 	public function endOfSale($params)
 	{
         $req = new CompleteSaleRequestType();
+		$this->session->setRequestToken($params['AuthToken']);
 
 		// Good buyer, prompt payment, valued customer, highly recommended.
 		// Thank you for an easy, pleasant transaction. Excellent buyer. A++++++.

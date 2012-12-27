@@ -43,4 +43,4 @@ if (isset($_REQUEST['uid'])) {
 }
 
 $url = "index.php?module=xeBayOrders&action=ListView&filter=handled";
-// SugarApplication::redirect($url);
+SugarApplication::redirect($url);

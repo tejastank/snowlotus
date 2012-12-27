@@ -80,6 +80,9 @@ class GetSellerList extends eBayApiEnvironment
 
 	public function getActiveListing($params)
 	{
+		$account_id = $params['AccountID'];
+		$this->session->setRequestToken($params['AuthToken']);
+
 		$result = true;
 
 		$bean = BeanFactory::getBean('xActiveListings');
@@ -131,6 +134,7 @@ class GetSellerList extends eBayApiEnvironment
 				if (empty($itemArray))
 					break;
 				foreach ($itemArray as &$item) {
+					$bean->ebay_account_id = $account_id;
 					$bean->hitcount = $item->getHitCount();;
 					$bean->item_id = $item->getItemID();
 					$bean->currency_id = $item->getListingDetails()->getConvertedStartPrice()->getTypeAttribute('currencyID');
