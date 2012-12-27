@@ -76,7 +76,7 @@ class xeBayAccountsController extends SugarController
 			$url .= "&record=".$_REQUEST['record'];
 
 		$x = new GetSessionID();
-		$session_id = $x->dispatchCall();
+		$session_id = $x->dispatchCall(array());
 
 		if ($session_id === false)
 		{

@@ -19,6 +19,12 @@ require_once 'FetchTokenRequestType.php';
  */
 class FetchToken extends eBayApiEnvironment
 {
+    public function setup()
+	{
+		$this->session->setTokenMode(0);
+		parent::setup();
+	}
+
    /**
      * sample_FetchToken::dispatchCall()
      * 

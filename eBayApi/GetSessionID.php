@@ -19,6 +19,12 @@ require_once 'GetSessionIDRequestType.php';
  */
 class GetSessionID extends eBayApiEnvironment
 {
+    public function setup()
+	{
+		$this->session->setTokenMode(0);
+		parent::setup();
+	}
+
    /**
      * sample_GetSessionID::dispatchCall()
      * 
