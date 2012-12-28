@@ -86,6 +86,23 @@ class xInventoryRecord extends Basic {
         // parent::retrieve($id, $encode,$deleted);
     // }
 
+	function get_list_view_data()
+	{
+        global $mod_strings;
+
+		$field_list = $this->get_list_view_array();
+
+		$operation = $field_list['OPERATION'];
+		$operation_icon = "";
+		if ($operation  == 'in')
+        	$operation_icon = "<img style='margin-left:6px;' alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_in.png')."'>";
+		else
+        	$operation_icon = "<img style='margin-left:6px;' alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_out.png')."'>";
+        $field_list['OPERATION'] = $operation_icon;
+
+		return $field_list;
+	}
+
     function save($check_notify = FALSE)
     {
         $bean = BeanFactory::getBean('xInventories');
@@ -117,8 +134,10 @@ class xInventoryRecord extends Basic {
         if (!empty($_REQUEST['inventory_id'])) {
             $this->inventory_id = $_REQUEST['inventory_id'];
 		    $bean = BeanFactory::getBean('xInventories');
-            if ($bean->retrieve($this->inventory_id))
+            if ($bean->retrieve($this->inventory_id)) {
                 $this->inventory_name = $bean->name;
+				$this->name = $this->inventory_name;
+			}
         }
     }
 }

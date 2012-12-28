@@ -82,9 +82,10 @@ $listViewDefs['xInventories'] = array(
 		'default' => true,
 	),
     'INVENTORY_MANAGEMENT' => array(
-		'width' => '8', 
+		'width' => '4', 
 		'label' => 'LBL_INVENTORY_MANAGEMENT',
 		'default' => true,
+		'sortable' => false,
     ),
 );
 ?>

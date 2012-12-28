@@ -50,7 +50,10 @@ $viewdefs['xInventoryRecords']['EditView'] = array(
                 'inventory_name',
 			),
             array (
-                'operation',
+				array(
+					'name' => 'operation',
+					'customCode' => '{$OPERATION_OPTIONS}',
+				),
             ),
             array (
                 'quantity',

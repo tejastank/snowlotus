@@ -39,11 +39,38 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['xInventoryRecords'] = array(
+	'OPERATION' => array(
+		'width' => '10',
+		'label' => 'LBL_INVENTORY_MANAGEMENT',
+		'default' => true,
+	),
 	'NAME' => array(
-		'width' => '32', 
+		'width' => '30', 
 		'label' => 'LBL_NAME', 
 		'default' => true,
-        'link' => true),         
+		'link' => true
+	),
+	'INVENTORY_NAME' => array(
+		'width' => '30', 
+		'label' => 'LBL_INVENTORY', 
+		'module' => 'xInventories',
+        'id' => 'INVENTORY_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'inventory_id',
+		),
+	),
+	'PRICE' => array(
+ 		'width' => '10',
+ 		'label' => 'LBL_PRICE',
+		'default' => true,
+	),
+	'quantity' => array(
+ 		'width' => '10',
+ 		'label' => 'LBL_QUANTITY',
+		'default' => true,
+	),
 	'ASSIGNED_USER_NAME' => array(
 		'width' => '9', 
 		'label' => 'LBL_ASSIGNED_TO_NAME',

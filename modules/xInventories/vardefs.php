@@ -167,11 +167,25 @@ $dictionary['xInventory'] = array(
 			'audited' => true,
 			'reportable'=>false,
 		),
+		'records'=>
+		array(
+			'name'=>'records',
+			'vname'=>'LBL_RECORDS',
+			'type'=>'link',
+			'relationship' => 'xinventory_records',
+			'module'=>'xInventoryRecords',
+			'bean_name'=>'xInventoryRecord',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
 		'xinventory_xcategory' => array(
 			'lhs_module'=> 'xCategories', 'lhs_table'=> 'xcategories', 'lhs_key' => 'id',
 			'rhs_module' => 'xInventories', 'rhs_table'=> 'xinventories', 'rhs_key' => 'category_id',
+			'relationship_type'=>'one-to-many'),
+		'xinventory_records' => array(
+			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
+			'rhs_module' => 'xInventoryRecords', 'rhs_table'=> 'xinventoryrecords', 'rhs_key' => 'inventory_id',
 			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,

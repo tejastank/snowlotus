@@ -47,7 +47,7 @@ $mod_strings = array (
   'LBL_CREATED_ID' => 'Created By Id',
   'LBL_DESCRIPTION' => 'Description',
   'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'InventoryRecord',
+  'LBL_NAME' => 'Subject',
   'LBL_CREATED_USER' => 'Created by User',
   'LBL_MODIFIED_USER' => 'Modified by User',
   'LBL_LIST_NAME' => 'Name',
@@ -68,4 +68,7 @@ $mod_strings = array (
   'LBL_PRICE' => 'Price(RMB)',
   'LBL_QUANTITY' => 'Quantity',
   'LBL_INVENTORY' => 'Inventory',
+  'LBL_INVENTORY_IN' => 'Enter warehouse',
+  'LBL_INVENTORY_OUT' => 'Out of warehouse',
+  'LBL_INVENTORY_MANAGEMENT' => "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_Mngt.png')."'>",
 );

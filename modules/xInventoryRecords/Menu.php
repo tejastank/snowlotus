@@ -38,6 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('xInventoryRecords', 'edit', true))$module_menu[]=Array("index.php?module=xInventoryRecords&action=EditView&return_module=xInventoryRecords&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateInventoryRecords", 'xInventoryRecords');
+// if(ACLController::checkAccess('xInventoryRecords', 'edit', true))$module_menu[]=Array("index.php?module=xInventoryRecords&action=EditView&return_module=xInventoryRecords&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateInventoryRecords", 'xInventoryRecords');
 if(ACLController::checkAccess('xInventoryRecords', 'list', true))$module_menu[]=Array("index.php?module=xInventoryRecords&action=index&return_module=xInventoryRecords&return_action=DetailView", $mod_strings['LNK_LIST'],"InventoryRecords", 'xInventoryRecords');
 if(ACLController::checkAccess('xInventoryRecords', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xInventoryRecords&return_module=xInventoryRecords&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xInventoryRecords');

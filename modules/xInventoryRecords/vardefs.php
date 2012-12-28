@@ -71,10 +71,11 @@ $dictionary['xInventoryRecord'] = array(
         'operation'=>
 		array(
 			'name'=>'operation',
-			'vname'=>'LBL_OPERATION',
+			'vname'=>'LBL_INVENTORY_MANAGEMENT',
 			'type'=>'varchar',
 	    	'len'=>5,
 			'required' => true,
+			'audited' => true,
 			'comment' => 'value: in, out'
 		),
 		'price'=>
@@ -82,6 +83,7 @@ $dictionary['xInventoryRecord'] = array(
 			'name'=>'price',
 	    	'vname'=> 'LBL_PRICE',
 	    	'type'=>'double',
+			'required' => true,
 			'audited' => true,
 		),
 		'quantity'=>
@@ -89,6 +91,7 @@ $dictionary['xInventoryRecord'] = array(
 			'name'=>'quantity',
 	    	'vname'=> 'LBL_QUANTITY',
 	    	'type'=>'int',
+			'audited' => true,
 			'required' => true,
 		),
 		'vendor_id'=>

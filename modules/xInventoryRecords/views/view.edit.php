@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,47 +37,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xInventoryRecords'),
-	),
+class xInventoryRecordsViewEdit extends ViewEdit {
 
-	'where' => '',
+ 	function xInventoryRecordsViewEdit(){
+ 		parent::ViewEdit();
+ 	}
+ 	
+ 	function display() {
+		global $mod_strings;
 
-	'list_fields' => array(
-		'operation' => array(
-	 		'vname' => 'LBL_INVENTORY_MANAGEMENT',
-	 		'width' => '10%',
-		),
-		'name'=>array(
-	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
-		),
-		'price' => array(
-	 		'vname' => 'LBL_PRICE',
-	 		'width' => '10%',
-		),
-		'quantity' => array(
-	 		'vname' => 'LBL_QUANTITY',
-	 		'width' => '10%',
-		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '10%',
-		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xInventoryRecords',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xInventoryRecords',
-			'width' => '5%',
-		),
-	),
-);
+		$select_in = '';
+		$select_out = '';
+		if ($this->bean->operation == 'in')
+			$select_in = 'selected';
+		else
+			$select_out = 'selected';
 
+		$operation_options = "<select name='operation' id='operation' title=''>";
+		$operation_options .= "<option {$select_in} value='in'>{$mod_strings['LBL_INVENTORY_IN']}</option>";
+		$operation_options .= "<option {$select_out} value='out'>{$mod_strings['LBL_INVENTORY_OUT']}</option>";
+		$operation_options .= "</select>";
+		$this->ev->ss->assign("OPERATION_OPTIONS", $operation_options);
+
+ 		parent::display();
+ 	}
+}
 ?>

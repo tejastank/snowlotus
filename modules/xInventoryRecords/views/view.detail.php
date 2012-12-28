@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,47 +37,37 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xInventoryRecords'),
-	),
+require_once('include/MVC/View/views/view.detail.php');
 
-	'where' => '',
+class xInventoryRecordsViewDetail extends ViewDetail
+{
+ 	function xInventoryRecordsViewDetail(){
+ 		parent::ViewDetail();
+ 	}
 
-	'list_fields' => array(
-		'operation' => array(
-	 		'vname' => 'LBL_INVENTORY_MANAGEMENT',
-	 		'width' => '10%',
-		),
-		'name'=>array(
-	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
-		),
-		'price' => array(
-	 		'vname' => 'LBL_PRICE',
-	 		'width' => '10%',
-		),
-		'quantity' => array(
-	 		'vname' => 'LBL_QUANTITY',
-	 		'width' => '10%',
-		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '10%',
-		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xInventoryRecords',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xInventoryRecords',
-			'width' => '5%',
-		),
-	),
-);
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+ 	function display(){
+				
+		if(empty($this->bean->id)){
+			global $app_strings;
+			sugar_die($app_strings['ERROR_NO_RECORD']);
+		}				
+		
+		$this->dv->process();
+		global $mod_strings;
+
+		$this->ss->assign("OPERATION_IN", "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_in.png')."'>");
+		$this->ss->assign("OPERATION_OUT", "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_out.png')."'>");
+        
+		echo $this->dv->display();
+ 	} 	
+}
 
 ?>

@@ -36,47 +36,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xInventoryRecords'),
-	),
 
-	'where' => '',
+$layout_defs['xInventories'] = array(
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
 
-	'list_fields' => array(
-		'operation' => array(
-	 		'vname' => 'LBL_INVENTORY_MANAGEMENT',
-	 		'width' => '10%',
-		),
-		'name'=>array(
-	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
-		),
-		'price' => array(
-	 		'vname' => 'LBL_PRICE',
-	 		'width' => '10%',
-		),
-		'quantity' => array(
-	 		'vname' => 'LBL_QUANTITY',
-	 		'width' => '10%',
-		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '10%',
-		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xInventoryRecords',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xInventoryRecords',
-			'width' => '5%',
+		'records' => array(
+			'order' => 100,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xInventoryRecords',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'records',
+			'add_subpanel_data' => 'inventory_id',
+			'title_key' => 'LBL_RECORDS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+			),
 		),
 	),
 );
-
 ?>
