@@ -53,7 +53,7 @@ $listViewDefs['xInventories'] = array(
 	'ID' => array(
 		'width' => '24', 
 		'label' => 'LBL_SKU', 
-		'default' => true,
+		'default' => false,
 	),
 	'CATEGORY_NAME' => array(
 		'width' => '16', 
@@ -76,10 +76,15 @@ $listViewDefs['xInventories'] = array(
 		'label' => 'LBL_QUANTITY', 
 		'default' => true
 	),
-	'GOODS_ALLOCATION'=> array(
+	'GOODS_ALLOCATION' => array(
 		'width' => '8', 
 		'label' => 'LBL_GOODS_ALLOCATION', 
 		'default' => true,
 	),
+    'INVENTORY_MANAGEMENT' => array(
+		'width' => '8', 
+		'label' => 'LBL_INVENTORY_MANAGEMENT',
+		'default' => true,
+    ),
 );
 ?>

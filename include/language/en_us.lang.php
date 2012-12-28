@@ -112,6 +112,7 @@ $app_list_strings = array (
     'xeBayShipToAddresses' => 'Ship To Address',
     'xeBayTransactions' => 'Order Transactions',
     'xInventories' => 'Inventory',
+    'xInventoryRecords' => 'Inventory Records',
     'xPinnedItems' => 'Pinned Items',
     'xCategories' => 'Category',
     'xActiveListings' => 'Active Listings',

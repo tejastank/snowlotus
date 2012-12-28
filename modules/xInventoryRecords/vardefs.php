@@ -34,49 +34,48 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$dictionary['xInventory'] = array(
-	'table'=>'xinventories',
+$dictionary['xInventoryRecord'] = array(
+	'table'=>'xinventoryrecords',
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-		'subtitle'=>
+		'inventory_id'=>
 		array(
-			'name'=>'subtitle',
-	    	'vname'=> 'LBL_SUBTITLE',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>55,
+			'name'=>'inventory_id',
+			'vname'=>'LBL_INVENTORY_ID',
+			'type'=>'id',
+			'required' => true,
 		),
-		'category_id'=>
+		'inventory_name'=>
 		array(
-			'name'=>'category_id',
-			'vname'=>'LBL_CATEGORY',
-			'type' => 'id',
-			'required' => false,
-			'audited' => true,
-			'reportable'=>false,
-		),
-		'category_name'=>
-		array(
-			'name'=>'category_name',
+			'name'=>'inventory_name',
 			'rname' => 'name',
-			'vname'=>'LBL_CATEGORY',
-			'id_name'=>'category_id',
+			'vname'=>'LBL_INVENTORY',
+			'id_name'=>'inventory_id',
 			'type'=>'relate',
-			'link'=>'category_link',
+			'link'=>'inventory_link',
 			'reportable'=>false,
 			'source'=>'non-db',
 			'dbType' => 'varchar',
-			'table' => 'xcategories',
-			'module' => 'xCategories',
+			'table' => 'xinventories',
+			'module' => 'xInventories',
 		),
-		'category_link'=>
+		'inventory_link'=>
 		array(
-			'name' => 'category_link',
+			'name' => 'inventory_link',
 			'type' => 'link',
-			'relationship' => 'xinventory_xcategory',
+			'relationship' => 'xinventoryrecord_xinventory',
 			'vname' => 'LBL_CATEGORY',
 			'source'=>'non-db',
+		),
+        'operation'=>
+		array(
+			'name'=>'operation',
+			'vname'=>'LBL_OPERATION',
+			'type'=>'varchar',
+	    	'len'=>5,
+			'required' => true,
+			'comment' => 'value: in, out'
 		),
 		'price'=>
 		array(
@@ -85,95 +84,59 @@ $dictionary['xInventory'] = array(
 	    	'type'=>'double',
 			'audited' => true,
 		),
-		'width'=>
-		array(
-			'name'=>'width',
-	    	'vname'=> 'LBL_WIDTH',
-	    	'type'=>'float',
-		),
-		'height'=>
-		array(
-			'name'=>'height',
-	    	'vname'=> 'LBL_HEIGHT',
-	    	'type'=>'float',
-		),
-		'deep'=>
-		array(
-			'name'=>'deep',
-	    	'vname'=> 'LBL_DEEP',
-	    	'type'=>'float',
-		),
-		'weight'=>
-		array(
-			'name'=>'weight',
-	    	'vname'=> 'LBL_WEIGHT',
-	    	'type'=>'float',
-		),
 		'quantity'=>
 		array(
 			'name'=>'quantity',
 	    	'vname'=> 'LBL_QUANTITY',
 	    	'type'=>'int',
-		    'default'=>0,
-			'audited' => true,
+			'required' => true,
 		),
-		'inventory_cap'=>
+		'vendor_id'=>
 		array(
-			'name'=>'inventory_cap',
-	    	'vname'=> 'LBL_INVENTORY_CAP',
-	    	'type'=>'int',
-		    'default'=>0,
-		),
-		'inventory_floor'=>
-		array(
-			'name'=>'inventory_floor',
-	    	'vname'=> 'LBL_INVENTORY_FLOOR',
-	    	'type'=>'int',
-		    'default'=>0,
-		),
-		'goods_allocation'=>
-		array(
-			'name'=>'goods_allocation',
-	    	'vname'=> 'LBL_GOODS_ALLOCATION',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>5,
-			'audited' => true,
-		),
-		'description'=>
-		array (
-			'name' => 'description',
-			'vname' => 'LBL_DESCRIPTION',
-			'type' => 'text',
-		),
-		'body' => array(
-			'name' => 'body',
-			'vname' => 'LBL_PLAIN_TEXT',
-			'type' => 'text',
-			'comment' => 'Plain text body to be used in resulting email'
-		),
-		'body_html' => array(
-			'name' => 'body_html',
-			'vname' => 'LBL_BODY',
-			'type' => 'html',
-			'comment' => 'HTML formatted email body to be used in resulting email'
-		),
-		'body_tpl_id'=>
-		array(
-			'name'=>'body_tpl_id',
-			'vname'=>'LBL_BODY_TEMPLATE',
+			'name'=>'vendor_id',
+			'vname'=>'LBL_VENDOR_ID',
 			'type' => 'id',
-			'required' => false,
-			'audited' => true,
-			'reportable'=>false,
 		),
+        'parent_type'=>
+        array(
+            'name'=>'parent_type',
+            'vname'=>'LBL_PARENT_TYPE',
+            'type' =>'parent_type',
+            'dbType' => 'varchar',
+            'group'=>'parent_name',
+            'options'=> 'parent_type_display',
+            'len'=> '255',
+        ),
+        'parent_id'=>
+        array(
+            'name'=>'parent_id',
+            'vname'=>'LBL_PARENT_ID',
+            'type'=>'id',
+            'required'=>false,
+            'reportable'=>true,
+            'comment' => 'The ID of the record specified in parent_type'
+        ),
+        'parent_name'=>
+        array(
+            'name'=> 'parent_name',
+            'parent_type'=>'record_type_display',
+            'type_name'=>'parent_type',
+            'id_name'=>'parent_id',
+            'vname'=>'LBL_RELATED_TO',
+            'type'=>'parent',
+            'source'=>'non-db',
+            'options'=> 'record_type_display_notes',
+        ),
 	),
 	'relationships'=>array (
-		'xinventory_xcategory' => array(
-			'lhs_module'=> 'xCategories', 'lhs_table'=> 'xcategories', 'lhs_key' => 'id',
-			'rhs_module' => 'xInventories', 'rhs_table'=> 'xinventories', 'rhs_key' => 'category_id',
+		'xinventoryrecord_xinventory' => array(
+			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
+			'rhs_module' => 'xInventoryRecords', 'rhs_table'=> 'xinventoryrecords', 'rhs_key' => 'inventory_id',
 			'relationship_type'=>'one-to-many'),
 	),
+    'indices' => array (
+        array('name' =>'idx_inventory_record_parent', 'type'=>'index', 'fields'=>array('parent_id', 'parent_type')),
+    ),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,
 );
@@ -182,4 +145,4 @@ if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }
 
-VardefManager::createVardef('xInventories','xInventory', array('basic','assignable'));
+VardefManager::createVardef('xInventoryRecords','xInventoryRecord', array('basic','assignable'));

@@ -34,11 +34,11 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-class xInventory extends Basic {
+class xInventoryRecord extends Basic {
 	var $new_schema = true;
-	var $module_dir = 'xInventories';
-	var $object_name = 'xInventory';
-	var $table_name = 'xinventories';
+	var $module_dir = 'xInventoryRecords';
+	var $object_name = 'xInventoryRecord';
+	var $table_name = 'xinventoryrecords';
 	var $importable = true;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 	var $id;
@@ -56,13 +56,19 @@ class xInventory extends Basic {
 	var $assigned_user_id;
 	var $assigned_user_name;
 	var $assigned_user_link;
-	var $subtitle;
-	var $category_id;
-	var $category_name;
-	var $goods_allocation;
-	var $body_html;
 
-	function xInventory()
+    var $inventory_id;
+	var $inventory_name;
+	var $inventory_link;
+    var $operation;
+	var $price;
+	var $quantity;
+	var $vendor_id;
+    var $parent_type;
+    var $parent_id;
+    var $parent_name;
+
+	function xInventoryRecord()
 	{
 		parent::Basic();
 	}
@@ -75,31 +81,45 @@ class xInventory extends Basic {
 		return false;
 	}
 
-	function get_list_view_data()
-	{
-        global $mod_strings;
+    // function retrieve($id = -1, $encode=true,$deleted=true)
+    // {
+        // parent::retrieve($id, $encode,$deleted);
+    // }
 
-		$field_list = $this->get_list_view_array();
+    function save($check_notify = FALSE)
+    {
+        $bean = BeanFactory::getBean('xInventories');
+        if ($bean->retrieve($this->inventory_id) == null)
+            return;
+        if ($this->operation == 'in') {
+            $bean->quantity += $this->quantity;
+        } else {
+            $quantity = $bean->quantity;
+            $quantity -= $this->quantity;
+            if ($quantity < 0) {
+                $this->quantity = $bean->quantity;
+                $bean->quantity = 0;
+            } else {
+                $bean->quantity = $quantity;
+            }
+        }
+        $bean->save();
 
-        $inventory_id = $field_list['ID'];
-        $inventory_in_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_in.png')."'>";
-        $inventory_out_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_out.png')."'>";
-        $inventory_management = "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&inventory_id={$inventory_id}&operation=in' title='{$mod_strings['LBL_INVENTORY_IN']}'>{$inventory_in_icon}</a>";
-        $inventory_management .= "&nbsp;";
-        $inventory_management .= "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&inventory_id={$inventory_id}&operation=out' title='{$mod_strings['LBL_INVENTORY_OUT']}'>{$inventory_out_icon}</a>";
-        $field_list['INVENTORY_MANAGEMENT'] = $inventory_management;
+        parent::save($check_notify);
+    }
 
-		return $field_list;
-	}
+    function fill_in_additional_detail_fields()
+    {
+        parent::fill_in_additional_detail_fields();
+        if (!empty($_REQUEST['operation']))
+            $this->operation = $_REQUEST['operation'];
 
-	function get_body_html()
-	{
-		return $this->body_html;
-	}
-
-	function get_subtitle()
-	{
-		return $this->subtitle;
-	}
+        if (!empty($_REQUEST['inventory_id'])) {
+            $this->inventory_id = $_REQUEST['inventory_id'];
+		    $bean = BeanFactory::getBean('xInventories');
+            if ($bean->retrieve($this->inventory_id))
+                $this->inventory_name = $bean->name;
+        }
+    }
 }
 ?>
