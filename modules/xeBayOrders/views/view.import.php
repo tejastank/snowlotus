@@ -58,7 +58,7 @@ class xeBayOrdersViewImport extends SugarView
     {
 		$ss = new Sugar_Smarty();
         $ss->assign("MOD", $GLOBALS['mod_strings']);
-        $ss->assign("INSTRUCTION", "<h1>Import active listings from ebay</h1>");
+        $ss->assign("INSTRUCTION", "<h1>Download completed orders from ebay</h1>");
 
 		$bean = BeanFactory::getBean('xeBayAccounts');
 		$resp = $bean->get_list("", "ebay_auth_token<>''", 0, -1, -1, 0, false, array('name'));
