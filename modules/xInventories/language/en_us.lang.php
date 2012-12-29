@@ -57,6 +57,7 @@ $mod_strings = array (
   'LBL_HOMEPAGE_TITLE' => 'My Inventory',
   'LNK_NEW_RECORD' => 'Create Inventory',
   'LNK_LIST' => 'View Inventory',
+  'LNK_PURCHASE_ORDERS' => 'Purchase orders',
   'LNK_RECORDS_LIST' => 'View Records',
   'LBL_RECORDS_IMPORT' => 'Import Records',
   'LNK_IMPORT_XINVENTORIES' => 'Import Inventory',

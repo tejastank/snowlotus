@@ -40,6 +40,7 @@ global $mod_strings, $app_strings, $sugar_config;
  
 if(ACLController::checkAccess('xInventories', 'edit', true))$module_menu[]=Array("index.php?module=xInventories&action=EditView&return_module=xInventories&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'], "CreateInventories", 'xInventories');
 if(ACLController::checkAccess('xInventories', 'list', true))$module_menu[]=Array("index.php?module=xInventories&action=index&return_module=xInventories&return_action=DetailView", $mod_strings['LNK_LIST'], "Inventories", 'xInventories');
+if(ACLController::checkAccess('xInventories', 'purchase', true))$module_menu[]=Array("index.php?module=xInventories&action=purchase&return_module=xInventories&return_action=index", $mod_strings['LNK_PURCHASE_ORDERS'], "Inventories", 'xInventories');
 if(ACLController::checkAccess('xInventories', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xInventories&return_module=xInventories&return_action=index", $mod_strings['LNK_IMPORT_XINVENTORIES'], "Import", 'xInventories');
 if(ACLController::checkAccess('xPinnedItems', 'list', true)) $module_menu[] = array("index.php?module=xPinnedItems&action=index", $mod_strings['LNK_PINNED_ITEM_LIST'],"PinnedItems", 'xPinnedItems');
 if(ACLController::checkAccess('xInventoryRecords', 'list', true))$module_menu[]=Array("index.php?module=xInventoryRecords&action=index&return_module=xInventoryRecords&return_action=DetailView", $mod_strings['LNK_RECORDS_LIST'],"InventoryRecords", 'xInventoryRecords');
