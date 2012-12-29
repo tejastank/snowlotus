@@ -317,6 +317,10 @@ $moduleList[] = 'xeBayAccounts';
 $beanList['xeBayAccounts'] = 'xeBayAccount';
 $beanFiles['xeBayAccount'] = 'modules/xeBayAccounts/xeBayAccount.php';
 
+$moduleList[] = 'xeBayCategories';
+$beanList['xeBayCategories'] = 'xeBayCategory';
+$beanFiles['xeBayCategory'] = 'modules/xeBayCategories/xeBayCategory.php';
+
 $moduleList[] = 'xeBayOrders';
 $beanList['xeBayOrders'] = 'xeBayOrder';
 $beanFiles['xeBayOrder'] = 'modules/xeBayOrders/xeBayOrder.php';
