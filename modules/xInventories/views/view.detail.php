@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,62 +36,38 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xInventories']['DetailView'] = array(
-	'templateMeta' => array(
-		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
-		'maxColumns' => '2',
-		'widths' => array(
-			array('label' => '10', 'field' => '30'),
-			array('label' => '10', 'field' => '30')
-		 ),
-	),
 
-	'panels' =>array (
-		array (
-			'name',
-			'assigned_user_name',
-		),
-		array (
-			'subtitle',
-			'category_name',
-		),
-        array (
-            array(
-                'name' => 'quantity',
-                'customCode' => '{$CUSTOM_QUANTITY}',
-            ),
-            'goods_allocation',
-        ),
-        array (
-			'inventory_cap',
-			'inventory_floor',
-		),
-		array (
-			'width',
-			'height',
-		),
-		array (
-			'deep',
-			'weight',
-		),
-		array (
-			'description',
-		),
-		array (
-			'body_html',
-		),
-		array (
-			array (
-				'name' => 'date_entered',
-				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-				'label' => 'LBL_DATE_ENTERED',
-			),
-			array (
-				'name' => 'date_modified',
-				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-				'label' => 'LBL_DATE_MODIFIED',
-			),
-		),
-	)
-);
+require_once('include/MVC/View/views/view.detail.php');
+
+class xInventoriesViewDetail extends ViewDetail
+{
+ 	function xInventoriesViewDetail(){
+ 		parent::ViewDetail();
+ 	}
+
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+ 	function display(){
+				
+		if(empty($this->bean->id)){
+			global $app_strings;
+			sugar_die($app_strings['ERROR_NO_RECORD']);
+		}				
+		
+		$this->dv->process();
+
+		global $mod_strings;
+
+		$this->ss->assign("CUSTOM_QUANTITY", $this->bean->quantity . '&nbsp;&nbsp;' . $this->bean->get_management_html());
+        
+		echo $this->dv->display();
+ 	} 	
+}
+
 ?>

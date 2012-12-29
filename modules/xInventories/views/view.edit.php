@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -20,7 +22,7 @@
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
  * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+* You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  * 
  * The interactive user interfaces in modified source and object code versions
@@ -34,62 +36,43 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xInventories']['DetailView'] = array(
-	'templateMeta' => array(
-		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
-		'maxColumns' => '2',
-		'widths' => array(
-			array('label' => '10', 'field' => '30'),
-			array('label' => '10', 'field' => '30')
-		 ),
-	),
 
-	'panels' =>array (
-		array (
-			'name',
-			'assigned_user_name',
-		),
-		array (
-			'subtitle',
-			'category_name',
-		),
-        array (
-            array(
-                'name' => 'quantity',
-                'customCode' => '{$CUSTOM_QUANTITY}',
-            ),
-            'goods_allocation',
-        ),
-        array (
-			'inventory_cap',
-			'inventory_floor',
-		),
-		array (
-			'width',
-			'height',
-		),
-		array (
-			'deep',
-			'weight',
-		),
-		array (
-			'description',
-		),
-		array (
-			'body_html',
-		),
-		array (
-			array (
-				'name' => 'date_entered',
-				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-				'label' => 'LBL_DATE_ENTERED',
-			),
-			array (
-				'name' => 'date_modified',
-				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-				'label' => 'LBL_DATE_MODIFIED',
-			),
-		),
-	)
-);
+class xInventoriesViewEdit extends ViewEdit {
+
+ 	function xInventoriesViewEdit(){
+ 		parent::ViewEdit();
+ 	}
+ 	
+ 	function display() {
+		global $mod_strings;
+
+        $body_html = $this->bean->body_html;
+        $body = $this->bean->body;
+        $custom_body_html = <<<EOQ
+<div id='body_text_div'>
+    <textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40">{$body_html}</textarea>
+</div>
+EOQ;
+		$this->ev->ss->assign("CUSTOM_BODY_HTML", $custom_body_html);
+
+ 		parent::display();
+
+        require_once("include/SugarTinyMCE.php");
+        $tiny = new SugarTinyMCE();
+        $tiny->defaultConfig['cleanup_on_startup']=true;
+        $tiny->defaultConfig['width']=800;
+        $tiny->defaultConfig['height']=600;
+        $tiny->defaultConfig['plugins'].=",fullpage";
+        echo $tiny->getInstance();
+
+        $javascript = <<<EOQ
+<script type="text/javascript" language="Javascript">
+setTimeout("tinyMCE.execCommand('mceAddControl', false, 'body_text');", 500);
+var tiny = tinyMCE.getInstanceById('body_text');
+document.getElementById('body_text_div').style.display = 'inline';
+</script>
+EOQ;
+        echo $javascript;
+ 	}
+}
 ?>

@@ -54,28 +54,34 @@ $viewdefs['xInventories']['EditView'] = array(
 				'category_name',
 			),
 			array (
-				array(
-					'name' => "purchase_price",
-					'displayParams' => array('precision'=>2),
-				),
-			),
-			array (
-				'sku',
+                array(
+                    'name' => 'quantity',
+                    'customCode' => '{$fields.quantity.value}',
+                ),
 				'goods_allocation',
 			),
 			array (
-				'quantity',
 				'inventory_cap',
+				'inventory_floor',
 			),
 			array (
-				'',
-				'inventory_floor',
+				'width',
+				'height',
+			),
+			array (
+				'deep',
+				'weight',
+			),
+			array (
 			),
 			array (
 				'description',
 			),
 			array (
-				'body_html',
+                array(
+				    'name' => 'body_html',
+                    'customCode' => '{$CUSTOM_BODY_HTML}',
+                ),
 			),
 		),
 	),
