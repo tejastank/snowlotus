@@ -140,10 +140,22 @@ class GetOrders extends eBayApiEnvironment
 					foreach ($transactionArray as &$transaction) {
 						$orderTransaction->order_id = $bean->id;
 						$orderTransaction->combine_order_id = $bean->id;
-						$orderTransaction->actual_handling_cost_currency_id = $transaction->getActualHandlingCost()->getTypeAttribute('currencyID');
-						$orderTransaction->actual_handling_cost_value = $transaction->getActualHandlingCost()->getTypeValue();
-						$orderTransaction->actual_shipping_cost_currency_id = $transaction->getActualShippingCost()->getTypeAttribute('currencyID');
-						$orderTransaction->actual_shipping_cost_value = $transaction->getActualShippingCost()->getTypeValue();
+                        $actualHandlingCost = $transaction->getActualHandlingCost();
+                        if ($actualHandlingCost) {
+						    $orderTransaction->actual_handling_cost_currency_id = $actualHandlingCost()->getTypeAttribute('currencyID');
+						    $orderTransaction->actual_handling_cost_value = $actualHandlingCost()->getTypeValue();
+                        } else {
+						    $orderTransaction->actual_handling_cost_currency_id = '';
+						    $orderTransaction->actual_handling_cost_value = '';
+                        }
+                        $actualShippingCost = $transaction->getActualShippingCost();
+                        if ($actualShippingCost) {
+						    $orderTransaction->actual_shipping_cost_currency_id = $actualShippingCost()->getTypeAttribute('currencyID');
+						    $orderTransaction->actual_shipping_cost_value = $actualShippingCost()->getTypeValue();
+                        } else {
+						    $orderTransaction->actual_shipping_cost_currency_id = '';
+						    $orderTransaction->actual_shipping_cost_value = '';
+                        }
 						$orderTransaction->date_entered = $transaction->getCreatedDate();
 						$orderTransaction->item_item_id = $transaction->getItem()->getItemID();
 						$orderTransaction->item_site = $transaction->getItem()->getSite();
