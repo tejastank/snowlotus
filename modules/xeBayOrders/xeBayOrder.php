@@ -236,6 +236,7 @@ class xeBayOrder extends Basic {
 	function end_of_sale($ids)
 	{
 		$bean = BeanFactory::getBean('xeBayOrders');
+        $record = BeanFactory::getBean('xInventoryRecords');
 		$complete_sale = new CompleteSale;
 
 		$ebayAccount = BeanFactory::getBean('xeBayAccounts');
@@ -253,6 +254,18 @@ class xeBayOrder extends Basic {
 			$authToken = $account[$bean->ebay_account_id];
 	
 			foreach ($transactions as &$transaction) {
+                // new inventory record
+                $record->name = $transaction->name;
+                $record->inventory_id = $transaction->item_sku;
+                $record->operation = 'out';
+	            $record->price = '0.00';
+	            $record->quantity = $transaction->quantity_purchased;
+                $record->parent_type = 'xeBayTransactions';
+                $record->parent_id = $transaction->id;
+                $record->id = create_guid();
+                $record->new_with_id = true;
+                $record->save();
+
 				if ($transaction->sales_record_number < 100)
 					continue;
 				$params['TargetUser'] = $bean->buyer_user_id;

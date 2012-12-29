@@ -103,42 +103,65 @@ class xInventoryRecord extends Basic {
 		return $field_list;
 	}
 
-    function save($check_notify = FALSE)
+    function fill_in_additional_detail_fields()
     {
-        $bean = BeanFactory::getBean('xInventories');
-        if ($bean->retrieve($this->inventory_id) == null)
-            return;
-        if ($this->operation == 'in') {
-            $bean->quantity += $this->quantity;
-        } else {
-            $quantity = $bean->quantity;
-            $quantity -= $this->quantity;
-            if ($quantity < 0) {
-                $this->quantity = $bean->quantity;
-                $bean->quantity = 0;
-            } else {
-                $bean->quantity = $quantity;
+        parent::fill_in_additional_detail_fields();
+        if (!empty($_REQUEST['inventory_req'])) {
+            if (!empty($_REQUEST['operation']))
+                $this->operation = $_REQUEST['operation'];
+
+            if (!empty($_REQUEST['inventory_id'])) {
+                $this->inventory_id = $_REQUEST['inventory_id'];
+                $bean = BeanFactory::getBean('xInventories');
+                if ($bean->retrieve($this->inventory_id)) {
+                    $this->inventory_name = $bean->name;
+                    $this->name = $this->inventory_name;
+                }
             }
         }
-        $bean->save();
+    }
+
+    function save($check_notify = FALSE)
+    {
+        $item = BeanFactory::getBean('xInventories');
+
+		if ($this->new_with_id == true) {
+            if ($item->retrieve($this->inventory_id) != null) {
+                if ($this->operation == 'in') {
+                    $item->quantity += $this->quantity;
+                } else {
+                    $quantity = $item->quantity;
+                    $quantity -= $this->quantity;
+                    if ($quantity < 0) {
+                        $this->quantity = $item->quantity;
+                        $item->quantity = 0;
+                    } else {
+                        $item->quantity = $quantity;
+                    }
+                }
+                $item->save();
+            }
+        }
 
         parent::save($check_notify);
     }
 
-    function fill_in_additional_detail_fields()
+	function mark_deleted($id)
     {
-        parent::fill_in_additional_detail_fields();
-        if (!empty($_REQUEST['operation']))
-            $this->operation = $_REQUEST['operation'];
+        $item = BeanFactory::getBean('xInventories');
 
-        if (!empty($_REQUEST['inventory_id'])) {
-            $this->inventory_id = $_REQUEST['inventory_id'];
-		    $bean = BeanFactory::getBean('xInventories');
-            if ($bean->retrieve($this->inventory_id)) {
-                $this->inventory_name = $bean->name;
-				$this->name = $this->inventory_name;
-			}
+        if ($item->retrieve($this->inventory_id) != null) {
+            if ($this->operation == 'in') {
+                $item->quantity -= $this->quantity;
+                if ($item->quantity < 0)
+                    $item->quantity = 0;
+            } else {
+                $item->quantity += $this->quantity;
+            }
+            $item->save();
         }
+
+        parent::mark_deleted($id);
     }
 }
 ?>

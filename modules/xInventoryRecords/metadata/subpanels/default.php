@@ -71,11 +71,11 @@ $subpanel_layout = array(
 		 	'module' => 'xInventoryRecords',
 	 		'width' => '4%',
 		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xInventoryRecords',
-			'width' => '5%',
-		),
+        // 'remove_button'=>array(
+            // 'widget_class' => 'SubPanelRemoveButton',
+             // 'module' => 'xInventoryRecords',
+            // 'width' => '5%',
+        // ),
 	),
 );
 
