@@ -98,7 +98,6 @@ class xeBayCategoriesViewBrowser extends SugarView
         $doctree=new Tree('doctree');
         $doctree->tree_style = 'include/ytree/TreeView/css/default/tree.css';
         $doctree->set_param('module','xeBayCategories');
-        $href_string = "javascript:populate_search('doctree')";
  
         $nodes = get_node_data(
             array(

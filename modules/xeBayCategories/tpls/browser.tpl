@@ -38,68 +38,10 @@
 
 {$INSTRUCTION}
 
-<form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
-<input type="hidden" name="module" value="xeBayCategories">
-<input type="hidden" name="action" value="index">
-<table width="100%" style="border:2px solid #4e8ccf;margin-top:10px;" cellspacing="10" cellpadding="0">
-</table>
-
 <!-- BEGIN: TreeView -->
-{$SITEURL}
 {$TREEHEADER}
-{$SET_RETURN_JS}
 
 <script>
-{literal}
-function select_document(treeid) {
-	var node=YAHOO.namespace(treeid).selectednode;
-	send_back('Documents',node.data.id);
-}
-
-function populate_parent_search(treeid) {
-	var node=YAHOO.namespace(treeid).selectednode;
-		
-	if (node.depth==1) {
-		new_subcategory_id=node.data.id;
-		if (new_subcategory_id == 'null') new_subcategory_id='';
-		new_category_id=node.parent.data.id;
-		if (new_category_id == 'null') new_category_id='';
-	} else {
-		new_category_id=node.data.id;
-		if (new_category_id == 'null') new_category_id='';
-		new_subcategory_id='';	
-	}
-
-	if(!window.opener.document.getElementById('Documentsadvanced_searchSearchForm')) {
-		window.opener.location = 'index.php?searchFormTab=advanced_search&module=Documents&action=index&query=true&category_id_advanced' +'='+escape(new_category_id)+'&subcategory_id_advanced='+escape(new_subcategory_id);
-	} else {
-		var searchTab = (window.opener.document.getElementById('Documentsadvanced_searchSearchForm').style.display == '') ? 'advanced' : 'basic';
-		window.opener.location = 'index.php?searchFormTab='+searchTab+'_search&module=Documents&acti8n=index&query=true&category_id_'+searchTab+'='+escape(new_category_id)+'&subcategory_id_'+searchTab+'='+escape(new_subcategory_id);
-	}
-	window.close();
-}
-
-function populate_search(treeid) {
-	var node=YAHOO.namespace(treeid).selectednode;
-
-	if (node.depth==1) {
-		new_subcategory_id=node.data.id;
-		if (new_subcategory_id == 'null') new_subcategory_id='';
-		new_category_id=node.parent.data.id;
-		if (new_category_id == 'null') new_category_id='';
-	} else {
-		new_category_id=node.data.id;
-		if (new_category_id == 'null') new_category_id='';
-		new_subcategory_id='';	
-	}
-
-
-	document.popup_query_form.subcategory_id.value=new_subcategory_id;
-	document.popup_query_form.category_id.value=new_category_id;
-	
-	document.popup_query_form.submit();
-}
-{/literal}
 </script>
 
 <table cellpadding="0" cellspacing="0" style="border-left:1px solid; border-right:1px solid; border-bottom:1px solid" width="100%" class="edit view">
