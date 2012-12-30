@@ -44,12 +44,31 @@ $listViewDefs['xeBayCategories'] = array(
 		'label' => 'LBL_NAME', 
 		'default' => true,
         'link' => true),         
+	'CATEGORY_ID' => array(
+		'width' => '8', 
+		'label' => 'LBL_CATEGORY_ID', 
+		'default' => true),         
+	'CATEGORY_LEVEL' => array(
+		'width' => '8', 
+		'label' => 'LBL_CATEGORY_LEVEL', 
+		'default' => true),         
+	'CATEGORY_PARENT_ID' => array(
+		'width' => '8', 
+		'label' => 'LBL_CATEGORY_PARENT_ID', 
+		'default' => true),         
+	'LEAF_CATEGORY' => array(
+		'width' => '8', 
+		'label' => 'LBL_LEAF_CATEGORY', 
+		'default' => true),         
+    'expired' => array(
+		'width' => '8', 
+		'label' => 'LBL_EXPIRED', 
+		'default' => true),         
 	'ASSIGNED_USER_NAME' => array(
 		'width' => '9', 
 		'label' => 'LBL_ASSIGNED_TO_NAME',
 		'module' => 'Employees',
 		'id' => 'ASSIGNED_USER_ID',
         'default' => true),
-	
 );
 ?>

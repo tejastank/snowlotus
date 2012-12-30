@@ -50,6 +50,17 @@ $viewdefs['xeBayCategories']['DetailView'] = array(
 			'assigned_user_name',
 		),
 		array (
+			'category_level',
+			'expired',
+		),
+		array (
+			'category_id',
+			'category_parent_id',
+		),
+        // array (
+            // 'description',
+        // ),
+		array (
 			array (
 				'name' => 'date_entered',
 				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
@@ -60,9 +71,6 @@ $viewdefs['xeBayCategories']['DetailView'] = array(
 				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
 				'label' => 'LBL_DATE_MODIFIED',
 			),
-		),
-		array (
-			'description',
 		),
 	)
 );

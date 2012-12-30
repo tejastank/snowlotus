@@ -57,6 +57,21 @@ class xeBayCategory extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $autopay_enabled;
+	var $b2bvat_enabled;
+	var $bestoffer_enabled;
+	var $category_id;
+    var $category_level;
+	var $category_parent_id;
+	var $expired;
+	var $intl_autos_fixed_cat;
+	var $leaf_category;
+	var $lsd;
+	var $orpa;
+	var $orra;
+	var $seller_guarantee_eligible;
+	var $virtual;
+
 	function xeBayCategory()
 	{
 		parent::Basic();

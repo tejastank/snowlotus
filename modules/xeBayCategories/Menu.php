@@ -38,6 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('xeBayCategories', 'edit', true))$module_menu[]=Array("index.php?module=xeBayCategories&action=EditView&return_module=xeBayCategories&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayCategorys", 'xeBayCategories');
+// if(ACLController::checkAccess('xeBayCategories', 'edit', true))$module_menu[]=Array("index.php?module=xeBayCategories&action=EditView&return_module=xeBayCategories&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayCategorys", 'xeBayCategories');
 if(ACLController::checkAccess('xeBayCategories', 'list', true))$module_menu[]=Array("index.php?module=xeBayCategories&action=index&return_module=xeBayCategories&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayCategorys", 'xeBayCategories');
+if(ACLController::checkAccess('xeBayCategories', 'browse', true))$module_menu[]=Array("index.php?module=xeBayCategories&action=browser&return_module=xeBayCategories&return_action=index", $mod_strings['LNK_BROWSER'],"eBayCategorys", 'xeBayCategories');
 if(ACLController::checkAccess('xeBayCategories', 'import', true))$module_menu[]=Array("index.php?module=xeBayCategories&action=import&return_module=xeBayCategories&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBayCategories');

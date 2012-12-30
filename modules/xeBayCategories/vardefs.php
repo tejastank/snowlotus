@@ -39,6 +39,111 @@ $dictionary['xeBayCategory'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'autopay_enabled'=>
+		array(
+			'name'=>'autopay_enabled',
+	    	'vname'=> 'LBL_AUTOPAY_ENABLED',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'b2bvat_enabled'=>
+		array(
+			'name'=>'b2bvat_enabled',
+	    	'vname'=> 'LBL_B2BVAT_ENABLED',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'bestoffer_enabled'=>
+		array(
+			'name'=>'bestoffer_enabled',
+	    	'vname'=> 'LBL_BESTOFFER_ENABLED',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'category_id'=>
+		array(
+			'name'=>'category_id',
+	    	'vname'=> 'LBL_CATEGORY_ID',
+	    	'type'=>'varchar',
+            'length'=>'10',
+		),
+        'category_level'=>
+		array(
+			'name'=>'category_level',
+	    	'vname'=> 'LBL_CATEGORY_LEVEL',
+	    	'type'=>'int',
+		),
+		'name'=>
+		array(
+			'name'=>'name',
+	    	'vname'=> 'LBL_NAME',
+	    	'type'=>'varchar',
+            'length'=>'30',
+			'comment' => 'category name',
+		),
+		'category_parent_id'=>
+		array(
+			'name'=>'category_parent_id',
+	    	'vname'=> 'LBL_CATEGORY_PARENT_ID',
+	    	'type'=>'varchar',
+            'length'=>'10',
+		),
+		'expired'=>
+		array(
+			'name'=>'expired',
+	    	'vname'=> 'LBL_EXPIRED',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'intl_autos_fixed_cat'=>
+		array(
+			'name'=>'intl_autos_fixed_cat',
+	    	'vname'=> 'LBL_INTL_AUTOS_FIXED_CAT',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'leaf_category'=>
+		array(
+			'name'=>'leaf_category',
+	    	'vname'=> 'LBL_LEAF_CATEGORY',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'lsd'=>
+		array(
+			'name'=>'lsd',
+	    	'vname'=> 'LBL_LSD',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'orpa'=>
+		array(
+			'name'=>'orpa',
+	    	'vname'=> 'LBL_ORPA',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'orra'=>
+		array(
+			'name'=>'orra',
+	    	'vname'=> 'LBL_ORRA',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'seller_guarantee_eligible'=>
+		array(
+			'name'=>'seller_guarantee_eligible',
+	    	'vname'=> 'LBL_SELLER_GUARANTEE_ELIGIBLE',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'virtual'=>
+		array(
+			'name'=>'virtual',
+	    	'vname'=> 'LBL_VIRTUAL',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
 	),
 	'relationships'=>array (
 	),

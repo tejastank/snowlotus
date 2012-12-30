@@ -1,6 +1,5 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
+ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,36 +35,47 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
+require_once('include/ytree/Node.php');
 
- * Description: Controller for the Import module
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
+//function returns an array of objects of Node type.
+function get_node_data($params,$get_array=false) {
+    $ret=array();
+    $nodes = array();
 
-require_once("include/MVC/Controller/SugarController.php");
-require_once('eBayApi/GetCategories.php');
+    $click_level=$params['TREE']['depth'];
+    $category_id=$params['NODES'][$click_level]['id'];
+    $category_parent_id=$params['NODES'][$click_level-1]['id'];
 
-class xeBayCategoriesController extends SugarController
-{
-    function action_browser()
-    {
-        $this->view = 'browser';
+    if (isset($category_id)) {
+        $category_level=$click_level + 2;
+        $where = "expired='0' AND category_level='$category_level'";
+        $where .= " AND category_parent_id='$category_id'";
+    } else {
+        $category_level=$click_level + 1;
+        $where = "expired=0 AND category_level=$category_level";
+    }
+    $bean = BeanFactory::getBean('xeBayCategories');
+    $resp = $bean->get_list("name", $where, 0, -99, -99, 0, false, array('category_id', 'name', 'leaf_category'));
+    foreach($resp['list'] as &$category) {
+        $node = new Node($category->category_id, $category->name);
+        if ($category->leaf_category == 1) {
+            $node->dynamic_load = false;
+        } else {
+            $node->set_property("href", $href_string);
+            $node->dynamic_load = true;
+        }
+        $nodes[] = $node;
     }
 
-    function action_import()
-    {
-		$categories = new GetCategories;
+    if ($get_array)
+        return $nodes;
 
-        // $result = $categories->dispatchCall(array(
-            // 'CategoryParent' => 1,
-        // ));
-
-        $count =  $categories->retrieveCategories(array(
-            'AuthToken' => '',
-        ));
-        echo 'category count ' . $count;
-		sugar_cleanup(true);
-    }
+	foreach ($nodes as $node) {
+		$ret['nodes'][]=$node->get_definition();
+	}
+	$json = new JSON(JSON_LOOSE_TYPE);
+	$str=$json->encode($ret);
+	return $str;
 }
+
 ?>

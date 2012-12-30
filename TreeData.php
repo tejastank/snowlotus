@@ -132,6 +132,9 @@ if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename]) )
             'get_category_nodes'=>'',
             'get_documents'=>'',
             ),
+        'xeBayCategories' => array(
+            'get_node_data'=>'',
+            ),
         );
         
 	if (isset($TreeDataFunctions[$modulename][$func_name])) {
