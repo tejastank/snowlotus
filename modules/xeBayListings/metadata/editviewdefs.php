@@ -46,11 +46,76 @@ $viewdefs['xeBayListings']['EditView'] = array(
 	'panels' => array (
 		'default' => array (
 			array (
-				'name',
-				'assigned_user_name',
+				array(
+					'name' => 'name',
+					'displayParams' => array(
+						'maxlength' => 80,
+						'size' => 78,
+					),
+				),
+				array(
+					'name' => 'inventory_name',
+					'displayParams' => array(
+						'size' => 64,
+						'readOnly' => 'readOnly',
+					)
+				),
+			),
+			array (
+				// array(
+					// 'name' => 'subtitle',
+					// 'displayParams' => array(
+						// 'maxlength' => 55,
+						// 'size' => 78,
+					// ),
+				// ),
+				'',
+				array(
+					'name' => 'short_title',
+					'displayParams' => array(
+						'maxlength' => 55,
+						'size' => 78,
+					),
+				),
+			),
+			array (
+				array(
+					'name' => 'primarycategory_name',
+					'displayParams' => array(
+						'size' => 64,
+						'readOnly' => 'readOnly',
+					)
+				),
+				array(
+					'name' => 'secondarycategory_name',
+					'displayParams' => array(
+						'size' => 64,
+						'readOnly' => 'readOnly',
+					)
+				),
+			),
+			// array (
+				// 'variations',
+			// ),
+			array (
+				'conditionid',
+			),
+			// array (
+				// array(
+					// 'name' => 'conditiondescription',
+					// 'type' => 'text',
+					// 'displayParams' => array(
+						// 'rows' => 4,
+						// 'cols' => 160,
+					// ),
+				// ),
+			// ),
+			array (
+				'picturedetails',
 			),
 			array (
 				'description',
+				'assigned_user_name',
 			),
 		),
 	),

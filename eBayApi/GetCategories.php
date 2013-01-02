@@ -106,7 +106,8 @@ class GetCategories extends eBayApiEnvironment
                 $bean->orra = $category->getORRA();
                 $bean->seller_guarantee_eligible = $category->getSellerGuaranteeEligible();
                 $bean->virtual = $category->getVirtual();
-				$bean->id = create_guid();
+				// $bean->id = create_guid();
+				$bean->id = $bean->category_id;
 				$bean->new_with_id = true;
 				$bean->save();
             }

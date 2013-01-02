@@ -68,6 +68,7 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'conditionid',
 			'vname' => 'LBL_CONDITIONID',
 			'type' => 'int',
+			'required' => true,
 		),
 		'country' => array(
 			'name' => 'country',
@@ -277,6 +278,51 @@ $dictionary['xeBayListing'] = array(
 			'type' => 'varchar',
 			'len' => '55',
 		),
+		'primarycategory_name'=>
+		array(
+			'name'=>'primarycategory_name',
+			'rname' => 'name',
+			'vname'=>'LBL_PRIMARYCATEGORY',
+			'id_name'=>'primarycategoryid',
+			'type'=>'relate',
+			'link'=>'primarycategory_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebaycategories',
+			'module' => 'xeBayCategories',
+			'required' => true,
+		),
+		'primarycategory_link'=>
+		array(
+			'name' => 'primarycategory_link',
+			'type' => 'link',
+			'relationship' => 'xebaylisting_primarycategory',
+			'vname' => 'LBL_PRIMARYCATEGORY',
+			'source'=>'non-db',
+		),
+		'secondarycategory_name'=>
+		array(
+			'name'=>'secondarycategory_name',
+			'rname' => 'name',
+			'vname'=>'LBL_SECONDARYCATEGORY',
+			'id_name'=>'secondarycategoryid',
+			'type'=>'relate',
+			'link'=>'secondarycategory_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebaycategories',
+			'module' => 'xeBayCategories',
+		),
+		'secondarycategory_link'=>
+		array(
+			'name' => 'secondarycategory_link',
+			'type' => 'link',
+			'relationship' => 'xebaylisting_secondarycategory',
+			'vname' => 'LBL_SECONDARYCATEGORY',
+			'source'=>'non-db',
+		),
 		'inventory_name'=>
 		array(
 			'name'=>'inventory_name',
@@ -290,6 +336,7 @@ $dictionary['xeBayListing'] = array(
 			'dbType' => 'varchar',
 			'table' => 'xinventories',
 			'module' => 'xInventories',
+			'required' => true,
 		),
 		'inventory_link'=>
 		array(
@@ -301,6 +348,14 @@ $dictionary['xeBayListing'] = array(
 		),
 	),
 	'relationships'=>array (
+		'xebaylisting_primarycategory' => array(
+			'lhs_module'=> 'xeBayCategories', 'lhs_table'=> 'xebaycategories', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'primarycategoryid',
+			'relationship_type'=>'one-to-many'),
+		'xebaylisting_secondarycategory' => array(
+			'lhs_module'=> 'xeBayCategories', 'lhs_table'=> 'xebaycategories', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'secondarycategoryid',
+			'relationship_type'=>'one-to-many'),
 		'xebaylisting_inventory' => array(
 			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
 			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'sku',
