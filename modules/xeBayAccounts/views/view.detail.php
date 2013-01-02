@@ -36,44 +36,65 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description: Controller for the Import module
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
+require_once('include/MVC/View/views/view.detail.php');
 
-require_once("include/MVC/Controller/SugarController.php");
-require_once('eBayApi/GetCategories.php');
-
-class xeBayCategoriesController extends SugarController
+class xeBayAccountsViewDetail extends ViewDetail
 {
-    function action_browser()
-    {
-        $this->view = 'browser';
-    }
+ 	function xeBayAccountsViewDetail(){
+ 		parent::ViewDetail();
+ 	}
 
-    function action_import()
-    {
-		if (!empty($_REQUEST['ebay_account_name'])) {
-			$name = $_REQUEST['ebay_account_name'];
-			$bean = BeanFactory::getBean('xeBayAccounts');
-			$accounts = $bean->get_accounts($name);
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+ 	function display(){
+		global $mod_strings;
+				
+		if(empty($this->bean->id)){
+			global $app_strings;
+			sugar_die($app_strings['ERROR_NO_RECORD']);
 		}
 
-		$categories = new GetCategories;
-
-		foreach ($accounts as $id => $authToken) {
-        	$count = $categories->retrieveCategories(array(
-				'AccountID' => $id,
-				'AuthToken' => $authToken,
-        	));
-		}
-		if (isset($_REQUEST['return_module']) && isset($_REQUEST['return_action']) && isset($_REQUEST['return_id'])) {
-			$this->redirect_url = "index.php?module={$_REQUEST['return_module']}&action={$_REQUEST['return_action']}&record={$_REQUEST['return_id']}";
-		} else {
-			sugar_cleanup(true);
-		}
-    }
+      	$javascript = <<<EOQ
+<script>
+function  updateebaydetails()
+{
+	if (confirm("Do you want to update ebay details now ?")) {
+		window.location = "index.php?module=xeBayAccounts&action=getebaydetails&record={$this->bean->id}";
+	}
+	return false;
 }
+
+function  updatecategory()
+{
+	if (confirm("Do you want to update category now ?")) {
+		window.location = "index.php?module=xeBayCategories&action=import&ebay_account_name={$this->bean->name}&return_module=xeBayAccounts&return_action=DetailView&return_id={$this->bean->id}";
+	}
+	return false;
+}
+</script>
+EOQ;
+		echo $javascript;
+
+
+		$this->dv->process();
+
+		$updatetime = "<span>{$this->bean->ebay_detail_update_time}</span>&nbsp;";
+		$updatetime .= "<input title='{$mod_strings['LBL_UPDATE']}' class='button' type='submit' name='button' value='{$mod_strings['LBL_UPDATE']}' id='update' onclick='return updateebaydetails();'>";
+		$this->ss->assign("EBAY_DETAIL_UPDATETIME_CUSTOM", $updatetime);
+
+		$updatetime = "<span>{$this->bean->category_update_time}</span>&nbsp;";
+		$updatetime .= "<input title='{$mod_strings['LBL_UPDATE']}' class='button' type='submit' name='button' value='{$mod_strings['LBL_UPDATE']}' id='update' onclick='return updatecategory();'>";
+		$this->ss->assign("CATEGORY_UPDATETIME_CUSTOM", $updatetime);
+        
+		echo $this->dv->display();
+ 	} 	
+}
+
 ?>

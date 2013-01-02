@@ -53,6 +53,16 @@ $viewdefs['xeBayAccounts']['DetailView'] = array(
 			'hard_expiration_time',
 		),
 		array (
+			array(
+				'name' => 'ebay_detail_update_time',
+				'customCode' => '{$EBAY_DETAIL_UPDATETIME_CUSTOM}',
+			),
+			array(
+				'name' => 'category_update_time',
+				'customCode' => '{$CATEGORY_UPDATETIME_CUSTOM}',
+			),
+		),
+		array (
 			'description',
 		),
 		array (

@@ -51,6 +51,57 @@ $dictionary['xeBayAccount'] = array(
 			'vname' => 'LBL_HARD_EXPIRATION_TIME',
 	    	'type'=>'datetime',
 		),
+		// Use GeteBayDetails to retrieve the available meta-data for the specified eBay site.
+		'ebay_details'=>
+		array (
+			'name' => 'ebay_details',
+			'vname' => 'LBL_EBAY_DETAILS',
+			'type' => 'varchar',
+			'len' => 255,
+		),
+		'ebay_detail_update_time' => array(
+			'name' => 'ebay_detail_update_time',
+			'vname' => 'LBL_EBAY_DETAIL_UPDATE_TIME',
+			'type' => 'datetime',
+		),
+		// Category meta-data
+		'category_count'=>
+		array (
+			'name' => 'category_count',
+			'vname' => 'LBL_CATEGORY_COUNT',
+			'type' => 'int',
+		),
+		'category_version'=>
+		array (
+			'name' => 'category_version',
+			'vname' => 'LBL_CATEGORY_VERSION',
+			'type' => 'varchar',
+			'len' => 32,
+		),
+		'minimum_reserve_price'=>
+		array (
+			'name' => 'minimum_reserve_price',
+			'vname' => 'LBL_MINIMUM_RESERVE_PRICE',
+			'type' => 'double',
+		),
+		'reduce_reserve_allowed'=>
+		array (
+			'name' => 'reduce_reserve_allowed',
+			'vname' => 'LBL_REDUCE_RESERVE_ALLOWED',
+			'type' => 'bool',
+		),
+		'reserve_price_allowed'=>
+		array (
+			'name' => 'reserve_price_allowed',
+			'vname' => 'LBL_RESERVE_PRICE_ALLOWED',
+			'type' => 'bool',
+		),
+		'category_update_time'=>
+		array (
+			'name' => 'category_update_time',
+			'vname' => 'LBL_CATEGORY_UPDATE_TIME',
+			'type' => 'datetime',
+		),
 	),
 	'relationships'=>array (
 	),

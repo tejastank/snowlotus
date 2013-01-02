@@ -46,6 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once("include/MVC/Controller/SugarController.php");
 require_once('eBayApi/GetSessionID.php');
 require_once('eBayApi/FetchToken.php');
+require_once('eBayApi/GeteBayDetails.php');
 
 class xeBayAccountsController extends SugarController
 {
@@ -90,5 +91,59 @@ class xeBayAccountsController extends SugarController
 
 		$this->set_redirect($url);
     }
+
+	function action_getebaydetails()
+	{
+		$accounts = array();
+
+		// for debug
+		$_REQUEST['ebay_account_name'] = "xlongfeng";
+
+		if (!empty($_REQUEST['ebay_account_name'])) {
+			$name = $_REQUEST['ebay_account_name'];
+			$bean = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $bean->get_accounts($name);
+		}
+
+		$x = new GeteBayDetails();
+
+		// $x->dispatchCall(array('DetailName'=>'CountryDetails'));
+		// exit;
+
+		foreach ($accounts as $id => $authToken) {
+			$result = $x->retrieveeBayDetails(array(
+				'DetailName' => array(
+					'BuyerRequirementDetails',
+					'CountryDetails',
+					'CurrencyDetails',
+					'DispatchTimeMaxDetails',
+					'ExcludeShippingLocationDetails',
+					'ItemSpecificDetails',
+					'ListingFeatureDetails',
+					'ListingStartPriceDetails',
+					'PaymentOptionDetails',
+					'RecoupmentPolicyDetails',
+					'RegionDetails',
+					'RegionOfOriginDetails',
+					'ReturnPolicyDetails',
+					'ShippingCarrierDetails',
+					'ShippingCategoryDetails',
+					'ShippingLocationDetails',
+					/* 'ShippingPackageDetails', */
+					'ShippingServiceDetails',
+					'SiteDetails',
+					/* 'TaxJurisdiction', */
+					/* 'TimeZoneDetails', */
+					/* 'UnitOfMeasurementDetails', */
+					'URLDetails',
+					'VariationDetails',
+				),
+				'AccountID' => $id,
+				'AuthToken' => $authToken,
+			));
+		}
+
+		$this->redirect_url = "index.php?module=xeBayAccounts&action=DetailView&record={$this->record}";
+	}
 }
 ?>

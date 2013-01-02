@@ -39,6 +39,12 @@ $dictionary['xeBayCategory'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'ebay_account_id'=>
+		array(
+			'name'=>'ebay_account_id',
+	    	'vname'=> 'LBL_EBAY_ACCOUNT_ID',
+	    	'type'=>'id',
+		),
 		'autopay_enabled'=>
 		array(
 			'name'=>'autopay_enabled',

@@ -54,11 +54,17 @@ class GetCategories extends eBayApiEnvironment
 
 	public function retrieveCategories($params)
 	{
-        // $this->session->setRequestToken($params['AuthToken']);
+		$account_id = $params['AccountID'];
+		$this->session->setRequestToken($params['AuthToken']);
+
+		$account = BeanFactory::getBean('xeBayAccounts');
+		if ($account->retrieve($account_id) === null)
+			return false;
+
 		$bean = BeanFactory::getBean('xeBayCategories');
 
         $req = new GetCategoriesRequestType();
-        // $req->setLevelLimit(2);
+		// $req->setLevelLimit(1);
 		$req->setDetailLevel("ReturnAll");
 		
 		set_time_limit(60*10);
@@ -67,13 +73,18 @@ class GetCategories extends eBayApiEnvironment
         $categoryCount = 0;
         if ($this->testValid($res)) {
 		    $GLOBALS['db']->query($GLOBALS['db']->truncateTableSQL('xebaycategories'));
-            $categoryCount = $res->getCategoryCount();
-            $updatetime = $res->getUpdateTime();
-            $version = $res->getCategoryVersion();
-            $reservePriceAllowed = $res->getReservePriceAllowed();
-            $MinimumReservePrice = $res->getMinimumReservePrice();
-            $categoryArray = $res->getCategoryArray();
+
+			$account->category_count = $res->getCategoryCount();
+			$account->category_update_time = $res->getUpdateTime();
+			$account->category_version = $res->getCategoryVersion();
+			$account->reserve_price_allowed = $res->getReservePriceAllowed();
+			$account->reduce_reserve_allowed = $res->getReduceReserveAllowed();
+			$account->minimum_reserve_price = $res->getMinimumReservePrice();
+			$account->save();
+
+			$categoryArray = $res->getCategoryArray();
             foreach($categoryArray as &$category) {
+				$bean->ebay_account_id = $account_id;
                 $bean->autopay_enabled = $category->getAutoPayEnabled();
                 $bean->b2bvat_enabled = $category->getB2BVATEnabled();
                 $bean->bestoffer_enabled = $category->getBestOfferEnabled();
@@ -99,7 +110,7 @@ class GetCategories extends eBayApiEnvironment
 				$bean->new_with_id = true;
 				$bean->save();
             }
-            return $categoryCount;
+            return (true);
         } else {
             $this->dumpObject($res);
             return (false);

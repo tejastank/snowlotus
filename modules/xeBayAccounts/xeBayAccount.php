@@ -63,6 +63,17 @@ class xeBayAccount extends Basic {
 
 	var $additional_column_fields = Array('session_id');
 
+	// Use GeteBayDetails to retrieve the available meta-data for the specified eBay site.
+	var $ebay_details;
+	var $ebay_detail_update_time;
+
+    var $category_count;
+    var $category_update_time;
+    var $category_version;
+    var $reserve_price_allowed;
+    var $reduce_reserve_allowed;
+    var $minimum_reserve_price;
+
 	function xeBayAccount()
 	{
 		parent::Basic();

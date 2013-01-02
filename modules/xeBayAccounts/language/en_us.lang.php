@@ -69,4 +69,7 @@ $mod_strings = array (
   'LBL_HARD_EXPIRATION_TIME' => 'Expiration Time',
   'LBL_CONNECT_NOW' => 'Connect Now',
   'LBL_MISS_NAME' => 'Missing required field: Name',
+  'LBL_EBAY_DETAIL_UPDATE_TIME' => 'eBay Feature Updated',
+  'LBL_CATEGORY_UPDATE_TIME' => 'Category Updated',
+  'LBL_UPDATE' => 'Update',
 );
