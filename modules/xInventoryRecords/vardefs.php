@@ -65,7 +65,7 @@ $dictionary['xInventoryRecord'] = array(
 			'name' => 'inventory_link',
 			'type' => 'link',
 			'relationship' => 'xinventoryrecord_xinventory',
-			'vname' => 'LBL_CATEGORY',
+			'vname' => 'LBL_INVENTORY',
 			'source'=>'non-db',
 		),
         'operation'=>

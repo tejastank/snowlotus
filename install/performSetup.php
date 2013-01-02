@@ -495,6 +495,7 @@ FP;
     $enabled_tabs[] = 'Prospects';
     $enabled_tabs[] = 'ProspectLists';
     $enabled_tabs[] = 'xeBayAccounts';
+    $enabled_tabs[] = 'xeBayListings';
     $enabled_tabs[] = 'xeBayOrders';
     $enabled_tabs[] = 'xInventories';
     $enabled_tabs[] = 'xCategories';

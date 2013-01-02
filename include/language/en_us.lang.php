@@ -109,6 +109,7 @@ $app_list_strings = array (
     'OAuthTokens' => 'OAuth Tokens',
     'xeBayAccounts' => 'eBay Account',
 	'xeBayCategories' => 'eBay Category',
+    'xeBayListings' => 'eBay Listing',
     'xeBayOrders' => 'eBay Order',
     'xeBayShipToAddresses' => 'Ship To Address',
     'xeBayTransactions' => 'Order Transactions',
