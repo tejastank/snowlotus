@@ -83,7 +83,6 @@ $dictionary['xInventoryRecord'] = array(
 			'name'=>'price',
 	    	'vname'=> 'LBL_PRICE',
 	    	'type'=>'double',
-			'required' => true,
 			'audited' => true,
 		),
 		'quantity'=>

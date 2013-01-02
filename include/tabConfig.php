@@ -99,15 +99,23 @@ $GLOBALS['tabStructure'] = array(
         'label' => 'LBL_TABGROUP_SONWLOTUS',
         'modules' => array(
             "Home",
-            "xInventories",
 			"xCategories",
-			"xActiveListings",
-			"xeBayAccounts",
-			"xeBayListings",
-			"xeBayOrders",
+            "xInventories",
+            "xInventoryRecords",
             "xXxxs",
         )
     ),
+	'LBL_TABGROUP_EBAYTOOLS'=>array(
+        'label' => 'LBL_TABGROUP_EBAYTOOLS',
+        'modules' => array(
+            "Home",
+			"xActiveListings",
+			"xeBayAccounts",
+			"xeBayCategories",
+			"xeBayListings",
+			"xeBayOrders",
+        )
+	),
 );
 
 if(file_exists('custom/include/tabConfig.php')){

@@ -2051,6 +2051,7 @@ $app_strings = array (
     'LBL_TABGROUP_REPORTS' => 'Reports',
     'LBL_TABGROUP_SALES' => 'Sales',
     'LBL_TABGROUP_SONWLOTUS' => 'SnowLotus',
+    'LBL_TABGROUP_EBAYTOOLS' => 'eBay Tools',
     'LBL_TABGROUP_SUPPORT' => 'Support',
     'LBL_TABGROUP_TOOLS' => 'Tools',
     'LBL_TASKS'=>'Tasks',
