@@ -169,9 +169,7 @@ $dictionary['xeBayListing'] = array(
 		'primarycategoryid' => array(
 			'name' => 'primarycategoryid',
 			'vname' => 'LBL_PRIMARYCATEGORYID',
-			'type' => 'varchar',
-			'len' => '10',
-			'required' => true,
+			'type' => 'id',
 		),
 		// ProductListingDetails
 		'quantity' => array(
@@ -197,8 +195,7 @@ $dictionary['xeBayListing'] = array(
 		'secondarycategoryid' => array(
 			'name' => 'secondarycategoryid',
 			'vname' => 'LBL_SECONDARYCATEGORYID',
-			'type' => 'varchar',
-			'len' => '10',
+			'type' => 'id',
 		),
 		'shippingdetails' => array(
 			'name' => 'shippingdetails',

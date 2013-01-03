@@ -72,7 +72,7 @@ class GetCategories extends eBayApiEnvironment
         $res = $this->proxy->GetCategories($req);
         $categoryCount = 0;
         if ($this->testValid($res)) {
-		    $GLOBALS['db']->query($GLOBALS['db']->truncateTableSQL('xebaycategories'));
+		    $GLOBALS['db']->query("DELETE FROM xebaycategories WHERE xebaycategories.ebay_account_id = '$account_id'");
 
 			$account->category_count = $res->getCategoryCount();
 			$account->category_update_time = $res->getUpdateTime();
@@ -106,8 +106,7 @@ class GetCategories extends eBayApiEnvironment
                 $bean->orra = $category->getORRA();
                 $bean->seller_guarantee_eligible = $category->getSellerGuaranteeEligible();
                 $bean->virtual = $category->getVirtual();
-				// $bean->id = create_guid();
-				$bean->id = $bean->category_id;
+                $bean->id = create_guid();
 				$bean->new_with_id = true;
 				$bean->save();
             }

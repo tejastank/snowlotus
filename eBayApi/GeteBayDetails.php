@@ -73,8 +73,9 @@ class GeteBayDetails extends eBayApiEnvironment
 		$this->fill_url_details($bean, $res, $xml);
 		$this->fill_variation_details($bean, $res, $xml);
 
-		$file = "modules/xeBayAccounts/xmls/" . $bean->id . ".xml";
-		file_put_contents($file, $xml->asXML());
+        // $file = "modules/xeBayAccounts/xmls/" . $bean->id . ".xml";
+        // file_put_contents($file, $xml->asXML());
+        return htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
 	}
 
 	public function fill_buyer_requirement_details($bean, $res, $xml)
@@ -516,7 +517,7 @@ class GeteBayDetails extends eBayApiEnvironment
 
         $res = $this->proxy->GeteBayDetails($req);
         if ($this->testValid($res)) {
-			$this->fill_ebay_details($bean, $res, $xml);
+			$bean->ebay_details = $this->fill_ebay_details($bean, $res, $xml);
 			$bean->ebay_detail_update_time = $res->getUpdateTime();
 			$bean->save();
             return (true);

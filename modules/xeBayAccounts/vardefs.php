@@ -56,8 +56,7 @@ $dictionary['xeBayAccount'] = array(
 		array (
 			'name' => 'ebay_details',
 			'vname' => 'LBL_EBAY_DETAILS',
-			'type' => 'varchar',
-			'len' => 255,
+			'type' => 'longtext',
 		),
 		'ebay_detail_update_time' => array(
 			'name' => 'ebay_detail_update_time',
