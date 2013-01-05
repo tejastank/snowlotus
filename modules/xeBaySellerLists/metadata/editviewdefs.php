@@ -34,7 +34,7 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayListings']['EditView'] = array(
+$viewdefs['xeBaySellerLists']['EditView'] = array(
 	'templateMeta' => array(
 		'maxColumns' => '2', 
 		'widths' => array(
@@ -45,82 +45,59 @@ $viewdefs['xeBayListings']['EditView'] = array(
  
 	'panels' => array (
 		'default' => array (
+			array(
+				array(
+					'name' => 'item_id',
+					'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$fields.item_id.value}4040.jpg" alt="" /></a>',
+					'label' => 'LBL_PICTURE',
+				),
+				array(
+					'name' => 'item_id',
+					'customCode' => '{$fields.item_id.value}',
+				),
+			),
 			array (
 				array(
 					'name' => 'name',
+					'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank">{$fields.name.value}</a>',
+					'label' => 'LBL_NAME',
+					// 'displayParams' => array(
+						// 'size'=>78,
+						// 'field' => array(
+							// 'readonly' => 'readonly',
+						// ),
+					// ),
+				),
+				array(
+					'name' => 'endtime',
+					'customCode' => '{$fields.endtime.value}',
+				),
+			),
+			array (
+				array(
+					'name' => 'price',
+					'customCode' => '{$fields.currency_id.value}&nbsp{$fields.price.value}',
+					'label' => 'LBL_PRICE',
 					'displayParams' => array(
-						'maxlength' => 80,
-						'size' => 78,
+						'field' => array(
+							'readonly' => 'readonly',
+						),
 					),
 				),
+				array(
+					'name' => 'listing_type',
+					'customCode' => '{$fields.listing_type.value}',
+				),
+			),
+			array (
 				array(
 					'name' => 'inventory_name',
+					'label' => 'LBL_RELATED_TO',
 					'displayParams' => array(
 						'size' => 64,
 						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			array (
-				// array(
-					// 'name' => 'subtitle',
-					// 'displayParams' => array(
-						// 'maxlength' => 55,
-						// 'size' => 78,
-					// ),
-				// ),
-				'',
-				array(
-					'name' => 'short_title',
-					'displayParams' => array(
-						'maxlength' => 55,
-						'size' => 78,
 					),
 				),
-			),
-			array (
-				array(
-					'name' => 'primarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-				array(
-					'name' => 'secondarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			// array (
-				// 'variations',
-			// ),
-			array (
-				'conditionid',
-			),
-			// array (
-				// array(
-					// 'name' => 'conditiondescription',
-					// 'type' => 'text',
-					// 'displayParams' => array(
-						// 'rows' => 4,
-						// 'cols' => 160,
-					// ),
-				// ),
-			// ),
-			array (
-				'picturedetails',
-			),
-			array (
-				array(
-					'name' => 'description',
-					'customCode' => '{$CUSTOM_DISCRIPTION}',
-				),
-			),
-			array (
-				'assigned_user_name',
 			),
 		),
 	),

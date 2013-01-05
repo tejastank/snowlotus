@@ -161,6 +161,7 @@ class xeBayOrder extends Basic {
 
 	function print_orders($ids)
 	{
+		$nationality = require_once('modules/xeBayOrders/nationality.php');
 		$ss = new Sugar_Smarty();
         $ss->left_delimiter = '{{';
         $ss->right_delimiter = '}}';
@@ -210,6 +211,12 @@ class xeBayOrder extends Basic {
 				$ss->assign("STATE_OR_PROVINCE", '');
 			$ss->assign("POSTAL_CODE", $bean->postal_code);
         	$ss->assign("COUNTRY_NAME", $bean->country_name);
+			if (!empty($nationality[$bean->country]['cn'])) {
+				$country_zh_cn = $nationality[$bean->country]['cn'];
+				$ss->assign("COUNTRY_ZH_CN", "&nbsp;($country_zh_cn)");
+			} else {
+				$ss->assign("COUNTRY_ZH_CN", '');
+			}
 			$ss->assign("PHONE", $bean->phone);
 
 			$ss->assign("CONTENTS", $customs_declaration);

@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,95 +35,52 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayListings']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
+
+/**
+ * xeBaySellerListsViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
  
-	'panels' => array (
-		'default' => array (
-			array (
-				array(
-					'name' => 'name',
-					'displayParams' => array(
-						'maxlength' => 80,
-						'size' => 78,
-					),
-				),
-				array(
-					'name' => 'inventory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			array (
-				// array(
-					// 'name' => 'subtitle',
-					// 'displayParams' => array(
-						// 'maxlength' => 55,
-						// 'size' => 78,
-					// ),
-				// ),
-				'',
-				array(
-					'name' => 'short_title',
-					'displayParams' => array(
-						'maxlength' => 55,
-						'size' => 78,
-					),
-				),
-			),
-			array (
-				array(
-					'name' => 'primarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-				array(
-					'name' => 'secondarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			// array (
-				// 'variations',
-			// ),
-			array (
-				'conditionid',
-			),
-			// array (
-				// array(
-					// 'name' => 'conditiondescription',
-					// 'type' => 'text',
-					// 'displayParams' => array(
-						// 'rows' => 4,
-						// 'cols' => 160,
-					// ),
-				// ),
-			// ),
-			array (
-				'picturedetails',
-			),
-			array (
-				array(
-					'name' => 'description',
-					'customCode' => '{$CUSTOM_DISCRIPTION}',
-				),
-			),
-			array (
-				'assigned_user_name',
-			),
-		),
-	),
-);
-?>
+require_once('include/MVC/View/SugarView.php');
+
+class xeBaySellerListsViewImport extends SugarView 
+{
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+		$ss = new Sugar_Smarty();
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+        $ss->assign("INSTRUCTION", "<h1>Retrieve seller list from ebay</h1>");
+
+		$bean = BeanFactory::getBean('xeBayAccounts');
+		$resp = $bean->get_list("", "ebay_auth_token<>''", 0, -1, -1, 0, false, array('name'));
+		if ($resp['row_count'] > 0) {
+			$ebay_account_options =  "<select name='ebay_account_name' id='ebay_account_name' title=''>";
+			if ($resp['row_count'] > 1)
+				$ebay_account_options .= "<option value='All'>All</option>";
+			foreach($resp['list'] as &$account) {
+				$name = $account->name;
+				$ebay_account_options .= "<option value='$name'>$name</option>";
+			}
+			$ebay_account_options .=  "</select>";
+        	$ss->assign("EBAY_ACCOUNT_OPTIONS", $ebay_account_options);
+		}
+
+      	$javascript = <<<EOQ
+function ImportConfirm()
+{
+		return confirm("Do you want to retrieve seller list now ?");
+}
+EOQ;
+      	$ss->assign("JAVASCRIPT", $javascript);
+		echo $ss->fetch("modules/xeBaySellerLists/tpls/import.tpl");
+ 	}
+}

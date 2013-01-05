@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -20,7 +22,7 @@
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
  * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+* You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  * 
  * The interactive user interfaces in modified source and object code versions
@@ -34,95 +36,42 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayListings']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
- 
-	'panels' => array (
-		'default' => array (
-			array (
-				array(
-					'name' => 'name',
-					'displayParams' => array(
-						'maxlength' => 80,
-						'size' => 78,
-					),
-				),
-				array(
-					'name' => 'inventory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			array (
-				// array(
-					// 'name' => 'subtitle',
-					// 'displayParams' => array(
-						// 'maxlength' => 55,
-						// 'size' => 78,
-					// ),
-				// ),
-				'',
-				array(
-					'name' => 'short_title',
-					'displayParams' => array(
-						'maxlength' => 55,
-						'size' => 78,
-					),
-				),
-			),
-			array (
-				array(
-					'name' => 'primarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-				array(
-					'name' => 'secondarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			// array (
-				// 'variations',
-			// ),
-			array (
-				'conditionid',
-			),
-			// array (
-				// array(
-					// 'name' => 'conditiondescription',
-					// 'type' => 'text',
-					// 'displayParams' => array(
-						// 'rows' => 4,
-						// 'cols' => 160,
-					// ),
-				// ),
-			// ),
-			array (
-				'picturedetails',
-			),
-			array (
-				array(
-					'name' => 'description',
-					'customCode' => '{$CUSTOM_DISCRIPTION}',
-				),
-			),
-			array (
-				'assigned_user_name',
-			),
-		),
-	),
-);
+
+class xeBayListingsViewEdit extends ViewEdit {
+
+ 	function xeBayListingsViewEdit(){
+ 		parent::ViewEdit();
+ 	}
+ 	
+ 	function display() {
+		global $mod_strings;
+
+        $description = $this->bean->description;
+        $description = <<<EOQ
+<div id='description_text_div'>
+    <textarea id='description_text' tabindex='0' name='description' cols="100" rows="40">{$description}</textarea>
+</div>
+EOQ;
+		$this->ev->ss->assign("CUSTOM_DISCRIPTION", $description);
+
+ 		parent::display();
+
+        require_once("include/SugarTinyMCE.php");
+        $tiny = new SugarTinyMCE();
+        $tiny->defaultConfig['cleanup_on_startup']=true;
+        $tiny->defaultConfig['width']=800;
+        $tiny->defaultConfig['height']=600;
+        $tiny->defaultConfig['plugins'].=",fullpage";
+        echo $tiny->getInstance();
+
+        $javascript = <<<EOQ
+<script type="text/javascript" language="Javascript">
+setTimeout("tinyMCE.execCommand('mceAddControl', false, 'description_text');", 500);
+var tiny = tinyMCE.getInstanceById('description_text');
+document.getElementById('description_text_div').style.display = 'inline';
+</script>
+EOQ;
+        echo $javascript;
+ 	}
+}
 ?>

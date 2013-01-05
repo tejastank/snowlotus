@@ -77,19 +77,19 @@ class xInventory extends Basic {
 
     function get_management_html()
     {
+        global $mod_strings;
+
         $id = $this->id;
         $in_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_in.png')."'>";
         $out_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_out.png')."'>";
         $management = "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&inventory_req=true&inventory_id={$id}&operation=in' title='{$mod_strings['LBL_INVENTORY_IN']}'>{$in_icon}</a>";
-        $management .= "&nbsp;";
+        $management .= "&nbsp;&nbsp;";
         $management .= "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&inventory_req=true&inventory_id={$id}&operation=out' title='{$mod_strings['LBL_INVENTORY_OUT']}'>{$out_icon}</a>";
         return $management;
     }
 
 	function get_list_view_data()
 	{
-        global $mod_strings;
-
 		$field_list = $this->get_list_view_array();
 
         $field_list['INVENTORY_MANAGEMENT'] = $this->get_management_html();

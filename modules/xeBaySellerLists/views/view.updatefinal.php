@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,95 +35,30 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayListings']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
+
+/**
+ * xeBaySellerListsViewUpdate.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
  
-	'panels' => array (
-		'default' => array (
-			array (
-				array(
-					'name' => 'name',
-					'displayParams' => array(
-						'maxlength' => 80,
-						'size' => 78,
-					),
-				),
-				array(
-					'name' => 'inventory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			array (
-				// array(
-					// 'name' => 'subtitle',
-					// 'displayParams' => array(
-						// 'maxlength' => 55,
-						// 'size' => 78,
-					// ),
-				// ),
-				'',
-				array(
-					'name' => 'short_title',
-					'displayParams' => array(
-						'maxlength' => 55,
-						'size' => 78,
-					),
-				),
-			),
-			array (
-				array(
-					'name' => 'primarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-				array(
-					'name' => 'secondarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			// array (
-				// 'variations',
-			// ),
-			array (
-				'conditionid',
-			),
-			// array (
-				// array(
-					// 'name' => 'conditiondescription',
-					// 'type' => 'text',
-					// 'displayParams' => array(
-						// 'rows' => 4,
-						// 'cols' => 160,
-					// ),
-				// ),
-			// ),
-			array (
-				'picturedetails',
-			),
-			array (
-				array(
-					'name' => 'description',
-					'customCode' => '{$CUSTOM_DISCRIPTION}',
-				),
-			),
-			array (
-				'assigned_user_name',
-			),
-		),
-	),
-);
-?>
+require_once('include/MVC/View/SugarView.php');
+
+class xeBaySellerListsViewUpdatefinal extends SugarView 
+{
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+		$ss = new Sugar_Smarty();
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+		$ss->assign("MESSAGE", $GLOBALS['message']);
+		echo $ss->fetch("modules/xeBaySellerLists/tpls/updatefinal.tpl");
+ 	}
+}

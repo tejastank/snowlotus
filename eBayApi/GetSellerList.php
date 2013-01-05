@@ -78,16 +78,14 @@ class GetSellerList extends eBayApiEnvironment
         }
     }
 
-	public function getActiveListing($params)
+	public function retrieveSellerList($params)
 	{
 		$account_id = $params['AccountID'];
 		$this->session->setRequestToken($params['AuthToken']);
 
 		$result = true;
 
-		$bean = BeanFactory::getBean('xActiveListings');
-		$inventory = BeanFactory::getBean('xInventories');
-		$note = BeanFactory::getBean('Notes');
+		$bean = BeanFactory::getBean('xeBaySellerLists');
 
 		$outputSelector = array(
 			'HasMoreItems',
@@ -144,6 +142,7 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->listing_type = $item->getListingType();
 					if ($bean->listing_type == 'PersonalOffer')
 						continue;
+					$bean->picture_details = $this->fill_picture_details($item);
 					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
 					$bean->inventory_id = $item->getSKU();
@@ -153,22 +152,6 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
 					$bean->save();
-
-					$pictureURL = $item->getPictureDetails()->getPictureURL();
-					if (empty($pictureURL))
-						continue;
-					$count = 0;
-					foreach ($pictureURL as &$url) {
-						$note->id = create_guid();
-						$note->new_with_id = true;
-						$note->parent_id = $bean->id;
-						$note->parent_type = 'xActiveListings'; 
-						$note_name = str_replace(' ', '-', strtolower(trim($name)));
-						$note->name = "xactivelistings-" . $note_name . "-$count";
-						$count++;
-						$note->description = $url;
-						$note->save();
-					}
 				}
 			} else {
             	$this->dumpObject($res);
@@ -178,6 +161,19 @@ class GetSellerList extends eBayApiEnvironment
 		} while ($hasMoreItems);
 
 		return $result;
+	}
+
+	function fill_picture_details(&$item)
+	{
+		$xmlString = "<?xml version='1.0' standalone='yes'?><PictureDetails></PictureDetails>";
+		$xml = simplexml_load_string($xmlString);
+
+		$pictureURL = $item->getPictureDetails()->getPictureURL();
+		foreach ($pictureURL as &$url) {
+			$xml->addChild('PictureURL', $url);
+		}
+
+        return htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
 	}
 }
 

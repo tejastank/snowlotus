@@ -349,9 +349,9 @@ $moduleList[] = 'xCategories';
 $beanList['xCategories'] = 'xCategory';
 $beanFiles['xCategory'] = 'modules/xCategories/xCategory.php';
 
-$moduleList[] = 'xActiveListings';
-$beanList['xActiveListings'] = 'xActiveListing';
-$beanFiles['xActiveListing'] = 'modules/xActiveListings/xActiveListing.php';
+$moduleList[] = 'xeBaySellerLists';
+$beanList['xeBaySellerLists'] = 'xeBaySellerList';
+$beanFiles['xeBaySellerList'] = 'modules/xeBaySellerLists/xeBaySellerList.php';
 
 $moduleList[] = 'xXxxs';
 $beanList['xXxxs'] = 'xXxx';

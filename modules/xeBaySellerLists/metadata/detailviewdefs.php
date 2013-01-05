@@ -34,95 +34,64 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayListings']['EditView'] = array(
+$viewdefs['xeBaySellerLists']['DetailView'] = array(
 	'templateMeta' => array(
-		'maxColumns' => '2', 
+		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
+		'maxColumns' => '2',
 		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
+			array('label' => '10', 'field' => '30'),
+			array('label' => '10', 'field' => '30')
+		 ),
 	),
- 
-	'panels' => array (
-		'default' => array (
+
+	'panels' =>array (
+		array (
+			array(
+				'name' => 'item_id',
+				'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$fields.item_id.value}4040.jpg" alt="" /></a>',
+				'label' => 'LBL_PICTURE',
+			),
+			'item_id',
+		),
+		array (
+			array(
+				'name' => 'name',
+				'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank">{$fields.name.value}</a>',
+				'label' => 'LBL_NAME',
+			),
+			'endtime',
+		),
+		array (
+			array(
+				'name' => 'price',
+				'customCode' => '{$fields.currency_id.value}&nbsp{$fields.price.value}',
+				'label' => 'LBL_PRICE',
+			),
+			'quantity',
+		),
+		array (
+			'listing_type',
+			'hitcount'
+		),
+		array (
+			'inventory_name',
+		),
+		array (
 			array (
-				array(
-					'name' => 'name',
-					'displayParams' => array(
-						'maxlength' => 80,
-						'size' => 78,
-					),
-				),
-				array(
-					'name' => 'inventory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
+				'name' => 'date_entered',
+				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+				'label' => 'LBL_DATE_ENTERED',
 			),
 			array (
-				// array(
-					// 'name' => 'subtitle',
-					// 'displayParams' => array(
-						// 'maxlength' => 55,
-						// 'size' => 78,
-					// ),
-				// ),
-				'',
-				array(
-					'name' => 'short_title',
-					'displayParams' => array(
-						'maxlength' => 55,
-						'size' => 78,
-					),
-				),
-			),
-			array (
-				array(
-					'name' => 'primarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-				array(
-					'name' => 'secondarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			// array (
-				// 'variations',
-			// ),
-			array (
-				'conditionid',
-			),
-			// array (
-				// array(
-					// 'name' => 'conditiondescription',
-					// 'type' => 'text',
-					// 'displayParams' => array(
-						// 'rows' => 4,
-						// 'cols' => 160,
-					// ),
-				// ),
-			// ),
-			array (
-				'picturedetails',
-			),
-			array (
-				array(
-					'name' => 'description',
-					'customCode' => '{$CUSTOM_DISCRIPTION}',
-				),
-			),
-			array (
-				'assigned_user_name',
+				'name' => 'date_modified',
+				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+				'label' => 'LBL_DATE_MODIFIED',
 			),
 		),
-	),
+		array (
+			'variation',
+			'assigned_user_name',
+		),
+	)
 );
 ?>

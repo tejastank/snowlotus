@@ -53,6 +53,27 @@ $lbl_list_suspended = $mod_strings['LNK_LIST_SUSPENDED'] . '(<span style="color:
 $result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE deleted = 1");
 $assoc = $GLOBALS['db']->fetchByAssoc($result);
 $lbl_list_deleted = $mod_strings['LNK_LIST_DELETED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+
+if (!empty($_REQUEST['filter'])) {
+	switch ($_REQUEST['filter']) {
+	case 'unhandled':
+		$lbl_list_unhandled = "<b>$lbl_list_unhandled</b>";
+		break;
+	case 'handled':
+		$lbl_list_handled = "<b>$lbl_list_handled</b>";
+		break;
+	case 'suspended':
+		$lbl_list_suspended = "<b>$lbl_list_suspended</b>";
+		break;
+	case 'deleted':
+		$lbl_list_deleted = "<b>$lbl_list_deleted</b>";
+		break;
+	default:
+		break;
+	}
+} else {
+	$lbl_list_unhandled = "<b>$lbl_list_unhandled</b>";
+}
  
 // if(ACLController::checkAccess('xeBayOrders', 'list', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&return_module=xeBayOrders&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayOrders", 'xeBayOrders');
 if(ACLController::checkAccess('xeBayOrders', 'listUnhandled', true))$module_menu[]=Array("index.php?module=xeBayOrders&action=index&filter=unhandled&return_module=xeBayOrders&return_action=DetailView", $lbl_list_unhandled,"eBayOrders", 'xeBayOrders');

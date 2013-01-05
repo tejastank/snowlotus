@@ -61,10 +61,6 @@ $viewdefs['xInventories']['EditView'] = array(
 				'goods_allocation',
 			),
 			array (
-				'inventory_cap',
-				'inventory_floor',
-			),
-			array (
 				'width',
 				'height',
 			),

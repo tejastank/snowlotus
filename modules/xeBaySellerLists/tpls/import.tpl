@@ -1,4 +1,4 @@
-<?php
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -33,96 +33,49 @@
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
+
+*}
 
-$viewdefs['xeBayListings']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
- 
-	'panels' => array (
-		'default' => array (
-			array (
-				array(
-					'name' => 'name',
-					'displayParams' => array(
-						'maxlength' => 80,
-						'size' => 78,
-					),
-				),
-				array(
-					'name' => 'inventory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			array (
-				// array(
-					// 'name' => 'subtitle',
-					// 'displayParams' => array(
-						// 'maxlength' => 55,
-						// 'size' => 78,
-					// ),
-				// ),
-				'',
-				array(
-					'name' => 'short_title',
-					'displayParams' => array(
-						'maxlength' => 55,
-						'size' => 78,
-					),
-				),
-			),
-			array (
-				array(
-					'name' => 'primarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-				array(
-					'name' => 'secondarycategory_name',
-					'displayParams' => array(
-						'size' => 64,
-						'readOnly' => 'readOnly',
-					)
-				),
-			),
-			// array (
-				// 'variations',
-			// ),
-			array (
-				'conditionid',
-			),
-			// array (
-				// array(
-					// 'name' => 'conditiondescription',
-					// 'type' => 'text',
-					// 'displayParams' => array(
-						// 'rows' => 4,
-						// 'cols' => 160,
-					// ),
-				// ),
-			// ),
-			array (
-				'picturedetails',
-			),
-			array (
-				array(
-					'name' => 'description',
-					'customCode' => '{$CUSTOM_DISCRIPTION}',
-				),
-			),
-			array (
-				'assigned_user_name',
-			),
-		),
-	),
-);
-?>
+{$INSTRUCTION}
+
+<div class="hr"><hr /></div>
+
+<form enctype="multipart/form-data" name="import" method="POST" action="index.php" id="import">
+<input type="hidden" name="module" value="xeBaySellerLists">
+<input type="hidden" name="action" value="importfinal">
+<table width="100%" style="border:2px solid #4e8ccf;margin-top:10px;" cellspacing="10" cellpadding="0">
+	<tr>
+		<td width="50%" align="right">
+			{$MOD.LBL_EBAY_ACCOUNT}
+		</td>
+		<td width="50%" align="left">
+			{$EBAY_ACCOUNT_OPTIONS}
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			{$MOD.LBL_NUMBER_OF_DAYS}
+		</td>
+		<td align="left">
+			<select name='time_left' id='time_left' title=''>
+				<option value='1'>1</option>
+				<option value='3'>3</option>
+				<option value='5'>5</option>
+				<option value='7'>7</option>
+				<option value='15'>15</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+		</td>
+		<td align="left">
+			<input title="{$MOD.LBL_IMPORT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_IMPORT}  " id="import" onclick="return ImportConfirm()">
+		</td>
+	</tr>
+</table>
+
+<script>
+{$JAVASCRIPT}
+</script>  
+</form>

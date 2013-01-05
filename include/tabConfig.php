@@ -109,11 +109,11 @@ $GLOBALS['tabStructure'] = array(
         'label' => 'LBL_TABGROUP_EBAYTOOLS',
         'modules' => array(
             "Home",
-			"xActiveListings",
 			"xeBayAccounts",
 			"xeBayCategories",
 			"xeBayListings",
 			"xeBayOrders",
+			"xeBaySellerLists",
         )
 	),
 );
