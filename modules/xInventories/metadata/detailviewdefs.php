@@ -51,7 +51,7 @@ $viewdefs['xInventories']['DetailView'] = array(
 		),
 		array (
 			'subtitle',
-			'category_name',
+			'xcategory_name',
 		),
         array (
             array(

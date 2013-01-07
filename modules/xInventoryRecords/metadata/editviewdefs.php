@@ -47,7 +47,7 @@ $viewdefs['xInventoryRecords']['EditView'] = array(
 		'default' => array (
 			array (
 				'name',
-                'inventory_name',
+                'xinventory_name',
 			),
             array (
 				array(

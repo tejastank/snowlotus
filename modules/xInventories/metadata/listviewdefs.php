@@ -55,15 +55,15 @@ $listViewDefs['xInventories'] = array(
 		'label' => 'LBL_SKU', 
 		'default' => false,
 	),
-	'CATEGORY_NAME' => array(
+	'XCATEGORY_NAME' => array(
 		'width' => '16', 
 		'label' => 'LBL_CATEGORY', 
 		'module' => 'xCategories',
-        'id' => 'CATEGORY_ID',
+        'id' => 'XCATEGORY_ID',
 		'default' => true,
 		'related_fields' => 
 		array (
-			0 => 'category_id',
+			0 => 'xcategory_id',
 		),
 	),
 	'PRICE' => array(

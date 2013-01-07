@@ -152,7 +152,7 @@ foreach ($resp['list'] as &$item) {
 	}
 
 	$stockoutQuantity = 0;
-	$where = "item_sku='{$item->id}' AND stockout='1'";
+	$where = "xinventory_id='{$item->id}' AND stockout='1'";
 	$stockouts = $ebayTransactionBean->get_list("", $where, 0, -99, -99, 0, false, array('quantity_purchased'));
 	foreach($stockouts as &$stockout) {
 		$stockoutQuantity += $stockout->quantity_purchased;

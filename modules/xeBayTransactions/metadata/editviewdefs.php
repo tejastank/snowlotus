@@ -56,7 +56,7 @@ $viewdefs['xeBayTransactions']['EditView'] = array(
 			),
 			array (
 				array(
-					'name' => 'inventory_name',
+					'name' => 'xinventory_name',
 					'label' => 'LBL_RELATED_TO',
 					'displayParams' => array(
 						'size' => 64,

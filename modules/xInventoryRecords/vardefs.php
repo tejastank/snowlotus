@@ -39,32 +39,32 @@ $dictionary['xInventoryRecord'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-		'inventory_id'=>
+		'xinventory_id'=>
 		array(
-			'name'=>'inventory_id',
+			'name'=>'xinventory_id',
 			'vname'=>'LBL_INVENTORY',
 			'type'=>'id',
 			'required' => true,
 		),
-		'inventory_name'=>
+		'xinventory_name'=>
 		array(
-			'name'=>'inventory_name',
+			'name'=>'xinventory_name',
 			'rname' => 'name',
 			'vname'=>'LBL_INVENTORY',
-			'id_name'=>'inventory_id',
+			'id_name'=>'xinventory_id',
 			'type'=>'relate',
-			'link'=>'inventory_link',
+			'link'=>'xinventory_link',
 			'reportable'=>false,
 			'source'=>'non-db',
 			'dbType' => 'varchar',
 			'table' => 'xinventories',
 			'module' => 'xInventories',
 		),
-		'inventory_link'=>
+		'xinventory_link'=>
 		array(
 			'name' => 'inventory_link',
 			'type' => 'link',
-			'relationship' => 'xinventoryrecord_xinventory',
+			'relationship' => 'xinventoryrecords_xinventory',
 			'vname' => 'LBL_INVENTORY',
 			'source'=>'non-db',
 		),
@@ -131,9 +131,9 @@ $dictionary['xInventoryRecord'] = array(
         ),
 	),
 	'relationships'=>array (
-		'xinventoryrecord_xinventory' => array(
+		'xinventoryrecords_xinventory' => array(
 			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
-			'rhs_module' => 'xInventoryRecords', 'rhs_table'=> 'xinventoryrecords', 'rhs_key' => 'inventory_id',
+			'rhs_module' => 'xInventoryRecords', 'rhs_table'=> 'xinventoryrecords', 'rhs_key' => 'xinventory_id',
 			'relationship_type'=>'one-to-many'),
 	),
     'indices' => array (

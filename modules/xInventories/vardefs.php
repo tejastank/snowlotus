@@ -57,34 +57,34 @@ $dictionary['xInventory'] = array(
 			'dbType' => 'varchar',
 	    	'len'=>55,
 		),
-		'category_id'=>
+		'xcategory_id'=>
 		array(
-			'name'=>'category_id',
+			'name'=>'xcategory_id',
 			'vname'=>'LBL_CATEGORY',
 			'type' => 'id',
 			'required' => false,
 			'audited' => true,
 			'reportable'=>false,
 		),
-		'category_name'=>
+		'xcategory_name'=>
 		array(
-			'name'=>'category_name',
+			'name'=>'xcategory_name',
 			'rname' => 'name',
 			'vname'=>'LBL_CATEGORY',
-			'id_name'=>'category_id',
+			'id_name'=>'xcategory_id',
 			'type'=>'relate',
-			'link'=>'category_link',
+			'link'=>'xcategory_link',
 			'reportable'=>false,
 			'source'=>'non-db',
 			'dbType' => 'varchar',
 			'table' => 'xcategories',
 			'module' => 'xCategories',
 		),
-		'category_link'=>
+		'xcategory_link'=>
 		array(
-			'name' => 'category_link',
+			'name' => 'xcategory_link',
 			'type' => 'link',
-			'relationship' => 'xinventory_xcategory',
+			'relationship' => 'xinventories_xcategory',
 			'vname' => 'LBL_CATEGORY',
 			'source'=>'non-db',
 		),
@@ -168,25 +168,21 @@ $dictionary['xInventory'] = array(
 			'type' => 'html',
 			'comment' => 'HTML formatted email body to be used in resulting email'
 		),
-		'records'=>
+		'xinventoryrecords'=>
 		array(
-			'name'=>'records',
+			'name'=>'xinventoryrecords',
 			'vname'=>'LBL_RECORDS',
 			'type'=>'link',
-			'relationship' => 'xinventory_records',
+			'relationship' => 'xinventoryrecords_xinventory',
 			'module'=>'xInventoryRecords',
 			'bean_name'=>'xInventoryRecord',
 			'source'=>'non-db',
 		),
 	),
 	'relationships'=>array (
-		'xinventory_xcategory' => array(
+		'xinventories_xcategory' => array(
 			'lhs_module'=> 'xCategories', 'lhs_table'=> 'xcategories', 'lhs_key' => 'id',
-			'rhs_module' => 'xInventories', 'rhs_table'=> 'xinventories', 'rhs_key' => 'category_id',
-			'relationship_type'=>'one-to-many'),
-		'xinventory_records' => array(
-			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
-			'rhs_module' => 'xInventoryRecords', 'rhs_table'=> 'xinventoryrecords', 'rhs_key' => 'inventory_id',
+			'rhs_module' => 'xInventories', 'rhs_table'=> 'xinventories', 'rhs_key' => 'xcategory_id',
 			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,

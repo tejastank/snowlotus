@@ -49,13 +49,13 @@ class xInventoryRecordsController extends SugarController
 {
     var $pre_operation;
     var $pre_quantity;
-    var $pre_inventory_id;
+    var $pre_xinventory_id;
 
     public function pre_save()
     {
         $this->pre_operation = $this->bean->operation;
         $this->pre_quantity = $this->bean->quantity;
-        $this->pre_inventory_id = $this->bean->inventory_id;
+        $this->pre_xinventory_id = $this->bean->xinventory_id;
 
         parent::pre_save();
     }
@@ -65,8 +65,8 @@ class xInventoryRecordsController extends SugarController
         $item = BeanFactory::getBean('xInventories');
 
 		if ($this->bean->new_with_id == true) {
-            // new bean want to update inventory must be implemented in xInventoryRecord bean class;
-            // if ($item->retrieve($this->bean->inventory_id) != null) {
+            // new bean want to update xinventory must be implemented in xInventoryRecord bean class;
+            // if ($item->retrieve($this->bean->xinventory_id) != null) {
                 // if ($this->bean->operation == 'in') {
                     // $item->quantity += $this->bean->quantity;
                 // } else {
@@ -83,9 +83,9 @@ class xInventoryRecordsController extends SugarController
             // }
         } else if (($this->pre_operation != $this->bean->operation)
                     || ($this->pre_quantity != $this->bean->quantity)
-                    || ($this->pre_inventory_id != $this->bean->inventory_id)) {
-            if ($this->pre_inventory_id == $this->bean->inventory_id) {
-                if ($item->retrieve($this->bean->inventory_id) != null) {
+                    || ($this->pre_xinventory_id != $this->bean->xinventory_id)) {
+            if ($this->pre_xinventory_id == $this->bean->xinventory_id) {
+                if ($item->retrieve($this->bean->xinventory_id) != null) {
                     if ($this->pre_operation == $this->bean->operation) {
                         $diff = $this->bean->quantity - $this->pre_quantity;
                         if ($this->bean->operation == 'in') {
@@ -106,8 +106,8 @@ class xInventoryRecordsController extends SugarController
                         $item->quantity = 0;
                     $item->save();
                 }
-            } else { // inventory id changed
-                if ($item->retrieve($this->pre_inventory_id) != null) {
+            } else { // xinventory id changed
+                if ($item->retrieve($this->pre_xinventory_id) != null) {
                     if ($this->pre_operation == 'in') {
                         $item->quantity -= $this->pre_quantity;
                         if ($item->quantity < 0)
@@ -118,7 +118,7 @@ class xInventoryRecordsController extends SugarController
                     $item->save();
                 }
 
-                if ($item->retrieve($this->bean->inventory_id) != null) {
+                if ($item->retrieve($this->bean->xinventory_id) != null) {
                     if ($this->bean->operation == 'in') {
                         $item->quantity += $this->bean->quantity;
                     } else {

@@ -138,20 +138,20 @@ class GetOrders extends eBayApiEnvironment
 
 					$transactionArray = $order->getTransactionArray();
 					foreach ($transactionArray as &$transaction) {
-						$orderTransaction->order_id = $bean->id;
+						$orderTransaction->xebayorder_id = $bean->id;
 						$orderTransaction->combine_order_id = $bean->id;
                         $actualHandlingCost = $transaction->getActualHandlingCost();
                         if ($actualHandlingCost) {
-						    $orderTransaction->actual_handling_cost_currency_id = $actualHandlingCost()->getTypeAttribute('currencyID');
-						    $orderTransaction->actual_handling_cost_value = $actualHandlingCost()->getTypeValue();
+						    $orderTransaction->actual_handling_cost_currency_id = $actualHandlingCost->getTypeAttribute('currencyID');
+						    $orderTransaction->actual_handling_cost_value = $actualHandlingCost->getTypeValue();
                         } else {
 						    $orderTransaction->actual_handling_cost_currency_id = '';
 						    $orderTransaction->actual_handling_cost_value = '';
                         }
                         $actualShippingCost = $transaction->getActualShippingCost();
                         if ($actualShippingCost) {
-						    $orderTransaction->actual_shipping_cost_currency_id = $actualShippingCost()->getTypeAttribute('currencyID');
-						    $orderTransaction->actual_shipping_cost_value = $actualShippingCost()->getTypeValue();
+						    $orderTransaction->actual_shipping_cost_currency_id = $actualShippingCost->getTypeAttribute('currencyID');
+						    $orderTransaction->actual_shipping_cost_value = $actualShippingCost->getTypeValue();
                         } else {
 						    $orderTransaction->actual_shipping_cost_currency_id = '';
 						    $orderTransaction->actual_shipping_cost_value = '';
@@ -161,7 +161,7 @@ class GetOrders extends eBayApiEnvironment
 						$orderTransaction->item_site = $transaction->getItem()->getSite();
 						$orderTransaction->name =  $transaction->getItem()->getTitle();
 						$orderTransaction->item_view_item_url = 'http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=' . $orderTransaction->item_item_id;
-						$orderTransaction->item_sku = $transaction->getItem()->getSKU();
+						$orderTransaction->xinventory_id = $transaction->getItem()->getSKU();
 						$orderTransaction->orderline_item_id = $transaction->getOrderLineItemID();
 						$orderTransaction->quantity_purchased = $transaction->getQuantityPurchased();
 						$orderTransaction->transaction_id = $transaction->getTransactionID();
@@ -171,7 +171,7 @@ class GetOrders extends eBayApiEnvironment
 
 						$variation = $transaction->getVariation();
 						if (!empty($variation) && is_array($variation)) {
-							$orderTransaction->item_sku = $variation->getSKU();
+							$orderTransaction->xinventory_id = $variation->getSKU();
 							$orderTransaction->name = $variation->getVariationTitle();
 							$orderTransaction->item_view_item_url = $variation->getVariationViewItemURL();
 						}

@@ -70,10 +70,12 @@ $mod_strings = array (
   'LBL_PRICE_CURRENCY_ID' => 'Currency',
   'LBL_PRICE_VALUE' => 'Price',
   'LBL_QUANTITY_PURCHASED' => 'Quantity',
-  'LBL_GOODS_ALLOCATION' => 'Goods Allocation',
+  'LBL_GOODS_ALLOCATION' => 'Location',
   'LBL_CUSTOMS_DECLARATION' => 'Customs Declaration',
   'LBL_WIDTH' => 'Width(cm)',
   'LBL_HEIGHT' => 'Height(cm)',
   'LBL_DEEP' => 'Deep(cm)',
   'LBL_WEIGHT' => 'Weight(kg)',
+  'LBL_RELATED_TO_ORDER' => 'Related to Order',
+  'LBL_RELATED_TO_INVENTORY' => 'Related to Inventory',
 );

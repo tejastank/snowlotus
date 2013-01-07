@@ -47,7 +47,7 @@ $viewdefs['xInventoryRecords']['DetailView'] = array(
 	'panels' =>array (
 		array (
 			'name',
-            'inventory_name',
+            'xinventory_name',
 		),
         array (
 			array(

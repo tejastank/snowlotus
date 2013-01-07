@@ -41,14 +41,14 @@ $layout_defs['xCategories'] = array(
 	// list of what Subpanels to show in the DetailView
 	'subpanel_setup' => array(
 
-		'inventories' => array(
+		'xinventories' => array(
 			'order' => 100,
 			'sort_order' => 'desc',
 			'sort_by' => 'name',
 			'module' => 'xInventories',
 			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'inventories',
-			'add_subpanel_data' => 'catgory_id',
+			'get_subpanel_data' => 'xinventories',
+			'add_subpanel_data' => 'xcatgory_id',
 			'title_key' => 'LBL_INVENTORIES_SUBPANEL_TITLE',
 			'top_buttons' => array(
 				array('widget_class' => 'SubPanelTopButtonQuickCreate'),

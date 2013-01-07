@@ -52,12 +52,12 @@ $subpanel_layout = array(
 		'item_view_item_url'=>array(
 			'usage'=>'query_only',
 		),
-		'inventory_name'=>array(
-	 		'vname' => 'LBL_RELATED_TO',
+		'xinventory_name'=>array(
+			 'vname' => 'LBL_RELATED_TO',
 			'widget_class' => 'SubPanelDetailViewLink',
-		 	'target_record_key' => 'item_sku',
+			 'target_record_key' => 'xinventory_id',
 			'target_module' => 'xInventories',
-	 		'width' => '40%',
+			 'width' => '40%',
 		),
 		'quantity_purchased' => array(
 			'vname' => 'LBL_QUANTITY_PURCHASED',

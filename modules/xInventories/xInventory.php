@@ -59,8 +59,8 @@ class xInventory extends Basic {
 
 	var $strategy;
 	var $subtitle;
-	var $category_id;
-	var $category_name;
+	var $xcategory_id;
+	var $xcategory_name;
 	var $category_link;
 	var $price;
 	var $width;
@@ -72,6 +72,7 @@ class xInventory extends Basic {
 	var $inventory_floor;
 	var $goods_allocation;
 	var $body_html;
+	var $xinventoryrecords;
 
 	function xInventory()
 	{
@@ -93,9 +94,9 @@ class xInventory extends Basic {
         $id = $this->id;
         $in_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_in.png')."'>";
         $out_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Inventory_out.png')."'>";
-        $management = "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&inventory_req=true&inventory_id={$id}&operation=in' title='{$mod_strings['LBL_INVENTORY_IN']}'>{$in_icon}</a>";
+        $management = "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&xinventory_req=true&xinventory_id={$id}&operation=in' title='{$mod_strings['LBL_INVENTORY_IN']}'>{$in_icon}</a>";
         $management .= "&nbsp;&nbsp;";
-        $management .= "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&inventory_req=true&inventory_id={$id}&operation=out' title='{$mod_strings['LBL_INVENTORY_OUT']}'>{$out_icon}</a>";
+        $management .= "<a href='index.php?module=xInventoryRecords&action=EditView&return_module=xInventories&return_action=index&xinventory_req=true&xinventory_id={$id}&operation=out' title='{$mod_strings['LBL_INVENTORY_OUT']}'>{$out_icon}</a>";
         return $management;
     }
 

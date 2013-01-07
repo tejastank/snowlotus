@@ -41,14 +41,14 @@ $layout_defs['xeBayOrders'] = array(
 	// list of what Subpanels to show in the DetailView
 	'subpanel_setup' => array(
 
-		'transactions' => array(
+		'xebaytransactions' => array(
 			'order' => 100,
 			'sort_order' => 'desc',
 			'sort_by' => 'sales_record_number',
 			'module' => 'xeBayTransactions',
 			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'transactions',
-			'add_subpanel_data' => 'order_id',
+			'get_subpanel_data' => 'xebaytransactions',
+			'add_subpanel_data' => 'xebayorder_id',
 			'title_key' => 'LBL_TRANSACTIONS_SUBPANEL_TITLE',
 			'top_buttons' => array(
 				array('widget_class' => 'SubPanelTopButtonQuickCreate'),

@@ -51,7 +51,7 @@ $viewdefs['xInventories']['EditView'] = array(
 			),
 			array (
 				'subtitle',
-				'category_name',
+				'xcategory_name',
 			),
 			array (
                 array(

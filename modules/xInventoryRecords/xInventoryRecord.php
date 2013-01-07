@@ -57,9 +57,9 @@ class xInventoryRecord extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
-    var $inventory_id;
-	var $inventory_name;
-	var $inventory_link;
+    var $xinventory_id;
+	var $xinventory_name;
+	var $xinventory_link;
     var $operation;
 	var $price;
 	var $quantity;
@@ -106,16 +106,16 @@ class xInventoryRecord extends Basic {
     function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
-        if (!empty($_REQUEST['inventory_req'])) {
+        if (!empty($_REQUEST['xinventory_req'])) {
             if (!empty($_REQUEST['operation']))
                 $this->operation = $_REQUEST['operation'];
 
-            if (!empty($_REQUEST['inventory_id'])) {
-                $this->inventory_id = $_REQUEST['inventory_id'];
+            if (!empty($_REQUEST['xinventory_id'])) {
+                $this->xinventory_id = $_REQUEST['xinventory_id'];
                 $bean = BeanFactory::getBean('xInventories');
-                if ($bean->retrieve($this->inventory_id)) {
-                    $this->inventory_name = $bean->name;
-                    $this->name = $this->inventory_name;
+                if ($bean->retrieve($this->xinventory_id)) {
+                    $this->xinventory_name = $bean->name;
+                    $this->name = $this->xinventory_name;
                 }
             }
         }
@@ -126,7 +126,7 @@ class xInventoryRecord extends Basic {
         $item = BeanFactory::getBean('xInventories');
 
 		if ($this->new_with_id == true) {
-            if ($item->retrieve($this->inventory_id) != null) {
+            if ($item->retrieve($this->xinventory_id) != null) {
                 if ($this->operation == 'in') {
                     $item->quantity += $this->quantity;
                 } else {
@@ -150,7 +150,7 @@ class xInventoryRecord extends Basic {
     {
         $item = BeanFactory::getBean('xInventories');
 
-        if ($item->retrieve($this->inventory_id) != null) {
+        if ($item->retrieve($this->xinventory_id) != null) {
             if ($this->operation == 'in') {
                 $item->quantity -= $this->quantity;
                 if ($item->quantity < 0)

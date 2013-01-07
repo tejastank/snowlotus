@@ -51,15 +51,26 @@ $listViewDefs['xeBayTransactions'] = array(
 			'0' => 'item_view_item_url',
 		),
 		'default' => true),
-	'INVENTORY_NAME' => array (
-		'width' => '32',
-		'label' => 'LBL_LIST_RELATED_TO',
-		'module' => 'xInventories',
-		'id' => 'ITEM_SKU',
+	'XEBAYORDER_NAME' => array (
+		'width' => '16',
+		'label' => 'LBL_RELATED_TO_ORDER',
+		'module' => 'xeBayOrders',
+		'id' => 'XEBAYORDER_ID',
 		'default' => true,
 		'related_fields' => 
 		array (
-			0 => 'item_sku',
+			0 => 'xebayorder_id',
+		),
+	),
+	'XINVENTORY_NAME' => array (
+		'width' => '16',
+		'label' => 'LBL_RELATED_TO_INVENTORY',
+		'module' => 'xInventories',
+		'id' => 'XINVENTORY_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'xinventory_id',
 		),
 	),
 	'ASSIGNED_USER_NAME' => array(

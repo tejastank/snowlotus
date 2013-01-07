@@ -57,7 +57,9 @@ class xeBayTransaction extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
-	var $order_id;
+	var $xebayorder_id;
+	var $xebayorder_name;
+	var $xebayorder_link;
 	var $combine_order_id;
 	var $stockout;
 	var $actual_handling_cost_currency_id;
@@ -67,7 +69,7 @@ class xeBayTransaction extends Basic {
 	var $item_item_id;
 	var $item_view_item_url;
 	var $item_site;
-	var $item_sku;
+	var $xinventory_id; // sku
 	var $inventory_name;
 	var $customs_declaration;
 	var $width;

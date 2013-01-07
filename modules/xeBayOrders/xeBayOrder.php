@@ -91,7 +91,7 @@ class xeBayOrder extends Basic {
 	var $address_owner;
 	var $external_address_id;
 
-	var $transactions;
+	var $xebaytransactions;
 
 	function xeBayOrder()
 	{
@@ -125,15 +125,15 @@ class xeBayOrder extends Basic {
 
 		require_once('include/SubPanel/SubPanelDefinitions.php');
 		$subpanel_definitions=new SubPanelDefinitions($bean);
-		$subpanel_definitions->layout_defs['subpanel_setup']['transactions']['subpanel_name'] = "ForOrderSimple";
-		$thisPanel=$subpanel_definitions->load_subpanel("transactions");
-        ob_start();
-        include_once('include/SubPanel/SubPanel.php');
-        $subpanel_object = new SubPanel('xeBayOrders', $field_list['ID'], 'all', $thisPanel);
-        $subpanel_object->setTemplateFile('modules/xeBayTransactions/SubPanelDynamic.html');
+		$subpanel_definitions->layout_defs['subpanel_setup']['xebaytransactions']['subpanel_name'] = "ForOrderSimple";
+		$thisPanel=$subpanel_definitions->load_subpanel("xebaytransactions");
+		ob_start();
+		include_once('include/SubPanel/SubPanel.php');
+		$subpanel_object = new SubPanel('xeBayOrders', $field_list['ID'], 'all', $thisPanel);
+		$subpanel_object->setTemplateFile('modules/xeBayTransactions/SubPanelDynamic.html');
 		$subpanel_object->display();
-        $subpanel_data = ob_get_contents();
-        @ob_end_clean();
+		$subpanel_data = ob_get_contents();
+		@ob_end_clean();
 
 		$order_details .= '<p style="margin: 8px 0px 8px 0px;">';
 		$order_details .= $field_list['BUYER_USER_ID'];
@@ -253,8 +253,8 @@ class xeBayOrder extends Basic {
     	    $bean->retrieve($id);
 			$bean->handled_status = 'handled';
 
-			$bean->load_relationship('transactions');
-			$transactions = $bean->transactions->getBeans();
+			$bean->load_relationship('xebaytransactions');
+			$transactions = $bean->xebaytransactions->getBeans();
 			if (empty($transactions))
 				continue;
 
@@ -263,7 +263,7 @@ class xeBayOrder extends Basic {
 			foreach ($transactions as &$transaction) {
                 // new inventory record
                 $record->name = $transaction->name;
-                $record->inventory_id = $transaction->item_sku;
+                $record->xinventory_id = $transaction->xinventory_id;
                 $record->operation = 'out';
 	            $record->price = '0.00';
 	            $record->quantity = $transaction->quantity_purchased;
