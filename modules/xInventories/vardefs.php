@@ -39,6 +39,16 @@ $dictionary['xInventory'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'strategy'=> 
+		array(
+			'name'=>'strategy',
+	    	'vname'=> 'LBL_STRATEGY',
+	    	'type'=>'varchar',
+	    	'len'=>16,
+			'audited' => true,
+			'default'=>'listed',
+			'comment'=>'listed, delisting, delisted',
+		),
 		'subtitle'=>
 		array(
 			'name'=>'subtitle',
@@ -157,15 +167,6 @@ $dictionary['xInventory'] = array(
 			'vname' => 'LBL_BODY',
 			'type' => 'html',
 			'comment' => 'HTML formatted email body to be used in resulting email'
-		),
-		'body_tpl_id'=>
-		array(
-			'name'=>'body_tpl_id',
-			'vname'=>'LBL_BODY_TEMPLATE',
-			'type' => 'id',
-			'required' => false,
-			'audited' => true,
-			'reportable'=>false,
 		),
 		'records'=>
 		array(

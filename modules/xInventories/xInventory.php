@@ -56,9 +56,20 @@ class xInventory extends Basic {
 	var $assigned_user_id;
 	var $assigned_user_name;
 	var $assigned_user_link;
+
+	var $strategy;
 	var $subtitle;
 	var $category_id;
 	var $category_name;
+	var $category_link;
+	var $price;
+	var $width;
+	var $height;
+	var $deep;
+	var $weight;
+	var $quantity;
+	var $inventory_cap;
+	var $inventory_floor;
 	var $goods_allocation;
 	var $body_html;
 

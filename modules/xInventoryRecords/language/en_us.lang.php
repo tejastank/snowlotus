@@ -70,5 +70,6 @@ $mod_strings = array (
   'LBL_INVENTORY' => 'Inventory',
   'LBL_INVENTORY_IN' => 'Enter warehouse',
   'LBL_INVENTORY_OUT' => 'Out of warehouse',
-  'LBL_INVENTORY_MANAGEMENT' => "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_Mngt.png')."'>",
+  // 'LBL_INVENTORY_MANAGEMENT' => "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_Mngt.png')."'>",
+  'LBL_INVENTORY_MANAGEMENT' => 'Operation',
 );

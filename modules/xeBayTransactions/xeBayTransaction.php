@@ -59,6 +59,7 @@ class xeBayTransaction extends Basic {
 
 	var $order_id;
 	var $combine_order_id;
+	var $stockout;
 	var $actual_handling_cost_currency_id;
 	var $actual_handling_cost_value;
 	var $actual_shipping_cost_currency_id;

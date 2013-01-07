@@ -1,6 +1,5 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -38,18 +37,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
 
- * Description: Controller for the Import module
+ * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
+ * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-require_once("include/MVC/Controller/SugarController.php");
+$entry_point_registry['PurchaseOrders'] = array('file' => 'modules/xInventories/PurchaseOrders.php', 'auth' => true);
 
-class xInventoriesController extends SugarController
-{
-    function action_purchase()
-    {
-		$this->view = 'purchase';
-    }
-}
 ?>

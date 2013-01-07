@@ -42,7 +42,7 @@ $dictionary['xInventoryRecord'] = array(
 		'inventory_id'=>
 		array(
 			'name'=>'inventory_id',
-			'vname'=>'LBL_INVENTORY_ID',
+			'vname'=>'LBL_INVENTORY',
 			'type'=>'id',
 			'required' => true,
 		),

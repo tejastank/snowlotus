@@ -1,6 +1,4 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,21 +33,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
+
+*}
 
-/*********************************************************************************
+{$INSTRUCTION}
 
- * Description: Controller for the Import module
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
+<form enctype="multipart/form-data" name="update" method="POST" action="index.php" id="update">
+<input type="hidden" name="module" value="xInventories">
+<input type="hidden" name="action" value="purchasefinal">
+<table cellpadding="0" cellspacing="0" style="border-left:1px solid; border-right:1px solid; border-bottom:1px solid" width="100%" class="edit view">
+	<tr>
+	    <td>
+			{$PURCHASE_ORDERS_URL}
+		</td>
+	</tr>
+</table>
 
-require_once("include/MVC/Controller/SugarController.php");
-
-class xInventoriesController extends SugarController
-{
-    function action_purchase()
-    {
-		$this->view = 'purchase';
-    }
-}
-?>
+<script>
+{$JAVASCRIPT}
+</script>  
+</form>

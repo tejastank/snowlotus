@@ -1,6 +1,5 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,20 +35,42 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description: Controller for the Import module
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
+/**
+ * xInventoriesViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
+ 
+require_once('include/MVC/View/SugarView.php');
 
-require_once("include/MVC/Controller/SugarController.php");
-
-class xInventoriesController extends SugarController
+class xInventoriesViewPurchase extends SugarView 
 {
-    function action_purchase()
+ 	/**
+     * @see SugarView::display()
+     */
+    public function display()
     {
-		$this->view = 'purchase';
-    }
+		global $mod_strings;
+
+		$ss = new Sugar_Smarty();
+        $ss->assign("MOD", $GLOBALS['mod_strings']);
+        $ss->assign("INSTRUCTION", "<h1>Download purchase orders</h1>");
+		$ss->assign("PURCHASE_ORDERS_URL", "<a href=\"javascript: void(0);\" onclick=PurchaseOrders()>" . $mod_strings['LBL_DOWNLOAD_PURCHASE_ORDERS']."</a>");
+
+      	$javascript = <<<EOQ
+function PurchaseOrders()
+{
+   var href="index.php?entryPoint=PurchaseOrders&module=xInventories&action=index";
+   window.location.href=href;
 }
-?>
+EOQ;
+      	$ss->assign("JAVASCRIPT", $javascript);
+		echo $ss->fetch("modules/xInventories/tpls/purchase.tpl");
+ 	}
+}

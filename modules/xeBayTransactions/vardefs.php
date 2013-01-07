@@ -51,6 +51,13 @@ $dictionary['xeBayTransaction'] = array(
 			'vname'=>'LBL_COMBINE_ORDER_ID',
 			'type' => 'id',
 		),
+		'stockout'=>
+		array(
+			'name'=>'stockout',
+			'vname'=>'LBL_STOCKOUT',
+			'type' => 'bool',
+			'default'=>false,
+		),
 		'actual_handling_cost_currency_id' => array(
 			'name' => 'actual_handling_cost_currency_id',
 			'vname' => 'LBL_ACTUAL_HANDLING_COST_CURRENCY_ID',
