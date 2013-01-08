@@ -50,20 +50,27 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 	 		'width' => '45%',
 		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '45%',
+		'xinventory_name'=>array(
+	 		'vname' => 'LBL_RELATED_TO',
+			'widget_class' => 'SubPanelDetailViewLink',
+		 	'target_record_key' => 'xinventory_id',
+			'target_module' => 'xInventories',
+	 		'width' => '40%',
 		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xeBaySellerLists',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xeBaySellerLists',
-			'width' => '5%',
-		),
+		// 'date_modified'=>array(
+			 // 'vname' => 'LBL_DATE_MODIFIED',
+			 // 'width' => '45%',
+		// ),
+		// 'edit_button'=>array(
+			// 'widget_class' => 'SubPanelEditButton',
+			 // 'module' => 'xeBaySellerLists',
+			 // 'width' => '4%',
+		// ),
+		// 'remove_button'=>array(
+			// 'widget_class' => 'SubPanelRemoveButton',
+			 // 'module' => 'xeBaySellerLists',
+			// 'width' => '5%',
+		// ),
 	),
 );
 

@@ -153,7 +153,7 @@ class xeBaySellerListsController extends SugarController
 			$count = 0;
 
 			foreach ($item_list as &$item) {
-				$authToken = $accounts[$item->ebay_account_id];
+				$authToken = $accounts[$item->xebayaccount_id];
 				$item->get_description();
 				continue;
 				if (empty($item->variation)) {
@@ -162,7 +162,7 @@ class xeBaySellerListsController extends SugarController
 					$ri->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->get_description(),
-						'SKU' => $item->inventory_id,
+						'SKU' => $item->xinventory_id,
 						'scope'=> $scope,
 						'AuthToken' => $authToken,
 					));
@@ -171,7 +171,7 @@ class xeBaySellerListsController extends SugarController
 					$rfpi->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->get_description(),
-						'SKU' => $item->inventory_id,
+						'SKU' => $item->xinventory_id,
 						'scope'=> $scope,
 						'AuthToken' => $authToken,
 					));

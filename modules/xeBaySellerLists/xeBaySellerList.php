@@ -59,7 +59,7 @@ class xeBaySellerList extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
-	var $ebay_account_id;
+	var $xebayaccount_id;
 	var $hitcount;
 	var $item_id;
 	var $currency_id;
@@ -71,7 +71,7 @@ class xeBaySellerList extends Basic {
 	var $bid_count;
 	var $quantity;
 	var $variation;
-	var $inventory_id;
+	var $xinventory_id;
 
 	const shopwindow_stick_limit = 6;
 	const shopwindow_correlation_limit = 10;
@@ -115,7 +115,7 @@ class xeBaySellerList extends Basic {
 		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
 
 		$fields = array(
-			'inventory_id' => $item_id,
+			'xinventory_id' => $item_id,
 			'listing_type' => 'FixedPriceItem',
 		);
 
@@ -238,7 +238,7 @@ class xeBaySellerList extends Basic {
 		$count = 0;
 
 		foreach ($randomItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->inventory_id);
+			$inventory = $inventoryBean->retrieve($item->xinventory_id);
 			if ($inventory !== null) {
 				$shop_window_items[] = array(
 					'itemID' => $item->item_id,
@@ -274,7 +274,7 @@ class xeBaySellerList extends Basic {
 		$count = 0;
 
 		foreach ($randomItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->inventory_id);
+			$inventory = $inventoryBean->retrieve($item->xinventory_id);
 			if ($inventory !== null) {
 				$shop_window_items[] = array(
 					'itemID' => $item->item_id,
@@ -327,7 +327,7 @@ class xeBaySellerList extends Basic {
 	function _get_description()
 	{
         $inventoryBean = BeanFactory::getBean('xInventories');
-    	$inv = $inventoryBean->retrieve($this->inventory_id);
+    	$inv = $inventoryBean->retrieve($this->xinventory_id);
 		$desc = $this->name;
 		if ($inv) {
 			$body_html = $inv->body_html;

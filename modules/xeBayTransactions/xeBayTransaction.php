@@ -70,7 +70,7 @@ class xeBayTransaction extends Basic {
 	var $item_view_item_url;
 	var $item_site;
 	var $xinventory_id; // sku
-	var $inventory_name;
+	var $xinventory_name;
 	var $customs_declaration;
 	var $width;
 	var $height;

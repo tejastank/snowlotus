@@ -48,15 +48,15 @@ $listViewDefs['xeBayListings'] = array(
 		'width' => '24', 
 		'label' => 'LBL_SHORT_TITLE', 
 		'default' => true),         
-	'INVENTORY_NAME' => array(
+	'XINVENTORY_NAME' => array(
 		'width' => '24', 
 		'label' => 'LBL_INVENTORY', 
 		'module' => 'xInventories',
-        'id' => 'INVENTORY_ID',
+        'id' => 'XINVENTORY_ID',
 		'default' => true,
 		'related_fields' => 
 		array (
-			0 => 'inventory_id',
+			0 => 'xinventory_id',
 		),
 	),
 	'ASSIGNED_USER_NAME' => array(

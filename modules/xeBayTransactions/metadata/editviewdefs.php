@@ -52,7 +52,7 @@ $viewdefs['xeBayTransactions']['EditView'] = array(
 						'size'=>78,
 					),
 				),
-				'assigned_user_name',
+				'xebayaccount_name',
 			),
 			array (
 				array(
@@ -63,10 +63,14 @@ $viewdefs['xeBayTransactions']['EditView'] = array(
 						'readOnly' => 'readOnly',
 					),
 				),
+			),
+			array (
 				'quantity_purchased',
+				'price_value',
 			),
 			array (
 				'description',
+				'assigned_user_name',
 			),
 		),
 	),

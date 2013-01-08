@@ -45,25 +45,38 @@ $subpanel_layout = array(
 	'where' => '',
 
 	'list_fields' => array(
+		'sales_record_number'=>array(
+	 		'vname' => 'LBL_SALES_RECORD_NUMBER',
+			'widget_class' => 'SubPanelDetailViewLink',
+	 		'width' => '10%',
+		),
+		'buyer_user_id'=>array(
+	 		'vname' => 'LBL_BUYER_USER_ID',
+			'widget_class' => 'SubPanelDetailViewLink',
+	 		'width' => '20%',
+		),
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
+	 		'width' => '20%',
 		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '45%',
+		'country_name'=>array(
+	 		'vname' => 'LBL_COUNTRY_NAME',
+	 		'width' => '20%',
 		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xeBayOrders',
-	 		'width' => '4%',
-		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xeBayOrders',
-			'width' => '5%',
-		),
+		// 'date_modified'=>array(
+			 // 'vname' => 'LBL_DATE_MODIFIED',
+			 // 'width' => '45%',
+		// ),
+		// 'edit_button'=>array(
+			// 'widget_class' => 'SubPanelEditButton',
+			 // 'module' => 'xeBayOrders',
+			 // 'width' => '4%',
+		// ),
+		// 'remove_button'=>array(
+			// 'widget_class' => 'SubPanelRemoveButton',
+			 // 'module' => 'xeBayOrders',
+			// 'width' => '5%',
+		// ),
 	),
 );
 

@@ -78,6 +78,7 @@ $mod_strings = array (
   'LBL_QUANTITY' => 'Quantity',
   'LBL_SKU' => 'SKU',
   'LBL_PICTURE' => 'Picture',
+  'LBL_EBAY_ACCOUNT' => 'eBay Account',
   'LBL_RELATED_TO' => 'Related to',
   'LBL_IMPORT' => 'Import',
   'LBL_EBAY_ACCOUNT' => 'eBay Account',

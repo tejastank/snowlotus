@@ -62,7 +62,9 @@ class xeBayOrder extends Basic {
 	var $print_status;
 	var $redeliver_count;
 
-	var $ebay_account_id;
+	var $xebayaccount_id;
+	var $xebayaccount_name;
+	var $xebayaccount_link;
 	var $buyer_checkout_message;
 	var $order_id;
 	var $checkout_status_last_modified_time;
@@ -258,7 +260,7 @@ class xeBayOrder extends Basic {
 			if (empty($transactions))
 				continue;
 
-			$authToken = $account[$bean->ebay_account_id];
+			$authToken = $account[$bean->xebayaccount_id];
 	
 			foreach ($transactions as &$transaction) {
                 // new inventory record

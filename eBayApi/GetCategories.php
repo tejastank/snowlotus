@@ -72,7 +72,7 @@ class GetCategories extends eBayApiEnvironment
         $res = $this->proxy->GetCategories($req);
         $categoryCount = 0;
         if ($this->testValid($res)) {
-		    $GLOBALS['db']->query("DELETE FROM xebaycategories WHERE xebaycategories.ebay_account_id = '$account_id'");
+		    $GLOBALS['db']->query("DELETE FROM xebaycategories WHERE xebaycategories.xebayaccount_id = '$account_id'");
 
 			$account->category_count = $res->getCategoryCount();
 			$account->category_update_time = $res->getUpdateTime();
@@ -84,7 +84,7 @@ class GetCategories extends eBayApiEnvironment
 
 			$categoryArray = $res->getCategoryArray();
             foreach($categoryArray as &$category) {
-				$bean->ebay_account_id = $account_id;
+				$bean->xebayaccount_id = $account_id;
                 $bean->autopay_enabled = $category->getAutoPayEnabled();
                 $bean->b2bvat_enabled = $category->getB2BVATEnabled();
                 $bean->bestoffer_enabled = $category->getBestOfferEnabled();

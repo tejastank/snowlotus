@@ -109,7 +109,7 @@ foreach ($item_list as &$item) {
     if ($scope['description'])
         $metadatas[] = $item->get_description();
     if ($scope['sku'])
-        $metadatas[] = $item->inventory_id;
+        $metadatas[] = $item->xinventory_id;
 	
     $column = 0;
     foreach ($metadatas as &$data) {

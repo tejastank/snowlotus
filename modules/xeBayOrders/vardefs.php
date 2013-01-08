@@ -61,11 +61,33 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'int',
 			'default'=>0,
 		),
-		'ebay_account_id'=>
+		'xebayaccount_id'=>
 		array(
-			'name'=>'ebay_account_id',
+			'name'=>'xebayaccount_id',
 			'vname'=>'LBL_EBAY_ACCOUNT_ID',
 			'type' => 'id',
+		),
+		'xebayaccount_name'=>
+		array(
+			'name'=>'xebayaccount_name',
+			'rname' => 'name',
+			'vname'=>'LBL_EBAY_ACCOUNT',
+			'id_name'=>'xebayaccount_id',
+			'type'=>'relate',
+			'link'=>'xebayaccount_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebayaccounts',
+			'module' => 'xeBayAccounts',
+		),
+		'xebayaccount_link'=>
+		array(
+			'name' => 'xebayaccount_link',
+			'type' => 'link',
+			'relationship' => 'xebayorders_xebayaccount',
+			'vname' => 'LBL_EBAY_ACCOUNT',
+			'source'=>'non-db',
 		),
 		'buyer_checkout_message'=>
 		array(
@@ -168,6 +190,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>128,
+    		'audited'=>true,
 		),
 		'street1'=>
 		array(
@@ -176,6 +199,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>512,
+    		'audited'=>true,
 		),
 		'street2'=>
 		array(
@@ -184,6 +208,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>512,
+    		'audited'=>true,
 		),
 		'city_name'=>
 		array(
@@ -192,6 +217,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>128,
+    		'audited'=>true,
 		),
 		'state_or_province'=>
 		array(
@@ -200,6 +226,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>128,
+    		'audited'=>true,
 		),
 		'country'=>
 		array(
@@ -208,6 +235,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>12,
+    		'audited'=>true,
 		),
 		'country_name'=>
 		array(
@@ -216,6 +244,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>128,
+    		'audited'=>true,
 		),
 		'phone'=>
 		array(
@@ -224,6 +253,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>128,
+    		'audited'=>true,
 		),
 		'postal_code'=>
 		array(
@@ -232,6 +262,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>24,
+    		'audited'=>true,
 		),
 		'address_id'=>
 		array(
@@ -270,6 +301,10 @@ $dictionary['xeBayOrder'] = array(
 		),
 	),
 	'relationships'=>array (
+		'xebayorders_xebayaccount' => array(
+			'lhs_module'=> 'xeBayAccounts', 'lhs_table'=> 'xebayaccounts', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBayOrders', 'rhs_table'=> 'xebayorders', 'rhs_key' => 'xebayaccount_id',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

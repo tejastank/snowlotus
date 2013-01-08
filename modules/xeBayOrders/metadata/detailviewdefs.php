@@ -47,7 +47,7 @@ $viewdefs['xeBayOrders']['DetailView'] = array(
 	'panels' =>array (
 		array (
 			'buyer_user_id',
-			'assigned_user_name',
+			'xebayaccount_name',
 		),
 		array (
 			'name',

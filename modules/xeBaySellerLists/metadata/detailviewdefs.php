@@ -51,7 +51,6 @@ $viewdefs['xeBaySellerLists']['DetailView'] = array(
 				'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$fields.item_id.value}4040.jpg" alt="" /></a>',
 				'label' => 'LBL_PICTURE',
 			),
-			'item_id',
 		),
 		array (
 			array(
@@ -59,15 +58,19 @@ $viewdefs['xeBaySellerLists']['DetailView'] = array(
 				'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank">{$fields.name.value}</a>',
 				'label' => 'LBL_NAME',
 			),
+			'xebayaccount_name',
+		),
+		array (
+			'item_id',
 			'endtime',
 		),
 		array (
+			'quantity',
 			array(
 				'name' => 'price',
 				'customCode' => '{$fields.currency_id.value}&nbsp{$fields.price.value}',
 				'label' => 'LBL_PRICE',
 			),
-			'quantity',
 		),
 		array (
 			'listing_type',

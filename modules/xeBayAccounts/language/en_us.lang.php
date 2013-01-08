@@ -72,4 +72,7 @@ $mod_strings = array (
   'LBL_EBAY_DETAIL_UPDATE_TIME' => 'eBay Feature Updated',
   'LBL_CATEGORY_UPDATE_TIME' => 'Category Updated',
   'LBL_UPDATE' => 'Update',
+  'LBL_EBAYORDERS_SUBPANEL_TITLE' => 'Orders',
+  'LBL_EBAYTRANSACTIONS_SUBPANEL_TITLE' => 'Transactions',
+  'LBL_EBAYSELLERLISTS_SUBPANEL_TITLE' => 'Seller Lists',
 );

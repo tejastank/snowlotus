@@ -74,6 +74,10 @@ class xeBayAccount extends Basic {
     var $reduce_reserve_allowed;
     var $minimum_reserve_price;
 
+	var $xebayorders;
+	var $xebaytransactions;
+	var $xebaysellerlists;
+
 	function xeBayAccount()
 	{
 		parent::Basic();

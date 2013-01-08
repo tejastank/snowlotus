@@ -51,10 +51,6 @@ $viewdefs['xeBaySellerLists']['EditView'] = array(
 					'customCode' => '<a title="{$fields.name.value}" href="{$fields.view_item_url.value}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$fields.item_id.value}4040.jpg" alt="" /></a>',
 					'label' => 'LBL_PICTURE',
 				),
-				array(
-					'name' => 'item_id',
-					'customCode' => '{$fields.item_id.value}',
-				),
 			),
 			array (
 				array(
@@ -68,12 +64,22 @@ $viewdefs['xeBaySellerLists']['EditView'] = array(
 						// ),
 					// ),
 				),
+			),
+			array (
+				array(
+					'name' => 'item_id',
+					'customCode' => '{$fields.item_id.value}',
+				),
 				array(
 					'name' => 'endtime',
 					'customCode' => '{$fields.endtime.value}',
 				),
 			),
 			array (
+				array(
+					'name' => 'listing_type',
+					'customCode' => '{$fields.listing_type.value}',
+				),
 				array(
 					'name' => 'price',
 					'customCode' => '{$fields.currency_id.value}&nbsp{$fields.price.value}',
@@ -83,10 +89,6 @@ $viewdefs['xeBaySellerLists']['EditView'] = array(
 							'readonly' => 'readonly',
 						),
 					),
-				),
-				array(
-					'name' => 'listing_type',
-					'customCode' => '{$fields.listing_type.value}',
 				),
 			),
 			array (

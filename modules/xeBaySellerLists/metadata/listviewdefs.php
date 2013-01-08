@@ -56,15 +56,15 @@ $listViewDefs['xeBaySellerLists'] = array(
         'link' => true,
 		'sortable' => false
 	), 
-	'INVENTORY_NAME' => array (
+	'XINVENTORY_NAME' => array (
 		'width' => '50',
 		'label' => 'LBL_LIST_RELATED_TO',
 		'module' => 'xInventories',
-		'id' => 'INVENTORY_ID',
+		'id' => 'XINVENTORY_ID',
 		'default' => true,
 		'related_fields' => 
 		array (
-			0 => 'inventory_id',
+			0 => 'xinventory_id',
 		),
 	),
 	'LISTING_TYPE' => array(

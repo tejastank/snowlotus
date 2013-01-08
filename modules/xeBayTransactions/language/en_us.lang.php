@@ -76,6 +76,7 @@ $mod_strings = array (
   'LBL_HEIGHT' => 'Height(cm)',
   'LBL_DEEP' => 'Deep(cm)',
   'LBL_WEIGHT' => 'Weight(kg)',
+  'LBL_EBAY_ACCOUNT' => 'eBay Account',
   'LBL_RELATED_TO_ORDER' => 'Related to Order',
   'LBL_RELATED_TO_INVENTORY' => 'Related to Inventory',
 );

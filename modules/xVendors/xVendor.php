@@ -76,6 +76,7 @@ class xVendor extends Company {
 	var $phone_alternate;
 	var $phone_fax;
 	var $phone_office;
+	var $phone_mobile;
 	var $rating;
 	var $shipping_address_street;
 	var $shipping_address_city;

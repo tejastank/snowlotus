@@ -320,9 +320,9 @@ $dictionary['xeBayListing'] = array(
 			'vname' => 'LBL_SECONDARYCATEGORY',
 			'source'=>'non-db',
 		),
-		'inventory_name'=>
+		'xinventory_name'=>
 		array(
-			'name'=>'inventory_name',
+			'name'=>'xinventory_name',
 			'rname' => 'name',
 			'vname'=>'LBL_INVENTORY',
 			'id_name'=>'sku',
@@ -335,9 +335,9 @@ $dictionary['xeBayListing'] = array(
 			'module' => 'xInventories',
 			'required' => true,
 		),
-		'inventory_link'=>
+		'xinventory_link'=>
 		array(
-			'name' => 'inventory_link',
+			'name' => 'xinventory_link',
 			'type' => 'link',
 			'relationship' => 'xebaylisting_inventory',
 			'vname' => 'LBL_INVENTORY',

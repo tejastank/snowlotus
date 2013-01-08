@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,63 +35,49 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayOrders']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
- 
-	'panels' => array (
-		'default' => array (
-			array (
-				'buyer_user_id',
-				'xebayaccount_name',
+
+
+$layout_defs['xeBayAccounts'] = array(
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
+
+		'xebayorders' => array(
+			'order' => 100,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xeBayOrders',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xebayorders',
+			'add_subpanel_data' => 'xebayorder_id',
+			'title_key' => 'LBL_EBAYORDERS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				// array('widget_class' => 'SubPanelTopButtonQuickCreate'),
 			),
-			array (
-				'name',
+		),
+		'xebaytransactions' => array(
+			'order' => 110,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xeBayTransactions',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xebaytransactions',
+			'add_subpanel_data' => 'xebaytransaction_id',
+			'title_key' => 'LBL_EBAYTRANSACTIONS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				// array('widget_class' => 'SubPanelTopButtonQuickCreate'),
 			),
-			array (
-				'street1',
-				'handled_status',
-			),
-			array (
-				'street2',
-				'print_status',
-			),
-			array (
-				'city_name',
-				array (
-					'name' => 'subtotal_value',
-					'customCode' => '{$fields.subtotal_currency_id.value}&nbsp;{$fields.subtotal_value.value}',
-				),
-			),
-			array (
-				'state_or_province',
-				array (
-					'name' => 'total_value',
-					'customCode' => '{$fields.total_currency_id.value}&nbsp;{$fields.total_value.value}',
-				),
-			),
-			array (
-				'postal_code',
-			),
-			array (
-				'country_name',
-			),
-			array (
-				'phone',
-			),
-			array (
-				array (
-					'name' => 'buyer_checkout_message',
-					'customCode' => '{$fields.buyer_checkout_message.value}',
-				),
-			),
-			array (
-				'description',
+		),
+		'xebaysellerlists' => array(
+			'order' => 120,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xeBaySellerLists',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xebaysellerlists',
+			'add_subpanel_data' => 'xebaysellerlist_id',
+			'title_key' => 'LBL_EBAYSELLERLISTS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				// array('widget_class' => 'SubPanelTopButtonQuickCreate'),
 			),
 		),
 	),

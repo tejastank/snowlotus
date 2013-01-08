@@ -39,11 +39,33 @@ $dictionary['xeBaySellerList'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-		'ebay_account_id'=>
+		'xebayaccount_id'=>
 		array(
-			'name'=>'ebay_account_id',
+			'name'=>'xebayaccount_id',
 			'vname'=>'LBL_EBAY_ACCOUNT_ID',
 			'type' => 'id',
+		),
+		'xebayaccount_name'=>
+		array(
+			'name'=>'xebayaccount_name',
+			'rname' => 'name',
+			'vname'=>'LBL_EBAY_ACCOUNT',
+			'id_name'=>'xebayaccount_id',
+			'type'=>'relate',
+			'link'=>'xebayaccount_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebayaccounts',
+			'module' => 'xeBayAccounts',
+		),
+		'xebayaccount_link'=>
+		array(
+			'name' => 'xebayaccount_link',
+			'type' => 'link',
+			'relationship' => 'xebaysellerlists_xebayaccount',
+			'vname' => 'LBL_EBAY_ACCOUNT',
+			'source'=>'non-db',
 		),
 		'hitcount' => array(
 			'name' => 'hitcount',
@@ -108,12 +130,6 @@ $dictionary['xeBaySellerList'] = array(
 			'vname' => 'LBL_QUANTITY',
 			'type' => 'int',
 		),
-		'sku' => array(
-			'name' => 'sku',
-			'vname' => 'LBL_SKU',
-			'type' => 'varchar',
-			'len' => '50',
-		),
 		'name' => array(
 			'name' => 'name',
 			'vname' => 'LBL_NAME',
@@ -128,48 +144,41 @@ $dictionary['xeBaySellerList'] = array(
 			'type' => 'bool',
 			'default' => false,
 		),
-		'notes' => array (
-			'name' => 'notes',
-			'type' => 'link',
-			'relationship' => 'xebaysellerlists_notes',
-			'source'=>'non-db',
-			'vname'=>'LBL_NOTES',
-		),
-		'inventory_id' => array(
-			'name'=>'inventory_id',
+		'xinventory_id' => array(
+			'name'=>'xinventory_id',
 			'vname'=>'LBL_SKU',
 			'type'=>'id',
 		),
-		'inventory_name' => array(
-			'name'=> 'inventory_name',
+		'xinventory_name' => array(
+			'name'=> 'xinventory_name',
 			'rname' => 'name',
 			'vname'=>'LBL_RELATED_TO',
-			'id_name'=>'inventory_id',
+			'id_name'=>'xinventory_id',
 			'type'=>'relate',
-			'link'=>'inventory_link',
+			'link'=>'xinventory_link',
 			'source'=>'non-db',
 			'dbType' => 'varchar',
 			'table' => 'xinventories',
 			'module' => 'xInventories',
 		),
-		'inventory_link'=>
+		'xinventory_link'=>
 		array(
-			'name' => 'inventory_link',
+			'name' => 'xinventory_link',
 			'type' => 'link',
-			'relationship' => 'xinventory_ebaysellerlist',
+			'relationship' => 'xbaysellerlists_xinventory',
 			'vname' => 'LBL_RELATED_TO',
 			'source'=>'non-db',
 		),
 	),
 	'relationships'=>array (
-		'xinventory_ebaysellerlist' => array(
+		'xebaysellerlists_xebayaccount' => array(
+			'lhs_module'=> 'xeBayAccounts', 'lhs_table'=> 'xebayaccounts', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'xebayaccount_id',
+			'relationship_type'=>'one-to-many'),
+		'xbaysellerlists_xinventory' => array(
 								'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
-								'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'inventory_id',
+								'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'xinventory_id',
 								'relationship_type'=>'one-to-many'),
-		'xebaysellerlists_notes' => array('lhs_module'=> 'xeBaySellerLists', 'lhs_table'=> 'xebaysellerlists', 'lhs_key' => 'id',
-								'rhs_module'=> 'Notes', 'rhs_table'=> 'notes', 'rhs_key' => 'parent_id',
-								'relationship_type'=>'one-to-many', 'relationship_role_column'=>'parent_type',
-								'relationship_role_column_value'=>'xeBaySellerLists'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

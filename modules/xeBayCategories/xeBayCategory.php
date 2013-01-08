@@ -57,7 +57,7 @@ class xeBayCategory extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
-	var $ebay_account_id;
+	var $xebayaccount_id;
 	var $autopay_enabled;
 	var $b2bvat_enabled;
 	var $bestoffer_enabled;

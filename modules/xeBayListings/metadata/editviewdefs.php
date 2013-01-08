@@ -54,7 +54,7 @@ $viewdefs['xeBayListings']['EditView'] = array(
 					),
 				),
 				array(
-					'name' => 'inventory_name',
+					'name' => 'xinventory_name',
 					'displayParams' => array(
 						'size' => 64,
 						'readOnly' => 'readOnly',

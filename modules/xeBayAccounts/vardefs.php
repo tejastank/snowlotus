@@ -101,6 +101,36 @@ $dictionary['xeBayAccount'] = array(
 			'vname' => 'LBL_CATEGORY_UPDATE_TIME',
 			'type' => 'datetime',
 		),
+		'xebayorders'=>
+		array(
+			'name'=>'xebayorders',
+			'vname'=>'LBL_EBAYORDERS',
+			'type'=>'link',
+			'relationship' => 'xebayorders_xebayaccount',
+			'module'=>'xeBayOrders',
+			'bean_name'=>'xeBayOrder',
+			'source'=>'non-db',
+		),
+		'xebaytransactions'=>
+		array(
+			'name'=>'xebaytransactions',
+			'vname'=>'LBL_EBAYTRANSACTIONS',
+			'type'=>'link',
+			'relationship' => 'xebaytransactions_xebayaccount',
+			'module'=>'xeBayTransactions',
+			'bean_name'=>'xeBayTransaction',
+			'source'=>'non-db',
+		),
+		'xebaysellerlists'=>
+		array(
+			'name'=>'xebaysellerlists',
+			'vname'=>'LBL_EBAYSELLERLISTS',
+			'type'=>'link',
+			'relationship' => 'xebaysellerlists_xebayaccount',
+			'module'=>'xeBaySellerLists',
+			'bean_name'=>'xeBaySellerList',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
 	),

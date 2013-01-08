@@ -99,7 +99,7 @@ class GetOrders extends eBayApiEnvironment
 					}
 
 					$bean->handled_status = 'unhandled';
-					$bean->ebay_account_id = $account_id;
+					$bean->xebayaccount_id = $account_id;
 					$bean->buyer_checkout_message = $order->getBuyerCheckoutMessage();
 					$bean->order_id = $order->getOrderID();
 					$bean->checkout_status_last_modified_time = $order->getCheckoutStatus()->getLastModifiedTime();

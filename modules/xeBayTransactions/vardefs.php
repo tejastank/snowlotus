@@ -39,6 +39,34 @@ $dictionary['xeBayTransaction'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'xebayaccount_id'=>
+		array(
+			'name'=>'xebayaccount_id',
+			'vname'=>'LBL_EBAY_ACCOUNT_ID',
+			'type' => 'id',
+		),
+		'xebayaccount_name'=>
+		array(
+			'name'=>'xebayaccount_name',
+			'rname' => 'name',
+			'vname'=>'LBL_EBAY_ACCOUNT',
+			'id_name'=>'xebayaccount_id',
+			'type'=>'relate',
+			'link'=>'xebayaccount_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebayaccounts',
+			'module' => 'xeBayAccounts',
+		),
+		'xebayaccount_link'=>
+		array(
+			'name' => 'xebayaccount_link',
+			'type' => 'link',
+			'relationship' => 'xebaytransactions_xebayaccount',
+			'vname' => 'LBL_EBAY_ACCOUNT',
+			'source'=>'non-db',
+		),
 		'xebayorder_id'=>
 		array(
 			'name'=>'xebayorder_id',
@@ -259,6 +287,10 @@ $dictionary['xeBayTransaction'] = array(
 		),
 	),
 	'relationships'=>array (
+		'xebaytransactions_xebayaccount' => array(
+			'lhs_module'=> 'xeBayAccounts', 'lhs_table'=> 'xebayaccounts', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBayTransactions', 'rhs_table'=> 'xebaytransactions', 'rhs_key' => 'xebayaccount_id',
+			'relationship_type'=>'one-to-many'),
 		'xebaytransactions_xebayorder' => array(
 			'lhs_module'=> 'xeBayOrders', 'lhs_table'=> 'xebayorders', 'lhs_key' => 'id',
 			'rhs_module'=> 'xeBayTransactions', 'rhs_table'=> 'xebaytransactions', 'rhs_key' => 'xebayorder_id',

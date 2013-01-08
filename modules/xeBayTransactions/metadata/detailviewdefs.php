@@ -47,18 +47,18 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 	'panels' =>array (
 		array (
 			'name',
-			'assigned_user_name',
+			'xebayaccount_name',
 		),
 		array (
+			'xinventory_name',
+			'xebayorder_name',
+		),
+		array (
+			'quantity_purchased',
 			array (
 				'name' => 'price_value',
 				'customCode' => '{$fields.price_currency_id.value}&nbsp;{$fields.price_value.value}',
 			),
-			'quantity_purchased',
-		),
-		array (
-			'xebayorder_name',
-			'xinventory_name',
 		),
 		array (
 			'customs_declaration',
@@ -74,6 +74,7 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 		),
 		array (
 			'description',
+			'assigned_user_name',
 		),
 		array (
 			array (

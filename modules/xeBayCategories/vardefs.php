@@ -39,9 +39,9 @@ $dictionary['xeBayCategory'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-		'ebay_account_id'=>
+		'xebayaccount_id'=>
 		array(
-			'name'=>'ebay_account_id',
+			'name'=>'xebayaccount_id',
 	    	'vname'=> 'LBL_EBAY_ACCOUNT_ID',
 	    	'type'=>'id',
 		),

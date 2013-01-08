@@ -122,7 +122,7 @@ echo "<pre>";
 $row = 2;
 
 foreach ($resp['list'] as &$item) {
-    $where = "inventory_id='{$item->id}' AND operation='out' AND date_entered>'{$startTime}'";
+    $where = "xinventory_id='{$item->id}' AND operation='out' AND date_entered>'{$startTime}'";
 	$records = $recordBean->get_list("", $where, 0, -99, -99, 0, false, array('quantity'));
 
     $salesVolume = 0;
@@ -177,7 +177,14 @@ foreach ($resp['list'] as &$item) {
 	$puchaseData[] = $item->name;
 	$puchaseData[] = $purchaseQuantity;
 	$puchaseData[] = $item->price;
-	$puchaseData[] = "深圳福田华强北通讯市场";
+	$item->load_relationship('xvendors');
+	$vendors = $item->xvendors->getBeans();
+	$address = '';
+	foreach($vendors as &$vendor) {
+		$phone = empty($vendor->phone_office) ? $vendor->phone_mobile : $vendor->phone_office;
+		$address .= $vendor->billing_address_street ."({$phone})";
+	}
+	$puchaseData[] = $address;
 
 	set_row_data($objPHPExcel, 0, $puchaseData, $row);
 

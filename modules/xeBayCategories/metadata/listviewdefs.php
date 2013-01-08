@@ -60,15 +60,9 @@ $listViewDefs['xeBayCategories'] = array(
 		'width' => '8', 
 		'label' => 'LBL_LEAF_CATEGORY', 
 		'default' => true),         
-    'expired' => array(
+    'EXPIRED' => array(
 		'width' => '8', 
 		'label' => 'LBL_EXPIRED', 
 		'default' => true),         
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
 );
 ?>

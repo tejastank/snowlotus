@@ -132,7 +132,7 @@ class GetSellerList extends eBayApiEnvironment
 				if (empty($itemArray))
 					break;
 				foreach ($itemArray as &$item) {
-					$bean->ebay_account_id = $account_id;
+					$bean->xebayaccount_id = $account_id;
 					$bean->hitcount = $item->getHitCount();;
 					$bean->item_id = $item->getItemID();
 					$bean->currency_id = $item->getListingDetails()->getConvertedStartPrice()->getTypeAttribute('currencyID');
@@ -145,7 +145,7 @@ class GetSellerList extends eBayApiEnvironment
 					$bean->picture_details = $this->fill_picture_details($item);
 					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
-					$bean->inventory_id = $item->getSKU();
+					$bean->xinventory_id = $item->getSKU();
 					$name = $bean->name = $item->getTitle();
 					$variations = $item->getVariations();
 					$bean->variation = !empty($variations);
