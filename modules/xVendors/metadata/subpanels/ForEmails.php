@@ -38,88 +38,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-			"xCategories",
-            "xInventories",
-            "xInventoryRecords",
-            "xVendors",
-            "xXxxs",
-        )
-    ),
-	'LBL_TABGROUP_EBAYTOOLS'=>array(
-        'label' => 'LBL_TABGROUP_EBAYTOOLS',
-        'modules' => array(
-            "Home",
-			"xeBayAccounts",
-			"xeBayCategories",
-			"xeBayListings",
-			"xeBayOrders",
-			"xeBaySellerLists",
-        )
+$subpanel_layout = array(
+	'top_buttons' => array(
+		array('widget_class' => 'SubPanelTopCreateButton'),
+		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xVendors'),
+	),
+
+	'where' => '',
+	
+	'list_fields' => array(
+		'name' => array(
+ 		 	'vname' => 'LBL_LIST_XVENDOR_NAME',
+			'widget_class' => 'SubPanelDetailViewLink',
+			'width' => '45%',
+		),
+		'billing_address_city' => array(
+ 		 	'vname' => 'LBL_LIST_CITY',
+			'width' => '27%',
+		),
+		'phone_office' => array(
+ 		 	'vname' => 'LBL_LIST_PHONE',
+			'width' => '20%',
+		),
+		'edit_button' => array(
+			'vname' => 'LBL_EDIT_BUTTON',
+			'widget_class' => 'SubPanelEditButton',
+			'width' => '4%',
+		),
+		'remove_button' => array(
+			'vname' => 'LBL_REMOVE',
+			'widget_class' => 'SubPanelRemoveButton',
+			'width' => '4%',
+		),
 	),
 );
 
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
 ?>

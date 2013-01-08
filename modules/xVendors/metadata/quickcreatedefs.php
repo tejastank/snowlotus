@@ -35,91 +35,92 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+/*********************************************************************************
 
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+ 
 
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
+$viewdefs ['xVendors'] = 
+array (
+  'QuickCreate' => 
+  array (
+    'templateMeta' => 
+    array (
+      'form' => 
+      array (
+        'buttons' => 
+        array (
+          'SAVE',
+          'CANCEL',
+        ),
+      ),
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'includes' => 
+      array (
+        array (
+          'file' => 'modules/xVendors/xVendor.js',
+        ),
+      ),
     ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
+    'panels' => 
+    array (
+      'default' => 
+      array (
+        array (
+          array (
+            'name' => 'name',
+            'displayParams' => 
+            array (
+              'required' => true,
+            ),
+          ),
+        ),
+        array (
+          array (
+            'name' => 'website',
+          ),
+          array (
+            'name' => 'phone_office',
+          ),
+        ),
+        array (
+          array (
+            'name' => 'email1',
+          ),
+          array (
+            'name' => 'phone_fax',
+          ),
+        ),
+        array (
+          array (
+            'name' => 'industry',
+          ),
+          array (
+            'name' => 'xvendor_type',
+          ),
+        ),
+        array (
+            array (
+              'name' => 'assigned_user_name',
+            ),
+        ),
+      ),
     ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-			"xCategories",
-            "xInventories",
-            "xInventoryRecords",
-            "xVendors",
-            "xXxxs",
-        )
-    ),
-	'LBL_TABGROUP_EBAYTOOLS'=>array(
-        'label' => 'LBL_TABGROUP_EBAYTOOLS',
-        'modules' => array(
-            "Home",
-			"xeBayAccounts",
-			"xeBayCategories",
-			"xeBayListings",
-			"xeBayOrders",
-			"xeBaySellerLists",
-        )
-	),
-);
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
+  ),
+); 
+ 
 ?>

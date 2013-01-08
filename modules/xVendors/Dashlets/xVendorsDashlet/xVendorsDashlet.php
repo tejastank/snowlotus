@@ -38,88 +38,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-			"xCategories",
-            "xInventories",
-            "xInventoryRecords",
-            "xVendors",
-            "xXxxs",
-        )
-    ),
-	'LBL_TABGROUP_EBAYTOOLS'=>array(
-        'label' => 'LBL_TABGROUP_EBAYTOOLS',
-        'modules' => array(
-            "Home",
-			"xeBayAccounts",
-			"xeBayCategories",
-			"xeBayListings",
-			"xeBayOrders",
-			"xeBaySellerLists",
-        )
-	),
-);
 
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
+require_once('include/Dashlets/DashletGeneric.php');
+
+
+class MyxVendorsDashlet extends DashletGeneric { 
+    function MyxVendorsDashlet($id, $def = null) {
+		global $current_user, $app_strings;
+		require('modules/xVendors/Dashlets/MyxVendorsDashlet/MyxVendorsDashlet.data.php');
+
+        parent::DashletGeneric($id, $def);
+
+        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'xVendors');
+
+        $this->searchFields = $dashletData['MyxVendorsDashlet']['searchFields'];
+        $this->columns = $dashletData['MyxVendorsDashlet']['columns'];
+
+        $this->seedBean = new xVendor();        
+    }
+    
+    /**
+     * Overrides the generic process to include custom logic for email addresses,
+     * since they are no longer stored in  a list view friendly manner.
+     * (A record may have an undetermined number of email addresses).
+     *
+     * @param array $lvsParams
+     */
+     
+	function process($lvsParams = array()) {
+    	if (isset($this->displayColumns) && array_search('email1', $this->displayColumns) !== false) {
+	    	$lvsParams['custom_select'] = ', email_address as email1';
+	    	$lvsParams['custom_from'] = ' LEFT JOIN email_addr_bean_rel eabr ON eabr.deleted = 0 AND bean_module = \'xVendors\''
+	    							  . ' AND eabr.bean_id = xvendors.id AND primary_address = 1'
+	    							  . ' LEFT JOIN email_addresses ea ON ea.deleted = 0 AND ea.id = eabr.email_address_id';
+    	}
+    	
+        if (isset($this->displayColumns) && array_search('parent_name', $this->displayColumns) !== false) {
+	    	$lvsParams['custom_select'] = empty($lvsParams['custom_select']) ? ', a1.name as parent_name ' : $lvsParams['custom_select'] . ', a1.name as parent_name ';
+	    	$lvsParams['custom_from'] = empty($lvsParams['custom_from']) ? ' LEFT JOIN xvendors a1 on a1.id = xvendors.parent_id' : $lvsParams['custom_from'] . ' LEFT JOIN xvendors a1 on a1.id = xvendors.parent_id';
+    	}    	
+
+    	parent::process($lvsParams);
+    }
 }
+
 ?>

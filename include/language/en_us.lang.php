@@ -116,6 +116,7 @@ $app_list_strings = array (
     'xeBayTransactions' => 'Order Transactions',
     'xInventories' => 'Inventory',
     'xInventoryRecords' => 'Inventory Records',
+    'xVendors' => 'Vendors',
     'xPinnedItems' => 'Pinned Items',
     'xCategories' => 'Category',
     'xXxxs' => 'Xxx',

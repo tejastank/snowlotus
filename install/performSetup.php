@@ -497,10 +497,11 @@ FP;
     $enabled_tabs[] = 'xeBayAccounts';
     $enabled_tabs[] = 'xeBayListings';
     $enabled_tabs[] = 'xeBayOrders';
+    $enabled_tabs[] = 'xeBaySellerLists';
     $enabled_tabs[] = 'xCategories';
     $enabled_tabs[] = 'xInventoryRecords';
     $enabled_tabs[] = 'xInventories';
-    $enabled_tabs[] = 'xActiveListings';
+    $enabled_tabs[] = 'xVendors';
 
 
     installerHook('pre_setSystemTabs');

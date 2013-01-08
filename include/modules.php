@@ -329,9 +329,17 @@ $moduleList[] = 'xeBayOrders';
 $beanList['xeBayOrders'] = 'xeBayOrder';
 $beanFiles['xeBayOrder'] = 'modules/xeBayOrders/xeBayOrder.php';
 
+$moduleList[] = 'xeBaySellerLists';
+$beanList['xeBaySellerLists'] = 'xeBaySellerList';
+$beanFiles['xeBaySellerList'] = 'modules/xeBaySellerLists/xeBaySellerList.php';
+
 $moduleList[] = 'xeBayTransactions';
 $beanList['xeBayTransactions'] = 'xeBayTransaction';
 $beanFiles['xeBayTransaction'] = 'modules/xeBayTransactions/xeBayTransaction.php';
+
+$moduleList[] = 'xCategories';
+$beanList['xCategories'] = 'xCategory';
+$beanFiles['xCategory'] = 'modules/xCategories/xCategory.php';
 
 $moduleList[] = 'xInventories';
 $beanList['xInventories'] = 'xInventory';
@@ -341,17 +349,13 @@ $moduleList[] = 'xInventoryRecords';
 $beanList['xInventoryRecords'] = 'xInventoryRecord';
 $beanFiles['xInventoryRecord'] = 'modules/xInventoryRecords/xInventoryRecord.php';
 
+$moduleList[] = 'xVendors';
+$beanList['xVendors'] = 'xVendor';
+$beanFiles['xVendor'] = 'modules/xVendors/xVendor.php';
+
 $moduleList[] = 'xPinnedItems';
 $beanList['xPinnedItems'] = 'xPinnedItem';
 $beanFiles['xPinnedItem'] = 'modules/xPinnedItems/xPinnedItem.php';
-
-$moduleList[] = 'xCategories';
-$beanList['xCategories'] = 'xCategory';
-$beanFiles['xCategory'] = 'modules/xCategories/xCategory.php';
-
-$moduleList[] = 'xeBaySellerLists';
-$beanList['xeBaySellerLists'] = 'xeBaySellerList';
-$beanFiles['xeBaySellerList'] = 'modules/xeBaySellerLists/xeBaySellerList.php';
 
 $moduleList[] = 'xXxxs';
 $beanList['xXxxs'] = 'xXxx';

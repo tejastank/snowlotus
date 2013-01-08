@@ -35,91 +35,60 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+/*********************************************************************************
 
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
-    ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
-    ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-			"xCategories",
-            "xInventories",
-            "xInventoryRecords",
-            "xVendors",
-            "xXxxs",
-        )
-    ),
-	'LBL_TABGROUP_EBAYTOOLS'=>array(
-        'label' => 'LBL_TABGROUP_EBAYTOOLS',
-        'modules' => array(
-            "Home",
-			"xeBayAccounts",
-			"xeBayCategories",
-			"xeBayListings",
-			"xeBayOrders",
-			"xeBaySellerLists",
-        )
-	),
+ * Description:  Contains field arrays that are used for caching
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+$fields_array['xVendor'] = array ('column_fields' => Array(
+		"annual_revenue"
+		,"billing_address_street"
+		,"billing_address_city"
+		,"billing_address_state"
+		,"billing_address_postalcode"
+		,"billing_address_country"
+		,"date_entered"
+		,"date_modified"
+		,"modified_user_id"
+		,"assigned_user_id"
+		,"description"
+		,"email1"
+		,"email2"
+		,"employees"
+		,"id"
+		,"industry"
+		,"name"
+		,"ownership"
+		,"parent_id"
+		,"phone_alternate"
+		,"phone_fax"
+		,"phone_office"
+		,"rating"
+		,"shipping_address_street"
+		,"shipping_address_city"
+		,"shipping_address_state"
+		,"shipping_address_postalcode"
+		,"shipping_address_country"
+		,"sic_code"
+		,"ticker_symbol"
+		,"xvendor_type"
+		,"website"
+		, "created_by"
+		),
+        'list_fields' => Array('id', 'name', 'website', 'phone_office', 'assigned_user_name', 'assigned_user_id'
+	, 'billing_address_street'
+	, 'billing_address_city'
+	, 'billing_address_state'
+	, 'billing_address_postalcode'
+	, 'billing_address_country'
+	, 'shipping_address_street'
+	, 'shipping_address_city'
+	, 'shipping_address_state'
+	, 'shipping_address_postalcode'
+	, 'shipping_address_country'
+		),
+        'required_fields' => array("name"=>1),
 );
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
 ?>
