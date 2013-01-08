@@ -88,21 +88,43 @@ array (
               'required' => true,
             ),
           ),
+          array (
+            'name' => 'full_name',
+          ),
         ),
         array (
-          array (
-            'name' => 'website',
-          ),
           array (
             'name' => 'phone_office',
           ),
+          array (
+            'name' => 'qq',
+          ),
         ),
         array (
           array (
-            'name' => 'email1',
+            'name' => 'phone_mobile',
           ),
           array (
             'name' => 'phone_fax',
+          ),
+        ),
+        array (
+          array (
+            'name' => 'billing_address_street',
+            'hideLabel' => true,
+            'type' => 'address',
+            'displayParams' => 
+            array (
+              'key' => 'billing',
+              'rows' => 2,
+              'cols' => 30,
+              'maxlength' => 150,
+            ),
+          ),
+        ),
+        array (
+          array (
+            'name' => 'description',
           ),
         ),
         array (
@@ -112,11 +134,6 @@ array (
           array (
             'name' => 'xvendor_type',
           ),
-        ),
-        array (
-            array (
-              'name' => 'assigned_user_name',
-            ),
         ),
       ),
     ),

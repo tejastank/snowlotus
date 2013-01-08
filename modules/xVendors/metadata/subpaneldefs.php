@@ -55,6 +55,21 @@ $layout_defs['xVendors'] = array(
 				array('widget_class' => 'SubPanelTopSelectAccountButton', 'mode'=>'MultiSelect')
 			),
 		),
+
+		'xinventories' => array(
+			'order' => 110,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xInventories',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xinventories',
+			'add_subpanel_data' => 'xinventory_id',
+			'title_key' => 'LBL_XINVENTORIES_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
+			),
+		),
 	),
 );
 ?>

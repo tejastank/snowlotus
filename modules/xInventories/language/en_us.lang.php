@@ -92,5 +92,6 @@ $mod_strings = array (
   'LBL_INVENTORY_IN' => 'Enter warehouse',
   'LBL_INVENTORY_OUT' => 'Out of warehouse',
   'LBL_RECORDS_SUBPANEL_TITLE' => 'Records',
-  'LBL_DOWNLOAD_PURCHASE_ORDERS' => 'Download Purchaes Orders',
+  'LBL_XVENDORS_SUBPANEL_TITLE' => 'Vendors',
+  'LBL_DOWNLOAD_PURCHASE_ORDERS' => 'Download Purchase Orders',
 );

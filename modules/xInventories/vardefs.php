@@ -178,6 +178,16 @@ $dictionary['xInventory'] = array(
 			'bean_name'=>'xInventoryRecord',
 			'source'=>'non-db',
 		),
+        'xvendors'=>
+        array(
+            'name' => 'xvendors',
+            'type' => 'link',
+            'relationship' => 'xinventories_xvendors',
+            'module'=>'xVendors',
+            'bean_name'=>'xVendor',
+            'source'=>'non-db',
+            'vname'=>'LBL_VENDORS',
+        ),
 	),
 	'relationships'=>array (
 		'xinventories_xcategory' => array(

@@ -63,7 +63,7 @@ $dictionary['xVendor'] = array('table' => 'xvendors', 'audited'=>true, 'unified_
   'phone_mobile' =>
   array (
     'name' => 'phone_mobile',
-    'vname' => 'LBL_MOBILE_PHONE',
+    'vname' => 'LBL_PHONE_MOBILE',
     'type' => 'phone',
     'dbType' => 'varchar',
     'len' => 100,
@@ -428,6 +428,17 @@ $dictionary['xVendor'] = array('table' => 'xvendors', 'audited'=>true, 'unified_
         'source'=>'non-db',
         'vname'=>'LBL_PROSPECT_LIST',
       ), 
+
+        'xinventories'=>
+        array(
+            'name' => 'xinventories',
+            'type' => 'link',
+            'relationship' => 'xinventories_xvendors',
+            'module'=>'xInventories',
+            'bean_name'=>'xInventory',
+            'source'=>'non-db',
+            'vname'=>'LBL_INVENTORIES',
+        ),
 )
 , 'indices' => array (
         array('name' =>'idx_accnt_id_del', 'type' =>'index', 'fields'=>array('id', 'deleted')),

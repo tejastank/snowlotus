@@ -117,6 +117,7 @@ $mod_strings = array (
 	'LBL_MEMBER_OF' => 'Member of:',
 	'LBL_MEMBER_ORG_FORM_TITLE' => 'Member Organizations',
 	'LBL_MEMBER_ORG_SUBPANEL_TITLE'=>'Member Organizations',
+    'LBL_XINVENTORIES_SUBPANEL_TITLE'=>'Inventories',
 	'LBL_MODULE_NAME' => 'Vendors',
 	'LBL_MODULE_TITLE' => 'Vendors: Home',
 	'LBL_MODULE_ID'=> 'Vendors',

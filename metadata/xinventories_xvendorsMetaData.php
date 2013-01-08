@@ -35,40 +35,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-$layout_defs['xInventories'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-
-		'xinventoryrecords' => array(
-			'order' => 100,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xInventoryRecords',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xinventoryrecords',
-			'add_subpanel_data' => 'xinventory_id',
-			'title_key' => 'LBL_RECORDS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-			),
-		),
-
-		'xvendors' => array(
-			'order' => 110,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xVendors',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xvendors',
-			'add_subpanel_data' => 'xvendor_id',
-			'title_key' => 'LBL_XVENDORS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
-			),
-		),
-	),
-);
+$dictionary['xinventories_xvendors'] = array (
+    'table' => 'xinventories_xvendors',
+    'fields' => array (
+        array('name' =>'id', 'type' =>'varchar', 'len'=>'36',),
+        array('name' =>'xinventory_id', 'type' =>'varchar', 'len'=>'36'),
+        array('name' =>'xvendor_id', 'type' =>'varchar', 'len'=>'36'),
+        array('name' => 'date_modified','type' => 'datetime'),
+        array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'required'=>false, 'default'=>'0')
+    ),
+    'indices' => array (
+        array('name' =>'xinventories_xvendorspk', 'type' =>'primary', 'fields'=>array('id')),
+        array('name' =>'idx_acc_xvendor_acc', 'type' =>'index', 'fields'=>array('xinventory_id')),
+        array('name' =>'idx_acc_xvendor_xvendor', 'type' =>'index', 'fields'=>array('xvendor_id')),
+        array('name' => 'idx_xinventory_xvendor', 'type'=>'alternate_key', 'fields'=>array('xinventory_id','xvendor_id'))
+    ),
+    'relationships' => array (
+        'xinventories_xvendors' => array('lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
+        'rhs_module'=> 'xVendors', 'rhs_table'=> 'xvendors', 'rhs_key' => 'id',
+        'relationship_type'=>'many-to-many',
+        'join_table'=> 'xinventories_xvendors', 'join_key_lhs'=>'xinventory_id', 'join_key_rhs'=>'xvendor_id')
+    )
+)
 ?>
