@@ -70,6 +70,7 @@ $viewdefs['xInventories']['DetailView'] = array(
 		),
 		array (
 			'description',
+			'topmost',
 		),
 		array (
 			'body_html',

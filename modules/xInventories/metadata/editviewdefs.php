@@ -69,9 +69,8 @@ $viewdefs['xInventories']['EditView'] = array(
 				'weight',
 			),
 			array (
-			),
-			array (
 				'description',
+				'topmost',
 			),
 			array (
                 array(

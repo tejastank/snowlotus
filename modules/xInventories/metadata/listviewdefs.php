@@ -76,6 +76,11 @@ $listViewDefs['xInventories'] = array(
 		'label' => 'LBL_QUANTITY', 
 		'default' => true
 	),
+	'TOPMOST' => array(
+		'width' => '8', 
+		'label' => 'LBL_TOPMOST', 
+		'default' => true
+	),
 	'GOODS_ALLOCATION' => array(
 		'width' => '8', 
 		'label' => 'LBL_GOODS_ALLOCATION', 

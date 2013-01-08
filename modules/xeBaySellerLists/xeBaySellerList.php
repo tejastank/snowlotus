@@ -190,25 +190,23 @@ class xeBaySellerList extends Basic {
         return $html;
     }
 
-	function build_shopwindow_stick()
+	function build_shopwindow_topmost()
 	{
 		$inventoryBean = BeanFactory::getBean('xInventories');
-		$pinnedItemBean = BeanFactory::getBean('xPinnedItems');
 		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
 
-		$pinnedItems = $pinnedItemBean->get_full_list("", "parent_id<>'$this->id'");
+		$topmostItems = $inventoryBean->get_full_list("", "id<>'{$this->id}' AND topmost='1'");
 
 		$shop_window_items = array();
 
 		$count = 0;
 
-		foreach ($pinnedItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->parent_id);
-			$sellerList = $sellerListBean->get_valid_listing($item->parent_id);
-			if (($inventory !== null) && ($sellerList !== null)) {
+		foreach ($topmostItems as &$item) {
+			$sellerList = $sellerListBean->get_valid_listing($item->id);
+			if ($sellerList !== null) {
 				$shop_window_items[] = array(
 					'itemID' => $sellerList->item_id,
-                    'title' => empty($inventory->subtitle) ? $sellerList->name : $inventory->subtitle,
+                    'title' => empty($item->subtitle) ? $sellerList->name : $item->subtitle,
 					'listingType' => $sellerList->listing_type,
 					'currencyID' => $sellerList->currency_id,
 					'price' => $sellerList->price,
@@ -356,7 +354,7 @@ class xeBaySellerList extends Basic {
 		$ss->assign("GALLERY", $this->build_image_gallery());
 		$ss->assign("DESCRIPTION", $this->_get_description());
 		$ss->assign("PACKAGE_INCLUDED", "");
-        $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_stick());
+        $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_topmost());
         $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
         $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
         $desc = $ss->fetch("modules/xeBaySellerLists/tpls/default.html");

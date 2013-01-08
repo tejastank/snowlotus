@@ -353,10 +353,6 @@ $moduleList[] = 'xVendors';
 $beanList['xVendors'] = 'xVendor';
 $beanFiles['xVendor'] = 'modules/xVendors/xVendor.php';
 
-$moduleList[] = 'xPinnedItems';
-$beanList['xPinnedItems'] = 'xPinnedItem';
-$beanFiles['xPinnedItem'] = 'modules/xPinnedItems/xPinnedItem.php';
-
 $moduleList[] = 'xXxxs';
 $beanList['xXxxs'] = 'xXxx';
 $beanFiles['xXxx'] = 'modules/xXxxs/xXxx.php';

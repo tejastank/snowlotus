@@ -168,6 +168,13 @@ $dictionary['xInventory'] = array(
 			'type' => 'html',
 			'comment' => 'HTML formatted email body to be used in resulting email'
 		),
+		'topmost'=>
+		array(
+			'name' => 'topmost',
+			'vname' => 'LBL_TOPMOST',
+			'type' => 'bool',
+			'default' => false,
+		),
 		'xinventoryrecords'=>
 		array(
 			'name'=>'xinventoryrecords',

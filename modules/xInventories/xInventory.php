@@ -72,7 +72,9 @@ class xInventory extends Basic {
 	var $inventory_floor;
 	var $goods_allocation;
 	var $body_html;
+	var $topmost;
 	var $xinventoryrecords;
+	var $xvendors;
 
 	function xInventory()
 	{

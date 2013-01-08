@@ -101,9 +101,7 @@ $GLOBALS['tabStructure'] = array(
             "Home",
 			"xCategories",
             "xInventories",
-            "xInventoryRecords",
             "xVendors",
-            "xXxxs",
         )
     ),
 	'LBL_TABGROUP_EBAYTOOLS'=>array(

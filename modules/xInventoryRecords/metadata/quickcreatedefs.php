@@ -46,6 +46,24 @@ $viewdefs['xInventoryRecords']['QuickCreate'] = array(
 		'default' => array (
 			array (
 				'name',
+                'xinventory_name',
+			),
+            array (
+				array(
+					'name' => 'operation',
+					'customCode' =>
+		'<select name=\'operation\' id=\'operation\' title=\'\'>' .
+		'<option value=\'in\'>{$MOD.LBL_INVENTORY_IN}</option>' .
+		'<option value=\'out\'>{$MOD.LBL_INVENTORY_OUT}</option>' .
+		'</select>'
+				),
+            ),
+            array (
+                'quantity',
+                'price',
+            ),
+			array (
+				'description',
 				'assigned_user_name',
 			),
 		),
