@@ -1,5 +1,5 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,54 +36,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-$layout_defs['xInventories'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-
-        'xinventorygroups' => array(
-            'order' => 100,
-            'sort_order' => 'desc',
-            'sort_by' => 'name',
-            'module' => 'xInventoryGroups',
-            'subpanel_name' => 'default',
-            'get_subpanel_data' => 'xinventorygroups',
-            'add_subpanel_data' => 'xinventorygroup_id',
-            'title_key' => 'LBL_XINVENTORYGROUPS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
-            ),
-        ),
-
-		'xinventoryrecords' => array(
-			'order' => 110,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xInventoryRecords',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xinventoryrecords',
-			'add_subpanel_data' => 'xinventory_id',
-			'title_key' => 'LBL_RECORDS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-			),
-		),
-
-		'xvendors' => array(
-			'order' => 120,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xVendors',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xvendors',
-			'add_subpanel_data' => 'xvendor_id',
-			'title_key' => 'LBL_XVENDORS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
-			),
-		),
-	),
-);
-?>
+global $mod_strings, $app_strings, $sugar_config;
+ 
+if(ACLController::checkAccess('xInventoryGroups', 'edit', true))$module_menu[]=Array("index.php?module=xInventoryGroups&action=EditView&return_module=xInventoryGroups&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateInventoryGroups", 'xInventoryGroups');
+if(ACLController::checkAccess('xInventoryGroups', 'list', true))$module_menu[]=Array("index.php?module=xInventoryGroups&action=index&return_module=xInventoryGroups&return_action=DetailView", $mod_strings['LNK_LIST'],"InventoryGroups", 'xInventoryGroups');
+if(ACLController::checkAccess('xInventoryGroups', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xInventoryGroups&return_module=xInventoryGroups&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xInventoryGroups');

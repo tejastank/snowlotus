@@ -35,90 +35,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-
-$GLOBALS['tabStructure'] = array(
-    "LBL_TABGROUP_SALES" => array(
-        'label' => 'LBL_TABGROUP_SALES',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Opportunities",
-            "Leads",
-            "Contracts",
-            "Quotes",
-            "Forecasts",
-        )
+$dictionary['xinventories_xinventorygroups'] = array (
+    'table' => 'xinventories_xinventorygroups',
+    'fields' => array (
+        array('name' =>'id', 'type' =>'varchar', 'len'=>'36',),
+        array('name' =>'xinventory_id', 'type' =>'varchar', 'len'=>'36'),
+        array('name' =>'xinventorygroup_id', 'type' =>'varchar', 'len'=>'36'),
+        array('name' => 'date_modified','type' => 'datetime'),
+        array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'required'=>false, 'default'=>'0')
     ),
-    "LBL_TABGROUP_MARKETING" => array(
-        'label' => 'LBL_TABGROUP_MARKETING',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Leads",    
-            "Campaigns",
-            "Prospects",
-            "ProspectLists",
-        )
+    'indices' => array (
+        array('name' =>'xinventories_xinventorygroupspk', 'type' =>'primary', 'fields'=>array('id')),
+        array('name' =>'idx_acc_xinventorygroup_acc', 'type' =>'index', 'fields'=>array('xinventory_id')),
+        array('name' =>'idx_acc_xinventorygroup_xinventorygroup', 'type' =>'index', 'fields'=>array('xinventorygroup_id')),
+        array('name' => 'idx_xinventory_xinventorygroup', 'type'=>'alternate_key', 'fields'=>array('xinventory_id','xinventorygroup_id'))
     ),
-    "LBL_TABGROUP_SUPPORT" => array(
-        'label' => 'LBL_TABGROUP_SUPPORT',
-        'modules' => array(
-            "Home",
-            "Accounts",
-            "Contacts",
-            "Cases",
-            "Bugs",
-        )
-    ),
-    "LBL_TABGROUP_ACTIVITIES" => array(
-        'label' => 'LBL_TABGROUP_ACTIVITIES',
-        'modules' => array(
-            "Home",
-            "Calendar",
-            "Calls",
-            "Meetings",
-            "Emails",
-            "Tasks",
-            "Notes",
-        )
-    ),
-    "LBL_TABGROUP_COLLABORATION"=>array(
-        'label' => 'LBL_TABGROUP_COLLABORATION',
-        'modules' => array(
-            "Home",
-            "Emails",
-            "Documents",
-            "Project",
-        )
-    ),
-    "LBL_TABGROUP_SONWLOTUS"=>array(
-        'label' => 'LBL_TABGROUP_SONWLOTUS',
-        'modules' => array(
-            "Home",
-			"xCategories",
-            "xInventories",
-            "xInventoryGroups",
-            "xVendors",
-        )
-    ),
-	'LBL_TABGROUP_EBAYTOOLS'=>array(
-        'label' => 'LBL_TABGROUP_EBAYTOOLS',
-        'modules' => array(
-            "Home",
-			"xeBayAccounts",
-			"xeBayCategories",
-			"xeBayListings",
-			"xeBayOrders",
-			"xeBaySellerLists",
-        )
-	),
-);
-
-if(file_exists('custom/include/tabConfig.php')){
-	require_once('custom/include/tabConfig.php');
-}
+    'relationships' => array (
+        'xinventories_xinventorygroups' => array('lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
+        'rhs_module'=> 'xInventoryGroups', 'rhs_table'=> 'xinventorygroups', 'rhs_key' => 'id',
+        'relationship_type'=>'many-to-many',
+        'join_table'=> 'xinventories_xinventorygroups', 'join_key_lhs'=>'xinventory_id', 'join_key_rhs'=>'xinventorygroup_id')
+    )
+)
 ?>

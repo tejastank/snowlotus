@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,55 +34,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-$layout_defs['xInventories'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-
-        'xinventorygroups' => array(
-            'order' => 100,
-            'sort_order' => 'desc',
-            'sort_by' => 'name',
-            'module' => 'xInventoryGroups',
-            'subpanel_name' => 'default',
-            'get_subpanel_data' => 'xinventorygroups',
-            'add_subpanel_data' => 'xinventorygroup_id',
-            'title_key' => 'LBL_XINVENTORYGROUPS_SUBPANEL_TITLE',
-            'top_buttons' => array(
-                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-                array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
-            ),
-        ),
-
-		'xinventoryrecords' => array(
-			'order' => 110,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xInventoryRecords',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xinventoryrecords',
-			'add_subpanel_data' => 'xinventory_id',
-			'title_key' => 'LBL_RECORDS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-			),
-		),
-
-		'xvendors' => array(
-			'order' => 120,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xVendors',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xvendors',
-			'add_subpanel_data' => 'xvendor_id',
-			'title_key' => 'LBL_XVENDORS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
-			),
+$dictionary['xInventoryGroup'] = array(
+	'table'=>'xinventorygroups',
+	'audited'=>true,
+	'duplicate_merge'=>true,
+	'fields'=>array (
+		'xinventories'=>
+		array(
+			'name'=>'xinventories',
+			'vname'=>'LBL_INVENTORIES',
+			'type'=>'link',
+			'relationship' => 'xinventories_xinventorygroups',
+			'module'=>'xInventories',
+			'bean_name'=>'xInventory',
+			'source'=>'non-db',
 		),
 	),
+	'relationships'=>array (
+	),
+    'indices' => array (
+    ),
+	'optimistic_locking'=>true,
+	'unified_search'=>true,
 );
-?>
+
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
+}
+
+VardefManager::createVardef('xInventoryGroups','xInventoryGroup', array('basic','assignable'));

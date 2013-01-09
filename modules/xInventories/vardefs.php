@@ -195,6 +195,16 @@ $dictionary['xInventory'] = array(
             'source'=>'non-db',
             'vname'=>'LBL_VENDORS',
         ),
+        'xinventorygroups'=>
+        array(
+            'name' => 'xinventorygroups',
+            'type' => 'link',
+            'relationship' => 'xinventories_xinventorygroups',
+            'module'=>'xInventoryGroups',
+            'bean_name'=>'xInventoryGroup',
+            'source'=>'non-db',
+            'vname'=>'LBL_INVENTORYGROUPS',
+        ),
 	),
 	'relationships'=>array (
 		'xinventories_xcategory' => array(

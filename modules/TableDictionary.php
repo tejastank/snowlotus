@@ -96,6 +96,7 @@ include("metadata/documents_bugsMetaData.php");
 include("metadata/oauth_nonce.php");
 
 include("metadata/xinventories_xvendorsMetaData.php");
+include("metadata/xinventories_xinventorygroupsMetaData.php");
 
 if(file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')){
 	include('custom/application/Ext/TableDictionary/tabledictionary.ext.php');

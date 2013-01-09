@@ -500,6 +500,7 @@ FP;
     $enabled_tabs[] = 'xeBaySellerLists';
     $enabled_tabs[] = 'xCategories';
     $enabled_tabs[] = 'xInventories';
+    $enabled_tabs[] = 'xInventoryGroups';
     $enabled_tabs[] = 'xVendors';
 
 
