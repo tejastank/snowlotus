@@ -159,7 +159,7 @@ foreach ($resp['list'] as &$item) {
 	}
 
 	$purchaseQuantity = 0;
-	if ($item->quantity  > $salesVolume) {
+	if ($item->quantity  > (($salesVolume * 7) / 15)) {
 		echo "物品名称: {$item->name}, 库存量 {$item->quantity}, 本月销量 {$salesVolume}, 库存充足!!!\n\n";
 		continue;
 	} else {
@@ -182,9 +182,10 @@ foreach ($resp['list'] as &$item) {
 	$address = '';
 	foreach($vendors as &$vendor) {
 		$phone = empty($vendor->phone_office) ? $vendor->phone_mobile : $vendor->phone_office;
-		$address .= $vendor->billing_address_street ."({$phone})";
+        if (!empty($address)) $address .= "\n";
+		$address .= $vendor->billing_address_street ." ({$phone})";
 	}
-	$puchaseData[] = $address;
+	$puchaseData[] = array('value'=>$address, 'autosize'=>true);
 
 	set_row_data($objPHPExcel, 0, $puchaseData, $row);
 
@@ -221,16 +222,16 @@ sugar_cleanup(true);
 
 function set_column_head($excel, $index, $data, $title)
 {
-	$rowAlpha = 'A';
-	$column = 0;
+	$row = 1;
+	$column = 'A';
 	foreach ($data as &$cell) {
 	    $excel->setActiveSheetIndex($index)
-	                ->setCellValueByColumnAndRow($column++, 1, $cell['name']);
+	                ->setCellValue($column.$row, $cell['name']);
 		if (!empty($cell['width']))
-    		$excel->setActiveSheetIndex($index)->getColumnDimension($rowAlpha)->setWidth($cell['width']);
+    		$excel->setActiveSheetIndex($index)->getColumnDimension($column)->setWidth($cell['width']);
 		if (!empty($cell['hidden']))
-    		$excel->setActiveSheetIndex($index)->getColumnDimension($rowAlpha)->setVisible(false);
-		$rowAlpha++;
+    		$excel->setActiveSheetIndex($index)->getColumnDimension($column)->setVisible(false);
+		$column++;
 	}
 
 	$excel->getActiveSheet()->setTitle($title);
@@ -241,16 +242,30 @@ function set_column_head($excel, $index, $data, $title)
 	$excel->getActiveSheet()->getPageMargins()->setTop(0.2);
 	$excel->getActiveSheet()->getPageMargins()->setRight(0.2);
 	$excel->getActiveSheet()->getPageMargins()->setBottom(0.2);
-	$excel->getActiveSheet()->getPageMargins()->setLeft(0.2);
+	$excel->getActiveSheet()->getPageMargins()->setLeft(0.5);
 }
 
 function set_row_data($excel, $index, $data, $row)
 {
-	$column = 0;
+    $column = 'A';
 
     foreach ($data as &$cell) {
-    	$excel->setActiveSheetIndex($index)
-    	            ->setCellValueByColumnAndRow($column++, $row, $cell);
+        $excel->setActiveSheetIndex($index)->getStyle($column.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+        $excel->setActiveSheetIndex($index)->getStyle($column.$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $excel->setActiveSheetIndex($index)->getStyle($column.$row)->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_DASHDOT);
+        $excel->setActiveSheetIndex($index)->getStyle($column.$row)->getBorders()->getTop()->setColor(new PHPExcel_Style_Color('FFC0C0C0'));
+        if (is_array($cell)) {
+    	    $excel->setActiveSheetIndex($index)
+    	                ->setCellValue($column.$row, $cell['value']);
+            if (!empty($cell['autosize'])) {
+                $excel->setActiveSheetIndex($index)->getStyle($column.$row)->getAlignment()->setWrapText(true);
+                $excel->setActiveSheetIndex($index)->getRowDimension($row)->setRowHeight(-1);
+            }
+        } else {
+    	    $excel->setActiveSheetIndex($index)
+    	                ->setCellValue($column.$row, $cell);
+        }
+        $column++;
     }
 }
 
