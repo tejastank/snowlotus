@@ -93,10 +93,10 @@ $dictionary['xeBayTransaction'] = array(
 			'vname' => 'LBL_RELATED_TO_ORDER',
 			'source'=>'non-db',
 		),
-		'combine_order_id'=>
+		'primitive_order_id'=>
 		array(
-			'name'=>'combine_order_id',
-			'vname'=>'LBL_COMBINE_ORDER_ID',
+			'name'=>'primitive_order_id',
+			'vname'=>'LBL_PRIMITIVE_ORDER_ID',
 			'type' => 'id',
 		),
 		'stockout'=>
@@ -272,6 +272,7 @@ $dictionary['xeBayTransaction'] = array(
 			'name' => 'sales_record_number',
 			'vname' => 'LBL_SALES_RECORD_NUMBER',
 			'type' => 'int',
+			'default' => -1,
 			'comment' => 'shipping details selling manager sales record number',
 		),
 		'price_currency_id' => array(

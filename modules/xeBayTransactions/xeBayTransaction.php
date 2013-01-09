@@ -60,7 +60,7 @@ class xeBayTransaction extends Basic {
 	var $xebayorder_id;
 	var $xebayorder_name;
 	var $xebayorder_link;
-	var $combine_order_id;
+	var $primitive_order_id;
 	var $stockout;
 	var $actual_handling_cost_currency_id;
 	var $actual_handling_cost_value;
@@ -101,7 +101,8 @@ class xeBayTransaction extends Basic {
 	{
 		$field_list = $this->get_list_view_array();
 
-		$field_list['NAME'] = '<a target="_blank" href="' . $field_list['ITEM_VIEW_ITEM_URL'] . '">' . $field_list['NAME'] . "</a>";
+		if ($field_list['SALES_RECORD_NUMBER'] != -1)
+			$field_list['NAME'] = '<a target="_blank" href="' . $field_list['ITEM_VIEW_ITEM_URL'] . '">' . $field_list['NAME'] . "</a>";
 
 		return $field_list;
 	}

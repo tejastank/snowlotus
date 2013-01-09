@@ -43,6 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+$entry_point_registry['sfcFormatExport'] = array('file' => 'modules/xeBayOrders/sfcFormatExport.php', 'auth' => true);
+$entry_point_registry['pfcFormatExport'] = array('file' => 'modules/xeBayOrders/pfcFormatExport.php', 'auth' => true);
 $entry_point_registry['shippingMark'] = array('file' => 'modules/xeBayOrders/shippingMark.php', 'auth' => true);
 $entry_point_registry['print'] = array('file' => 'modules/xeBayOrders/print.php', 'auth' => true);
 $entry_point_registry['suspend'] = array('file' => 'modules/xeBayOrders/suspend.php', 'auth' => true);

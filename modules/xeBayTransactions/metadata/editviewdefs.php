@@ -63,6 +63,7 @@ $viewdefs['xeBayTransactions']['EditView'] = array(
 						'readOnly' => 'readOnly',
 					),
 				),
+				'xebayorder_name',
 			),
 			array (
 				'quantity_purchased',

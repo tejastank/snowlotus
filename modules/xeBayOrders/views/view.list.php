@@ -40,12 +40,22 @@ require_once('include/MVC/View/views/view.list.php');
 
 class xeBayOrdersViewList extends ViewList
 {
+	var $filter;
+
+	function xeBayOrdersViewList()
+	{
+		$this->filter = $_REQUEST['filter'];
+		if (empty($this->filter))
+			$this->filter = 'unhandled';
+
+        parent:: ViewList();
+    }
+
 	function listViewPrepare()
 	{
-		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] != 'deleted')
-			$this->where = "handled_status='{$_REQUEST['filter']}'";
-		else
-			$this->where = "handled_status='unhandled'";
+		if ($this->filter != 'deleted')
+			$this->where = "handled_status='{$this->filter}'";
+
 		parent::listViewPrepare();
 	}
 
@@ -70,34 +80,105 @@ EOF;
 		return "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings[$label]}</a>";
 	}
 
- 	public function preDisplay()
+ 	function preDisplay()
  	{
-		// echo "<pre>";
-		// print_r($_REQUEST);
-		// print_r($this->params);
-		// print_r($this->where);
-		// echo "</pre>";
  		parent::preDisplay();
 
 		$this->showMassupdateFields = false;
 
 		$items = array();
 
-		if (empty($_REQUEST['filter']) || (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'unhandled')) {
+		if ($this->filter == 'unhandled') {
 			$items[] = $this->buildLinks('LBL_SHIPPING_MARK_CONFIRMATION', 'shippingMark', 'LBL_SHIPPING_MARK');
-			$items[] = $this->buildLinks('LBL_PRINT_CONFIRMATION', 'print', 'LBL_PRINT');
+			$items[] = $this->buildLinks('LBL_PRINT_CONFIRMATION', 'print', 'LBL_PRINT_SELECT');
 			$items[] = $this->buildLinks('LBL_SUSPEND_CONFIRMATION', 'suspend', 'LBL_SUSPEND');
 		}
 
-		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'handled') {
+		if ($this->filter == 'handled') {
 			$items[] = $this->buildLinks('LBL_REDELIVER_CONFIRMATION', 'redeliver', 'LBL_REDELIVER');
 			$items[] = $this->buildLinks('LBL_UNHANDLED_MARK_CONFIRMATION', 'unhandledMark', 'LBL_MARK_AS_UNHANDLED');
 		}
 
-		if (!empty($_REQUEST['filter']) && $_REQUEST['filter'] == 'suspended') {
+		if ($this->filter == 'suspended') {
 			$items[] = $this->buildLinks('LBL_RESUME_CONFIRMATION', 'resume', 'LBL_RESUME');
 		}
 
 		$this->lv->actionsMenuExtraItems = $items;
  	}
+
+	function display()
+	{
+		global $mod_strings;
+		// echo "<pre>";
+		// print_r($_REQUEST);
+		// print_r($this->params);
+		// print_r($this->where);
+		// echo "</pre>";
+
+		$shortcuts_unhandled = <<<EOF
+<script>
+function automerge()
+{
+   var href="index.php?module=xeBayOrders&action=automerge&eturn_module=xeBayOrders&return_action=index";
+   window.location.href=href;
+}
+function completeall()
+{
+   var href="index.php?module=xeBayOrders&action=completeall&eturn_module=xeBayOrders&return_action=index";
+   window.location.href=href;
+}
+function printall()
+{
+   var href="index.php?module=xeBayOrders&action=printall&eturn_module=xeBayOrders&return_action=index";
+   window.location.href=href;
+}
+function sfcexport()
+{
+   var href="index.php?entryPoint=sfcFormatExport&module=xeBayOrders&action=index";
+   window.location.href=href;
+}
+function pfcexport()
+{
+   var href="index.php?entryPoint=pfcFormatExport&module=xeBayOrders&action=index";
+   window.location.href=href;
+}
+</script> 
+<input title="{$mod_strings['LBL_AUTO_MERGE']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_AUTO_MERGE']}" id="auto_merge" onclick="return automerge()">
+&nbsp;&nbsp;
+<input title="{$mod_strings['LBL_COMPLERE_ALL_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_COMPLERE_ALL']}" id="complete_all" onclick="return completeall()">
+&nbsp;&nbsp;
+<input title="{$mod_strings['LBL_PRINT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PRINT_ALL']}" id="print_all" onclick="return printall()">
+&nbsp;&nbsp;
+<input title="{$mod_strings['LBL_SFC_EXPORT']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_SFC_EXPORT']}" id="sfc_export" onclick="return sfcexport()">
+&nbsp;&nbsp;
+<input title="{$mod_strings['LBL_PFC_EXPORT']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PFC_EXPORT']}" id="pfc_export" onclick="return pfcexport()">
+<br/>
+<br/>
+EOF;
+
+		$shortcuts_handled = <<<EOF
+<script>
+function automessage()
+{
+   var href="index.php?module=xeBayOrders&action=automessage&eturn_module=xeBayOrders&return_action=index";
+   window.location.href=href;
+}
+</script> 
+<input title="{$mod_strings['LBL_AUTO_MESSAGE_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_AUTO_MESSAGE']}" id="auto_message" onclick="return automessage()">
+<br/>
+<br/>
+EOF;
+		switch ($this->filter) {
+		case 'unhandled':
+			echo $shortcuts_unhandled;
+			break;
+		case 'handled':
+			echo $shortcuts_handled;
+			break;
+		default:
+			break;
+		}
+
+ 		parent::display();
+	}
 }

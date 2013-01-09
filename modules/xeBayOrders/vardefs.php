@@ -45,6 +45,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>16,
+			'default'=>'unhandled',
 			'comment' => 'values: unhandled, handled, suspended',
 		),
 		'print_status'=>
@@ -165,6 +166,7 @@ $dictionary['xeBayOrder'] = array(
 			'name' => 'sales_record_number',
 			'vname' => 'LBL_SALES_RECORD_NUMBER',
 			'type' => 'int',
+			'default' => -1,
 		),
 		'eias_token'=>
 		array(

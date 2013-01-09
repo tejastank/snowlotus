@@ -98,7 +98,7 @@ class xeBayOrdersController extends SugarController
 		$this->view = 'importfinal';
 	}
 
-    function action_Print()
+    function action_printall()
     {
 		$this->view = 'print';
     }

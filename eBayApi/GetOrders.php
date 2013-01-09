@@ -139,7 +139,7 @@ class GetOrders extends eBayApiEnvironment
 					$transactionArray = $order->getTransactionArray();
 					foreach ($transactionArray as &$transaction) {
 						$orderTransaction->xebayorder_id = $bean->id;
-						$orderTransaction->combine_order_id = $bean->id;
+						$orderTransaction->primitive_order_id = $bean->id;
                         $actualHandlingCost = $transaction->getActualHandlingCost();
                         if ($actualHandlingCost) {
 						    $orderTransaction->actual_handling_cost_currency_id = $actualHandlingCost->getTypeAttribute('currencyID');
