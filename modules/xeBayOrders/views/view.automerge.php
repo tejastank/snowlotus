@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,37 +34,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-/**
- * xeBayOrdersViewPrint.php
- * 
- * This class overrides SugarView and provides an implementation for the ValidPortalUsername
- * method used for checking whether or not an existing portal user_name has already been assigned.
- * We take advantage of the MVC framework to provide this action which is invoked from
- * a javascript AJAX request.
- * 
- * @author xlongfeng
- * */
- 
 require_once('include/MVC/View/SugarView.php');
 
-class xeBayOrdersViewPrint extends SugarView 
-{
- 	/**
-     * @see SugarView::display()
-     */
-    public function display()
+class xeBayOrdersViewAutomerge extends SugarView {
+
+	function xeBayOrdersViewAutomerge()
     {
-		$ss = new Sugar_Smarty();
-        $ss->assign("MOD", $GLOBALS['mod_strings']);
-        $ss->assign("INSTRUCTION", "<h1>Print orders</h1>");
-      	$javascript = <<<EOQ
-function PrintConfirm()
-{
-		return confirm("Do you want to print orders now ?");
+ 		parent::SugarView();
+	}
+	
+    function process()
+    {
+ 		parent::process();
+	}
+	
+	function display(){
+        echo "<pre>";
+        print_r($_REQUEST);
+        echo "</pre>";
+        // header("Location: index.php?module=xeBayOrders&action=index");
+	}
 }
-EOQ;
-      	$ss->assign("JAVASCRIPT", $javascript);
-		echo $ss->fetch("modules/xeBayOrders/tpls/print.tpl");
- 	}
-}
+
+?>

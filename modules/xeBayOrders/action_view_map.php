@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -36,66 +35,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description: Controller for the Import module
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- ********************************************************************************/
 
-require_once("include/MVC/Controller/SugarController.php");
-require_once('eBayApi/GetOrders.php');
-
-class xeBayOrdersController extends SugarController
-{
-    function action_test()
-    {
-		$numberOfDays = 30;
-
-		$orders = new GetOrders;
-
-		$result = $orders->dispatchCall(array(
-			'NumberOfDays' => $numberOfDays,
-			// 'OrderStatus' => 'Active',
-			'OrderStatus' => 'Completed',
-		));
-    }
-
-    function action_Import()
-    {
-		$this->view = 'import';
-    }
-
-    function action_ImportFinal()
-	{
-		$numberOfDays = isset($_REQUEST['number_of_days']) ? $_REQUEST['number_of_days'] : 1;
-
-		$orders = new GetOrders;
-
-		$accounts = array();
-
-		if (!empty($_REQUEST['ebay_account_name'])) {
-			$name = $_REQUEST['ebay_account_name'];
-			$bean = BeanFactory::getBean('xeBayAccounts');
-			$accounts = $bean->get_accounts($name);
-		}
-
-		foreach ($accounts as $id => $authToken) {
-			$result = $orders->retrieveOrders(array(
-				'NumberOfDays' => $numberOfDays,
-				// 'OrderStatus' => 'Shipped',
-				'OrderStatus' => 'Completed',
-				'AccountID' => $id,
-				'AuthToken' => $authToken,
-			));
-		}
-
-		if ($result === true)
-			$GLOBALS['message'] = "Get orders from ebay succeed!";
-		else
-			$GLOBALS['message'] = "Get orders from ebay falied!";
-
-		$this->view = 'importfinal';
-	}
-}
-?>
+$action_view_map['automerge'] = 'automerge';
+$action_view_map['completeall'] = 'completeall';
+$action_view_map['printall'] = 'printall';

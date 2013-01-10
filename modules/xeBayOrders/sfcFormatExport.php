@@ -100,12 +100,18 @@ $row = 2;
 foreach ($list as &$order) {
 	$order->load_relationship('xebaytransactions');
 	$transactions = $order->xebaytransactions->getBeans();
+    $quantity = 0; 
+    $weight = 0;
+    foreach($transactions as &$transaction) {
+        $quantity += $transaction->quantity_purchased;
+        $weight += ($transaction->weight * $quantity);
+    }
 
-	$orderLine['declared value'] = '';
-	$orderLine['evaluate'] = '';
+	$orderLine['declared value'] = "{$order->total_currency_id} {$order->total_value}";
+	$orderLine['evaluate'] = "{$order->total_currency_id} {$order->total_value}";
 	$orderLine['is return'] = 'Y';
 	$orderLine['with_battery'] = 'N';
-	$orderLine['weight'] = '';
+	$orderLine['weight'] = $weight;
 	$orderLine['Length'] = '';
 	$orderLine['Width'] = '';
 	$orderLine['Height'] = '';
@@ -116,16 +122,16 @@ foreach ($list as &$order) {
 	$orderLine['Buyer Email'] = '';
 	$orderLine['Buyer Address 1'] = $order->street1;
 	$orderLine['Buyer Address 2'] = $order->street2;
-	$orderLine['Buyer City'] = $order->city;
-	$orderLine['Buyer State'] = $order->state;
+	$orderLine['Buyer City'] = $order->city_name;
+	$orderLine['Buyer State'] = $order->state_or_province;
 	$orderLine['Buyer Zip'] = $order->postal_code;
 	$orderLine['Buyer Country'] = $order->country;
 	$orderLine['Item Title'] = '';
 	$orderLine['Custom Label'] = '';
-	$orderLine['Quantity'] = '';
-	$orderLine['Sale Price'] = '';
-	$orderLine['Total Price'] = '';
-	$orderLine['Shipping Service'] = 'HKBAM';
+	$orderLine['Quantity'] = $quantity;
+	$orderLine['Sale Price'] = "{$order->total_currency_id} {$order->total_value}";
+	$orderLine['Total Price'] = "{$order->total_currency_id} {$order->total_value}";
+	$orderLine['Shipping Service'] = $order->shipping_service;
 
 	set_row_data($objPHPExcel, 0, $orderLine, $row);
 
@@ -166,6 +172,7 @@ function set_column_head($excel, $index, $data, $title)
 	    	$excel->setActiveSheetIndex($index)
 	    	            ->setCellValue($column.$row, $cell);
 		}
+        $excel->setActiveSheetIndex($index)->getColumnDimension($column)->setAutoSize(true);
 		$column++;
 	}
 

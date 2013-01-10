@@ -42,9 +42,9 @@ $dictionary['xeBayOrder'] = array(
 		array(
 			'name'=>'handled_status',
 	    	'vname'=> 'LBL_HANDLED_STATUS',
-	    	'type'=>'name',
-			'dbType' => 'varchar',
-	    	'len'=>16,
+            'type'=>'enum',
+            'function'=>'getHandledStatusDropDown',
+	    	'len'=>32,
 			'default'=>'unhandled',
 			'comment' => 'values: unhandled, handled, suspended',
 		),
@@ -62,6 +62,14 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'int',
 			'default'=>0,
 		),
+        'shipping_service'=>
+        array(
+            'name'=>'shipping_service',
+            'vname'=>'LBL_SHIPPING_SERVICE',
+            'type'=>'enum',
+            'function'=>'getShippingServiceDropDown',
+			'len'=>'32',
+        ),
 		'xebayaccount_id'=>
 		array(
 			'name'=>'xebayaccount_id',

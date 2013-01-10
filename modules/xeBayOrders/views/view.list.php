@@ -117,20 +117,91 @@ EOF;
 
 		$shortcuts_unhandled = <<<EOF
 <script>
-function automerge()
-{
-   var href="index.php?module=xeBayOrders&action=automerge&eturn_module=xeBayOrders&return_action=index";
-   window.location.href=href;
+var OO = {};
+OO.get = YAHOO.util.Dom.get;
+OO.settingsDialog = false;	
+OO.toggle_settings = function (){
+	var sd = OO.get("settings_dialog");
+	if(!OO.settingsDialog){	
+		OO.settingsDialog = new YAHOO.widget.Dialog("settings_dialog",{
+			  	fixedcenter: true,
+			  	draggable: false,
+			  	visible : false, 
+			 	modal : true,
+			  	close: true
+		});
+		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.settingsDialog.cancel();} } );
+		OO.settingsDialog.cfg.queueProperty("keylisteners", listeners);
+	}
+	OO.settingsDialog.cancelEvent.subscribe(function(e, a, o){
+		OO.get("form_settings").reset();
+	});
+	sd.style.display = "block";	
+	OO.settingsDialog.render();
+	OO.settingsDialog.show();
 }
-function completeall()
-{
-   var href="index.php?module=xeBayOrders&action=completeall&eturn_module=xeBayOrders&return_action=index";
-   window.location.href=href;
+OO.automergeDialog = false;	
+OO.toggle_automerge = function (){
+	var sd = OO.get("automerge_dialog");
+	if(!OO.automergeDialog){	
+		OO.automergeDialog = new YAHOO.widget.Dialog("automerge_dialog",{
+			  	fixedcenter: true,
+			  	draggable: false,
+			  	visible : false, 
+			 	modal : true,
+			  	close: true
+		});
+		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.automergeDialog.cancel();} } );
+		OO.automergeDialog.cfg.queueProperty("keylisteners", listeners);
+	}
+	OO.automergeDialog.cancelEvent.subscribe(function(e, a, o){
+		OO.get("form_automerge").reset();
+	});
+	sd.style.display = "block";	
+	OO.automergeDialog.render();
+	OO.automergeDialog.show();
 }
-function printall()
-{
-   var href="index.php?module=xeBayOrders&action=printall&eturn_module=xeBayOrders&return_action=index";
-   window.location.href=href;
+OO.completeallDialog = false;	
+OO.toggle_completeall = function (){
+	var sd = OO.get("completeall_dialog");
+	if(!OO.completeallDialog){	
+		OO.completeallDialog = new YAHOO.widget.Dialog("completeall_dialog",{
+			  	fixedcenter: true,
+			  	draggable: false,
+			  	visible : false, 
+			 	modal : true,
+			  	close: true
+		});
+		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.completeallDialog.cancel();} } );
+		OO.completeallDialog.cfg.queueProperty("keylisteners", listeners);
+	}
+	OO.completeallDialog.cancelEvent.subscribe(function(e, a, o){
+		OO.get("form_completeall").reset();
+	});
+	sd.style.display = "block";	
+	OO.completeallDialog.render();
+	OO.completeallDialog.show();
+}
+OO.printallDialog = false;	
+OO.toggle_printall = function (){
+	var sd = OO.get("printall_dialog");
+	if(!OO.printallDialog){	
+		OO.printallDialog = new YAHOO.widget.Dialog("printall_dialog",{
+			  	fixedcenter: true,
+			  	draggable: false,
+			  	visible : false, 
+			 	modal : true,
+			  	close: true
+		});
+		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.printallDialog.cancel();} } );
+		OO.printallDialog.cfg.queueProperty("keylisteners", listeners);
+	}
+	OO.printallDialog.cancelEvent.subscribe(function(e, a, o){
+		OO.get("form_printall").reset();
+	});
+	sd.style.display = "block";	
+	OO.printallDialog.render();
+	OO.printallDialog.show();
 }
 function sfcexport()
 {
@@ -143,11 +214,87 @@ function pfcexport()
    window.location.href=href;
 }
 </script> 
-<input title="{$mod_strings['LBL_AUTO_MERGE']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_AUTO_MERGE']}" id="auto_merge" onclick="return automerge()">
+<div id="automerge_dialog" style="width: 450px; display: none;">
+	<div class="hd">{$mod_strings['LBL_AUTOMERGE_TITLE']}</div>
+	<div class="bd">
+	<form name="automerge" id="form_automerge" method="POST" action="index.php?module=xeBayOrders&action=automerge">
+		<table class='edit view tabForm'>
+				<tr>
+					<td scope="row" valign="top" width="55%">
+						{$mod_strings['LBL_STOCKOUT_CHECKED']}
+					</td>
+					<td width="45%">	
+						<input type="hidden" name="stockout_checked" value="">
+						<input type="checkbox" id="stockout_checked" name="stockout_checked" checked value="1" tabindex="">
+					</td>
+				</tr>
+				<tr>
+					<td scope="row" valign="top">
+						{$mod_strings['LBL_PRINTED_ORDER_INCLUDED']}
+					</td>
+					<td>	
+						<input type="hidden" name="printed_order_included" value="">
+						<input type="checkbox" id="printed_order_included" name="printed_order_included" value="1" tabindex="">
+					</td>
+				</tr>
+		</table>
+	</form>
+	<div style="text-align: right;">
+		<button id="btn-save-automergeDialog" class="button" type="button" onclick="OO.get('form_automerge').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
+		<button id="btn-cancel-automergeDialog" class="button" type="button" onclick="OO.automergeDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
+	</div>
+	</div>
+</div>
+<div id="completeall_dialog" style="width: 450px; display: none;">
+	<div class="hd">{$mod_strings['LBL_COMPLETEALL_TITLE']}</div>
+	<div class="bd">
+	<form name="completeall" id="form_completeall" method="POST" action="index.php?module=xeBayOrders&action=completeall">
+		<table class='edit view tabForm'>
+				<tr>
+					<td scope="row" valign="top" width="55%">
+						{$mod_strings['LBL_UNPRINTED_ORDER_INCLUDED']}
+					</td>
+					<td width="45%">	
+						<input type="hidden" name="unprinted_order_included" value="">
+						<input type="checkbox" id="unprinted_order_included" name="printed_order_included" value="0" tabindex="">
+					</td>
+				</tr>
+		</table>
+	</form>
+	<div style="text-align: right;">
+		<button id="btn-save-completeallDialog" class="button" type="button" onclick="OO.get('form_completeall').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
+		<button id="btn-cancel-completeallDialog" class="button" type="button" onclick="OO.completeallDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
+	</div>
+	</div>
+</div>
+<div id="printall_dialog" style="width: 450px; display: none;">
+	<div class="hd">{$mod_strings['LBL_PRINTALL_TITLE']}</div>
+	<div class="bd">
+	<form name="printall" id="form_printall" method="POST" action="index.php?module=xeBayOrders&action=printall">
+		<table class='edit view tabForm'>
+				<tr>
+					<td scope="row" valign="top" width="55%">
+						{$mod_strings['LBL_PRINTED_ORDER_INCLUDED']}
+					</td>
+					<td width="45%">	
+						<input type="hidden" name="printed_order_included" value="">
+						<input type="checkbox" id="printed_order_included" name="printed_order_included" value="1" tabindex="">
+					</td>
+				</tr>
+		</table>
+	</form>
+	<div style="text-align: right;">
+		<button id="btn-save-printallDialog" class="button" type="button" onclick="OO.get('form_printall').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
+		<button id="btn-cancel-printallDialog" class="button" type="button" onclick="OO.printallDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
+	</div>
+	</div>
+</div>
 &nbsp;&nbsp;
-<input title="{$mod_strings['LBL_COMPLERE_ALL_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_COMPLERE_ALL']}" id="complete_all" onclick="return completeall()">
+<input title="{$mod_strings['LBL_AUTO_MERGE']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_AUTO_MERGE']}" id="auto_merge" onclick="OO.toggle_automerge()">
 &nbsp;&nbsp;
-<input title="{$mod_strings['LBL_PRINT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PRINT_ALL']}" id="print_all" onclick="return printall()">
+<input title="{$mod_strings['LBL_COMPLERE_ALL_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_COMPLERE_ALL']}" id="complete_all" onclick="OO.toggle_completeall()">
+&nbsp;&nbsp;
+<input title="{$mod_strings['LBL_PRINT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PRINT_ALL']}" id="print_all" onclick="OO.toggle_printall()">
 &nbsp;&nbsp;
 <input title="{$mod_strings['LBL_SFC_EXPORT']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_SFC_EXPORT']}" id="sfc_export" onclick="return sfcexport()">
 &nbsp;&nbsp;

@@ -71,6 +71,11 @@ $listViewDefs['xeBayOrders'] = array(
 		'width' => '4', 
 		'label' => 'LBL_COUNTRY', 
 		'default' => true),         
+
+    'SHIPPING_SERVICE'=> array(
+		'width' => '4', 
+        'label'=>'LBL_SHIPPING_SERVICE',
+		'default' => true),         
 	'BUYER_CHECKOUT_MESSAGE' => array(
 		'width' => '2', 
 		'label' => 'LBL_BUYER_CHECKOUT_MESSAGE', 

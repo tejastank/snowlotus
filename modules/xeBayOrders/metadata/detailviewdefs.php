@@ -51,6 +51,7 @@ $viewdefs['xeBayOrders']['DetailView'] = array(
 		),
 		array (
 			'name',
+            'shipping_service',
 		),
 		array (
 			'street1',

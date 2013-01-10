@@ -61,10 +61,12 @@ class xeBayOrder extends Basic {
 	var $handled_status;
 	var $print_status;
 	var $redeliver_count;
+    var $shipping_servcie;
 
 	var $xebayaccount_id;
 	var $xebayaccount_name;
 	var $xebayaccount_link;
+
 	var $buyer_checkout_message;
 	var $order_id;
 	var $checkout_status_last_modified_time;
@@ -289,4 +291,40 @@ class xeBayOrder extends Basic {
 		}
 	}
 }
+
+function getHandledStatusDropDown()
+{
+    global $mod_strings;
+    $list = array(
+        'unhandled' => 'unhandled',
+        'handled' => 'handled',
+        'suspended' => 'suspended',
+    );
+
+    return $list;
+}
+
+function getShippingServiceDropDown()
+{
+    $list = array(
+        'HKBAM' => 'HKBAM',
+        'HKBRAM' => 'HKBRAM',
+        'SWBAM' => 'SWBAM',
+        'SWBRAM' => 'SWBRAM',
+        'DEAM' => 'DEAM',
+        'DERAM' => 'DERAM',
+        'RM1' => 'RM1',
+        'RM1R' => 'RM1R',
+        'CNAM' => 'CNAM',
+        'CNRAM' => 'CNRAM',
+        'SGAM' => 'SGAM',
+        'SGRAM' => 'SGRAM',
+        'WWAM' => 'WWAM',
+        'WWRAM' => 'WWRAM',
+        'BPAM' => 'BPAM',
+    );
+
+    return $list;
+}
+
 ?>
