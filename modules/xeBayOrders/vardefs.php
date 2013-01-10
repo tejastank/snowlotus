@@ -46,7 +46,7 @@ $dictionary['xeBayOrder'] = array(
             'function'=>'getHandledStatusDropDown',
 	    	'len'=>32,
 			'default'=>'unhandled',
-			'comment' => 'values: unhandled, handled, suspended',
+			'comment' => 'values: unhandled, handled, suspended, deleted',
 		),
 		'print_status'=>
 		array(

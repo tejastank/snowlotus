@@ -45,6 +45,55 @@ class xeBayOrdersViewAutomerge extends SugarView {
 	
     function process()
     {
+		$data = $_REQUEST;
+		$stockout_checked = $data['stockout_checked'];
+		$printed_order_included = $data['printed_order_included'];
+
+		$inventoryBean = BeanFactory::getBean('xInventories');
+		$ebayOrderBean = BeanFactory::getBean('xeBayOrders');
+		$where = "handled_status='unhandled'";
+		if (empty($printed_order_included))
+			$where .= " AND print_status<>'1'";
+		$resp = $ebayOrderBean->get_list("", $where, 0, -99, -99, 0, false, array('id', 'address_id', 'address_owner', 'xebaytransactions'));
+
+		$address_ids = array();
+		foreach ($resp['list'] as &$order) {
+			$address_ids[] = $order->address_id;
+		}
+
+		$merged_ids = array();
+		foreach ($resp['list'] as $order_key => &$order) {
+			$address_id = $order->address_id;
+			if (in_array($address_id, $merged_ids)) {
+				continue;
+			}
+
+			foreach ($address_ids as $transaction_key => &$value) {
+				if (empty($address_id) || empty($value) || ($order_key == $transaction_key))
+					continue;
+
+				if ($address_id == $value) {
+					unset($address_ids[$key]);
+					$merged_ids[] = $value;
+					$order_matched = $resp['list'][$transaction_key];
+					$order_matched->load_relationship('xebaytransactions');
+					$transactions = $order_matched->xebaytransactions->getBeans();
+					foreach ($transactions as &$transaction) {
+						$transaction->xebayorder_id = $order->id;
+						$transaction->save();
+					}
+					$order_matched->mark_deleted($resp['list'][$transaction_key]->id);
+				}
+			}
+
+			if (!empty($stockout_checked)) {
+				$order->load_relationship('xebaytransactions');
+				$transactions = $order->xebaytransactions->getBeans();
+				foreach ($transactions as &$transaction) {
+				}
+			}
+		}
+
  		parent::process();
 	}
 	

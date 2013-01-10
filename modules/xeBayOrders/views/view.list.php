@@ -53,8 +53,7 @@ class xeBayOrdersViewList extends ViewList
 
 	function listViewPrepare()
 	{
-		if ($this->filter != 'deleted')
-			$this->where = "handled_status='{$this->filter}'";
+		$this->where = "handled_status='{$this->filter}'";
 
 		parent::listViewPrepare();
 	}

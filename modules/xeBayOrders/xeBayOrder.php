@@ -110,11 +110,32 @@ class xeBayOrder extends Basic {
 		return false;
 	}
 
-	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false)
+	function mark_deleted($id)
 	{
-		if ($_REQUEST['filter'] == 'deleted')
-			$show_deleted = 1;
-		return parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, $return_array,$parentbean, $singleSelect, $ifListForExport);
+		global $current_user;
+		$date_modified = $GLOBALS['timedate']->nowDb();
+		if(isset($_SESSION['show_deleted'])) {
+			$this->mark_undeleted($id);
+		} else {
+            if ( isset($this->field_defs['modified_user_id']) ) {
+                if (!empty($current_user)) {
+                    $this->modified_user_id = $current_user->id;
+                } else {
+                    $this->modified_user_id = 1;
+                }
+                $query = "UPDATE $this->table_name set handled_status='deleted' , date_modified = '$date_modified', modified_user_id = '$this->modified_user_id' where id='$id'";
+            } else {
+                $query = "UPDATE $this->table_name set handled_status='deleted' , date_modified = '$date_modified' where id='$id'";
+            }
+            $this->db->query($query, true,"Error marking record deleted: ");
+        }
+	}
+
+    function mark_undeleted($id)
+	{
+		$date_modified = $GLOBALS['timedate']->nowDb();
+		$query = "UPDATE $this->table_name set handled_status='unhandled' , date_modified = '$date_modified' where id='$id'";
+		$this->db->query($query, true,"Error marking record undeleted: ");
 	}
 
 	function get_list_view_data()
@@ -181,8 +202,8 @@ class xeBayOrder extends Basic {
 			$bean->print_status = true;
 			$bean->save();
 
-			$bean->load_relationship('transactions');
-			$transactions = $bean->transactions->getBeans();
+			$bean->load_relationship('xebaytransactions');
+			$transactions = $bean->xebaytransactions->getBeans();
 			if (empty($transactions))
 				continue;
 
@@ -196,7 +217,7 @@ class xeBayOrder extends Basic {
 				}
 				$total_weight += $transaction->weight * $transaction->quantity_purchased;
 				$ss->assign("NO", $transaction_count);
-				$ss->assign("INVENTORY_NAME", $transaction->inventory_name);
+				$ss->assign("INVENTORY_NAME", $transaction->xinventory_name);
 				$ss->assign("QUANTITY", $transaction->quantity_purchased);
 				$ss->assign("GOODS_ALLOCATION", $transaction->goods_allocation);
 				$order_blank .= $ss->fetch("modules/xeBayOrders/tpls/takesendlogistics-order-blank.html");
@@ -299,6 +320,7 @@ function getHandledStatusDropDown()
         'unhandled' => 'unhandled',
         'handled' => 'handled',
         'suspended' => 'suspended',
+        'deleted' => 'deleted',
     );
 
     return $list;
