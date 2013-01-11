@@ -67,6 +67,35 @@ $dictionary['xeBaySellerList'] = array(
 			'vname' => 'LBL_EBAY_ACCOUNT',
 			'source'=>'non-db',
 		),
+        'xebaylisting_id' =>
+		array(
+			'name'=>'xebaylisting_id',
+			'vname'=>'LBL_EBAY_LISING_ID',
+			'type' => 'id',
+            'comment' => 'Application Data',
+		),
+		'xebaylisting_name'=>
+		array(
+			'name'=>'xebaylisting_name',
+			'rname' => 'name',
+			'vname'=>'LBL_EBAY_LISTING',
+			'id_name'=>'xebaylisting_id',
+			'type'=>'relate',
+			'link'=>'xebaylisting_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebaylistings',
+			'module' => 'xeBayListings',
+		),
+		'xebaylisting_link'=>
+		array(
+			'name' => 'xebaylisting_link',
+			'type' => 'link',
+			'relationship' => 'xebaysellerlists_xebaylisting',
+			'vname' => 'LBL_EBAY_LISTING',
+			'source'=>'non-db',
+		),
 		'hitcount' => array(
 			'name' => 'hitcount',
 			'vname' => 'LBL_HITCOUNT',
@@ -152,7 +181,7 @@ $dictionary['xeBaySellerList'] = array(
 		'xinventory_name' => array(
 			'name'=> 'xinventory_name',
 			'rname' => 'name',
-			'vname'=>'LBL_RELATED_TO',
+			'vname'=>'LBL_XINVENTORY',
 			'id_name'=>'xinventory_id',
 			'type'=>'relate',
 			'link'=>'xinventory_link',
@@ -175,10 +204,14 @@ $dictionary['xeBaySellerList'] = array(
 			'lhs_module'=> 'xeBayAccounts', 'lhs_table'=> 'xebayaccounts', 'lhs_key' => 'id',
 			'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'xebayaccount_id',
 			'relationship_type'=>'one-to-many'),
+		'xebaysellerlists_xebaylisting' => array(
+			'lhs_module'=> 'xeBayListings', 'lhs_table'=> 'xebaylistings', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'xebaylisting_id',
+			'relationship_type'=>'one-to-one'),
 		'xbaysellerlists_xinventory' => array(
-								'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
-								'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'xinventory_id',
-								'relationship_type'=>'one-to-many'),
+			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBaySellerLists', 'rhs_table'=> 'xebaysellerlists', 'rhs_key' => 'xinventory_id',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

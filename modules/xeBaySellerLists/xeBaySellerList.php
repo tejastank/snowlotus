@@ -60,6 +60,10 @@ class xeBaySellerList extends Basic {
 	var $assigned_user_link;
 
 	var $xebayaccount_id;
+    var $xebayaccount_name;
+    var $xebaylisting_id;
+    var $xebaylisting_name;
+    var $xebaylisting_link;
 	var $hitcount;
 	var $item_id;
 	var $currency_id;
@@ -89,6 +93,18 @@ class xeBaySellerList extends Basic {
 		}
 		return false;
 	}
+
+    function save($check_notify = FALSE)
+    {
+        if (!empty($this->xebaylisting_id)) {
+	        $this->load_relationship('xebaylisting_link');
+	        $vendors = $item->xebaylisting_link->getBeans();
+            $this->xinventory_id = '';
+        } else {
+            $this->xinventory_id = '';
+        }
+        parent::save($check_notify);
+    }
 
 	function get_list_view_data()
 	{

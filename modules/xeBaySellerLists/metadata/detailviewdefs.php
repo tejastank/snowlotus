@@ -77,7 +77,8 @@ $viewdefs['xeBaySellerLists']['DetailView'] = array(
 			'hitcount'
 		),
 		array (
-			'inventory_name',
+			'xebaylisting_name',
+			'xinventory_name',
 		),
 		array (
 			array (
