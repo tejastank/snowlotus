@@ -58,13 +58,24 @@ $listViewDefs['xeBaySellerLists'] = array(
 	), 
 	'XINVENTORY_NAME' => array (
 		'width' => '50',
-		'label' => 'LBL_LIST_RELATED_TO',
+		'label' => 'LBL_XINVENTORY',
 		'module' => 'xInventories',
 		'id' => 'XINVENTORY_ID',
 		'default' => true,
 		'related_fields' => 
 		array (
 			0 => 'xinventory_id',
+		),
+	),
+	'XEBAYLISTING_NAME' => array (
+		'width' => '50',
+		'label' => 'LBL_EBAY_LISTING',
+		'module' => 'xeBAyListings',
+		'id' => 'XEBAYLISTING_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'xebaylisting_id',
 		),
 	),
 	'LISTING_TYPE' => array(

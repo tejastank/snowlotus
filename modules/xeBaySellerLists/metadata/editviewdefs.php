@@ -93,8 +93,7 @@ $viewdefs['xeBaySellerLists']['EditView'] = array(
 			),
 			array (
 				array(
-					'name' => 'inventory_name',
-					'label' => 'LBL_RELATED_TO',
+					'name' => 'xebaylisting_name',
 					'displayParams' => array(
 						'size' => 64,
 						'readOnly' => 'readOnly',
