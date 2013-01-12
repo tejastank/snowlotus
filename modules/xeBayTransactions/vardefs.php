@@ -173,7 +173,7 @@ $dictionary['xeBayTransaction'] = array(
 		),
 		'customs_declaration' => array(
 			'name'=> 'customs_declaration',
-			'rname' => 'subtitle',
+			'rname' => 'name_en',
 			'vname'=>'LBL_CUSTOMS_DECLARATION',
 			'id_name'=>'xinventory_id',
 			'type'=>'relate',

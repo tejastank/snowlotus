@@ -90,4 +90,7 @@ $mod_strings = array (
   'LBL_REVISE_SCOPE' => 'Revise scope',
   'LBL_REVISE' => 'Revise',
   'LBL_DOWNLOAD_FILE_EXCHANGE' => "Download FileExchange File",
+  'LBL_PREVIEW' => ' ',
+  'LBL_UPDATE' => 'Update',
+  'LBL_UPDATE_CONFIRMATION' => 'Are you sure you want to update the ',
 );

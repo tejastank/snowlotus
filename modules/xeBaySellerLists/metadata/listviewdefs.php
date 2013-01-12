@@ -50,27 +50,16 @@ $listViewDefs['xeBaySellerLists'] = array(
 		),
 	),
 	'NAME' => array(
-		'width' => '80', 
+		'width' => '36', 
 		'label' => 'LBL_NAME', 
 		'default' => true,
         'link' => true,
 		'sortable' => false
 	), 
-	'XINVENTORY_NAME' => array (
-		'width' => '50',
-		'label' => 'LBL_XINVENTORY',
-		'module' => 'xInventories',
-		'id' => 'XINVENTORY_ID',
-		'default' => true,
-		'related_fields' => 
-		array (
-			0 => 'xinventory_id',
-		),
-	),
 	'XEBAYLISTING_NAME' => array (
-		'width' => '50',
+		'width' => '32',
 		'label' => 'LBL_EBAY_LISTING',
-		'module' => 'xeBAyListings',
+		'module' => 'xeBayListings',
 		'id' => 'XEBAYLISTING_ID',
 		'default' => true,
 		'related_fields' => 
@@ -107,6 +96,24 @@ $listViewDefs['xeBaySellerLists'] = array(
 		'width' => '18', 
 		'label' => 'LBL_VARIATION', 
 		'default' => true,
+	),
+	'XINVENTORY_NAME' => array (
+		'width' => '24',
+		'label' => 'LBL_XINVENTORY',
+		'module' => 'xInventories',
+		'id' => 'XINVENTORY_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'xinventory_id',
+		),
+	),
+	'PREVIEW' => array(
+		'width' => '1', 
+		'label' => 'LBL_PREVIEW', 
+		'customCode' => '{$PREVIEW_URL}',
+		'default' => true,
+		'sortable' => false,
 	),
 );
 ?>

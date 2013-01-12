@@ -94,6 +94,9 @@ $dictionary['xeBaySellerList'] = array(
 			'type' => 'link',
 			'relationship' => 'xebaysellerlists_xebaylisting',
 			'vname' => 'LBL_EBAY_LISTING',
+			'link_type' => 'one',
+			'module' => 'xeBayListings',
+			'bean_name' => 'xeBayListing',
 			'source'=>'non-db',
 		),
 		'hitcount' => array(

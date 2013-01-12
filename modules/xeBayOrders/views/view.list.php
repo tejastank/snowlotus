@@ -63,7 +63,7 @@ class xeBayOrdersViewList extends ViewList
 		parent::listViewProcess();
 	}
 
-	public function buildLinks($confirmation, $entryPoint, $label)
+	function buildLinks($confirmation, $entryPoint, $label)
 	{
 		global $app_strings, $mod_strings;
 

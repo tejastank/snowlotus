@@ -68,7 +68,6 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'conditionid',
 			'vname' => 'LBL_CONDITIONID',
 			'type' => 'int',
-			'required' => true,
 		),
 		'country' => array(
 			'name' => 'country',
@@ -218,12 +217,6 @@ $dictionary['xeBayListing'] = array(
 			'type' => 'varchar',
 			'len' => '32',
 		),
-		'sku' => array(
-			'name' => 'sku',
-			'vname' => 'LBL_SKU',
-			'type' => 'id',
-			'required' => true,
-		),
 		'startprice'=>
 		array(
 			'name'=>'startprice',
@@ -260,7 +253,6 @@ $dictionary['xeBayListing'] = array(
 			'vname' => 'LBL_UUID',
 			'type' => 'varchar',
 			'len' => '32',
-			'required' => true,
 		),
 		// Variations, Only available in AddFixedPriceItem
 		'variations' => array(
@@ -288,13 +280,12 @@ $dictionary['xeBayListing'] = array(
 			'dbType' => 'varchar',
 			'table' => 'xebaycategories',
 			'module' => 'xeBayCategories',
-			'required' => true,
 		),
 		'primarycategory_link'=>
 		array(
 			'name' => 'primarycategory_link',
 			'type' => 'link',
-			'relationship' => 'xebaylisting_primarycategory',
+			'relationship' => 'xprimarycategoriess_xebaycategory',
 			'vname' => 'LBL_PRIMARYCATEGORY',
 			'source'=>'non-db',
 		),
@@ -316,18 +307,24 @@ $dictionary['xeBayListing'] = array(
 		array(
 			'name' => 'secondarycategory_link',
 			'type' => 'link',
-			'relationship' => 'xebaylisting_secondarycategory',
+			'relationship' => 'xsecondarycategories_xebaycategory',
 			'vname' => 'LBL_SECONDARYCATEGORY',
 			'source'=>'non-db',
+		),
+		'xinventory_id' => array(
+			'name' => 'xinventory_id',
+			'vname' => 'LBL_XINVENTORY_ID',
+			'type' => 'id',
+			'required' => true,
 		),
 		'xinventory_name'=>
 		array(
 			'name'=>'xinventory_name',
-			'rname' => 'name',
+			'rname' =>'name',
 			'vname'=>'LBL_INVENTORY',
-			'id_name'=>'sku',
+			'id_name'=>'xinventory_id',
 			'type'=>'relate',
-			'link'=>'inventory_link',
+			'link'=>'xinventory_link',
 			'reportable'=>false,
 			'source'=>'non-db',
 			'dbType' => 'varchar',
@@ -339,23 +336,23 @@ $dictionary['xeBayListing'] = array(
 		array(
 			'name' => 'xinventory_link',
 			'type' => 'link',
-			'relationship' => 'xebaylisting_inventory',
+			'relationship' => 'xebaylistings_xinventory',
 			'vname' => 'LBL_INVENTORY',
 			'source'=>'non-db',
 		),
 	),
 	'relationships'=>array (
-		'xebaylisting_primarycategory' => array(
+		'xprimarycategories_xebaycategory' => array(
 			'lhs_module'=> 'xeBayCategories', 'lhs_table'=> 'xebaycategories', 'lhs_key' => 'id',
 			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'primarycategoryid',
 			'relationship_type'=>'one-to-many'),
-		'xebaylisting_secondarycategory' => array(
+		'xsecondarycategories_xebaycategory' => array(
 			'lhs_module'=> 'xeBayCategories', 'lhs_table'=> 'xebaycategories', 'lhs_key' => 'id',
 			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'secondarycategoryid',
 			'relationship_type'=>'one-to-many'),
-		'xebaylisting_inventory' => array(
+		'xebaylistings_xinventory' => array(
 			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
-			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'sku',
+			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'xinventory_id',
 			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,

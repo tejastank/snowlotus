@@ -77,6 +77,8 @@ class xeBaySellerList extends Basic {
 	var $variation;
 	var $xinventory_id;
 
+	var $xinventory_id_used = array();
+
 	const shopwindow_stick_limit = 6;
 	const shopwindow_correlation_limit = 10;
 	const shopwindow_random_limit = 12;
@@ -97,9 +99,8 @@ class xeBaySellerList extends Basic {
     function save($check_notify = FALSE)
     {
         if (!empty($this->xebaylisting_id)) {
-	        $this->load_relationship('xebaylisting_link');
-	        $vendors = $item->xebaylisting_link->getBeans();
-            $this->xinventory_id = '';
+			$bean = BeanFactory::getBean('xeBayListings', $this->xebaylisting_id);
+            $this->xinventory_id = $bean->xinventory_id;
         } else {
             $this->xinventory_id = '';
         }
@@ -123,15 +124,24 @@ class xeBaySellerList extends Basic {
 			break;
 		}
 
+        $preview_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Preview-icon.png')."'>";
+		$preview_url = "<a href=\"javascript:open_popup_preview('{$field_list['ID']}')\">{$preview_icon}</a>";
+		$field_list['PREVIEW_URL'] = $preview_url;
+
 		return $field_list;
 	}
 
-	function get_valid_listing($item_id)
+	function get_valid_listing($inventory_id)
 	{
+		if (in_array($inventory_id, $this->xinventory_id_used)) {
+			return null;
+		}
+		$this->xinventory_id_used[] = $inventory_id;
+
 		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
 
 		$fields = array(
-			'xinventory_id' => $item_id,
+			'xinventory_id' => $inventory_id,
 			'listing_type' => 'FixedPriceItem',
 		);
 
@@ -142,6 +152,61 @@ class xeBaySellerList extends Basic {
 		// }
 
 		return $sellerList;
+	}
+
+	function get_valid_listing_gallery($id)
+	{
+		$sellerList = $this->get_valid_listing($id);
+		if ($sellerList !== null) {
+        	$listing = BeanFactory::getBean('xeBayListings', $sellerList->xebaylisting_id);
+			if ($listing !== false) {
+				return array (
+					'itemID' => $sellerList->item_id,
+            	    'title' => empty($listing->short_title) ? $sellerList->name : $listing->short_title,
+					'listingType' => $sellerList->listing_type,
+					'currencyID' => $sellerList->currency_id,
+					'price' => $sellerList->price,
+					'viewItemUrl' => $sellerList->view_item_url,
+				);
+			}
+		}
+		return false;
+	}
+
+	function get_shop_window_items_random($max)
+	{
+		if ($max < 1)
+			return array();
+
+		$shop_window_items = array();
+		$count = 0;
+
+		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
+		$where = "listing_type='FixedPriceItem' AND item_id<>'$this->item_id'";
+		$sallerLists = $sellerListBean->get_list("", $where, 0, -99, -99, 0, false, array('xebaylisting_id', 'item_id', 'name', 'listing_type', 'currency_id', 'price', 'view_item_url'));
+		shuffle($sallerLists['list']);
+
+		foreach ($sallerLists['list'] as &$sellerList) {
+        	$listing = BeanFactory::getBean('xeBayListings', $sellerList->xebaylisting_id);
+			if (($listing !== false) && !in_array($listing->xinventory_id, $this->xinventory_id_used)) {
+				$this->xinventory_id_used[] = $listing->xinventory_id;
+				$shop_window_items[] = array(
+					'itemID' => $sellerList->item_id,
+                    'title' => empty($listing->short_title) ? $sellerList->name : $listing->short_title,
+					'listingType' => $sellerList->listing_type,
+					'currencyID' => $sellerList->currency_id,
+					'price' => $sellerList->price,
+					'viewItemUrl' => $sellerList->view_item_url,
+				);
+
+				$count++;
+
+				if ($count == $max)
+					break;
+			}
+		}
+
+		return $shop_window_items;
 	}
 
     function build_shopwindow_html($items, $row, $column)
@@ -208,110 +273,63 @@ class xeBaySellerList extends Basic {
 
 	function build_shopwindow_topmost()
 	{
-		$inventoryBean = BeanFactory::getBean('xInventories');
-		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
-
-		$topmostItems = $inventoryBean->get_full_list("", "id<>'{$this->id}' AND topmost='1'");
-
 		$shop_window_items = array();
-
 		$count = 0;
 
-		foreach ($topmostItems as &$item) {
-			$sellerList = $sellerListBean->get_valid_listing($item->id);
-			if ($sellerList !== null) {
-				$shop_window_items[] = array(
-					'itemID' => $sellerList->item_id,
-                    'title' => empty($item->subtitle) ? $sellerList->name : $item->subtitle,
-					'listingType' => $sellerList->listing_type,
-					'currencyID' => $sellerList->currency_id,
-					'price' => $sellerList->price,
-					'viewItemUrl' => $sellerList->view_item_url,
-				);
+		$inventoryBean = BeanFactory::getBean('xInventories');
+		$where = "id<>'{$this->id}' AND topmost='1'";
+		$topmostItems = $inventoryBean->get_list("", $where, 0, -99, -99, 0, false, array('id'));
 
+		foreach ($topmostItems['list'] as &$topmostItem) {
+			$res = $this->get_valid_listing_gallery($topmostItem->id);
+			if ($res !== false) {
+				$shop_window_items[] = $res;
 				$count++;
-
 				if ($count == self::shopwindow_stick_limit)
 					break;
 			}
 		}
 
-		if (count($shop_window_items) < self::shopwindow_stick_limit) {
-		}
+		$padding = $this->get_shop_window_items_random(self::shopwindow_stick_limit - $count);
+		$shop_window_items = array_merge($shop_window_items, $padding);
 
         return $this->build_shopwindow_html($shop_window_items, 1, self::shopwindow_stick_limit);
 	}
 
 	function build_shopwindow_correlation()
 	{
-		$inventoryBean = BeanFactory::getBean('xInventories');
-		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
-		$randomItems = $sellerListBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->item_id'");
-		shuffle($randomItems);
-
 		$shop_window_items = array();
-
 		$count = 0;
 
-		foreach ($randomItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->xinventory_id);
-			if ($inventory !== null) {
-				$shop_window_items[] = array(
-					'itemID' => $item->item_id,
-                    'title' => empty($inventory->subtitle) ? $item->name : $inventory->subtitle,
-					'listingType' => $item->listing_type,
-					'currencyID' => $item->currency_id,
-					'price' => $item->price,
-					'viewItemUrl' => $item->view_item_url,
-				);
-
-				$count++;
-
-				if ($count == self::shopwindow_correlation_limit)
-					break;
+		$inventory = BeanFactory::getBean('xInventories', $this->xinventory_id);
+		if ($inventory !== false) {
+			$idGroup = array();
+			$inventory->load_relationship('xinventorygroups');
+			$groups = $inventory->xinventorygroups->getBeans();
+			foreach($groups as &$group) {
+				$group->load_relationship('xinventories');
+				$ids = $group->xinventories->get();
+				foreach ($ids as &$id) {
+					$res = $this->get_valid_listing_gallery($id);
+					if ($res !== false) {
+						$shop_window_items[] = $res;
+						$count++;
+						if ($count == self::shopwindow_correlation_limit)
+							break;
+					}
+				}
 			}
 		}
 
-		if (count($shop_window_items) < self::shopwindow_correlation_limit) {
-		}
+		$padding = $this->get_shop_window_items_random(self::shopwindow_correlation_limit - $count);
+		$shop_window_items = array_merge($shop_window_items, $padding);
 
         return $this->build_shopwindow_html($shop_window_items, self::shopwindow_correlation_limit, 1);
 	}
 
 	function build_shopwindow_random()
 	{
-		$inventoryBean = BeanFactory::getBean('xInventories');
-		$sellerListBean = BeanFactory::getBean('xeBaySellerLists');
-		$randomItems = $sellerListBean->get_full_list("", "listing_type='FixedPriceItem' AND item_id<>'$this->item_id'");
-		shuffle($randomItems);
-
-		$shop_window_items = array();
-
-		$count = 0;
-
-		foreach ($randomItems as &$item) {
-			$inventory = $inventoryBean->retrieve($item->xinventory_id);
-			if ($inventory !== null) {
-				$shop_window_items[] = array(
-					'itemID' => $item->item_id,
-                    'title' => empty($inventory->subtitle) ? $item->name : $inventory->subtitle,
-					'listingType' => $item->listing_type,
-					'currencyID' => $item->currency_id,
-					'price' => $item->price,
-					'viewItemUrl' => $item->view_item_url,
-				);
-
-				$count++;
-
-				if ($count == self::shopwindow_random_limit)
-					break;
-			}
-		}
-
-		if (count($shop_window_items) < self::shopwindow_random_limit) {
-		}
-
-        return $this->build_shopwindow_html($shop_window_items, 3, 4);
+        return $this->build_shopwindow_html($this->get_shop_window_items_random(self::shopwindow_random_limit), 3, 4);
 	}
 
 	function build_image_gallery()
@@ -319,7 +337,7 @@ class xeBaySellerList extends Basic {
 		$xml = simplexml_load_string(html_entity_decode($this->picture_details,ENT_COMPAT,'UTF-8'));
 		$html = '';
 		$html .= CHtml::openTag('div', array('id'=>'gallery'));
-		$html .= CHtml::image($images[0]->description, '', array("class"=>"default", 'width'=>450, 'height'=>450));
+		$html .= CHtml::image($xml->PictureURL[0], '', array("class"=>"default", 'width'=>450, 'height'=>450));
 		$html .= CHtml::openTag('ul');
 		foreach ($xml->PictureURL as $url) {
 			$html .= CHtml::openTag('li');
@@ -342,11 +360,10 @@ class xeBaySellerList extends Basic {
 
 	function _get_description()
 	{
-        $inventoryBean = BeanFactory::getBean('xInventories');
-    	$inv = $inventoryBean->retrieve($this->xinventory_id);
+        $listing = BeanFactory::getBean('xeBayListings', $this->xebaylisting_id);
 		$desc = $this->name;
-		if ($inv) {
-			$body_html = $inv->body_html;
+		if ($listing !== false) {
+			$body_html = $listing->description;
 			if (!empty($body_html))
 				$desc = html_entity_decode($body_html);
 		}
@@ -355,6 +372,9 @@ class xeBaySellerList extends Basic {
 
 	function get_description()
 	{
+		$this->xinventory_id_used = array();
+		$this->xinventory_id_used[] = $this->xinventory_id;
+
 		$strips = array(
 			"\t" => "",
 			"\n" => "",
@@ -373,14 +393,49 @@ class xeBaySellerList extends Basic {
         $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_topmost());
         $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
         $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
-        $desc = $ss->fetch("modules/xeBaySellerLists/tpls/default.html");
+        $desc = $ss->fetch("modules/xeBayListings/tpls/default.html");
 		$desc = strtr($desc, $strips);
  
         unset($ss);
 
-		file_put_contents($this->item_id . ".html", $desc);
+		// file_put_contents("{$this->name}.html", $desc);
  
         return $desc;
 	}
+
+	function revise()
+	{
+		// static $ebayAccount = BeanFactory::getBean('xeBayAccounts');
+		// static $accounts = $ebayAccount->get_accounts('All');
+		// static $ri = new ReviseItem;
+		// static $rfpi = new ReviseFixedPriceItem;
+		static $scope = array('description', 'sku');
+
+		$authToken = $accounts[$this->xebayaccount_id];
+		if (empty($this->variation)) {
+			if ($this->bid_count > 0)
+				continue;
+			$ri->ryi(array(
+				'ItemID' => $this->this_id,
+				'Description' => $this->get_description(),
+				'ApplicationData' => xeBayListing::guid_to_uuid($this->xebaylisting_id),
+				'SKU' => $this->xinventory_id,
+				'scope'=> $scope,
+				'AuthToken' => $authToken,
+			));
+			$count++;
+		} else {
+			$rfpi->ryi(array(
+				'ItemID' => $this->this_id,
+				'Description' => $this->get_description(),
+				'ApplicationData' => xeBayListing::guid_to_uuid($this->xebaylisting_id),
+				'SKU' => $this->xinventory_id,
+				'scope'=> $scope,
+				'AuthToken' => $authToken,
+			));
+			$count++;
+		}
+	}
 }
+
 ?>

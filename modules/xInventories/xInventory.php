@@ -58,7 +58,7 @@ class xInventory extends Basic {
 	var $assigned_user_link;
 
 	var $strategy;
-	var $subtitle;
+	var $name_en;
 	var $xcategory_id;
 	var $xcategory_name;
 	var $category_link;
@@ -110,15 +110,18 @@ class xInventory extends Basic {
 
 		return $field_list;
 	}
-
-	function get_body_html()
-	{
-		return $this->body_html;
-	}
-
-	function get_subtitle()
-	{
-		return $this->subtitle;
-	}
 }
+
+function getInventoryStrategyDropDown()
+{
+	global $mod_strings;
+    $list = array(
+		'listed' => 'listed',
+		'delisting' => 'delisting',
+		'delisted' => 'delisted',
+	);
+
+	return $list;
+}
+
 ?>

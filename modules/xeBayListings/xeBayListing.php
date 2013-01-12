@@ -42,20 +42,76 @@ class xeBayListing extends Basic {
 	var $importable = true;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 	var $id;
-	var $name;
 	var $date_entered;
 	var $date_modified;
 	var $modified_user_id;
 	var $modified_by_name;
 	var $created_by;
 	var $created_by_name;
-	var $description;
 	var $deleted;
 	var $created_by_link;
 	var $modified_user_link;
 	var $assigned_user_id;
 	var $assigned_user_name;
 	var $assigned_user_link;
+
+	var $applicationdata;
+	var $autopay;
+	var $bestofferenabled;
+	var $conditiondescription;
+	var $conditionid;
+	var $country;
+	var $crossbordertrade;
+	var $currency;
+	var $description;
+	var $disablebuyerrequirements;
+	// DiscountPriceInfo
+	var $dispatchtimemax;
+	// GetItFast
+	var $hitcounter;
+	// InventoryTrackingMethod, only available in AddFixedPirceItem
+	// ItemCompatibilityList
+	// ItemSpecifics
+	// ListingCheckoutRedirectPreference
+	// ListingDesigner
+	// ListingDetails
+	var $listingduration;
+	// ListingEnhancement
+	var $listingtype;
+	var $location;
+	var $paymentmethods;
+	var $paypalemailaddress;
+	var $picturedetails;
+	var $postalcode;
+	var $primarycategoryid;
+	// ProductListingDetails
+	var $quantity;
+	// QuantityInfo
+	// QuantityRestrictionPerBuyer
+	var $returnpolicy;
+	var $scheduletime;
+	var $secondarycategoryid;
+	var $shippingdetails;
+	// ShippingPackageDetails
+	// ShippingTermsInDescription
+	var $shiptolocations;
+	var $site;
+	var $startprice;
+	var $storecategory2id;
+	var $storecategoryid;
+	var $subtitle;
+	var $name;
+	var $uuid;
+	// Variations, Only available in AddFixedPriceItem
+	var $variations;
+	var $short_title;
+	var $primarycategory_name;
+	var $primarycategory_link;
+	var $secondarycategory_name;
+	var $secondarycategory_link;
+	var $xinventory_id;
+	var $xinventory_name;
+	var $xinventory_link;
 
 	function xeBayListing()
 	{
@@ -68,6 +124,45 @@ class xeBayListing extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+	function get_description()
+	{
+        return $desc;
+	}
+
+    public static function guid_to_uuid($guid)
+	{
+		$uuid = '';
+
+		if(strlen($guid) == 36) {
+			$uuid .= substr($guid, 0, 8);
+			$uuid .= substr($guid, 9, 4);
+			$uuid .= substr($guid, 14, 4);
+			$uuid .= substr($guid, 19, 4);
+			$uuid .= substr($guid, 24, 12);
+		}
+
+		return $uuid;
+	}
+
+    public static function uuid_to_guid($uuid)
+	{
+		$guid = '';
+
+		if(strlen($uuid) == 32) {
+			$guid .= substr($uuid, 0, 8);
+			$guid .= '-';
+			$guid .= substr($uuid, 8, 4);
+			$guid .= '-';
+			$guid .= substr($uuid, 12, 4);
+			$guid .= '-';
+			$guid .= substr($uuid, 16, 4);
+			$guid .= '-';
+			$guid .= substr($uuid, 20, 12);
+		}
+
+		return $guid;
 	}
 }
 ?>

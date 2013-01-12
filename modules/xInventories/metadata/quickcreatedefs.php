@@ -49,7 +49,7 @@ $viewdefs['xInventories']['QuickCreate'] = array(
 				'assigned_user_name',
 			),
 			array (
-				'subtitle',
+				'name_en',
 				'goods_allocation',
 			),
 			array (

@@ -35,15 +35,95 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+require_once('include/MVC/View/views/view.list.php');
 
-$entry_point_registry['FileExchange'] = array('file' => 'modules/xeBaySellerLists/FileExchange.php', 'auth' => true);
-$entry_point_registry['update'] = array('file' => 'modules/xeBaySellerLists/update.php', 'auth' => true);
+class xeBaySellerListsViewList extends ViewList
+{
+	function xeBaySellerListsViewList()
+	{
+        parent:: ViewList();
+    }
 
-?>
+	function listViewPrepare()
+	{
+		parent::listViewPrepare();
+	}
+
+	function listViewProcess()
+ 	{
+		parent::listViewProcess();
+	}
+
+	function buildLinks($confirmation, $entryPoint, $label)
+	{
+		global $app_strings, $mod_strings;
+
+		$js = <<<EOF
+if (confirm('{$mod_strings[$confirmation]}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
+	return sListView.send_form(true, 'xeBaySellerLists', 'index.php?entryPoint={$entryPoint}', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
+}
+return false;
+EOF;
+
+		$js = str_replace(array("\r","\n"),'',$js);
+
+		return "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings[$label]}</a>";
+	}
+
+ 	function preDisplay()
+ 	{
+ 		parent::preDisplay();
+		$this->showMassupdateFields = false;
+		$items = array();
+		$items[] = $this->buildLinks('LBL_UPDATE_CONFIRMATION', 'update', 'LBL_UPDATE');
+		$this->lv->actionsMenuExtraItems = $items;
+ 	}
+
+	function display()
+	{
+		global $mod_strings;
+
+		$javascript = <<<EOF
+<script>
+function open_popup_preview(id)
+{
+	if (typeof(popupCount) == "undefined" || popupCount == 0)
+	   popupCount = 1;
+
+	//globally changing width and height of standard pop up window from 600 x 400 to 800 x 800
+	width = 1024;
+	height = 600;
+
+	// launch the popup
+	URL = 'index.php?'
+		+ 'module=xeBaySellerLists'
+		+ '&action=preview'
+		+ '&record=' + id;
+
+	windowName = 'Seller List Preview' + '_popup_window' + popupCount;
+	popupCount++;
+
+	windowFeatures = 'width=' + width
+		+ ',height=' + height
+		+ ',resizable=1,scrollbars=1';
+
+	win = SUGAR.util.openWindow(URL, windowName, windowFeatures);
+
+	if(window.focus)
+	{
+		// put the focus on the popup if the browser supports the focus() method
+		win.focus();
+	}
+
+	win.popupCount = popupCount;
+
+	return win;
+}
+</script> 
+EOF;
+		echo $javascript;
+
+ 		parent::display();
+	}
+}

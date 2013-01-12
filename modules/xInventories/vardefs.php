@@ -43,16 +43,17 @@ $dictionary['xInventory'] = array(
 		array(
 			'name'=>'strategy',
 	    	'vname'=> 'LBL_STRATEGY',
-	    	'type'=>'varchar',
+	    	'type'=>'enum',
+            'function'=>'getInventoryStrategyDropDown',
 	    	'len'=>16,
 			'audited' => true,
 			'default'=>'listed',
-			'comment'=>'listed, delisting, delisted',
+			'comment'=>'value: listed, delisting, delisted',
 		),
-		'subtitle'=>
+		'name_en'=>
 		array(
-			'name'=>'subtitle',
-	    	'vname'=> 'LBL_SUBTITLE',
+			'name'=>'name_en',
+	    	'vname'=> 'LBL_NAME_EN',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
 	    	'len'=>55,
@@ -156,18 +157,6 @@ $dictionary['xInventory'] = array(
 			'vname' => 'LBL_DESCRIPTION',
 			'type' => 'text',
 		),
-		'body' => array(
-			'name' => 'body',
-			'vname' => 'LBL_PLAIN_TEXT',
-			'type' => 'text',
-			'comment' => 'Plain text body to be used in resulting email'
-		),
-		'body_html' => array(
-			'name' => 'body_html',
-			'vname' => 'LBL_BODY',
-			'type' => 'html',
-			'comment' => 'HTML formatted email body to be used in resulting email'
-		),
 		'topmost'=>
 		array(
 			'name' => 'topmost',
@@ -205,6 +194,16 @@ $dictionary['xInventory'] = array(
             'source'=>'non-db',
             'vname'=>'LBL_INVENTORYGROUPS',
         ),
+		'xebaylistings'=>
+		array(
+			'name'=>'xebaylistings',
+			'vname'=>'LBL_XEBAYLISTINGS',
+			'type'=>'link',
+			'relationship' => 'xebaylistings_xinventory',
+			'module'=>'xeBayListings',
+			'bean_name'=>'xeBayListing',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
 		'xinventories_xcategory' => array(

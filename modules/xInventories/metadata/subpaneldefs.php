@@ -40,9 +40,35 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $layout_defs['xInventories'] = array(
 	// list of what Subpanels to show in the DetailView
 	'subpanel_setup' => array(
-
+		'xinventoryrecords' => array(
+			'order' => 100,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xInventoryRecords',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xinventoryrecords',
+			'add_subpanel_data' => 'xinventory_id',
+			'title_key' => 'LBL_RECORDS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+			),
+		),
+		'xvendors' => array(
+			'order' => 110,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xVendors',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xvendors',
+			'add_subpanel_data' => 'xvendor_id',
+			'title_key' => 'LBL_XVENDORS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
+			),
+		),
         'xinventorygroups' => array(
-            'order' => 100,
+            'order' => 120,
             'sort_order' => 'desc',
             'sort_by' => 'name',
             'module' => 'xInventoryGroups',
@@ -55,33 +81,17 @@ $layout_defs['xInventories'] = array(
                 array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
             ),
         ),
-
-		'xinventoryrecords' => array(
-			'order' => 110,
+		'xebaylistings' => array(
+			'order' => 130,
 			'sort_order' => 'desc',
 			'sort_by' => 'name',
-			'module' => 'xInventoryRecords',
+			'module' => 'xeBayListings',
 			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xinventoryrecords',
-			'add_subpanel_data' => 'xinventory_id',
-			'title_key' => 'LBL_RECORDS_SUBPANEL_TITLE',
+			'get_subpanel_data' => 'xebaylistings',
+			'add_subpanel_data' => 'xebaylisting_id',
+			'title_key' => 'LBL_XEBAYRLISTING_SUBPANEL_TITLE',
 			'top_buttons' => array(
 				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-			),
-		),
-
-		'xvendors' => array(
-			'order' => 120,
-			'sort_order' => 'desc',
-			'sort_by' => 'name',
-			'module' => 'xVendors',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'xvendors',
-			'add_subpanel_data' => 'xvendor_id',
-			'title_key' => 'LBL_XVENDORS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
 			),
 		),
 	),

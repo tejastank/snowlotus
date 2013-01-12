@@ -52,8 +52,10 @@ class ReviseItem extends eBayApiEnvironment
 		if (in_array('description', $scope))
         	$item->setDescription($params['Description']);
 
-		if (in_array('sku', $scope))
+		if (in_array('sku', $scope)) {
+			$item->setApplicationData($params['ApplicationData']);
 			$item->setSKU($params['SKU']);
+		}
 
         $req->setItem($item);
 		

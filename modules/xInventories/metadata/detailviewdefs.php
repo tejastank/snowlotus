@@ -50,8 +50,12 @@ $viewdefs['xInventories']['DetailView'] = array(
 			'assigned_user_name',
 		),
 		array (
-			'subtitle',
+			'name_en',
 			'xcategory_name',
+		),
+		array (
+			'strategy',
+			'topmost',
 		),
         array (
             array(
@@ -70,10 +74,6 @@ $viewdefs['xInventories']['DetailView'] = array(
 		),
 		array (
 			'description',
-			'topmost',
-		),
-		array (
-			'body_html',
 		),
 		array (
 			array (

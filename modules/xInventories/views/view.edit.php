@@ -46,31 +46,9 @@ class xInventoriesViewEdit extends ViewEdit {
  	function display() {
 		global $mod_strings;
 
-        $body_html = $this->bean->body_html;
-        $body = $this->bean->body;
-        $custom_body_html = <<<EOQ
-<div id='body_text_div'>
-    <textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40">{$body_html}</textarea>
-</div>
-EOQ;
-		$this->ev->ss->assign("CUSTOM_BODY_HTML", $custom_body_html);
-
  		parent::display();
 
-        require_once("include/SugarTinyMCE.php");
-        $tiny = new SugarTinyMCE();
-        $tiny->defaultConfig['cleanup_on_startup']=true;
-        $tiny->defaultConfig['width']=800;
-        $tiny->defaultConfig['height']=600;
-        $tiny->defaultConfig['plugins'].=",fullpage";
-        echo $tiny->getInstance();
-
         $javascript = <<<EOQ
-<script type="text/javascript" language="Javascript">
-setTimeout("tinyMCE.execCommand('mceAddControl', false, 'body_text');", 500);
-var tiny = tinyMCE.getInstanceById('body_text');
-document.getElementById('body_text_div').style.display = 'inline';
-</script>
 EOQ;
         echo $javascript;
  	}

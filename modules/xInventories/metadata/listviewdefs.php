@@ -45,9 +45,9 @@ $listViewDefs['xInventories'] = array(
 		'default' => true,
 		'link' => true
 	),
-	'SUBTITLE' => array(
+	'NAME_EN' => array(
 		'width' => '24', 
-		'label' => 'LBL_SUBTITLE', 
+		'label' => 'LBL_NAME_EN', 
 		'default' => true,
 	),
 	'ID' => array(
@@ -60,11 +60,11 @@ $listViewDefs['xInventories'] = array(
 		'label' => 'LBL_CATEGORY', 
 		'module' => 'xCategories',
         'id' => 'XCATEGORY_ID',
-		'default' => true,
 		'related_fields' => 
 		array (
 			0 => 'xcategory_id',
 		),
+		'default' => false,
 	),
 	'PRICE' => array(
 		'width' => '8', 
@@ -74,6 +74,11 @@ $listViewDefs['xInventories'] = array(
 	'QUANTITY' => array(
 		'width' => '8', 
 		'label' => 'LBL_QUANTITY', 
+		'default' => true
+	),
+	'STRATEGY' => array(
+		'width' => '8', 
+		'label' => 'LBL_STRATEGY', 
 		'default' => true
 	),
 	'TOPMOST' => array(
@@ -87,7 +92,7 @@ $listViewDefs['xInventories'] = array(
 		'default' => true,
 	),
     'INVENTORY_MANAGEMENT' => array(
-		'width' => '4', 
+		'width' => '6', 
 		'label' => 'LBL_INVENTORY_MANAGEMENT',
 		'default' => true,
 		'sortable' => false,

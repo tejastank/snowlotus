@@ -63,6 +63,12 @@ class xeBaySellerListsController extends SugarController
 		));
     }
 
+	function action_preview()
+	{
+		echo $this->bean->get_description();
+		sugar_cleanup(true);
+	}
+
     function action_import()
     {
 		$this->view = 'import';
@@ -154,14 +160,13 @@ class xeBaySellerListsController extends SugarController
 
 			foreach ($item_list as &$item) {
 				$authToken = $accounts[$item->xebayaccount_id];
-				$item->get_description();
-				continue;
 				if (empty($item->variation)) {
 					if ($item->bid_count > 0)
 						continue;
 					$ri->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->get_description(),
+						'ApplicationData' => xeBayListing::guid_to_uuid($item->xebaylisting_id),
 						'SKU' => $item->xinventory_id,
 						'scope'=> $scope,
 						'AuthToken' => $authToken,
@@ -171,6 +176,7 @@ class xeBaySellerListsController extends SugarController
 					$rfpi->ryi(array(
 						'ItemID' => $item->item_id,
 						'Description' => $item->get_description(),
+						'ApplicationData' => xeBayListing::guid_to_uuid($item->xebaylisting_id),
 						'SKU' => $item->xinventory_id,
 						'scope'=> $scope,
 						'AuthToken' => $authToken,

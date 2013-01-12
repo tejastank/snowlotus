@@ -45,6 +45,7 @@ class GetSellerList extends eBayApiEnvironment
 		$req->setPagination($pagination);
 		$outputSelector = array(
 			'HasMoreItems',
+			'ItemArray.Item.ApplicationData',
 			// 'ItemArray.Item.BuyItNowPrice',
 			// 'ItemArray.Item.Currency',
 			'ItemArray.Item.HitCount', /* may be not set */
@@ -89,6 +90,8 @@ class GetSellerList extends eBayApiEnvironment
 
 		$outputSelector = array(
 			'HasMoreItems',
+			'ItemArray.Item.ApplicationData',
+			'ItemArray.Item.HitCount', /* may be not set */
 			// 'ItemArray.Item.BuyItNowPrice',
 			// 'ItemArray.Item.Currency',
 			'ItemArray.Item.HitCount', /* may be not set */
@@ -133,6 +136,7 @@ class GetSellerList extends eBayApiEnvironment
 					break;
 				foreach ($itemArray as &$item) {
 					$bean->xebayaccount_id = $account_id;
+					$bean->xebaylisting_id = xeBayListing::uuid_to_guid($item->getApplicationData());
 					$bean->hitcount = $item->getHitCount();;
 					$bean->item_id = $item->getItemID();
 					$bean->currency_id = $item->getListingDetails()->getConvertedStartPrice()->getTypeAttribute('currencyID');

@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,48 +35,17 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xInventories']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
- 
-	'panels' => array (
-		'default' => array (
-			array (
-				'name',
-				'assigned_user_name',
-			),
-			array (
-				'name_en',
-				'xcategory_name',
-			),
-			array (
-				'strategy',
-				'topmost',
-			),
-			array (
-                array(
-                    'name' => 'quantity',
-                    'customCode' => '{$fields.quantity.value}',
-                ),
-				'goods_allocation',
-			),
-			array (
-				'width',
-				'height',
-			),
-			array (
-				'deep',
-				'weight',
-			),
-			array (
-				'description',
-			),
-		),
-	),
-);
-?>
+
+if (isset($_REQUEST['uid'])) {
+	$ids = explode(',', $_REQUEST['uid']);
+	$bean = BeanFactory::getBean('xeBaySellerLists');
+	set_time_limit(60 * 10);
+	foreach ($ids as &$id) {
+		if ($bean->retrieve($id) !== null) {
+			$bean->revise();
+		}
+	}
+}
+
+$url = "index.php?module=xeBaySellerListing&action=index";
+SugarApplication::redirect($url);
