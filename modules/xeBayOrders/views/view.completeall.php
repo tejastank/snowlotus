@@ -45,13 +45,27 @@ class xeBayOrdersViewCompleteall extends SugarView {
 	
     function process()
     {
- 		parent::process();
+		$unprinted_order_included = $_REQUEST['unprinted_order_included'];
+		$bean = BeanFactory::getBean('xeBayOrders');
+		$where = "handled_status='unhandled'";
+		if (empty($unprinted_order_included)) {
+			$where .= " AND print_status=1";
+		}
+
+		$beans = $bean->get_full_list("", $where);
+		if ($beans !== null) {
+			foreach($beans as &$bean) {
+				$bean->end_of_sale();
+			}
+		}
+
+		// parent::process();
+		$this->display();
 	}
 	
-	function display(){
-        echo "<pre>";
-        print_r($_REQUEST);
-        echo "</pre>";
+	function display()
+	{
+		header("Location: index.php?module=xeBayOrders&action=index&filter=handled");
 	}
 }
 

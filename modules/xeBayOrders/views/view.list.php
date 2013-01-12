@@ -255,7 +255,7 @@ function pfcexport()
 					</td>
 					<td width="45%">	
 						<input type="hidden" name="unprinted_order_included" value="">
-						<input type="checkbox" id="unprinted_order_included" name="printed_order_included" value="0" tabindex="">
+						<input type="checkbox" id="unprinted_order_included" name="unprinted_order_included" value="1" tabindex="">
 					</td>
 				</tr>
 		</table>

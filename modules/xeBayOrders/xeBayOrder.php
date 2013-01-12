@@ -97,6 +97,9 @@ class xeBayOrder extends Basic {
 
 	var $xebaytransactions;
 
+	protected static $complete_sale = null;
+	protected static $ebay_accounts = null;
+
 	function xeBayOrder()
 	{
 		parent::Basic();
@@ -186,6 +189,11 @@ class xeBayOrder extends Basic {
 
 	function print_orders($ids)
 	{
+		if (empty($ids)) {
+			echo "<b>Not found any qualified orders</b>";
+			sugar_cleanup(true);
+		}
+
 		$nationality = require_once('modules/xeBayOrders/nationality.php');
 		$ss = new Sugar_Smarty();
         $ss->left_delimiter = '{{';
@@ -265,50 +273,64 @@ class xeBayOrder extends Basic {
 		sugar_cleanup(true);
 	}
 
-	function end_of_sale($ids)
+	function end_of_sale()
 	{
-		$bean = BeanFactory::getBean('xeBayOrders');
         $record = BeanFactory::getBean('xInventoryRecords');
-		$complete_sale = new CompleteSale;
 
-		$ebayAccount = BeanFactory::getBean('xeBayAccounts');
-		$accounts = $ebayAccount->get_accounts('All');
+		if (empty($this->complete_sale))
+			$this->complete_sale = new CompleteSale;
+
+		if (empty($this->ebay_accounts)) {
+			$ebayAccountBean = BeanFactory::getBean('xeBayAccounts');
+			$this->ebay_accounts = $ebayAccountBean->get_accounts('All');
+		}
+
+		$this->handled_status = 'handled';
+
+		$this->load_relationship('xebaytransactions');
+		$transactions = $this->xebaytransactions->getBeans();
+		if (empty($transactions))
+			return;
+
+		$authToken = $this->ebay_accounts[$this->xebayaccount_id];
+	
+		foreach ($transactions as &$transaction) {
+            // new inventory record
+            $record->name = $transaction->name;
+            $record->xinventory_id = $transaction->xinventory_id;
+            $record->operation = 'out';
+	        $record->price = '0.00';
+	        $record->quantity = $transaction->quantity_purchased;
+            $record->parent_type = 'xeBayTransactions';
+            $record->parent_id = $transaction->id;
+            $record->id = create_guid();
+            $record->new_with_id = true;
+            $record->save();
+
+			if ($transaction->sales_record_number < 100)
+				continue;
+			$params['TargetUser'] = $this->buyer_user_id;
+			$params['OrderID'] = $this->order_id; 
+    		$params['ItemID'] = $transaction->item_item_id;
+    		$params['TransactionID'] = $transaction->transaction_id;
+			$params['AuthToken'] = $authToken;
+			$res = $this->complete_sale->endOfSale($params);
+		}
+
+		$this->save();
+	}
+
+	function end_of_sales($ids)
+	{
+		if (!is_array($ids))
+			return;
+
+		$bean = BeanFactory::getBean('xeBayOrders');
 
 		foreach ($ids as &$id) {
-    	    $bean->retrieve($id);
-			$bean->handled_status = 'handled';
-
-			$bean->load_relationship('xebaytransactions');
-			$transactions = $bean->xebaytransactions->getBeans();
-			if (empty($transactions))
-				continue;
-
-			$authToken = $account[$bean->xebayaccount_id];
-	
-			foreach ($transactions as &$transaction) {
-                // new inventory record
-                $record->name = $transaction->name;
-                $record->xinventory_id = $transaction->xinventory_id;
-                $record->operation = 'out';
-	            $record->price = '0.00';
-	            $record->quantity = $transaction->quantity_purchased;
-                $record->parent_type = 'xeBayTransactions';
-                $record->parent_id = $transaction->id;
-                $record->id = create_guid();
-                $record->new_with_id = true;
-                $record->save();
-
-				if ($transaction->sales_record_number < 100)
-					continue;
-				$params['TargetUser'] = $bean->buyer_user_id;
-				$params['OrderID'] = $bean->order_id; 
-        		$params['ItemID'] = $transaction->item_item_id;
-        		$params['TransactionID'] = $transaction->transaction_id;
-				$params['AuthToken'] = $authToken;
-				$res = $complete_sale->endOfSale($params);
+			if ($bean->retrieve($id) !== null) {
+				$bean->end_of_sale();
 			}
-
-			$bean->save();
 		}
 	}
 }
