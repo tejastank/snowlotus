@@ -47,7 +47,7 @@ $subpanel_layout = array(
 		),
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
-	 		'width' => '50%',
+	 		'width' => '20%',
 		),
 		'item_view_item_url'=>array(
 			'usage'=>'query_only',
@@ -57,11 +57,14 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 			 'target_record_key' => 'xinventory_id',
 			'target_module' => 'xInventories',
-			 'width' => '40%',
+			 'width' => '20%',
 		),
 		'quantity_purchased' => array(
 			'vname' => 'LBL_QUANTITY_PURCHASED',
 	 		'width' => '10%',
+		),
+		'stockout' => array(
+			'usage'=>'query_only',
 		),
 	),
 );

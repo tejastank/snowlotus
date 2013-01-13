@@ -71,6 +71,7 @@ $listViewDefs['xeBayTransactions'] = array(
 		'related_fields' => 
 		array (
 			0 => 'xinventory_id',
+			1 => 'stockout',
 		),
 	),
 	'ASSIGNED_USER_NAME' => array(

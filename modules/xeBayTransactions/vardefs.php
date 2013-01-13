@@ -231,6 +231,19 @@ $dictionary['xeBayTransaction'] = array(
 			'table' => 'xinventories',
 			'module' => 'xInventories',
 		),
+		'quantity'=>
+		array(
+			'name'=>'quantity',
+			'rname' => 'quantity',
+	    	'vname'=> 'LBL_QUANTITY',
+			'id_name'=>'xinventory_id',
+			'type'=>'relate',
+			'link'=>'xinventory_link',
+			'source'=>'non-db',
+			'dbType' => 'int',
+			'table' => 'xinventories',
+			'module' => 'xInventories',
+		),
 		'goods_allocation' => array(
 			'name'=> 'goods_allocation',
 			'rname' => 'goods_allocation',

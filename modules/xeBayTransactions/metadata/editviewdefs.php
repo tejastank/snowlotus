@@ -56,6 +56,19 @@ $viewdefs['xeBayTransactions']['EditView'] = array(
 			),
 			array (
 				array(
+					'name' => 'xebayorder_name',
+					'displayParams' => array(
+						'size' => 64,
+						'readOnly' => 'readOnly',
+					),
+				),
+			),
+			array (
+				'quantity_purchased',
+				'price_value',
+			),
+			array (
+				array(
 					'name' => 'xinventory_name',
 					'label' => 'LBL_RELATED_TO',
 					'displayParams' => array(
@@ -63,11 +76,7 @@ $viewdefs['xeBayTransactions']['EditView'] = array(
 						'readOnly' => 'readOnly',
 					),
 				),
-				'xebayorder_name',
-			),
-			array (
-				'quantity_purchased',
-				'price_value',
+				'stockout',
 			),
 			array (
 				'description',

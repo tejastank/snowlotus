@@ -40,9 +40,7 @@ if (isset($_REQUEST['uid'])) {
 	$ids = explode(',', $_REQUEST['uid']);
 	$bean = BeanFactory::getBean('xeBayOrders');
 	foreach ($ids as &$id) {
-        $bean->retrieve($id);
-		$bean->handled_status = 'suspended';
-		$bean->save();
+		$bean->handled_status_update($id, 'suspended');
 	}
 }
 

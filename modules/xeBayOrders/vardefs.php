@@ -55,6 +55,13 @@ $dictionary['xeBayOrder'] = array(
 	    	'type'=>'bool',
 			'default'=>false,
 		),
+		'checked_out'=>
+		array(
+			'name'=>'checked_out',
+	    	'vname'=> 'LBL_CHECKED_OUT',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
 		'redeliver_count'=>
 		array(
 			'name'=>'redeliver_count',

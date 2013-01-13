@@ -51,19 +51,12 @@ class xeBayOrdersViewPrintall extends SugarView {
 	
 	function display()
 	{
+		$stockout_checked = $_REQUEST['stockout_checked'];
+		$automerge = $_REQUEST['automerge'];
 		$printed_order_included = $_REQUEST['printed_order_included'];
-		$bean = BeanFactory::getBean('xeBayOrders');
-		$where = "handled_status='unhandled'";
-		if (empty($printed_order_included)) {
-			$where .= " AND print_status=0";
-		}
 
-		$ids = array();
-		$resp = $bean->get_list("", $where, 0, -99, -99, 0, false, array('id'));
-		foreach ($resp['list'] as &$v) {
-			$ids[] = $v->id;
-		}
-		$bean->print_orders($ids);
+		$bean = BeanFactory::getBean('xeBayOrders');
+		$bean->print_orders(array(), $stockout_checked, $automerge, $printed_order_included);
 	}
 }
 

@@ -45,7 +45,7 @@ $listViewDefs['xeBayOrders'] = array(
 		'default' => true,
         'link' => true),         
 	'BUYER_USER_ID' => array(
-		'width' => '25', 
+		'width' => '20', 
 		'label' => 'LBL_BUYER_USER_ID', 
 		'customCode' => '{$ORDER_DETAILS}',
     	'related_fields' => array(
@@ -73,7 +73,7 @@ $listViewDefs['xeBayOrders'] = array(
 		'default' => true),         
 
     'SHIPPING_SERVICE'=> array(
-		'width' => '4', 
+		'width' => '6', 
         'label'=>'LBL_SHIPPING_SERVICE',
 		'default' => true),         
 	'BUYER_CHECKOUT_MESSAGE' => array(

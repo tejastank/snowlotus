@@ -50,7 +50,6 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 			'xebayaccount_name',
 		),
 		array (
-			'xinventory_name',
 			'xebayorder_name',
 		),
 		array (
@@ -61,7 +60,14 @@ $viewdefs['xeBayTransactions']['DetailView'] = array(
 			),
 		),
 		array (
+			'xinventory_name',
 			'customs_declaration',
+		),
+		array (
+			'quantity',
+			'stockout',
+		),
+		array (
 			'goods_allocation',
 		),
 		array (

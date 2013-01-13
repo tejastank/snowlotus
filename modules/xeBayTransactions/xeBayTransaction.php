@@ -103,8 +103,59 @@ class xeBayTransaction extends Basic {
 
 		if ($field_list['SALES_RECORD_NUMBER'] != -1)
 			$field_list['NAME'] = '<a target="_blank" href="' . $field_list['ITEM_VIEW_ITEM_URL'] . '">' . $field_list['NAME'] . "</a>";
+		if (!empty($field_list['STOCKOUT']))
+			$field_list['XINVENTORY_NAME'] = "<span style='color:red'>{$field_list['XINVENTORY_NAME']}</span>";
 
 		return $field_list;
+	}
+
+	function stockout_status_update($id, $status)
+	{
+		global $current_user;
+		$date_modified = $GLOBALS['timedate']->nowDb();
+        if ( isset($this->field_defs['modified_user_id']) ) {
+            if (!empty($current_user)) {
+                $this->modified_user_id = $current_user->id;
+            } else {
+                $this->modified_user_id = 1;
+            }
+            $query = "UPDATE $this->table_name set stockout='{$status}' , date_modified = '$date_modified', modified_user_id = '$this->modified_user_id' where id='$id'";
+        } else {
+            $query = "UPDATE $this->table_name set stockout='{$status}' , date_modified = '$date_modified' where id='$id'";
+        }
+        $this->db->query($query, true,"Error updating record stockout: ");
+	}
+
+	function stockout_status()
+	{
+		$stockout = $this->stockout;
+		if ($this->quantity < $this->quantity_purchased) {
+			$this->stockout = true;
+		} else {
+			$this->stockout = false;
+		}
+
+		if ($stockout != $this->stockout) {
+			$this->stockout_status_update($this->id, $this->stockout);
+		}
+
+		return $this->stockout;
+	}
+
+	function new_sale_record()
+	{
+        $record = BeanFactory::getBean('xInventoryRecords');
+        // new inventory recor
+        $record->name = $this->name;
+        $record->xinventory_id = $this->xinventory_id;
+        $record->operation = 'out';
+	    $record->price = '0.00';
+	    $record->quantity = $this->quantity_purchased;
+        $record->parent_type = 'xeBayTransactions';
+        $record->parent_id = $this->id;
+        $record->id = create_guid();
+        $record->new_with_id = true;
+        $record->save();
 	}
 }
 ?>
