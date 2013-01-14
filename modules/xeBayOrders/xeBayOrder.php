@@ -321,10 +321,35 @@ class xeBayOrder extends Basic {
 		return $ids;
 	}
 
+	function get_valid_ids($printed_order_included)
+	{
+		$ids = array();
+
+		$query = "SELECT id, name FROM $this->table_name WHERE deleted=0 ";
+		$query .= "AND handled_status='unhandled' ";
+		if (empty($printed_order_included))
+			$query .= " AND print_status<>'1' ";
+
+		$result = $this->db->query($query, false);
+		$GLOBALS['log']->debug("get valid printable ids: result is ".var_export($result, true));
+
+		while (($row = $this->db->fetchByAssoc($result)) != null) {
+			$ids[] = $row['id'];
+		}
+
+		return $ids;
+	}
+
 	function print_orders($ids, $stockout_check = true, $automerge = true, $printed_order_included = true)
 	{
+		$bean = BeanFactory::getBean('xeBayOrders');
+
 		if ($automerge) {
 			$ids = $this->automerge($ids, $printed_order_included);
+		} else {
+			if (empty($ids)) {
+				$ids = $this->get_valid_ids($printed_order_included);
+			}
 		}
 
 		if (empty($ids)) {
@@ -339,7 +364,6 @@ class xeBayOrder extends Basic {
         $ss->left_delimiter = '{{';
         $ss->right_delimiter = '}}';
 
-		$bean = BeanFactory::getBean('xeBayOrders');
 		$count = 1;
 
 		$ss->assign("MOD", $GLOBALS['mod_strings']);

@@ -76,6 +76,7 @@ $dictionary['xeBayOrder'] = array(
             'type'=>'enum',
             'function'=>'getShippingServiceDropDown',
 			'len'=>'32',
+            'default'=>'HKBAM',
         ),
 		'xebayaccount_id'=>
 		array(
@@ -215,7 +216,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'vname'=> 'LBL_STREET1',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>512,
+	    	'len'=>256,
     		'audited'=>true,
 		),
 		'street2'=>
@@ -224,7 +225,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'vname'=> 'LBL_STREET2',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>512,
+	    	'len'=>256,
     		'audited'=>true,
 		),
 		'city_name'=>
@@ -233,7 +234,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'vname'=> 'LBL_CITY_NAME',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>128,
+	    	'len'=>64,
     		'audited'=>true,
 		),
 		'state_or_province'=>
@@ -242,7 +243,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'vname'=> 'LBL_STATE_OR_PROVINCE',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>128,
+	    	'len'=>64,
     		'audited'=>true,
 		),
 		'country'=>
@@ -260,7 +261,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'vname'=> 'LBL_COUNTRY_NAME',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>128,
+	    	'len'=>64,
     		'audited'=>true,
 		),
 		'phone'=>
@@ -269,7 +270,7 @@ $dictionary['xeBayOrder'] = array(
 	    	'vname'=> 'LBL_PHONE',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>128,
+	    	'len'=>64,
     		'audited'=>true,
 		),
 		'postal_code'=>
@@ -316,6 +317,9 @@ $dictionary['xeBayOrder'] = array(
 			'bean_name'=>'xeBayTransaction',
 			'source'=>'non-db',
 		),
+	),
+	'indices' => array (
+		array('name' =>'idx_ebayorder_id_handle_del', 'type' =>'index', 'fields'=>array('id', 'handled_status', 'deleted')),
 	),
 	'relationships'=>array (
 		'xebayorders_xebayaccount' => array(
