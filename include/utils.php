@@ -293,6 +293,7 @@ function get_sugar_config_defaults() {
     'ebay_primary_site_id' => 0,
     'ebay_app_mode_sandbox' => false,
     'ebay_shipping_service' => 'HKBAM',
+	'ebay_express_carrier' => 'default',
 	'email_address_separator' => ',', // use RFC2368 spec unless we have a noncompliant email client
     'email_default_editor' => 'html',
 	'email_default_client' => 'sugar',

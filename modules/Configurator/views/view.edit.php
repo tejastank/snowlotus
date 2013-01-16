@@ -151,8 +151,10 @@ class ConfiguratorViewEdit extends ViewEdit
             '216' => 'eBay Singapore',
         );
         $this->ss->assign("EBAY_SITE_ID_OPTIONS", get_select_options_with_id($ebay_site_ids, isset($configurator->config['ebay_primary_site_id']) ? $configurator->config['ebay_primary_site_id'] : 0));
+
         require_once('modules/xeBayOrders/xeBayOrder.php');
         $this->ss->assign("EBAY_SHIPPING_SERVICE_OPTIONS", get_select_options_with_id(getShippingServiceDropDown(), isset($configurator->config['ebay_shipping_service']) ? $configurator->config['ebay_shipping_service'] : 'HKBAM'));
+        $this->ss->assign("EBAY_EXPRESS_CARRIER_OPTIONS", get_select_options_with_id(getExpressCarrierDropDown(), isset($configurator->config['ebay_express_carrier']) ? $configurator->config['ebay_express_carrier'] : 'default'));
         
         echo $this->getModuleTitle(false);
         

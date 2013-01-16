@@ -37,9 +37,9 @@
 require_once('include/MVC/View/SugarView.php');
 require_once 'PHPExcel/Classes/PHPExcel.php';
 
-class xeBayOrdersViewSfcexport extends SugarView {
+class xeBayOrdersViewExportAll extends SugarView {
 
-	function xeBayOrdersViewSfcexport()
+	function xeBayOrdersViewExportAll()
     {
  		parent::SugarView();
 	}
@@ -87,15 +87,12 @@ class xeBayOrdersViewSfcexport extends SugarView {
         }
     }
 
-    function process()
-    {
-		$stockout_checked = $_REQUEST['stockout_checked'];
-		$automerge = $_REQUEST['automerge'];
-		$printed_order_included = $_REQUEST['printed_order_included'];
+	function default_export($orders)
+	{
+	}
 
-		$bean = BeanFactory::getBean('xeBayOrders');
-        $orders = $bean->get_valid_orders(array(), $stockout_check, $automerge, $printed_order_included);
-
+	function sfc_export($orders)
+	{
         ini_set('zlib.output_compression', 'Off');
         ob_start();
  
@@ -105,11 +102,11 @@ class xeBayOrdersViewSfcexport extends SugarView {
         // Set document properties
         $objPHPExcel->getProperties()->setCreator("xlongfeng")
         							 ->setLastModifiedBy("xlongfeng")
-        							 ->setTitle("三态订单批量导入")
-        							 ->setSubject("三态订单批量导入")
-        							 ->setDescription("三态订单批量导入")
-        							 ->setKeywords("三态订单批量导入")
-        							 ->setCategory("三态订单批量导入");
+        							 ->setTitle("订单批量导入")
+        							 ->setSubject("订单批量导入")
+        							 ->setDescription("订单批量导入")
+        							 ->setKeywords("订单批量导入")
+        							 ->setCategory("订单批量导入");
         
         $column_head_import = array(
         	'declared value',
@@ -144,11 +141,11 @@ class xeBayOrdersViewSfcexport extends SugarView {
         $row = 2;
         
         foreach ($orders as &$order) {
-        	$orderLine['declared value'] = $order['total_value'];
-        	$orderLine['evaluate'] = $order['total_value'];
+        	$orderLine['declared value'] = "{$order['total_currency']} {$order['total_value']}";
+        	$orderLine['evaluate'] = "{$order['total_currency']} {$order['total_value']}";
         	$orderLine['is return'] = 'Y';
         	$orderLine['with_battery'] = 'N';
-        	$orderLine['weight'] = $order['weight'];
+        	$orderLine['weight'] = $order['total_weight'];
         	$orderLine['Length'] = '';
         	$orderLine['Width'] = '';
         	$orderLine['Height'] = '';
@@ -176,8 +173,8 @@ class xeBayOrdersViewSfcexport extends SugarView {
         	$orderLine['Item Title'] = $item_title;
         	$orderLine['Custom Label'] = $custom_label;
         	$orderLine['Quantity'] = $order['quantity'];
-        	$orderLine['Sale Price'] = $order['value'];
-        	$orderLine['Total Price'] = $order['total_value'];
+        	$orderLine['Sale Price'] = "{$order['subtotal_currency']} {$order['subtotal_value']}";
+        	$orderLine['Total Price'] = "{$order['total_currency']} {$order['total_value']}";
         	$orderLine['Shipping Service'] = $order['shipping_service'];
         
         	$this->set_row_data($objPHPExcel, 0, $orderLine, $row);
@@ -188,7 +185,7 @@ class xeBayOrdersViewSfcexport extends SugarView {
         $objPHPExcel->setActiveSheetIndex(0);
         
         date_default_timezone_set("Asia/Shanghai");
-        $filename = "三态速递订单_" . date("Ymd");
+        $filename = "sfc_三态速递_" . date("Ymd");
 
         // Redirect output to a client’s web browser
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -198,12 +195,140 @@ class xeBayOrdersViewSfcexport extends SugarView {
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->setOffice2003Compatibility(true);
         $objWriter->save('php://output');
+	}
+
+	function pfc_export($orders)
+	{
+        ini_set('zlib.output_compression', 'Off');
+        ob_start();
+ 
+        // Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+        
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("xlongfeng")
+        							 ->setLastModifiedBy("xlongfeng")
+        							 ->setTitle("订单批量导入")
+        							 ->setSubject("订单批量导入")
+        							 ->setDescription("订单批量导入")
+        							 ->setKeywords("订单批量导入")
+        							 ->setCategory("订单批量导入");
+
+        $column_head_import = array(
+			'客户参考编号',
+			'运输方式',
+			'投保易网邮保险服务',
+			'Buyer Fullname',
+			'Buyer Phone Number',
+			'Buyer Email',
+			'Buyer Address 1',
+			'Buyer Address 2',
+			'Buyer City',
+			'Buyer State',
+			'Buyer Zip',
+			'Buyer Country',
+			'物品类别内容1',
+			'总重量(千克)',
+			'货币',
+			'总值',
+			'物品1', '数量1', '净重1', '货币1', '价值1',
+			'物品2', '数量2', '净重2', '货币2', '价值2',
+			'物品3', '数量3', '净重3', '货币3', '价值3',
+			'物品4', '数量4', '净重4', '货币4', '价值4',
+			'物品5', '数量5', '净重5', '货币5', '价值5',
+		);
+
+        $this->set_column_head($objPHPExcel, 0, $column_head_import, 'ebay批量上传模版');
+
+        $row = 2;
+
+        foreach ($orders as &$order) {
+			$orderLine = array();
+        	$orderLine['客户参考编号'] = $order['sales_record_number'];
+        	$orderLine['运输方式'] = getPfcShippingService($order['shipping_service']);
+        	$orderLine['投保易网邮保险服务'] = 'N';
+        	$orderLine['Buyer Fullname'] = $order['name'];
+        	$orderLine['Buyer Phone Number'] = $order['phone'];
+        	$orderLine['Buyer Email'] = '';
+        	$orderLine['Buyer Address 1'] = $order['street1'];
+        	$orderLine['Buyer Address 2'] = $order['street2'];
+        	$orderLine['Buyer City'] = $order['city'];
+        	$orderLine['Buyer State'] = $order['state'];
+        	$orderLine['Buyer Zip'] = $order['postal_code'];
+        	$orderLine['Buyer Country'] = $order['country'];
+        	$orderLine['物品类别内容1'] = 'W';
+        	$orderLine['总重量(千克)'] = $order['total_weight'];
+        	$orderLine['货币'] = $order['total_currency'];
+        	$orderLine['总值'] = $order['total_value'];
+			$index = 1;
+			$isfive = false;
+			if (count($order['order_details']) == 5)
+				$isfive = true;
+            foreach($order['order_details'] as &$detail) {
+				if ($index < 5) {
+					$orderLine["物品{$index}"] = "{$detail['location']} {$detail['inventory_name']}";
+					$orderLine["数量{$index}"] = $detail['quantity'];
+					$orderLine["净重{$index}"] = $detail['weight'];
+					$orderLine["货币{$index}"] = $detail['currency'];
+					$orderLine["价值{$index}"] = $detail['value'];
+					$index++;
+				} else {
+					if (!empty($orderLine["物品5"])) {
+						$orderLine["物品5"] .= '<br>';
+					} else {
+						$orderLine["物品5"] = '';
+						$orderLine["数量5"] = 0;
+						$orderLine["货币5"] = $detail['currency'];
+					}
+					if ($isfive)
+						$orderLine["物品5"] .= "{$detail['location']} {$detail['inventory_name']}";
+					else
+						$orderLine["物品5"] .= "{$detail['location']} {$detail['inventory_name']} x{$detail['quantity']})";
+					$orderLine["数量5"] += $detail['quantity'];
+					$orderLine["净重5"] += $detail['weight'];
+					$orderLine["价值5"] += $detail['value'];
+				}
+            }
+
+        	$this->set_row_data($objPHPExcel, 0, $orderLine, $row);
+        
+        	$row++;
+        }
+
+        $objPHPExcel->setActiveSheetIndex(0);
+        
+        date_default_timezone_set("Asia/Shanghai");
+        $filename = "pfc_皇家物流_" . date("Ymd");
+
+        // Redirect output to a client’s web browser
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename={$filename}.xls");
+        header('Cache-Control: max-age=0');
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->setOffice2003Compatibility(true);
+        $objWriter->save('php://output');
+	}
+
+    function process()
+    {
+		$stockout_checked = $_REQUEST['stockout_checked'];
+		$automerge = $_REQUEST['automerge'];
+		$printed_order_included = $_REQUEST['printed_order_included'];
+		$express_carrier = $_REQUEST['express_carrier'];
+
+		$bean = BeanFactory::getBean('xeBayOrders');
+        $orders = $bean->get_valid_orders(array(), $stockout_check, $automerge, $printed_order_included);
+
+		$export = "{$express_carrier}_export";
+		$this->$export($orders);
 
 		$this->display();
 	}
 	
 	function display()
 	{
+		// header("Location: index.php?module=xeBayOrders&action=index&filter=unhandled");
 	}
 }
 

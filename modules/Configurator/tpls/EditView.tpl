@@ -354,6 +354,8 @@
 	<tr>
 		<td scope="row" width="25%">{$MOD.LBL_EBAY_SHIPPING_SERVICE}: </td>
 		<td width="25%" align="left"  valign='middle'><input type='hidden' name='ebay_shipping_service' value='0'><select name='ebay_shipping_service'>{$EBAY_SHIPPING_SERVICE_OPTIONS}</select></td>
+		<td scope="row" width="25%">{$MOD.LBL_EBAY_EXPRESS_CARRIER}: </td>
+		<td width="25%" align="left"  valign='middle'><input type='hidden' name='ebay_express_carrier' value='0'><select name='ebay_express_carrier'>{$EBAY_EXPRESS_CARRIER_OPTIONS}</select></td>
 	</tr>
 </table>
 

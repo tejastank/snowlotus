@@ -437,6 +437,7 @@ To configure additional system settings, click <a href="index.php?module=Adminis
     'LBL_EBAY_PRIMARY_SITE' => 'Primary Site',
     'LBL_EBAY_APP_MODE_SANDBOX' => 'Sandbox Mode',
     'LBL_EBAY_SHIPPING_SERVICE' => 'Shipping Service',
+	'LBL_EBAY_EXPRESS_CARRIER' => 'Express Carrier',
 );
 
 

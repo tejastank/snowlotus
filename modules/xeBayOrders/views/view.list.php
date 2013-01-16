@@ -107,12 +107,9 @@ EOF;
 
 	function display()
 	{
-		global $mod_strings;
-		// echo "<pre>";
-		// print_r($_REQUEST);
-		// print_r($this->params);
-		// print_r($this->where);
-		// echo "</pre>";
+		global $mod_strings, $sugar_config;
+
+		$express_carrier_options = get_select_options_with_id(getExpressCarrierDropDown(), isset($sugar_config['ebay_express_carrier']) ? $sugar_config['ebay_express_carrier'] : 'sfc');
 
 		$shortcuts_unhandled = <<<EOF
 <script>
@@ -139,47 +136,26 @@ OO.toggle_printall = function (){
 	OO.printallDialog.render();
 	OO.printallDialog.show();
 }
-OO.sfcexportDialog = false;	
-OO.toggle_sfcexport = function (){
-	var sd = OO.get("sfcexport_dialog");
-	if(!OO.sfcexportDialog){	
-		OO.sfcexportDialog = new YAHOO.widget.Dialog("sfcexport_dialog",{
+OO.exportallDialog = false;	
+OO.toggle_exportall = function (){
+	var sd = OO.get("exportall_dialog");
+	if(!OO.exportallDialog){	
+		OO.exportallDialog = new YAHOO.widget.Dialog("exportall_dialog",{
 			  	fixedcenter: true,
 			  	draggable: false,
 			  	visible : false, 
 			 	modal : true,
 			  	close: true
 		});
-		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.sfcexportDialog.cancel();} } );
-		OO.sfcexportDialog.cfg.queueProperty("keylisteners", listeners);
+		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.exportallDialog.cancel();} } );
+		OO.exportallDialog.cfg.queueProperty("keylisteners", listeners);
 	}
-	OO.sfcexportDialog.cancelEvent.subscribe(function(e, a, o){
-		OO.get("form_sfcexport").reset();
+	OO.exportallDialog.cancelEvent.subscribe(function(e, a, o){
+		OO.get("form_exportall").reset();
 	});
 	sd.style.display = "block";	
-	OO.sfcexportDialog.render();
-	OO.sfcexportDialog.show();
-}
-OO.pfcexportDialog = false;	
-OO.toggle_pfcexport = function (){
-	var sd = OO.get("pfcexport_dialog");
-	if(!OO.pfcexportDialog){	
-		OO.pfcexportDialog = new YAHOO.widget.Dialog("pfcexport_dialog",{
-			  	fixedcenter: true,
-			  	draggable: false,
-			  	visible : false, 
-			 	modal : true,
-			  	close: true
-		});
-		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.pfcexportDialog.cancel();} } );
-		OO.pfcexportDialog.cfg.queueProperty("keylisteners", listeners);
-	}
-	OO.pfcexportDialog.cancelEvent.subscribe(function(e, a, o){
-		OO.get("form_pfcexport").reset();
-	});
-	sd.style.display = "block";	
-	OO.pfcexportDialog.render();
-	OO.pfcexportDialog.show();
+	OO.exportallDialog.render();
+	OO.exportallDialog.show();
 }
 OO.completeallDialog = false;	
 OO.toggle_completeall = function (){
@@ -201,11 +177,6 @@ OO.toggle_completeall = function (){
 	sd.style.display = "block";	
 	OO.completeallDialog.render();
 	OO.completeallDialog.show();
-}
-function pfcexport()
-{
-   var href="index.php?entryPoint=pfcFormatExport&module=xeBayOrders&action=index";
-   window.location.href=href;
 }
 </script> 
 <div id="printall_dialog" style="width: 450px; display: none;">
@@ -248,10 +219,10 @@ function pfcexport()
 	</div>
 	</div>
 </div>
-<div id="sfcexport_dialog" style="width: 450px; display: none;">
-	<div class="hd">{$mod_strings['LBL_SFC_EXPORT']}</div>
+<div id="exportall_dialog" style="width: 450px; display: none;">
+	<div class="hd">{$mod_strings['LBL_EXPORTALL_TITLE']}</div>
 	<div class="bd">
-	<form name="sfcexport" id="form_sfcexport" method="POST" action="index.php?module=xeBayOrders&action=sfcexport">
+	<form name="exportall" id="form_exportall" method="POST" action="index.php?module=xeBayOrders&action=exportall">
 		<table class='edit view tabForm'>
 			<tr>
 				<td scope="row" valign="top" width="55%">
@@ -280,51 +251,20 @@ function pfcexport()
 					<input type="checkbox" id="printed_order_included" name="printed_order_included" value="1" tabindex="">
 				</td>
 			</tr>
-		</table>
-	</form>
-	<div style="text-align: right;">
-		<button id="btn-save-sfcexportDialog" class="button" type="button" onclick="OO.get('form_sfcexport').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
-		<button id="btn-cancel-sfcexportDialog" class="button" type="button" onclick="OO.sfcexportDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
-	</div>
-	</div>
-</div>
-<div id="pfcexport_dialog" style="width: 450px; display: none;">
-	<div class="hd">{$mod_strings['LBL_SFC_EXPORT']}</div>
-	<div class="bd">
-	<form name="pfcexport" id="form_pfcexport" method="POST" action="index.php?module=xeBayOrders&action=pfcexport">
-		<table class='edit view tabForm'>
-			<tr>
-				<td scope="row" valign="top" width="55%">
-					{$mod_strings['LBL_STOCKOUT_CHECKED']}
-				</td>
-				<td width="45%">	
-					<input type="hidden" name="stockout_checked" value="">
-					<input type="checkbox" id="stockout_checked" name="stockout_checked" checked value="1" tabindex="">
-				</td>
-			</tr>
 			<tr>
 				<td scope="row" valign="top">
-					{$mod_strings['LBL_AUTO_MERGE']}
+					{$mod_strings['LBL_EXPRESS_CARRIER']}
 				</td>
 				<td>	
-					<input type="hidden" name="automerge" value="">
-					<input type="checkbox" id="automerge" name="automerge" checked value="1" tabindex="">
-				</td>
-			</tr>
-			<tr>
-				<td scope="row" valign="top">
-					{$mod_strings['LBL_PRINTED_ORDER_INCLUDED']}
-				</td>
-				<td>	
-					<input type="hidden" name="printed_order_included" value="">
-					<input type="checkbox" id="printed_order_included" name="printed_order_included" value="1" tabindex="">
+					<input type='hidden' name='express_carrier' value='0'>
+					<select name='express_carrier'>{$express_carrier_options}</select>
 				</td>
 			</tr>
 		</table>
 	</form>
 	<div style="text-align: right;">
-		<button id="btn-save-pfcexportDialog" class="button" type="button" onclick="OO.get('form_pfcexport').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
-		<button id="btn-cancel-pfcexportDialog" class="button" type="button" onclick="OO.pfcexportDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
+		<button id="btn-save-exportallDialog" class="button" type="button" onclick="OO.get('form_exportall').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
+		<button id="btn-cancel-exportallDialog" class="button" type="button" onclick="OO.exportallDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
 	</div>
 	</div>
 </div>
@@ -353,9 +293,7 @@ function pfcexport()
 &nbsp;&nbsp;
 <input title="{$mod_strings['LBL_PRINT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PRINT_ALL']}" id="print_all" onclick="OO.toggle_printall()">
 &nbsp;&nbsp;
-<input title="{$mod_strings['LBL_SFC_EXPORT']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_SFC_EXPORT']}" id="sfc_export" onclick="OO.toggle_sfcexport()">
-&nbsp;&nbsp;
-<input title="{$mod_strings['LBL_PFC_EXPORT']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PFC_EXPORT']}" id="pfc_export" onclick="OO.toggle_sfcexport()">
+<input title="{$mod_strings['LBL_EXPORT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_EXPORT_ALL']}" id="export_all" onclick="OO.toggle_exportall()">
 &nbsp;&nbsp;
 <input title="{$mod_strings['LBL_COMPLERE_ALL_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_COMPLERE_ALL']}" id="complete_all" onclick="OO.toggle_completeall()">
 <br/>

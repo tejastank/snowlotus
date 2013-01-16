@@ -403,17 +403,20 @@ class xeBayOrder extends Basic {
 					// new sale record
 					$transaction->new_sale_record();
 				}
+
                 $declaration_name = empty($transaction->customs_declaration) ? $transaction->name : $transaction->customs_declaration;
 				$weight += $transaction->weight * $transaction->quantity_purchased;
                 $quantity += $transaction->quantity_purchased;
 				$inventory_name = empty($transaction->xinventory_name) ? $transaction->name : $transaction->xinventory_name;
 
-                $transaction->goods_allocation = 'A0308';
                 $order_details[] = array(
                     'declaration_name' => $declaration_name,
                     'inventory_name' => $inventory_name,
                     'location' => $transaction->goods_allocation,
                     'quantity' => $transaction->quantity_purchased,
+					'weight' => $transaction->weight,
+                	'currency' => $transaction->price_currency_id,
+                	'value' => $transaction->price_value,
                 );
 			}
 
@@ -432,8 +435,10 @@ class xeBayOrder extends Basic {
                 'country_name' => $bean->country_name,
                 'country_name_cn' => $nationality[$bean->country]['cn'],
                 'phone' => $bean->phone,
-                'value' => "{$bean->subtotal_currency_id} {$bean->subtotal_value}",
-                'total_value' => "{$bean->total_currency_id} {$bean->total_value}",
+                'subtotal_currency' => $bean->subtotal_currency_id,
+                'subtotal_value' => $bean->subtotal_value,
+                'total_currency' => $bean->total_currency_id,
+                'total_value' => $bean->total_value,
                 'weight' => $weight,
                 'total_weight' => $total_weight,
                 'quantity' => $quantity,
@@ -632,21 +637,55 @@ function getHandledStatusDropDown()
 function getShippingServiceDropDown()
 {
     $list = array(
-        'HKBAM' => 'HKBAM',
-        'HKBRAM' => 'HKBRAM',
-        'SWBAM' => 'SWBAM',
-        'SWBRAM' => 'SWBRAM',
-        'DEAM' => 'DEAM',
-        'DERAM' => 'DERAM',
-        'RM1' => 'RM1',
-        'RM1R' => 'RM1R',
-        'CNAM' => 'CNAM',
-        'CNRAM' => 'CNRAM',
-        'SGAM' => 'SGAM',
-        'SGRAM' => 'SGRAM',
-        'WWAM' => 'WWAM',
-        'WWRAM' => 'WWRAM',
-        'BPAM' => 'BPAM',
+        'HKBAM' => '香港邮政平邮小包',
+        'HKBRAM' => '香港邮政挂号小包',
+        'SWBAM' => '瑞士邮政平邮小包',
+        'SWBRAM' => '瑞士邮政挂号小包',
+        'DEAM' => '德国邮政平邮小包',
+        'DERAM' => '德国邮政挂号小包',
+        'RM1' => '英国邮政平邮小包',
+        'RM1R' => '英国邮政挂号小包',
+        'CNAM' => '中国邮政平邮小包',
+        'CNRAM' => '中国邮政挂号小包',
+        'SGAM' => '新加坡邮政平邮小包',
+        'SGRAM' => '新加坡邮政挂号小包',
+        'WWAM' => '中国邮政外围平邮小包',
+        'WWRAM' => '中国邮政外围挂号小包',
+        'BPAM' => '比利时邮政平邮小包',
+    );
+
+    return $list;
+}
+
+function getPfcShippingService($express)
+{
+	static $pfc = array(
+        'HKBAM' => '香港邮政小包挂号',
+        'HKBRAM' => '香港邮政小包平邮',
+        'SWBAM' => '瑞士邮政小包挂号',
+        'SWBRAM' => '瑞士邮政小包平邮',
+        'DEAM' => '德国邮政小包平邮',
+        'DERAM' => '德国邮政小包挂号',
+        'RM1' => '英国皇家邮政小包平邮',
+        'RM1R' => '英国皇家邮政小包挂号',
+        'CNAM' => '中国邮政小包挂号',
+        'CNRAM' => '中国邮政小包 平邮',
+        'SGAM' => '',
+        'SGRAM' => '新加坡邮政小包挂号',
+        'WWAM' => '',
+        'WWRAM' => '',
+        'BPAM' => '',
+	);
+
+	return $pfc[$express];
+}
+
+function getExpressCarrierDropDown()
+{
+    $list = array(
+		'default' => 'Default',
+		'sfc' => '三态速递',
+		'pfc' => '皇家物流',
     );
 
     return $list;
