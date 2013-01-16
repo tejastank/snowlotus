@@ -37,7 +37,7 @@ class GetSessionID extends eBayApiEnvironment
 	public function dispatchCall ($params)
     {
         $req = new GetSessionIDRequestType();
-        $req->setRuName($this->getRuName());
+        $req->setRuName($this->session->getRuName());
         
         $res = $this->proxy->GetSessionID($req);
         if ($this->testValid($res))

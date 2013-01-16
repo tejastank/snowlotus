@@ -3,6 +3,7 @@
  * sources
  */
 require_once 'setincludepath.php';
+require_once 'EbatNs_AuthenticationHelper.php';
 require_once 'EbatNs_Environment.php';
 
 /**
@@ -11,26 +12,19 @@ require_once 'EbatNs_Environment.php';
  */
 class eBayApiEnvironment extends EbatNs_Environment
 {
-	// const app_mode = 'production';
-	const app_mode = 'sandbox';
-
-	var $ebay_config = array (
-		'production' => array (
-			'config' => 'config/ebay.config.php',
-			'ru_name' => 'Philips-Philips81-c350--pkrqdtg',
-			'sign_in_url' => 'https://signin.ebay.com/ws/eBayISAPI.dll?SignIn',
-		),
-
-		'sandbox' => array (
-			'config' => 'config/ebay.config.sandbox.php',
-			'ru_name' => 'Philips-Philips81-c350--pkrqdtg',
-			'sign_in_url' => 'https://signin.sandbox.ebay.com/ws/eBayISAPI.dll?SignIn',
-		),
-	);
+    var $authentication_helper;
+    var $sandbox_mode = true;
+	var $app_mode = 0;
+    var $site_id = 0;
 
     public function __construct()
     {
-		parent::__construct(0, $this->ebay_config[self::app_mode]['config']);
+        global $sugar_config;
+        $this->sandbox_mode = $sugar_config['ebay_app_mode_sandbox'];
+        $this->app_mode = $this->sandbox_mode ? 1 : 0;
+        $this->site_id = empty($sugar_config['ebay_primary_site_id']) ? 0 : $sugar_config['ebay_primary_site_id'];
+
+		parent::__construct(0, 'config/ebay.config.php');
     }
 
     public function setup()
@@ -43,26 +37,19 @@ class eBayApiEnvironment extends EbatNs_Environment
             $this->logger = new EbatNs_Logger();
         $this->configFile = $configFile;
         $this->session = new EbatNs_Session($this->configFile);
+        $this->session->setAppMode($this->app_mode);
+        $this->session->setSiteId($this->site_id);
 		$this->setup();
         $this->proxy = new EbatNs_ServiceProxy($this->session);
+        $this->authentication_helper = new EbatNs_AuthenticationHelper($this->proxy);
         
         if ($this->logger)
 	        $this->proxy->attachLogger($this->logger);
     }
 
-	public function appModeIsSandbox()
+	public function getSignInURL($sessionId)
 	{
-		return (self::app_mode == 'sandbox');
-	}
-
-	public function getRuName()
-	{
-		return $this->ebay_config[self::app_mode]['ru_name'];
-	}
-	
-	public function getSignInURL($session_id)
-	{
-		return $this->ebay_config[self::app_mode]['sign_in_url'] . "&RuName=" . $this->getRuname() . "&SessID=" . $session_id;
+        return ($this->authentication_helper->GetEbaySignInUrl($this->session->getRuName()) . "&SessID={$sessionId}");
 	}
 }
 

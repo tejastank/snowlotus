@@ -337,6 +337,27 @@
 
 
 <table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+    <tr>
+        <th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_EBAY_SETTINGS}</h4></th>
+    </tr>
+	<tr>
+		<td scope="row" width="25%">{$MOD.LBL_EBAY_PRIMARY_SITE}: </td>
+		<td width="25%" align="left"  valign='middle'><input type='hidden' name='ebay_primary_site_id' value='0'><select name='ebay_primary_site_id'>{$EBAY_SITE_ID_OPTIONS}</select></td>
+		<td scope="row" width="25%">{$MOD.LBL_EBAY_APP_MODE_SANDBOX}: </td>
+		{if !empty($config.ebay_app_mode_sandbox)}
+			{assign var='ebay_app_mode_sandbox_checked' value='CHECKED'}
+		{else}
+			{assign var='ebay_app_mode_sandbox_checked' value=''}
+		{/if}
+		<td width="25%" align="left" valign='middle'><input type='hidden' name='ebay_app_mode_sandbox' value='false'><input name='ebay_app_mode_sandbox'  type="checkbox" value='true' {$ebay_app_mode_sandbox_checked}></td>
+	</tr>
+	<tr>
+		<td scope="row" width="25%">{$MOD.LBL_EBAY_SHIPPING_SERVICE}: </td>
+		<td width="25%" align="left"  valign='middle'><input type='hidden' name='ebay_shipping_service' value='0'><select name='ebay_shipping_service'>{$EBAY_SHIPPING_SERVICE_OPTIONS}</select></td>
+	</tr>
+</table>
+
+<table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 <tr>
 <th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_LOGGER}</h4></th>
 </tr>

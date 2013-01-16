@@ -432,6 +432,11 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 	'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
 	'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Sugar Mobile native clients',
+
+    'LBL_EBAY_SETTINGS' => 'eBay Settings',
+    'LBL_EBAY_PRIMARY_SITE' => 'Primary Site',
+    'LBL_EBAY_APP_MODE_SANDBOX' => 'Sandbox Mode',
+    'LBL_EBAY_SHIPPING_SERVICE' => 'Shipping Service',
 );
 
 

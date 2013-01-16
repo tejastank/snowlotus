@@ -125,6 +125,34 @@ class ConfiguratorViewEdit extends ViewEdit
         } else {
             $this->ss->assign('filename_suffix', get_select_options_with_id(  SugarLogger::$filename_suffix,''));
         }
+
+        $ebay_site_ids = array(
+            '0' => 'eBay United States',
+            '2' => 'eBay Canada (English)',
+            '3' => 'eBay UK',
+            '15' => 'eBay Australia',
+            '16' => 'eBay Austria',
+            '23' => 'eBay Belgium (French)',
+            '71' => 'eBay France',
+            '77' => 'eBay Germany',
+            '100' => 'eBay Motors',
+            '101' => 'eBay Italy',
+            '123' => 'eBay Belgium (Dutch)',
+            '146' => 'eBay Netherlands',
+            '186' => 'eBay Spain',
+            '193' => 'eBay Switzerland',
+            '201' => 'eBay Hong Kong',
+            '203' => 'eBay India',
+            '205' => 'eBay Ireland',
+            '207' => 'eBay Malaysia',
+            '210' => 'eBay Canada (French)',
+            '211' => 'eBay Philippines',
+            '212' => 'eBay Poland',
+            '216' => 'eBay Singapore',
+        );
+        $this->ss->assign("EBAY_SITE_ID_OPTIONS", get_select_options_with_id($ebay_site_ids, isset($configurator->config['ebay_primary_site_id']) ? $configurator->config['ebay_primary_site_id'] : 0));
+        require_once('modules/xeBayOrders/xeBayOrder.php');
+        $this->ss->assign("EBAY_SHIPPING_SERVICE_OPTIONS", get_select_options_with_id(getShippingServiceDropDown(), isset($configurator->config['ebay_shipping_service']) ? $configurator->config['ebay_shipping_service'] : 'HKBAM'));
         
         echo $this->getModuleTitle(false);
         

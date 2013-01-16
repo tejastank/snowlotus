@@ -290,6 +290,9 @@ function get_sugar_config_defaults() {
     'display_email_template_variable_chooser' => false,
 	'display_inbound_email_buttons' => false,
 	'dump_slow_queries' => false,
+    'ebay_primary_site_id' => 0,
+    'ebay_app_mode_sandbox' => false,
+    'ebay_shipping_service' => 'HKBAM',
 	'email_address_separator' => ',', // use RFC2368 spec unless we have a noncompliant email client
     'email_default_editor' => 'html',
 	'email_default_client' => 'sugar',

@@ -62,7 +62,7 @@ class xeBayOrder extends Basic {
 	var $print_status;
 	var $checked_out;
 	var $redeliver_count;
-    var $shipping_servcie;
+    var $shipping_service;
 
 	var $xebayaccount_id;
 	var $xebayaccount_name;
