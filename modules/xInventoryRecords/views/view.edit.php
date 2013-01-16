@@ -46,19 +46,6 @@ class xInventoryRecordsViewEdit extends ViewEdit {
  	function display() {
 		global $mod_strings;
 
-		$select_in = '';
-		$select_out = '';
-		if ($this->bean->operation == 'in')
-			$select_in = 'selected';
-		else
-			$select_out = 'selected';
-
-		$operation_options = "<select name='operation' id='operation' title=''>";
-		$operation_options .= "<option {$select_in} value='in'>{$mod_strings['LBL_INVENTORY_IN']}</option>";
-		$operation_options .= "<option {$select_out} value='out'>{$mod_strings['LBL_INVENTORY_OUT']}</option>";
-		$operation_options .= "</select>";
-		$this->ev->ss->assign("OPERATION_OPTIONS", $operation_options);
-
  		parent::display();
  	}
 }

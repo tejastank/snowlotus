@@ -68,8 +68,9 @@ $mod_strings = array (
   'LBL_PRICE' => 'Price(RMB)',
   'LBL_QUANTITY' => 'Quantity',
   'LBL_INVENTORY' => 'Inventory',
-  'LBL_INVENTORY_IN' => 'Enter warehouse',
-  'LBL_INVENTORY_OUT' => 'Out of warehouse',
+  'LBL_INVENTORY_IN' => 'In Stock',
+  'LBL_INVENTORY_OUT' => 'Out Stock',
   // 'LBL_INVENTORY_MANAGEMENT' => "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_Mngt.png')."'>",
   'LBL_INVENTORY_MANAGEMENT' => 'Operation',
+  'LBL_STOCK_TAKING' => 'Stock Taking',
 );

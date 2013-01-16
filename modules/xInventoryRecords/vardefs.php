@@ -72,11 +72,19 @@ $dictionary['xInventoryRecord'] = array(
 		array(
 			'name'=>'operation',
 			'vname'=>'LBL_INVENTORY_MANAGEMENT',
-			'type'=>'varchar',
-	    	'len'=>5,
+	    	'type'=>'enum',
+            'function'=>'getInventoryRecordOperationDropDown',
+	    	'len'=>32,
 			'required' => true,
 			'audited' => true,
-			'comment' => 'value: in, out'
+			'default'=>'in',
+		),
+		'stock_taking'=>
+		array(
+			'name'=>'stock_taking',
+			'vname'=>'LBL_STOCK_TAKING',
+	    	'type'=>'bool',
+			'default'=>false,
 		),
 		'price'=>
 		array(

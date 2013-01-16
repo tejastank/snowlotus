@@ -44,30 +44,6 @@ class xInventoryRecordsViewDetail extends ViewDetail
  	function xInventoryRecordsViewDetail(){
  		parent::ViewDetail();
  	}
-
- 	/**
- 	 * display
- 	 * Override the display method to support customization for the buttons that display
- 	 * a popup and allow you to copy the account's address into the selected contacts.
- 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
- 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
- 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
- 	 */
- 	function display(){
-				
-		if(empty($this->bean->id)){
-			global $app_strings;
-			sugar_die($app_strings['ERROR_NO_RECORD']);
-		}				
-		
-		$this->dv->process();
-		global $mod_strings;
-
-		$this->ss->assign("OPERATION_IN", "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_in.png')."'>");
-		$this->ss->assign("OPERATION_OUT", "<img alt='' border='0' src='" . SugarThemeRegistry::current()->getImageURL('Inventory_out.png')."'>");
-        
-		echo $this->dv->display();
- 	} 	
 }
 
 ?>

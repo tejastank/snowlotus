@@ -61,6 +61,7 @@ class xInventoryRecord extends Basic {
 	var $xinventory_name;
 	var $xinventory_link;
     var $operation;
+	var $stock_taking;
 	var $price;
 	var $quantity;
 	var $vendor_id;
@@ -127,9 +128,11 @@ class xInventoryRecord extends Basic {
 
 		if ($this->new_with_id == true) {
             if ($item->retrieve($this->xinventory_id) != null) {
-                if ($this->operation == 'in') {
+				switch ($this->operation) {
+				case 'in':
                     $item->quantity += $this->quantity;
-                } else {
+					break;
+				case 'out':
                     $quantity = $item->quantity;
                     $quantity -= $this->quantity;
                     if ($quantity < 0) {
@@ -138,7 +141,12 @@ class xInventoryRecord extends Basic {
                     } else {
                         $item->quantity = $quantity;
                     }
-                }
+					break;
+				default:
+					echo "inventory record operation error!!!";
+					exit;
+					break;
+				}
                 $item->save();
             }
         }
@@ -163,5 +171,17 @@ class xInventoryRecord extends Basic {
 
         parent::mark_deleted($id);
     }
+}
+
+function getInventoryRecordOperationDropDown()
+{
+	global $mod_strings;
+
+    $list = array (
+		'in' => $mod_strings['LBL_INVENTORY_IN'],
+		'out' => $mod_strings['LBL_INVENTORY_OUT'],
+	);
+
+	return $list;
 }
 ?>

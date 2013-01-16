@@ -50,10 +50,8 @@ $viewdefs['xInventoryRecords']['DetailView'] = array(
             'xinventory_name',
 		),
         array (
-			array(
-				'name' => 'operation',
-				'customCode' => '{if $fields.operation.value == "in"}{$OPERATION_IN}{else}{$OPERATION_OUT}{/if}',
-			),
+			'operation',
+			'stock_taking',
         ),
         array (
             'quantity',

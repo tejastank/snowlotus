@@ -122,7 +122,7 @@ echo "<pre>";
 $row = 2;
 
 foreach ($resp['list'] as &$item) {
-    $where = "xinventory_id='{$item->id}' AND operation='out' AND date_entered>'{$startTime}'";
+    $where = "xinventory_id='{$item->id}' AND operation='out' AND stock_taking=0 AND date_entered>'{$startTime}'";
 	$records = $recordBean->get_list("", $where, 0, -99, -99, 0, false, array('quantity'));
 
     $salesVolume = 0;

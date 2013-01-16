@@ -66,21 +66,6 @@ class xInventoryRecordsController extends SugarController
 
 		if ($this->bean->new_with_id == true) {
             // new bean want to update xinventory must be implemented in xInventoryRecord bean class;
-            // if ($item->retrieve($this->bean->xinventory_id) != null) {
-                // if ($this->bean->operation == 'in') {
-                    // $item->quantity += $this->bean->quantity;
-                // } else {
-                    // $quantity = $item->quantity;
-                    // $quantity -= $this->bean->quantity;
-                    // if ($quantity < 0) {
-                        // $this->bean->quantity = $item->quantity;
-                        // $item->quantity = 0;
-                    // } else {
-                        // $item->quantity = $quantity;
-                    // }
-                // }
-                // $item->save();
-            // }
         } else if (($this->pre_operation != $this->bean->operation)
                     || ($this->pre_quantity != $this->bean->quantity)
                     || ($this->pre_xinventory_id != $this->bean->xinventory_id)) {
