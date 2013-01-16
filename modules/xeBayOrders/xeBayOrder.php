@@ -340,6 +340,111 @@ class xeBayOrder extends Basic {
 		return $ids;
 	}
 
+    function get_valid_orders($ids, $stockout_check, $automerge, $printed_order_included)
+    {
+		$bean = BeanFactory::getBean('xeBayOrders');
+        $orders = array();
+
+		if ($automerge) {
+			$ids = $this->automerge($ids, $printed_order_included);
+		} else {
+			if (empty($ids)) {
+				$ids = $this->get_valid_ids($printed_order_included);
+			}
+		}
+
+		if (empty($ids)) {
+			echo "<b>Not found any qualified orders</b>";
+			sugar_cleanup(true);
+		}
+
+		set_time_limit(60 * 5);
+
+		$nationality = require_once('modules/xeBayOrders/nationality.php');
+
+		$count = 1;
+
+		foreach ($ids as &$id) {
+    	    $bean->retrieve($id);
+			if (empty($printed_order_included)) {
+				if (!empty($bean->print_status))
+					continue;
+			}
+			$bean->load_relationship('xebaytransactions');
+			$transactions = $bean->xebaytransactions->getBeans();
+			if (empty($transactions))
+				continue;
+
+			if (($bean->checked_out != true) && !empty($stockout_check)) {
+				$skip = false;
+				foreach ($transactions as &$transaction) {
+					if ($transaction->stockout_status()) {
+						$bean->handled_status_update($bean->id, 'suspended');
+						$skip = true;;
+					}
+					
+				}
+				if ($skip)
+					continue;
+			}
+
+			if ($bean->checked_out != true) {
+				// update checked out status, avoid duplicate sale record
+				$bean->checked_out_update($bean->id, true);
+			}
+			if ($bean->print_status != true)
+				$bean->print_status_update($bean->id, true);
+
+			$weight = 0.0;
+            $quantity = 0;
+			$order_details = array();
+			foreach ($transactions as &$transaction) {
+				if ($bean->checked_out != true) {
+					// new sale record
+					$transaction->new_sale_record();
+				}
+                $declaration_name = empty($transaction->customs_declaration) ? $transaction->name : $transaction->customs_declaration;
+				$weight += $transaction->weight * $transaction->quantity_purchased;
+                $quantity += $transaction->quantity_purchased;
+				$inventory_name = empty($transaction->xinventory_name) ? $transaction->name : $transaction->xinventory_name;
+
+                $transaction->goods_allocation = 'A0308';
+                $order_details[] = array(
+                    'declaration_name' => $declaration_name,
+                    'inventory_name' => $inventory_name,
+                    'location' => $transaction->goods_allocation,
+                    'quantity' => $transaction->quantity_purchased,
+                );
+			}
+
+            $total_weight = $weight;
+
+            $orders[] = array(
+                'buyer_user_id' => $bean->buyer_user_id,
+                'sales_record_number' => $bean->sales_record_number,
+                'name' => $bean->name,
+                'street1' => $bean->street1,
+                'street2' => $bean->street2,
+                'city' => $bean->city_name,
+                'state' => $bean->state_or_province,
+                'postal_code' => $bean->postal_code,
+                'country' => $bean->country,
+                'country_name' => $bean->country_name,
+                'country_name_cn' => $nationality[$bean->country]['cn'],
+                'phone' => $bean->phone,
+                'value' => "{$bean->subtotal_currency_id} {$bean->subtotal_value}",
+                'total_value' => "{$bean->total_currency_id} {$bean->total_value}",
+                'weight' => $weight,
+                'total_weight' => $total_weight,
+                'quantity' => $quantity,
+                'shipping_service' => $bean->shipping_service,
+                'order_details' => $order_details,
+            );
+		}
+
+        return $orders;
+    }
+
 	function print_orders($ids, $stockout_check = true, $automerge = true, $printed_order_included = true)
 	{
 		$bean = BeanFactory::getBean('xeBayOrders');
@@ -406,7 +511,8 @@ class xeBayOrder extends Basic {
 			$order_blank = "";
 			foreach ($transactions as &$transaction) {
 				if ($transaction_count++ < 4) {
-					$customs_declaration .= $transaction->customs_declaration . "&nbsp;x" . $transaction->quantity_purchased . "<br/>";
+                    $declaration_name = empty($transaction->customs_declaration) ? $transaction->name : $transaction->customs_declaration;
+					$customs_declaration .= $declaration_name . "&nbsp;x" . $transaction->quantity_purchased . "<br/>";
 				}
 				if ($bean->checked_out != true) {
 					// new sale record
@@ -442,7 +548,7 @@ class xeBayOrder extends Basic {
 			$ss->assign("PHONE", $bean->phone);
 
 			$ss->assign("CONTENTS", $customs_declaration);
-			$ss->assign("VALUE", $bean->total_currency_id . "&nbsp" . $bean->total_value);
+			$ss->assign("VALUE", $bean->subtotal_currency_id . "&nbsp" . $bean->subtotal_value);
 			$ss->assign("TOTAL_VALUE", $bean->total_currency_id . "&nbsp" . $bean->total_value);
 			$ss->assign("WEIGHT", $total_weight);
 			$ss->assign("TOTAL_WEIGHT", $total_weight);

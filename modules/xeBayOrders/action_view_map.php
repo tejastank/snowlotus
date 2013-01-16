@@ -37,6 +37,7 @@
 
 
 
-$action_view_map['automerge'] = 'automerge';
-$action_view_map['completeall'] = 'completeall';
 $action_view_map['printall'] = 'printall';
+$action_view_map['sfcexport'] = 'sfcexport';
+$action_view_map['pfcexport'] = 'pfcexport';
+$action_view_map['completeall'] = 'completeall';
