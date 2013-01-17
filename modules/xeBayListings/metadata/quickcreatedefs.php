@@ -46,6 +46,10 @@ $viewdefs['xeBayListings']['QuickCreate'] = array(
 		'default' => array (
 			array (
 				'name',
+                'xinventory_name',
+			),
+			array (
+                'short_title',
 				'assigned_user_name',
 			),
 		),

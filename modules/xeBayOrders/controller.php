@@ -44,7 +44,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once("include/MVC/Controller/SugarController.php");
-require_once('eBayApi/GetOrders.php');
 
 class xeBayOrdersController extends SugarController
 {
@@ -60,42 +59,5 @@ class xeBayOrdersController extends SugarController
 			'OrderStatus' => 'Completed',
 		));
     }
-
-    function action_Import()
-    {
-		$this->view = 'import';
-    }
-
-    function action_ImportFinal()
-	{
-		$numberOfDays = isset($_REQUEST['number_of_days']) ? $_REQUEST['number_of_days'] : 1;
-
-		$orders = new GetOrders;
-
-		$accounts = array();
-
-		if (!empty($_REQUEST['ebay_account_name'])) {
-			$name = $_REQUEST['ebay_account_name'];
-			$bean = BeanFactory::getBean('xeBayAccounts');
-			$accounts = $bean->get_accounts($name);
-		}
-
-		foreach ($accounts as $id => $authToken) {
-			$result = $orders->retrieveOrders(array(
-				'NumberOfDays' => $numberOfDays,
-				// 'OrderStatus' => 'Shipped',
-				'OrderStatus' => 'Completed',
-				'AccountID' => $id,
-				'AuthToken' => $authToken,
-			));
-		}
-
-		if ($result === true)
-			$GLOBALS['message'] = "Get orders from ebay succeed!";
-		else
-			$GLOBALS['message'] = "Get orders from ebay falied!";
-
-		$this->view = 'importfinal';
-	}
 }
 ?>

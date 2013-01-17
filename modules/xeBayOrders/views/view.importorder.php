@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -33,32 +34,59 @@
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
-
-*}
 
-{$INSTRUCTION}
 
-<div class="hr"><hr /></div>
+/**
+ * xeBayOrdersViewImport.php
+ * 
+ * This class overrides SugarView and provides an implementation for the ValidPortalUsername
+ * method used for checking whether or not an existing portal user_name has already been assigned.
+ * We take advantage of the MVC framework to provide this action which is invoked from
+ * a javascript AJAX request.
+ * 
+ * @author xlongfeng
+ * */
+ 
+require_once('include/MVC/View/SugarView.php');
+require_once('eBayApi/GetOrders.php');
 
-<form enctype="multipart/form-data" name="print" method="POST" action="index.php" id="print">
-<input type="hidden" name="module" value="xeBayOrders">
-<input type="hidden" name="action" value="PrintFinal">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-<td>
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-        <tr>
-            <td align="left" scope="row" colspan="4" style="padding-left: 10px;">
-				{$MOD.LBL_PRINT_INSTRUCTION}
-				<input title="{$MOD.LBL_PRINT}"  class="button" type="submit" name="button" value="  {$MOD.LBL_PRINT}  " id="print" onclick="return PrintConfirm()">
-			</td>
-        </tr>
-	</table>
-</td>
-</tr>
-</table>
+class xeBayOrdersViewImportorder extends SugarView 
+{
+	function xeBayOrdersViewImportorder()
+    {
+ 		parent::SugarView();
+	}
 
-<script>
-{$JAVASCRIPT}
-</script>  
-</form>
+    function process()
+    {
+		$numberOfDays = isset($_REQUEST['number_of_days']) ? $_REQUEST['number_of_days'] : 1;
+
+		$orders = new GetOrders;
+
+		$accounts = array();
+
+		if (!empty($_REQUEST['ebay_account_name'])) {
+			$name = $_REQUEST['ebay_account_name'];
+			$bean = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $bean->get_accounts($name);
+		}
+
+		foreach ($accounts as $id => $authToken) {
+			$result = $orders->retrieveOrders(array(
+				'NumberOfDays' => $numberOfDays,
+				// 'OrderStatus' => 'Shipped',
+				'OrderStatus' => 'Completed',
+				'AccountID' => $id,
+				'AuthToken' => $authToken,
+			));
+		}
+ 
+        parent::process();
+        // $this->display();
+	}
+	
+	function display()
+	{
+        header("Location: index.php?module=xeBayOrders&action=index&filter=unhandled");
+	}
+}

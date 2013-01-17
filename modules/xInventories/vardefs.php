@@ -48,7 +48,7 @@ $dictionary['xInventory'] = array(
 	    	'len'=>16,
 			'audited' => true,
 			'default'=>'listed',
-			'comment'=>'value: listed, delisting, delisted',
+			'comment'=>'value: survey, listed, delisting, delisted',
 		),
 		'name_en'=>
 		array(

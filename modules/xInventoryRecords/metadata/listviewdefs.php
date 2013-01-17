@@ -47,7 +47,7 @@ $listViewDefs['xInventoryRecords'] = array(
 	'STOCK_TAKING' => array(
 		'width' => '10',
 		'label' => 'LBL_STOCK_TAKING',
-		'default' => true,
+		'default' => false,
 	),
 	'NAME' => array(
 		'width' => '30', 

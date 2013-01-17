@@ -192,8 +192,7 @@ class xeBayOrdersViewExportAll extends SugarView {
         header("Content-Disposition: attachment; filename={$filename}.xls");
         header('Cache-Control: max-age=0');
         
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objWriter->setOffice2003Compatibility(true);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
 	}
 
@@ -305,8 +304,7 @@ class xeBayOrdersViewExportAll extends SugarView {
         header("Content-Disposition: attachment; filename={$filename}.xls");
         header('Cache-Control: max-age=0');
         
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objWriter->setOffice2003Compatibility(true);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
 	}
 

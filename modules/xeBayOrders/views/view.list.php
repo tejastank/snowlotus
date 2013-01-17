@@ -109,12 +109,47 @@ EOF;
 	{
 		global $mod_strings, $sugar_config;
 
+		$bean = BeanFactory::getBean('xeBayAccounts');
+        $ebay_account_options =  "<select name='ebay_account_name' id='ebay_account_name' title=''>";
+		$resp = $bean->get_list("", "ebay_auth_token<>''", 0, -1, -1, 0, false, array('name'));
+		if ($resp['row_count'] > 0) {
+			$ebay_account_options =  "<select name='ebay_account_name' id='ebay_account_name' title=''>";
+			if ($resp['row_count'] > 1)
+				$ebay_account_options .= "<option value='All'>All</option>";
+			foreach($resp['list'] as &$account) {
+				$name = $account->name;
+				$ebay_account_options .= "<option value='$name'>$name</option>";
+			}
+		}
+        $ebay_account_options .=  "</select>";
+
 		$express_carrier_options = get_select_options_with_id(getExpressCarrierDropDown(), isset($sugar_config['ebay_express_carrier']) ? $sugar_config['ebay_express_carrier'] : 'sfc');
 
 		$shortcuts_unhandled = <<<EOF
 <script>
 var OO = {};
 OO.get = YAHOO.util.Dom.get;
+OO.importorderDialog = false;	
+OO.toggle_importorder = function (){
+	var sd = OO.get("importorder_dialog");
+	if(!OO.importorderDialog){	
+		OO.importorderDialog = new YAHOO.widget.Dialog("importorder_dialog",{
+			  	fixedcenter: true,
+			  	draggable: false,
+			  	visible : false, 
+			 	modal : true,
+			  	close: true
+		});
+		var listeners = new YAHOO.util.KeyListener(document, { keys : 27 }, {fn: function() { OO.importorderDialog.cancel();} } );
+		OO.importorderDialog.cfg.queueProperty("keylisteners", listeners);
+	}
+	OO.importorderDialog.cancelEvent.subscribe(function(e, a, o){
+		OO.get("form_importorder").reset();
+	});
+	sd.style.display = "block";	
+	OO.importorderDialog.render();
+	OO.importorderDialog.show();
+}
 OO.printallDialog = false;	
 OO.toggle_printall = function (){
 	var sd = OO.get("printall_dialog");
@@ -179,6 +214,44 @@ OO.toggle_completeall = function (){
 	OO.completeallDialog.show();
 }
 </script> 
+<div id="importorder_dialog" style="width: 450px; display: none;">
+	<div class="hd">{$mod_strings['LBL_IMPORT_TITLE']}</div>
+	<div class="bd">
+	<form name="importorder" id="form_importorder" method="POST" action="index.php?module=xeBayOrders&action=importorder">
+		<table class='edit view tabForm'>
+			<tr>
+				<td scope="row" valign="top" width="55%">
+					{$mod_strings['LBL_EBAY_ACCOUNT']}
+				</td>
+				<td width="45%">	
+					<input type="hidden" name="ebay_account_name" value="">{$ebay_account_options}
+				</td>
+			</tr>
+			<tr>
+				<td scope="row" valign="top">
+					{$mod_strings['LBL_NUMBER_OF_DAYS']}
+				</td>
+				<td>	
+					<input type="hidden" name="number_of_days" value="">
+			        <select name='number_of_days' id='number_of_days' title=''>
+				        <option value='1'>1</option>
+				        <option value='2' selected>2</option>
+				        <option value='3'>3</option>
+				        <option value='5'>5</option>
+				        <option value='7'>7</option>
+				        <option value='15'>15</option>
+				        <option value='30'>30</option>
+			        </select>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<div style="text-align: right;">
+		<button id="btn-save-importorderDialog" class="button" type="button" onclick="OO.get('form_importorder').submit()">{$mod_strings['LBL_APPLY_BUTTON']}</button>&nbsp;
+		<button id="btn-cancel-importorderDialog" class="button" type="button" onclick="OO.importorderDialog.cancel()">{$mod_strings['LBL_CANCEL_BUTTON']}</button>&nbsp;
+	</div>
+	</div>
+</div>
 <div id="printall_dialog" style="width: 450px; display: none;">
 	<div class="hd">{$mod_strings['LBL_PRINTALL_TITLE']}</div>
 	<div class="bd">
@@ -290,6 +363,8 @@ OO.toggle_completeall = function (){
 	</div>
 	</div>
 </div>
+&nbsp;&nbsp;
+<input title="{$mod_strings['LBL_IMPORT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_IMPORT']}" id="import_order" onclick="OO.toggle_importorder()">
 &nbsp;&nbsp;
 <input title="{$mod_strings['LBL_PRINT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_PRINT_ALL']}" id="print_all" onclick="OO.toggle_printall()">
 &nbsp;&nbsp;

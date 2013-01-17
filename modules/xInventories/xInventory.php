@@ -116,6 +116,7 @@ function getInventoryStrategyDropDown()
 {
 	global $mod_strings;
     $list = array(
+		'survey' => 'survey',
 		'listed' => 'listed',
 		'delisting' => 'delisting',
 		'delisted' => 'delisted',

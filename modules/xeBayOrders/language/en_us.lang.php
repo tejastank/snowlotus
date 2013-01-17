@@ -79,7 +79,7 @@ $mod_strings = array (
   'LBL_NEW_FORM_TITLE' => 'New Order',
   'LBL_XEBAYORDERS_SUBPANEL_TITLE' => 'eBayOrder',
   'LBL_EBAY_ACCOUNT' => 'eBay Account',
-  'LBL_NUMBER_OF_DAYS' => 'The number of days in the past to search for orders',
+  'LBL_NUMBER_OF_DAYS' => 'The number of days in the past',
   'LBL_IMPORT' => 'Import',
   'LBL_AUTO_MERGE' => 'Auto Merge',
   'LBL_COMPLERE_ALL' => 'Complete All',
@@ -126,4 +126,5 @@ $mod_strings = array (
   'LBL_EXPORTALL_TITLE' => 'Export Orders',
   'LBL_EXPORT_ALL' => 'Export All',
   'LBL_EXPRESS_CARRIER' => 'Express Carrier',
+  'LBL_IMPORT_TITLE' => 'Import Orders',
 );

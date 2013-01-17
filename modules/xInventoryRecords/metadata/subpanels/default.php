@@ -49,6 +49,10 @@ $subpanel_layout = array(
 	 		'vname' => 'LBL_INVENTORY_MANAGEMENT',
 	 		'width' => '10%',
 		),
+		'stock_taking' => array(
+	 		'vname' => 'LBL_STOCK_TAKING',
+	 		'width' => '10%',
+		),
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',

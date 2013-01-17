@@ -34,8 +34,6 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once('eBayApi/CompleteSale.php');
-
 class xeBayOrder extends Basic {
 	var $new_schema = true;
 	var $module_dir = 'xeBayOrders';
@@ -311,8 +309,8 @@ class xeBayOrder extends Basic {
 						$transaction->xebayorder_id = $order->id;
 						$transaction->save();
 					}
-					$order_matched->mark_deleted($orders[$transaction_key]->id);
 					$order_matched->mark_merged($orders[$transaction_key]->id);
+					$order_matched->mark_deleted($orders[$transaction_key]->id);
 				}
 			}
 
@@ -575,6 +573,7 @@ class xeBayOrder extends Basic {
 
 	function end_of_sale()
 	{
+        require_once('eBayApi/CompleteSale.php');
 		if (empty($this->complete_sale))
 			$this->complete_sale = new CompleteSale;
 
@@ -647,11 +646,11 @@ function getShippingServiceDropDown()
         'RM1R' => '英国邮政挂号小包',
         'CNAM' => '中国邮政平邮小包',
         'CNRAM' => '中国邮政挂号小包',
-        'SGAM' => '新加坡邮政平邮小包',
+        'SGAM' => '新加坡邮政平邮小包(只限三态速递)',
         'SGRAM' => '新加坡邮政挂号小包',
-        'WWAM' => '中国邮政外围平邮小包',
-        'WWRAM' => '中国邮政外围挂号小包',
-        'BPAM' => '比利时邮政平邮小包',
+        'WWAM' => '中国邮政外围平邮小包(只限三态速递)',
+        'WWRAM' => '中国邮政外围挂号小包(只限三态速递)',
+        'BPAM' => '比利时邮政平邮小包(只限三态速递)',
     );
 
     return $list;

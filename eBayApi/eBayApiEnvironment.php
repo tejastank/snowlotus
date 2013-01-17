@@ -3,7 +3,6 @@
  * sources
  */
 require_once 'setincludepath.php';
-require_once 'EbatNs_AuthenticationHelper.php';
 require_once 'EbatNs_Environment.php';
 
 /**
@@ -41,7 +40,6 @@ class eBayApiEnvironment extends EbatNs_Environment
         $this->session->setSiteId($this->site_id);
 		$this->setup();
         $this->proxy = new EbatNs_ServiceProxy($this->session);
-        $this->authentication_helper = new EbatNs_AuthenticationHelper($this->proxy);
         
         if ($this->logger)
 	        $this->proxy->attachLogger($this->logger);
@@ -49,6 +47,9 @@ class eBayApiEnvironment extends EbatNs_Environment
 
 	public function getSignInURL($sessionId)
 	{
+        require_once ('EbatNs_AuthenticationHelper.php');
+        if (empty($this->authentication_helper))
+            $this->authentication_helper = new EbatNs_AuthenticationHelper($this->proxy);
         return ($this->authentication_helper->GetEbaySignInUrl($this->session->getRuName()) . "&SessID={$sessionId}");
 	}
 }
