@@ -34,62 +34,82 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once ('modules/DynamicFields/FieldCases.php') ;
 
-class Bug48826Test extends Sugar_PHPUnit_Framework_TestCase
+require_once 'modules/EmailAddresses/EmailAddress.php';
+
+class SugarTestEmailAddressUtilities
 {
-	public function setUp()
-	{
-        $this->markTestSkipped('Skipping a broken unit test, dev will work on fixing this.');
-	}
-	
-	public function tearDown()
-	{
-	}
-    
-    public function provider()
-    {
-        $types = array(
-            'char','varchar','varchar2','text','textarea','double','float','decimal','int','date','bool','relate',
-            'enum','multienum','radioenum','email','url','iframe','html','phone','currency','parent','parent_type',
-            'currency_id','address','encrypt','id','datetimecombo','datetime','image','_other_'
-        );
-        $provider_array = array();
-        foreach ( $types as $type )
-        {
-            $provider_array[] = array($type, array('name' => 'equal($dd1_c,&quot;Analyst&quot;)'), 'equal($dd1_c,&quot;Analyst&quot;)');
-            $provider_array[] = array($type, array('dependency' => 'equal($dd1_c,&quot;Analyst&quot;)'), 'equal($dd1_c,"Analyst")');
-            $provider_array[] = array($type, array('dependency' => 'equal($dd1_c,"Analyst")'), 'equal($dd1_c,"Analyst")');
-            $provider_array[] = array($type, array('formula' => 'equal($dd1_c,&quot;Analyst&quot;)'), 'equal($dd1_c,"Analyst")');
-            $provider_array[] = array($type, array('formula' => 'equal($dd1_c,"Analyst")'), 'equal($dd1_c,"Analyst")');
-        }
-        
-        return $provider_array;
-    }
-    
-    /**
-     * @dataProvider provider
-     */
-    public function testPopulateFromPost($type, $request_data, $expected)
-    {
-        $tested_key = null;
-        foreach ( $request_data as $_key => $_data )
-        {
-            $_REQUEST[$_key] = $_data;
-            $tested_key = $_key;
-        }
-        
-        $field = get_widget($type) ;
-        $field->populateFromPost();
+    private static $createdAddresses = array();
 
-        if ( isset($field->$tested_key) )
+    private function __construct() {}
+
+    public static function createEmailAddress($address = null)
+    {
+        if (null === $address)
         {
-            $this->assertEquals($expected, $field->$tested_key);
-        } 
-        else 
-        {
-            $this->markTestSkipped();
+            $address = 'address-' . mt_rand() . '@example.com';
         }
+
+        $email_address = new EmailAddress();
+        $email_address->email_address = $address;
+        $email_address->save();
+
+        self::$createdAddresses[] = $email_address;
+        return $email_address;
+    }
+
+    /**
+     * Add specified email address to the person
+     *
+     * @param Person $person
+     * @param string|EmailAddress $address
+     * @param array $additional_values
+     * @return boolean|EmailAddress
+     * @throws InvalidArgumentException
+     */
+    public static function addAddressToPerson(Person $person, $address, array $additional_values = array())
+    {
+        if (is_string($address))
+        {
+            $address = self::createEmailAddress($address);
+        }
+
+        if (!$address instanceof EmailAddress)
+        {
+            throw new InvalidArgumentException(
+                'Address must be a string or an instance of EmailAddress, '
+                    . gettype($address) . ' given'
+            );
+        }
+
+        if (!$person->load_relationship('email_addresses'))
+        {
+            return false;
+        }
+
+        // create relation between user and email address
+        $person->email_addresses->add(array($address), $additional_values);
+        $GLOBALS['db']->commit();
+        return $address;
+    }
+
+    public static function removeAllCreatedAddresses()
+    {
+        $ids = self::getCreatedEmailAddressIds();
+        if (count($ids) > 0)
+        {
+            $GLOBALS['db']->query('DELETE FROM email_addresses WHERE id IN (\'' . implode("', '", $ids) . '\')');
+        }
+        self::$createdAddresses = array();
+    }
+
+    public static function getCreatedEmailAddressIds()
+    {
+        $ids = array();
+        foreach (self::$createdAddresses as $address)
+        {
+            $ids[] = $address->id;
+        }
+        return $ids;
     }
 }
-?>

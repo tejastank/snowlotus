@@ -35,55 +35,70 @@
  ********************************************************************************/
 
 
-class Bug44515 extends Sugar_PHPUnit_Framework_TestCase
-{
-   
-    /**
-     * @group Bug44515
-     */
-    var $customDir = "custom/modules/ProductTemplates/formulas";
+require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
+class Bugs39819_39820Test extends Sugar_PHPUnit_Framework_TestCase
+{
+    /**
+     * @ticket 39819
+     * @ticket 39820
+     */
     public function setUp()
     {
+        if (!is_dir("custom/modules/Accounts/language")) {
+            mkdir("custom/modules/Accounts/language", 0700, TRUE); // Creating nested directories at a glance
+        }
+    }
+    
+    public function testLoadEnHelp()
+    {
+        // en_us help on a standard module.
+        file_put_contents("modules/Accounts/language/en_us.help.DetailView.html", "<h1>ENBugs39819-39820</h1>");
         
-        if (!is_dir($this->customDir))
-          mkdir($this->customDir, 0700, TRUE); // Creating nested directories at a glance
+        $_SERVER['HTTP_HOST'] = "";
+        $_SERVER['SCRIPT_NAME'] = "";
+        $_SERVER['QUERY_STRING'] = "";
 
-        file_put_contents($this->customDir . "/customformula1.php", "<?php\nclass Customformula1 {\n}\n?>");
-        file_put_contents($this->customDir . "/customformula2.php", "<?php\nclass Customformula2 {\n}\n?>");
+        $_REQUEST['view'] = 'documentation';
+        $_REQUEST['lang'] = 'en_us';
+        $_REQUEST['help_module'] = 'Accounts';
+        $_REQUEST['help_action'] = 'DetailView';
+
+        ob_start();
+        require "modules/Administration/SupportPortal.php";
+
+        $tStr = ob_get_contents();
+        ob_end_clean();
+        
+        unlink("modules/Accounts/language/en_us.help.DetailView.html");
+        
+        // I expect to get the en_us normal help file....
+        $this->assertRegExp("/.*ENBugs39819\-39820.*/", $tStr);
     }
-
-
-    public function tearDown()
+    
+    public function testLoadCustomItHelp()
     {
-        unset($GLOBALS['price_formulas']['Customformula1']);
-        unset($GLOBALS['price_formulas']['Customformula2']);
-        unlink($this->customDir . "/customformula1.php");
-        unlink($this->customDir . "/customformula2.php");
-        rmdir($this->customDir);
-    }
+        // Custom help (NOT en_us) on a standard module.
+        file_put_contents("custom/modules/Accounts/language/it_it.help.DetailView.html", "<h1>Bugs39819-39820</h1>");
 
-    public function testLoadCustomFormulas()
-    {
-      require_once "modules/ProductTemplates/Formulas.php";
+        $_SERVER['HTTP_HOST'] = "";
+        $_SERVER['SCRIPT_NAME'] = "";
+        $_SERVER['QUERY_STRING'] = "";
 
-      // At this point I expect to have 7 formulas (5 standard and 2 custom).
-      $expectedIndexes = 7;
-      $this->assertEquals($expectedIndexes, count($GLOBALS['price_formulas']));
+        $_REQUEST['view'] = 'documentation';
+        $_REQUEST['lang'] = 'it_it';
+        $_REQUEST['help_module'] = 'Accounts';
+        $_REQUEST['help_action'] = 'DetailView';
+        
+        ob_start();
+        require "modules/Administration/SupportPortal.php";
 
-      // Check if standard formulas are still in the array
-      $this->assertArrayHasKey("Fixed", $GLOBALS['price_formulas']);
-      $this->assertArrayHasKey("ProfitMargin", $GLOBALS['price_formulas']);
-      $this->assertArrayHasKey("PercentageMarkup", $GLOBALS['price_formulas']);
-      $this->assertArrayHasKey("PercentageDiscount", $GLOBALS['price_formulas']);
-      $this->assertArrayHasKey("IsList", $GLOBALS['price_formulas']);
-      // Check if custom formulas are in the array
-      $this->assertArrayHasKey("Customformula1", $GLOBALS['price_formulas']);
-      $this->assertArrayHasKey("Customformula2", $GLOBALS['price_formulas']);
+        $tStr = ob_get_contents();
+        ob_end_clean();
 
-      // Check if CustomFormula1 point to the right file (/custom/modules/ProductTemplates/formulas/customformula1.php)
-      $_customFormula1FileName = "custom/modules/ProductTemplates/formulas/customformula1.php";
-      $this->assertEquals($_customFormula1FileName, $GLOBALS['price_formulas']['Customformula1']);
+        unlink("custom/modules/Accounts/language/it_it.help.DetailView.html");
+        
+        // I expect to get the it_it custom help....
+        $this->assertRegExp("/.*Bugs39819\-39820.*/", $tStr);
     }
 }
-

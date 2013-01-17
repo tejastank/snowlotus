@@ -34,49 +34,63 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
- 
-require_once("modules/ModuleBuilder/parsers/views/AbstractMetaDataParser.php");
-require_once("modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php");
 
-class Bug42085Test extends Sugar_PHPUnit_Framework_TestCase
+require_once 'modules/InboundEmail/InboundEmail.php';
+class AttachmentHeaderTest extends Sugar_PHPUnit_Framework_TestCase
 {
-	var $meeting;
-	//var $listLayoutMetaDataParser;
-	
-	public function setUp()
-	{
-	    $GLOBALS['current_user'] = SugarTestUserUtilities::createAnonymousUser();
-		$this->meeting = SugarTestMeetingUtilities::createMeeting();	
-		//$this->listLayoutMetaDataParser = new ListLayoutMetaDataParser(MB_LISTVIEW, 'Meetings');
-	}
-	
-	public function tearDown()
-	{
-		SugarTestMeetingUtilities::removeAllCreatedMeetings();
-		SugarTestUserUtilities::removeAllCreatedAnonymousUsers();
-		unset($GLOBALS['current_user']);
-	}
-	
-    public function testHideMeetingType()
+    protected $ie = null;
+
+    public function setUp()
     {
-    	$validDef = $this->meeting->field_defs['type'];
-		$this->assertFalse(AbstractMetaDataParser::validField($validDef, 'wirelesseditview'));
-		$this->assertFalse(AbstractMetaDataParser::validField($validDef, 'wirelessdetailview'));
+        $this->ie = new InboundEmail();
     }
 
-    public function testHideMeetingPassword()
+    /**
+     * @param $param -> "dparameters" | "parameters"
+     * @param $a -> attribute
+     * @param $v -> value
+     * @return stdClass:  $obj->attribute = $a, $obj->value = $v
+     */
+    protected function _convertToObject($param,$a,$v)
     {
-    	$validDef = $this->meeting->field_defs['password'];
-		$this->assertFalse(AbstractMetaDataParser::validField($validDef, 'wirelesseditview'));
-		$this->assertFalse(AbstractMetaDataParser::validField($validDef, 'wirelessdetailview'));
-    } 
+        $obj = new stdClass;
+        $obj->attribute = $a;
+        $obj->value = $v;
 
-    public function testHideMeetingDisplayedURL()
+        $outer = new stdClass;
+        $outer->parameters = ($param == 'parameters') ? array($obj) : array();
+        $outer->isparameters = !empty($outer->parameters);
+        $outer->dparameters = ($param == 'dparameters') ? array($obj) : array();
+        $outer->isdparameters = !empty($outer->dparameters);
+
+        return $outer;
+    }
+
+    public function contentParameterProvider()
     {
-    	$validDef = $this->meeting->field_defs['displayed_url'];
-		$this->assertFalse(AbstractMetaDataParser::validField($validDef, 'wirelesseditview'));
-		$this->assertFalse(AbstractMetaDataParser::validField($validDef, 'wirelessdetailview'));
-    }       
+        return array(
+            // pretty standard dparameters
+            array(
+                $this->_convertToObject('dparameters','filename','test.txt'),
+                'test.txt'
+            ),
+
+            // how about a regular parameter set
+            array(
+                $this->_convertToObject('parameters','name','bonus.txt'),
+                'bonus.txt'
+            )
+        );
+    }
+
+    /**
+     * @group bug57309
+     * @dataProvider contentParameterProvider
+     * @param array $in - the part parameters -> will convert to object in test method
+     * @param string $expected - the name digested from the parameters
+     */
+    public function testRetrieveAttachmentNameFromStructure($in, $expected)
+    {
+        $this->assertEquals($expected, $this->ie->retrieveAttachmentNameFromStructure($in),  'We did not get the attachmentName');
+    }
 }
-
-?>

@@ -265,7 +265,7 @@ function seamless_login($session){
 		if(!validate_authenticated($session)){
 			return 0;
 		}
-		$_SESSION['seamless_login'] = true;
+		
 		return 1;
 }
 
@@ -1178,6 +1178,11 @@ function get_relationships($session, $module_name, $module_id, $related_module, 
 
 	$sql = "SELECT {$related_mod->table_name}.id FROM {$related_mod->table_name} ";
 
+
+    if (isset($related_mod->custom_fields)) {
+        $customJoin = $related_mod->custom_fields->getJOIN();
+        $sql .= $customJoin ? $customJoin['join'] : '';
+    }
 
 	$sql .= " WHERE {$related_mod->table_name}.id IN ({$in}) ";
 

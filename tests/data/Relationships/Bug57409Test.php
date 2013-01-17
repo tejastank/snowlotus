@@ -35,70 +35,60 @@
  ********************************************************************************/
 
 
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
-
-class Bugs39819_39820 extends Sugar_PHPUnit_Framework_TestCase
+/**
+ * Bug #57409
+ * It takes 1.4 min to load Contact record edit view
+ *
+ * @author mgusev@sugarcrm.com
+ * @ticked 57409
+ */
+class Bug57409Test extends Sugar_PHPUnit_Framework_TestCase
 {
     /**
-     * @ticket 39819
-     * @ticket 39820
+     * @var Contact
      */
+    protected $contact = null;
+
     public function setUp()
     {
-        if (!is_dir("custom/modules/Accounts/language")) {
-            mkdir("custom/modules/Accounts/language", 0700, TRUE); // Creating nested directories at a glance
+        SugarTestHelper::setUp('beanFiles');
+        SugarTestHelper::setUp('beanList');
+        SugarTestHelper::setUp('current_user');
+
+        SugarTestOpportunityUtilities::createOpportunity();
+        $opp1 = SugarTestOpportunityUtilities::createOpportunity();
+
+        $this->contact = SugarTestContactUtilities::createContact();
+        $this->contact->load_relationship('opportunities');
+        $this->contact->opportunities->add($opp1->id);
+    }
+
+    public function tearDown()
+    {
+        SugarTestOpportunityUtilities::removeAllCreatedOpportunities();
+        SugarTestContactUtilities::removeAllCreatedContacts();
+
+        SugarTestHelper::tearDown();
+    }
+
+    /**
+     * Test asserts that query returns correct number of records
+     *
+     * @group 57409
+     * @return void
+     */
+    public function testGetQuery()
+    {
+        $query = $this->contact->opportunities->relationship->getQuery($this->contact->opportunities, array(
+            'enforce_teams' => true
+        ));
+
+        $actual = 0;
+        $result = $GLOBALS['db']->query($query);
+        while ($GLOBALS['db']->fetchByAssoc($result, FALSE)) {
+            $actual++;
         }
-    }
-    
-    public function testLoadEnHelp()
-    {
-        // en_us help on a standard module.
-        file_put_contents("modules/Accounts/language/en_us.help.DetailView.html", "<h1>ENBugs39819-39820</h1>");
-        
-        $_SERVER['HTTP_HOST'] = "";
-        $_SERVER['SCRIPT_NAME'] = "";
-        $_SERVER['QUERY_STRING'] = "";
 
-        $_REQUEST['view'] = 'documentation';
-        $_REQUEST['lang'] = 'en_us';
-        $_REQUEST['help_module'] = 'Accounts';
-        $_REQUEST['help_action'] = 'DetailView';
-
-        ob_start();
-        require "modules/Administration/SupportPortal.php";
-
-        $tStr = ob_get_contents();
-        ob_end_clean();
-        
-        unlink("modules/Accounts/language/en_us.help.DetailView.html");
-        
-        // I expect to get the en_us normal help file....
-        $this->assertRegExp("/.*ENBugs39819\-39820.*/", $tStr);
-    }
-    
-    public function testLoadCustomItHelp()
-    {
-        // Custom help (NOT en_us) on a standard module.
-        file_put_contents("custom/modules/Accounts/language/it_it.help.DetailView.html", "<h1>Bugs39819-39820</h1>");
-
-        $_SERVER['HTTP_HOST'] = "";
-        $_SERVER['SCRIPT_NAME'] = "";
-        $_SERVER['QUERY_STRING'] = "";
-
-        $_REQUEST['view'] = 'documentation';
-        $_REQUEST['lang'] = 'it_it';
-        $_REQUEST['help_module'] = 'Accounts';
-        $_REQUEST['help_action'] = 'DetailView';
-        
-        ob_start();
-        require "modules/Administration/SupportPortal.php";
-
-        $tStr = ob_get_contents();
-        ob_end_clean();
-
-        unlink("custom/modules/Accounts/language/it_it.help.DetailView.html");
-        
-        // I expect to get the it_it custom help....
-        $this->assertRegExp("/.*Bugs39819\-39820.*/", $tStr);
+        $this->assertEquals(1, $actual, 'Number of fetched opportunities is incorrect');
     }
 }

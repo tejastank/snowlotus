@@ -41,7 +41,7 @@ require_once('modules/DynamicFields/FieldCases.php');
  * @group DynamicFieldsCurrencyTests
  */
 
-class DynamicFieldsCurrencyTests extends Sugar_PHPUnit_Framework_TestCase
+class DynamicFieldsCurrencyTest extends Sugar_PHPUnit_Framework_TestCase
 {
     private $_modulename = 'Accounts';
     private $_originaldbType = '';
@@ -85,31 +85,12 @@ class DynamicFieldsCurrencyTests extends Sugar_PHPUnit_Framework_TestCase
     
     public function testCurrencyDbType()
     {
-        // oci8 - number
-        $GLOBALS['db']->dbType = 'oci8';
+        $type = 'decimal';
         $this->field->len = NULL;
         $dbTypeString = $this->field->get_db_type();
-        $this->assertRegExp('/number *\(/', $dbTypeString);
+        $this->assertRegExp('/' . $type . ' *\(/', $dbTypeString);
         $dbTypeString = $this->field->get_db_type();
         $this->field->len = 20;
-        $this->assertRegExp('/number *\(/', $dbTypeString);
-        
-        // mssql - decimal
-        $GLOBALS['db']->dbType = 'mssql';
-        $this->field->len = NULL;
-        $dbTypeString = $this->field->get_db_type();
-        $this->assertRegExp('/decimal *\(/', $dbTypeString);
-        $this->field->len = 20;
-        $dbTypeString = $this->field->get_db_type();
-        $this->assertRegExp('/decimal *\(/', $dbTypeString);
-        
-        // default - decimal
-        $GLOBALS['db']->dbType = 'mssql';
-        $this->field->len = NULL;
-        $dbTypeString = $this->field->get_db_type();
-        $this->assertRegExp('/decimal *\(/', $dbTypeString);
-        $this->field->len = 20;
-        $dbTypeString = $this->field->get_db_type();
-        $this->assertRegExp('/decimal *\(/', $dbTypeString);
+        $this->assertRegExp('/' . $type . ' *\(/', $dbTypeString);
     }
 }

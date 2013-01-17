@@ -88,7 +88,7 @@ class SugarCleaner
         $config = HTMLPurifier_Config::createDefault();
 
         if(!is_dir(sugar_cached("htmlclean"))) {
-            create_cache_directory("htmlclean");
+            create_cache_directory("htmlclean/");
         }
         $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
         $config->set('Core.Encoding', 'UTF-8');
@@ -100,20 +100,23 @@ class SugarCleaner
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
         $config->set('AutoFormat.RemoveEmpty', false);
+        $config->set('Cache.SerializerPermissions', 0775);
         // for style
         //$config->set('Filter.ExtractStyleBlocks', true);
         $config->set('Filter.ExtractStyleBlocks.TidyImpl', false); // can't use csstidy, GPL
-        // for object
-        $config->set('HTML.SafeObject', true);
-        // for embed
-        $config->set('HTML.SafeEmbed', true);
+        if(!empty($GLOBALS['sugar_config']['html_allow_objects'])) {
+            // for object
+            $config->set('HTML.SafeObject', true);
+            // for embed
+            $config->set('HTML.SafeEmbed', true);
+        }
         $config->set('Output.FlashCompat', true);
         // for iframe and xmp
         $config->set('Filter.Custom',  array(new HTMLPurifier_Filter_Xmp()));
         // for link
         $config->set('HTML.DefinitionID', 'Sugar HTML Def');
         $config->set('HTML.DefinitionRev', 2);
-        $config->set('Cache.DefinitionImpl', null); // TODO: remove this later!
+        $config->set('Cache.SerializerPath', sugar_cached('htmlclean/'));
         // IDs are namespaced
         $config->set('Attr.EnableID', true);
         $config->set('Attr.IDPrefix', 'sugar_text_');

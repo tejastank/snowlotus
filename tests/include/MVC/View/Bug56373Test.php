@@ -1,4 +1,4 @@
-<?php
+<?php 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +34,42 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+ 
+require_once('include/MVC/View/SugarView.php');
 
-class Bug44515 extends Sugar_PHPUnit_Framework_TestCase
+class Bug56373Test extends Sugar_PHPUnit_Framework_TestCase
 {
-   
-    /**
-     * @group Bug44515
+
+
+	// Currently, getBreadCrumbList in BreadCrumbStack.php limits you to 10
+	// Also, the Constructor in BreadCrumbStack.php limits it to 10 too.
+    /*
+     * @group bug56373
      */
-    public function setUp()
-    {
-        
+    public function testProcessRecentRecordsForHTML() {
+        $view = new Bug56373TestSugarViewMock();
+
+        $history = array(
+                        array('item_summary' => '&lt;img src=x alert(true)', 'module_name'=>'Accounts'),
+                        array('item_summary' => '&lt;script&gt;alert(hi)&lt;/script&gt;', 'module_name'=>'Accounts'),
+
+
+        );
+        $out = $view->processRecentRecords($history);
+        foreach($out as $key => $row) {
+            $this->assertEquals($row['item_summary'], $history[$key]['item_summary']);
+           $this->assertNotRegExp('/[<>]/',$row['item_summary_short']);
+           $this->assertContains($history[$key]['item_summary'], $row['image']);
+        }
+
     }
 
-
-    public function tearDown()
-    {
-    }
-
-    public function testLoadCustomFormulas()
-    {
-      require_once "modules/ProductTemplates/Formulas.php";
-
-      // At this point I expect to have only the 5 standard formulas
-      $expectedIndexes = 5;
-      $this->assertEquals($expectedIndexes, count($GLOBALS['price_formulas']));
-    }
 }
 
+class Bug56373TestSugarViewMock extends SugarView
+{
+    public function processRecentRecords($history)
+    {
+        return parent::processRecentRecords($history);
+    }
+}

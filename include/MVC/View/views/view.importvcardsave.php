@@ -46,8 +46,8 @@ require_once('include/vCard.php');
 
 class ViewImportvcardsave extends SugarView
 {
-	var $type = 'detail';
-    
+	var $type = 'save';
+
     public function __construct()
     {
  		parent::SugarView();

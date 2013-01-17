@@ -1367,7 +1367,7 @@ $app_strings = array (
     'LBL_EMAIL_DELETE_ERROR_DESC'           => 'You do not have access to this area. Contact your site administrator to obtain access.',
     'LBL_EMAIL_ERROR_DUPE_FOLDER_NAME'      => 'Sugar Folder names must be unique.',
     'LBL_EMAIL_ERROR_EMPTY'                 => 'Please enter some search criteria.',
-    'LBL_EMAIL_ERROR_GENERAL_TITLE'         => 'An error has occured',
+    'LBL_EMAIL_ERROR_GENERAL_TITLE'         => 'An error has occurred',
     'LBL_EMAIL_ERROR_LIST_NAME'             => 'An email list with that name already exists',
     'LBL_EMAIL_ERROR_MESSAGE_DELETED'       => 'Message Removed from Server',
     'LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED'  => 'Either message Removed from Server or moved to a different folder',
@@ -1380,7 +1380,7 @@ $app_strings = array (
     'LBL_EMAIL_ERROR_NO_IMAP_FOLDER_RENAME' => 'IMAP folder renaming is not supported at this time.',
     'LBL_EMAIL_ERROR_SERVER'                => 'A mail server address is required.',
     'LBL_EMAIL_ERROR_SAVE_ACCOUNT'          => 'The mail account may not have been saved.',
-    'LBL_EMAIL_ERROR_TIMEOUT'               => 'An error has occured while communicating with the mail server.',
+    'LBL_EMAIL_ERROR_TIMEOUT'               => 'An error has occurred while communicating with the mail server.',
     'LBL_EMAIL_ERROR_USER'                  => 'A login name is required.',
     'LBL_EMAIL_ERROR_PASSWORD'              => 'A password is required.',
     'LBL_EMAIL_ERROR_PORT'                  => 'A mail server port is required.',
@@ -1641,7 +1641,7 @@ $app_strings = array (
     'LBL_INVALID_FILE_EXTENSION' => 'Invalid File Extension',
 
 
-    'ERR_AJAX_LOAD'     => 'An error has occured:',
+    'ERR_AJAX_LOAD'     => 'An error has occurred:',
     'ERR_AJAX_LOAD_FAILURE'     => 'There was an error processing your request, please try again at a later time.',
     'ERR_AJAX_LOAD_FOOTER' => 'If this error persists, please have your administrator disable Ajax for this module',
     'ERR_CREATING_FIELDS' => 'Error filling in additional detail fields: ',
@@ -2206,7 +2206,7 @@ $app_strings = array (
     'LBL_RELATED_CAMPAIGN' =>'Related campaign',
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
-    'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only image type attachment can be embedded',
+    'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
     'LBL_REMOVE' => 'Remove',
     'LBL_TRAINING' => 'Support',
     'ERR_DATABASE_CONN_DROPPED'=>'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
@@ -2497,6 +2497,7 @@ $app_strings = array (
     'UPLOAD_ERROR_TEXT_SIZEINFO' => 'ERROR: There was an error during upload. Error code: {0} - {1}. The upload_maxsize is {2} ',
     'UPLOAD_ERROR_HOME_TEXT'     => 'ERROR: There was an error during your upload, please contact an administrator for help.',
     'UPLOAD_MAXIMUM_EXCEEDED'    => 'Size of Upload ({0} bytes) Exceeded Allowed Maximum: {1} bytes',
+    'UPLOAD_REQUEST_ERROR'    => 'An error has occured. Please refresh your page and try again.',
 
 
     //508 used Access Keys
@@ -3260,7 +3261,7 @@ $app_list_strings['kbdocument_status_dom'] = array (
     'Sugar'=>'Sugar',
     'WebEx'=>'WebEx',
     'GoToMeeting'=>'GoToMeeting',
-    'LotusLive'=>'LotusLive',
+    'IBMSmartCloud'=>'IBM SmartCloud',
     'Google' => 'Google',
     'Box' => 'Box.net',
     'Facebook'=>'Facebook',

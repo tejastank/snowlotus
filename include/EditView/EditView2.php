@@ -149,7 +149,7 @@ class EditView
                 die();
             }
 
-            require_once("modules/$this->module/metadata/editviewdefs.php");
+            require("modules/$this->module/metadata/editviewdefs.php");
         }
 
         $this->defs = $viewdefs[$this->module][$this->view];
@@ -428,6 +428,11 @@ class EditView
             if (!empty($this->focus->assigned_user_id))
             {
                 $this->focus->assigned_user_name = get_assigned_user_name($this->focus->assigned_user_id);
+            }
+
+            if (!empty($this->focus->job) && $this->focus->job_function == '')
+            {
+                $this->focus->job_function = $this->focus->job;
             }
 
             foreach ($this->focus->toArray() as $name => $value)

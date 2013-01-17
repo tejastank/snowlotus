@@ -34,53 +34,56 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
- 
-class QuickSearchTest extends Sugar_PHPUnit_Framework_OutputTestCase
+
+require_once('modules/Import/sources/ImportFile.php');
+
+/**
+ * Test checks Import when not using UTF-8 encoding
+ * 
+ * @ticket 58207
+ * @author avucinic
+ *
+ */
+class Bug58207Test extends Sugar_PHPUnit_Framework_TestCase
 {
-	private $quickSearch;
-	
-	public function setUp() 
+
+    private $_file;
+    private $_sugarConfig;
+
+    public function setUp()
     {
-        SugarTestHelper::setUp('beanFiles');
-        SugarTestHelper::setUp('beanList');
-        SugarTestHelper::setUp('current_user', array(true, 1));
-    }
-    
-    public function tearDown() 
-    {
-        unset($_REQUEST['data']);
-        unset($_REQUEST['query']);
-        $q = "delete from product_templates where name = 'MasonUnitTest'";
-        $GLOBALS['db']->query($q);
-        SugarTestHelper::tearDown();
-    }
-	
-    public function testFormatResults()
-    {
-    	$tempPT = new ProductTemplate();
-    	$tempPT->name = 'MasonUnitTest';
-    	$tempPT->description = "Unit'test";
-    	$tempPT->cost_price = 1000;
-    	$tempPT->discount_price = 800;
-    	$tempPT->list_price = 1100;
-    	$tempPT->save();
-    	
-    	$_REQUEST['data'] = '{"conditions":[{"end":"%","name":"name","op":"like_custom","value":""}],"field_list":["name","id","type_id","mft_part_num","cost_price","list_price","discount_price","pricing_factor","description","cost_usdollar","list_usdollar","discount_usdollar","tax_class_name"],"form":"EditView","group":"or","id":"EditView_product_name[1]","limit":"30","method":"query","modules":["ProductTemplates"],"no_match_text":"No Match","order":"name","populate_list":["name_1","product_template_id_1"],"post_onblur_function":"set_after_sqs"}';
-        $_REQUEST['query'] = 'MasonUnitTest';
-        require('modules/Home/quicksearchQuery.php');
+        // SJIS encoded Japanese CSV
+        $this->_file = 'tests/modules/Import/Bug58207Test.csv';
         
-        $json = getJSONobj();
-		$data = $json->decode(html_entity_decode($_REQUEST['data']));
-		if(isset($_REQUEST['query']) && !empty($_REQUEST['query'])){
-    		foreach($data['conditions'] as $k=>$v){
-    			if(empty($data['conditions'][$k]['value'])){
-       				$data['conditions'][$k]['value']=$_REQUEST['query'];
-    			}
-    		}
-		}
- 		$this->quickSearch = new quicksearchQuery();
-		$result = $this->quickSearch->query($data);
-		$resultBean = $json->decodeReal($result);
-		$this->assertEquals($resultBean['fields'][0]['description'], $tempPT->description);
+        global $sugar_config;
+        $this->_sugarConfig = $sugar_config; 
+        $sugar_config['default_export_charset'] = "SJIS";
+
+        SugarTestHelper::setUp('current_user');
     }
+
+    public function tearDown()
+    {
+        SugarTestHelper::tearDown();
+        global $sugar_config;
+        $sugar_config = $this->_sugarConfig;
+    }
+
+    /**
+     * Import a SJIS encoded file, and check if getNextRow() properly
+     * converts all the data into UTF-8
+     */
+    public function testFileImportEncoding()
+    {
+        $importFile = new ImportFile($this->_file, ',', '"', FALSE, FALSE);
+
+        $row = $importFile->getNextRow();
+
+        // Hardcode some Japanese strings
+        $this->assertEquals('名前', $row[0]);
+        $this->assertEquals('請求先郵便番号', $row[10]);
+        $this->assertEquals('年間売上', $row[20]);
+        $this->assertEquals('チームID', $row[30]);
+    }
+
 }

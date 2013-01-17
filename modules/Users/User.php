@@ -35,16 +35,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
-
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
 require_once('include/SugarObjects/templates/person/Person.php');
-
 
 // User is used to store customer information.
 class User extends Person {
@@ -480,12 +471,19 @@ class User extends Person {
 		}
 
 
-
+		// set some default preferences when creating a new user
+		$setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
 
 		parent::save($check_notify);
 
 
+		// set some default preferences when creating a new user
+		if ( $setNewUserPreferences ) {
+	        if(!$this->getPreference('calendar_publish_key')) {
+		        $this->setPreference('calendar_publish_key', create_guid());
+	        }
+		}
 
         $this->savePreferencesToDB();
         return $this->id;
@@ -785,9 +783,9 @@ EOQ;
 	/**
 	 * Verify that the current password is correct and write the new password to the DB.
 	 *
-	 * @param string $user name - Must be non null and at least 1 character.
 	 * @param string $user_password - Must be non null and at least 1 character.
 	 * @param string $new_password - Must be non null and at least 1 character.
+     * @param string $system_generated
 	 * @return boolean - If passwords pass verification and query succeeds, return true, else return false.
 	 */
 	function change_password($user_password, $new_password, $system_generated = '0')
@@ -801,11 +799,6 @@ EOQ;
 			return false;
 		}
 
-		// Check new password against rules set by admin
-		if (!$this->check_password_rules($new_password)) {
-		    $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'].$current_user->user_name.$mod_strings['ERR_PASSWORD_CHANGE_FAILED_3'];
-		    return false;
-		}
 
 		if (!$current_user->isAdminForModule('Users')) {
 			//check old password first
@@ -821,51 +814,6 @@ EOQ;
 		return true;
 	}
 
-	/**
-	 * Check new password against rules set by admin
-	 * @param string $password
-	 * @return boolean
-	 */
-	function check_password_rules($password) {
-	    $length = mb_strlen($password);
-
-	    // Min length
-	    if(!empty($GLOBALS["sugar_config"]["passwordsetting"]["minpwdlength"]) && $GLOBALS["sugar_config"]["passwordsetting"]["minpwdlength"] > 0 && $length < $GLOBALS["sugar_config"]["passwordsetting"]["minpwdlength"]) {
-	        return false;
-	    }
-
-	    // Max length
-	    if(!empty($GLOBALS['sugar_config']['passwordsetting']['maxpwdlength']) && $GLOBALS['sugar_config']['passwordsetting']['maxpwdlength'] > 0 && $length > $GLOBALS['sugar_config']['passwordsetting']['maxpwdlength']) {
-	        return false;
-	    }
-
-	    // One lower case
-	    if(!empty($GLOBALS["sugar_config"]["passwordsetting"]["onelower"]) && !preg_match('/[a-z]+/', $password)){
-	        return false;
-	    }
-
-	    // One upper case
-	    if(!empty($GLOBALS["sugar_config"]["passwordsetting"]["oneupper"]) && !preg_match('/[A-Z]+/', $password)){
-	        return false;
-	    }
-
-	    // One number
-	    if(!empty($GLOBALS["sugar_config"]["passwordsetting"]["onenumber"]) && !preg_match('/[0-9]+/', $password)){
-	        return false;
-	    }
-
-	    // One special character
-	    if(!empty($GLOBALS["sugar_config"]["passwordsetting"]["onespecial"]) && !preg_match('/[|}{~!@#$%^&*()_+=-]+/', $password)){
-	        return false;
-	    }
-
-	    // Custom regex
-	    if(!empty($GLOBALS["sugar_config"]["passwordsetting"]["customregex"]) && !preg_match($GLOBALS["sugar_config"]["passwordsetting"]["customregex"], $password)){
-	        return false;
-	    }
-
-	    return true;
-	}
 
 	function is_authenticated() {
 		return $this->authenticated;
@@ -876,6 +824,9 @@ EOQ;
 	}
 
 	function fill_in_additional_detail_fields() {
+        // jmorais@dri Bug #56269
+        parent::fill_in_additional_detail_fields();
+        // ~jmorais@dri
 		global $locale;
 
 		$query = "SELECT u1.first_name, u1.last_name from users  u1, users  u2 where u1.id = u2.reports_to_id AND u2.id = '$this->id' and u1.deleted=0";
@@ -888,6 +839,7 @@ EOQ;
 		} else {
 			$this->reports_to_name = '';
 		}
+
 
 		$this->_create_proper_name_field();
 	}
@@ -1510,6 +1462,10 @@ EOQ;
      * @return bool
      */
     public function isDeveloperForAnyModule() {
+        if(empty($this->id)) {
+            // empty user is no developer
+            return false;
+        }
         if ($this->isAdmin()) {
             return true;
         }
@@ -1534,6 +1490,10 @@ EOQ;
      * @return bool
      */
     public function isDeveloperForModule($module) {
+        if(empty($this->id)) {
+            // empty user is no developer
+            return false;
+        }
         if ($this->isAdmin()) {
             return true;
         }
@@ -1566,6 +1526,10 @@ EOQ;
      * @return bool
      */
     public function isAdminForModule($module) {
+        if(empty($this->id)) {
+            // empty user is no admin
+            return false;
+        }
         if ($this->isAdmin()) {
             return true;
         }
@@ -1594,8 +1558,6 @@ EOQ;
         	return true;
         }
 	}
-
-
 
    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false)
    {	//call parent method, specifying for array to be returned

@@ -188,6 +188,7 @@ class SugarChart {
 
 		// grab the property and value from the chart_properties variable
 		foreach ($this->chart_properties as $key => $value){
+		    if(is_array($value)) continue;
 			$properties .= $this->tab("<$key>$value</$key>",2);
 		}
 
@@ -382,14 +383,30 @@ class SugarChart {
 	}
 
 
-	function convertCurrency($to_convert){
-		global $locale;
-		$decimals = '2';
-		$decimals = $locale->getPrecision();
-		$amount = ($this->div == 1) ? $to_convert : round($to_convert * $this->div,$decimals);
+    /**
+     * Convert the amount given to the User's currency.
+     *
+     * TODO make this use the Currency module to convert from dollars and make
+     * it deprecated.
+     *
+     * @param float $to_convert
+     *   The amount to be converted.
+     *
+     * @return float
+     *   The amount converted in the User's current currency.
+     *
+     * @see Currency::convertFromDollar()
+     * @see SugarChart::__construct()
+     */
+    function convertCurrency($to_convert)
+    {
+        global $locale;
 
-		return $amount;
-	}
+        $decimals = $locale->getPrecision();
+        $amount = round($to_convert * $this->div, $decimals);
+
+        return $amount;
+    }
 
 	function formatNumber($number, $decimals= null, $decimal_point= null, $thousands_sep= null){
 		global $locale;
@@ -450,7 +467,11 @@ class SugarChart {
 		$this->chart_yAxis['yMax'] = $this->chart_properties['gaugeTarget'];
 		$this->chart_yAxis['yStep'] = 1;
 		$data .= $this->processDataGroup(2, 'GaugePosition', $gaugePosition, $gaugePosition, '');
-		$data .= $this->processGauge($gaugePosition, $this->chart_properties['gaugeTarget']);
+		if (isset($this->chart_properties['gaugePhases']) && is_array($this->chart_properties['gaugePhases'])) {
+			$data .= $this->processGauge($gaugePosition, $this->chart_properties['gaugeTarget'], $this->chart_properties['gaugePhases']);
+		} else {
+			$data .= $this->processGauge($gaugePosition, $this->chart_properties['gaugeTarget']);
+		}
 
 		return $data;
 	}
@@ -631,8 +652,9 @@ class SugarChart {
 
         $filename = sugar_cached("xml/"). $current_user->id . '_' . $file_id . '.xml';
 
+        $filename_temp = "xml/". $current_user->id . '_' . $file_id . '.xml';
         if ( !is_dir(dirname($filename)) ) {
-            create_cache_directory("xml");
+            create_cache_directory($filename_temp);
         }
 
         return $filename;
@@ -762,7 +784,7 @@ class SugarChart {
 		return $templateFile;
 	}
 
- 	        
+
 	function getDashletScript($id,$xmlFile="") {
 
 	$xmlFile = (!$xmlFile) ? $sugar_config['tmp_dir']. $current_user->id . '_' . $this->id . '.xml' : $xmlFile;

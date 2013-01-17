@@ -35,50 +35,85 @@
  ********************************************************************************/
 
 
-require_once "modules/Opportunities/Opportunity.php";
+require_once('modules/Import/ImportDuplicateCheck.php');
 
-class MockOpportunity extends Opportunity {
-
-    public $mailWasSent = false;
-    public $notify_inworkflow = true;
-    public $set_created_by = false;
-    
-    public function send_assignment_notifications() {
-        $this->mailWasSent = true;
-    }
-}
-
-class Bug42727Test extends Sugar_PHPUnit_Framework_TestCase
+/**
+ * Bug #51264
+ * Importing updates to rows prevented by duplicates check
+ *
+ * @ticket 51264
+ */
+class Bug51264Test extends Sugar_PHPUnit_Framework_TestCase
 {
-    protected $_opportunity;
-    protected $_opportunityIds = array();
+    private $contact;
 
     public function setUp()
     {
-        $this->_opportunity = new MockOpportunity();
+        $beanList = array();
+        $beanFiles = array();
+        require('include/modules.php');
+        $GLOBALS['beanList'] = $beanList;
+        $GLOBALS['beanFiles'] = $beanFiles;
+
+        $GLOBALS['current_user'] = SugarTestUserUtilities::createAnonymousUser();
+        $this->contact = SugarTestContactUtilities::createContact();
     }
 
     public function tearDown()
     {
+        SugarTestContactUtilities::removeAllCreatedContacts();
+        unset($this->contact);
+        unset($GLOBALS['beanFiles'], $GLOBALS['beanList']);
+
         SugarTestUserUtilities::removeAllCreatedAnonymousUsers();
-        $GLOBALS['db']->query('DELETE FROM opportunities WHERE id IN (\'' . implode("', '", $this->_opportunityIds) . '\')');
+        unset($GLOBALS['current_user']);
     }
 
-    
-    public function testSentMail() 
+    /**
+     * @group 51264
+     */
+    public function testIsADuplicateRecordWithID()
     {
-        $this->_opportunity->created_by = $this->_opportunity->assigned_user_id = SugarTestUserUtilities::createAnonymousUser()->id;
-        $this->_opportunityIds[] = $this->_opportunity->save();
-        $this->assertTrue($this->_opportunity->isOwner($this->_opportunity->created_by));
-        $this->assertFalse($this->_opportunity->mailWasSent);
+        $idc = new ImportDuplicateCheck($this->contact);
+        $result = $idc->isADuplicateRecord(array('special_idx_email1::email1'));
+        $this->assertFalse($result);
     }
-    
-    public function testNotSentMail() 
+
+    /**
+     * @group 51264
+     */
+    public function testIsADuplicateRecordWithInvalidID()
     {
-        $this->_opportunity->created_by = SugarTestUserUtilities::createAnonymousUser()->id;
-        $this->_opportunity->assigned_user_id = SugarTestUserUtilities::createAnonymousUser()->id;
-        $this->_opportunityIds[] = $this->_opportunity->save();
-        $this->assertFalse($this->_opportunity->isOwner($this->_opportunity->created_by));
-        $this->assertTrue($this->_opportunity->mailWasSent);    
+        $contact = new Contact();
+        $contact->id = '0000000000000000';
+        $contact->email1 = $this->contact->email1;
+        $idc = new ImportDuplicateCheck($contact);
+        $result = $idc->isADuplicateRecord(array('special_idx_email1::email1'));
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @group 51264
+     */
+    public function testIsADuplicateRecordWithInvalidID2()
+    {
+        $contact = new Contact();
+        $contact->id = '0000000000000000';
+        $contact->email1 = 'Bug51264Test@Bug51264Test.com';
+        $idc = new ImportDuplicateCheck($contact);
+        $result = $idc->isADuplicateRecord(array('special_idx_email1::email1'));
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @group 51264
+     */
+    public function testIsADuplicateRecord()
+    {
+        $contact = new Contact();
+        $contact->email1 = $this->contact->email1;
+        $idc = new ImportDuplicateCheck($contact);
+        $result = $idc->isADuplicateRecord(array('special_idx_email1::email1'));
+        $this->assertTrue($result);
     }
 }

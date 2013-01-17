@@ -34,16 +34,17 @@
  ********************************************************************************/
 SUGAR.ajaxUI={loadingWindow:false,callback:function(o)
 {var cont;if(typeof window.onbeforeunload=="function")
-window.onbeforeunload=null;scroll(0,0);SUGAR.ajaxUI.hideLoadingPanel();try{var r=YAHOO.lang.JSON.parse(o.responseText);cont=r.content;if(r.title)
+window.onbeforeunload=null;scroll(0,0);try{var r=YAHOO.lang.JSON.parse(o.responseText);cont=r.content;if(r.title)
 {document.title=html_entity_decode(r.title);}
 if(r.action)
 {action_sugar_grp1=r.action;}
 if(r.favicon)
 {SUGAR.ajaxUI.setFavicon(r.favicon);}
-var c=document.getElementById("content");c.innerHTML=cont;SUGAR.util.evalScript(cont);if(r.moduleList)
+var c=document.getElementById("content");c.style.visibility='hidden';c.innerHTML=cont;SUGAR.util.evalScript(cont);c.style.visibility='visible';if(r.moduleList)
 {SUGAR.themes.setModuleTabs(r.moduleList);}
 if(typeof(r.responseTime)!='undefined'){var rt=$("#responseTime");if(rt.length>0){rt.html(rt.html().replace(/[\d]+\.[\d]+/,r.responseTime));}
-else if(typeof(logoStats)!="undefined"){$("#logo").attr("title",logoStats.replace(/[\d]+\.[\d]+/,r.responseTime)).tipTip({maxWidth:"auto",edgeOffset:10});}}}catch(e){SUGAR.ajaxUI.showErrorMessage(o.responseText);}},showErrorMessage:function(errorMessage)
+else if(typeof(logoStats)!="undefined"){$("#logo").attr("title",logoStats.replace(/[\d]+\.[\d]+/,r.responseTime)).tipTip({maxWidth:"auto",edgeOffset:10});}}
+SUGAR.ajaxUI.hideLoadingPanel();}catch(e){SUGAR.ajaxUI.hideLoadingPanel();SUGAR.ajaxUI.showErrorMessage(o.responseText);}},showErrorMessage:function(errorMessage)
 {if(!SUGAR.ajaxUI.errorPanel){SUGAR.ajaxUI.errorPanel=new YAHOO.widget.Panel("ajaxUIErrorPanel",{modal:false,visible:true,constraintoviewport:true,width:"800px",height:"600px",close:true});}
 var panel=SUGAR.ajaxUI.errorPanel;panel.setHeader(SUGAR.language.get('app_strings','ERR_AJAX_LOAD'));panel.setBody('<iframe id="ajaxErrorFrame" style="width:780px;height:550px;border:none;marginheight="0" marginwidth="0" frameborder="0""></iframe>');panel.setFooter(SUGAR.language.get('app_strings','ERR_AJAX_LOAD_FOOTER'));panel.render(document.body);SUGAR.util.doWhen(function(){var f=document.getElementById("ajaxErrorFrame");return f!=null&&f.contentWindow!=null&&f.contentWindow.document!=null;},function(){document.getElementById("ajaxErrorFrame").contentWindow.document.body.innerHTML=errorMessage;window.setTimeout('throw "AjaxUI error parsing response"',300);});SUGAR.ajaxUI.errorMessage=errorMessage;window.setTimeout('if((typeof(document.getElementById("ajaxErrorFrame")) == "undefined" || typeof(document.getElementById("ajaxErrorFrame")) == null  || document.getElementById("ajaxErrorFrame").contentWindow.document.body.innerHTML == "")){document.getElementById("ajaxErrorFrame").contentWindow.document.body.innerHTML=SUGAR.ajaxUI.errorMessage;}',3000);panel.show();panel.center();throw"AjaxUI error parsing response";},canAjaxLoadModule:function(module)
 {var checkLS=/&LicState=check/.exec(window.location.search);if(checkLS||(typeof(SUGAR.config.disableAjaxUI)!='undefined'&&SUGAR.config.disableAjaxUI==true)){return false;}
@@ -79,7 +80,7 @@ return true;}else{if(typeof(YAHOO.util.Selector.query("input[type=submit]",form)
 form.submit();return false;}},cleanGlobals:function()
 {sqs_objects={};QSProcessedFieldsArray={};collection={};if(SUGAR.EmailAddressWidget){SUGAR.EmailAddressWidget.instances={};SUGAR.EmailAddressWidget.count={};}
 YAHOO.util.Event.removeListener(window,'resize');if(typeof(dialog)!='undefined'&&typeof(dialog.destroy)=='function'){dialog.destroy();delete dialog;}},firstLoad:function()
-{var url=YAHOO.util.History.getBookmarkedState('ajaxUILoc');var aRegex=/action=([^&#]*)/.exec(window.location);var action=aRegex?aRegex[1]:false;var mRegex=/module=([^&#]*)/.exec(window.location);var module=mRegex?mRegex[1]:false;if(module!="ModuleBuilder")
+{SUGAR.ajaxUI.menuFix=true;var url=YAHOO.util.History.getBookmarkedState('ajaxUILoc');var aRegex=/action=([^&#]*)/.exec(window.location);var action=aRegex?aRegex[1]:false;var mRegex=/module=([^&#]*)/.exec(window.location);var module=mRegex?mRegex[1]:false;if(module!="ModuleBuilder")
 {var go=url!=null||action=="ajaxui";url=url?url:'index.php?module=Home&action=index';YAHOO.util.History.register('ajaxUILoc',url,SUGAR.ajaxUI.go);YAHOO.util.History.initialize("ajaxUI-history-field","ajaxUI-history-iframe");SUGAR.ajaxUI.hist_loaded=true;if(go)
 SUGAR.ajaxUI.go(url);}
 SUGAR_callsInProgress--;},print:function()

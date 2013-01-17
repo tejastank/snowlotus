@@ -34,51 +34,49 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
- 
-require_once('modules/UpgradeWizard/uw_utils.php');
-require_once('modules/MySettings/TabController.php');
 
-class Bug42490Test extends Sugar_PHPUnit_Framework_TestCase 
+require_once "modules/ModuleBuilder/parsers/views/AbstractMetaDataParser.php";
+
+/**
+ * Bug #39729
+ * "Email Address field is not avialable in the ToolBox if removed from Leeds > Convert Leeds > Contacts Layout"
+ *
+ * @author Mikhail Yarotsky
+ * @ticket 39729
+ */
+class Bug39729Test extends Sugar_PHPUnit_Framework_TestCase
 {
-	private $_originalEnabledTabs;
-	private $_tc;
-	
+    /**
+     * @var $_view;
+     */
+    private $_view;
+
+    /**
+     * @var $def;
+     */
+    private $def;
+
     public function setUp()
     {
-        SugarTestHelper::setUp('moduleList');
-        SugarTestHelper::setUp('current_user', array(true, 1));
-        $this->_tc = new TabController();
-        $tabs = $this->_tc->get_tabs_system();
-        $this->_originalEnabledTabs = $tabs[0];
+        global $dictionary;
+        $this->_view = 'editview';
+        VardefManager::loadVardef('Contacts', 'Contact');
+        $this->def = $dictionary['Contact']['fields']['email1'];
+
     }
 
-	public function tearDown() 
-	{
-        if (!empty($this->_originalEnabledTabs))
-        {
-            $this->_tc->set_system_tabs($this->_originalEnabledTabs);
-        }
-	}
+    public function tearDown()
+    {
+        unset($this->_view);
+        unset($this->def);
+    }
 
-	public function testUpgradeDisplayedTabsAndSubpanels() 
-	{
-        $modules_to_add = array(
-            'Calls',
-            'Meetings',
-            'Tasks',
-            'Notes',
-            'Prospects',
-            'ProspectLists',
-        );
-
-		upgradeDisplayedTabsAndSubpanels('610');
-		
-		$all_tabs = $this->_tc->get_tabs_system();
-		$tabs = $all_tabs[0];
-		
-		foreach($modules_to_add as $module)
-		{
-            $this->assertArrayHasKey($module, $tabs, 'Assert that ' . $module . ' tab is set for system tabs');
-		}
-	}
+    /**
+     * Relate to email1 should be true
+     * @group 39729
+     */
+    public function testEmail1FieldOnTrue()
+    {
+        $this->assertTrue(AbstractMetaDataParser::validField ( $this->def,  $this->_view ));
+    }
 }

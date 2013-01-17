@@ -1,4 +1,4 @@
-{*
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,59 +35,70 @@
  ********************************************************************************/
 
 
-*}
-<style>
-{literal}
-.searchHighlight{
-    background-color: #FFFF00;
-}
+/**
+ * @group 54858
+ *
+ */
+class Bug54858Test extends Sugar_PHPUnit_Framework_TestCase
+{
 
-.detail_label{
-	color:#666666;
-	font-weight:bold;
+    public function setUp()
+    {
+        $this->user = SugarTestUserUtilities::createAnonymousUser();
+        $this->user->email1 = $email = 'test'.uniqid().'@test.com';
+        $this->user->save();
+        $GLOBALS['current_user'] = $this->user;
+        $this->vcal_url =  "{$GLOBALS['sugar_config']['site_url']}/vcal_server.php/type=vfb&source=outlook&email=" . urlencode($email);
+        $GLOBALS['db']->commit();
+    }
+
+    public function tearDown()
+    {
+    	unset($GLOBALS['current_user']);
+    	SugarTestUserUtilities::removeAllCreatedAnonymousUsers();
+    }
+
+    /**
+     * Test that new user gets ical key
+     */
+    public function testCreateNewUser()
+    {
+        $this->assertNotEmpty($this->user->getPreference('calendar_publish_key'), "Publish key is not set");
+    }
+
+	protected function callVcal($key)
+	{
+       $ch = curl_init($this->vcal_url."&key=" . urlencode($key));
+       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+	   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+       $return = curl_exec($ch);
+	   $info = curl_getinfo($ch);
+	   $info['return'] = $return;
+	   return $info;
+	}
+
+	// test vcal service
+    public function testPublishKey()
+    {
+        $res = $this->callVcal('');
+		$this->assertEquals('401', $res['http_code']);
+
+        $res = $this->callVcal('blah');
+		$this->assertEquals('401', $res['http_code']);
+
+		$key = $this->user->getPreference('calendar_publish_key');
+        $res = $this->callVcal($key);
+		$this->assertEquals('200', $res['http_code']);
+		$this->assertContains('BEGIN:VCALENDAR', $res['return']);
+
+		// now reset the key
+        $this->user->setPreference('calendar_publish_key', '');
+        $this->user->savePreferencesToDB();
+        $GLOBALS['db']->commit();
+
+        $res = $this->callVcal('');
+		$this->assertEquals('401', $res['http_code']);
+        $res = $this->callVcal($key);
+		$this->assertEquals('401', $res['http_code']);
+	}
 }
-.odd {
-    background-color: #f6f6f6;
-}
-.even {
-    background-color: #eeeeee;
-}
-div.sec .odd a, div.sec .even a {
-    font-size: 12px;
-}
-#gsdetail_div {
-    overflow-x:auto;
-}
-{/literal}
-</style>
-<!-- Global Search Detail View -->
-<div id="gsdetail_div">
-<div><h3>{$BEAN_NAME}</h3></div>
-<br>
-<div style="height:325px;width:300px" >
-<table>
-	{foreach from=$DETAILS item=DETAIL name="recordlist"}
-	{if !$fields[$DETAIL.field].hidden}
-    <tr>
-		<td class="detail_label {if $smarty.foreach.recordlist.index % 2 == 0}odd{else}even{/if}">{$DETAIL.label|strip_semicolon}:</td>
-		<td class="{if $smarty.foreach.recordlist.index % 2 == 0}odd{else}even{/if}">
-		{if !empty($DETAIL.customCode)}
-            {eval var=$DETAIL.customCode}
-        {else}
-            {sugar_field parentFieldArray='fields' vardef=$fields[$DETAIL.field] displayType='wirelessDetailView' displayParams='' typeOverride=$DETAIL.type}
-        {/if}
-		</td>
-	</tr>
-    {/if}
-	{/foreach}
-	<tr><td>&nbsp;<td></tr>
-	<tr>
-	<td colspan="2">
-	<h3>{$LBL_GS_HELP}</h3>
-	</td>
-	</tr>
-</table>
-</div>
-<div style="padding-right:200px">
-</div>
-</div>

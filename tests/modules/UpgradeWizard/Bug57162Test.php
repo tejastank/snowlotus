@@ -1,4 +1,4 @@
-{*
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,9 +34,51 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-*}
 
-{multienum_to_array string=$vardef.value default=$vardef.default assign="values"}
-<select id="{$vardef.name}" name="{$vardef.name}[]" multiple="true">
-    {html_options options=$vardef.options selected=$values}
-</select>
+require_once('modules/UpgradeWizard/uw_utils.php');
+
+/**
+ * Bug #57162
+ * Upgrader needs to handle 3-dots releases and double digit values
+ *
+ * @author mgusev@sugarcrm.com
+ * @ticked 57162
+ */
+class Bug57162Test extends Sugar_PHPUnit_Framework_TestCase
+{
+    public function dataProvider()
+    {
+        return array(
+            array('656', array('6.5.6')),
+            array('660', array('6.6.0beta1')),
+            array('640', array('6.4.0rc2')),
+            array('600', array('6', 3)),
+            array('6601', array('6.6.0.1')),
+            array('6601', array('6.6.0.1', 0)),
+            array('660', array('6.6.0.1', 3)),
+            array('660', array('6.6.0.1', 3, '')),
+            array('66x', array('6.6.0.1', 3, 'x')),
+            array('660x', array('6.6.0.1', 0, 'x')),
+            array('6.6.x', array('6.6.0.1', 3, 'x', '.')),
+            array('6-6-0-beta2', array('6.6.0.1', 0, 'beta2', '-')),
+            array('6601', array('6.6.0.1', 0, '', '')),
+            array('', array('test342lk')),
+            array('650', array('6.5.6' ,0, '0')),
+            array('60', array('6.5.6', 2, 0)),
+        );
+    }
+
+    /**
+     * Test asserts result of implodeVersion function
+     *
+     * @group 57162
+     * @dataProvider dataProvider
+     * @param string $expect version
+     * @param array $params for implodeVersion function
+     */
+    public function testImplodeVersion($expected, $params)
+    {
+        $actual = call_user_func_array('implodeVersion', $params);
+        $this->assertEquals($expected, $actual, 'Result is incorrect');
+    }
+}
