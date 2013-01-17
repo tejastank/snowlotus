@@ -241,6 +241,7 @@ OO.toggle_completeall = function (){
 				        <option value='7'>7</option>
 				        <option value='15'>15</option>
 				        <option value='30'>30</option>
+				        <option value='90'>90</option>
 			        </select>
 				</td>
 			</tr>

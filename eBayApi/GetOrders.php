@@ -59,7 +59,11 @@ class GetOrders extends eBayApiEnvironment
 		$bean = BeanFactory::getBean('xeBayOrders');
 
         $req = new GetOrdersRequestType();
-        $req->setNumberOfDays($params['NumberOfDays']);
+		if ($params['NumberOfDays'] != 90) {
+        	$req->setNumberOfDays($params['NumberOfDays']);
+		} else {
+			$req->setCreateTimeFrom(date('Y-m-dTH:i:s', strtotime('now - 88 days')));
+		}
 		$req->setOrderStatus($params['OrderStatus']);
 
 		$pagination = new PaginationType();
