@@ -1,4 +1,5 @@
-<?php
+{*
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,33 +35,52 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Xxx',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Xxx List',
-  'LBL_MODULE_NAME' => 'Xxx',
-  'LBL_MODULE_TITLE' => 'Xxx',
-  'LBL_HOMEPAGE_TITLE' => 'My Xxx',
-  'LNK_NEW_RECORD' => 'Create Xxx',
-  'LNK_LIST' => 'View Xxx',
-  'LNK_IMPORT_XXXXS' => 'Import Xxx',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Xxx',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XXXXS_SUBPANEL_TITLE' => 'Xxx',
-  'LBL_NEW_FORM_TITLE' => 'New Xxx',
-);
+
+
+
+*}
+<form name="xeBayMessageReply" id="xeBayMessageReply" enctype='multipart/form-data' method="POST" action="index.php">
+<input type='hidden' name='action' value='reply'/>
+<input type='hidden' name='module' value='xeBayMessages'/>
+<input type='hidden' name='record' value='{$RECORD}'/>
+<span class='error'>{$error.main}</span>
+<table width="100%" cellpadding="0" cellspacing="1" border="0" class="actionsContainer">
+<tr>
+	<td>
+		<input title="{$MOD.LBL_EMAIL_REPLY}" accessKey="" class="button primary" id="xeBayMessageReply_reply_button" type="submit" name="reply" value="{$APP.LBL_EMAIL_REPLY}">
+		<span class="id-ff multiple">
+		<button title="{$MOD.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='0' class="button firstChild" value='{$APP.LBL_SELECT_BUTTON_LABEL}' name="btn_author"  id="btn_author"
+						onclick='open_popup("xeBayMessageTemplates", 600, 400, "", true, false, {$ENCODED_TEMPLATES_POPUP_REQUEST_DATA});'>{$TEMPLATE_SELECT}</button>
+{if 0}
+		<button type="button" name="btn_clr" id="btn_clr" tabindex="0" title="{$APP.LBL_CLEAR_BUTTON_TITLE}" class="button lastChild"
+						onclick="this.form.response.value = ''; " value="{$APP.LBL_CLEAR_BUTTON_LABEL}" >{$TEMPLATE_CLEAR}</button>
+{/if}
+		</span>
+	</td>
+</tr>
+</table>
+
+<table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+	<tr>
+		<td scope="row"><span style="font-weight:bold">{$MOD.LBL_NAME}:</span>&nbsp;&nbsp;<input title="" id="subject" name="subject" type="text" size="78" value="{$SUBJECT}"></td>
+	</tr>
+	<tr>
+		<td scope="row" colspan="2" style="font-weight:bold">{$SALUTATION}</td>
+	</tr>
+	<tr>
+		<td scope="row" colspan="2"><textarea id='response' name='response' rows="10" cols="120" title='' tabindex="" accesskey=''>{$RESPONSE}</textarea></td>
+	</tr>
+	<tr>
+		<td scope="row" colspan="2" style="font-weight:bold">{$SIGNATURE}</td>
+	</tr>
+</table>
+
+{$JAVASCRIPT}
+
+</form>
+{literal}
+<script type='text/javascript'>
+YAHOO.util.Event.onDOMReady(function(){
+});
+</script>
+{/literal}

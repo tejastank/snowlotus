@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,33 +35,12 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Xxx',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Xxx List',
-  'LBL_MODULE_NAME' => 'Xxx',
-  'LBL_MODULE_TITLE' => 'Xxx',
-  'LBL_HOMEPAGE_TITLE' => 'My Xxx',
-  'LNK_NEW_RECORD' => 'Create Xxx',
-  'LNK_LIST' => 'View Xxx',
-  'LNK_IMPORT_XXXXS' => 'Import Xxx',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Xxx',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XXXXS_SUBPANEL_TITLE' => 'Xxx',
-  'LBL_NEW_FORM_TITLE' => 'New Xxx',
-);
+
+global $mod_strings, $app_strings, $sugar_config;
+ 
+// if(ACLController::checkAccess('xeBayMessages', 'edit', true))$module_menu[]=Array("index.php?module=xeBayMessages&action=EditView&return_module=xeBayMessages&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayMessages", 'xeBayMessages');
+if(ACLController::checkAccess('xeBayMessages', 'list', true))$module_menu[]=Array("index.php?module=xeBayMessages&action=index&return_module=xeBayMessages&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayMessages", 'xeBayMessages');
+if(ACLController::checkAccess('xeBayMessageTemplates', 'edit', true))$module_menu[]=Array("index.php?module=xeBayMessageTemplates&action=EditView&return_module=xeBayMessages&return_action=index", $mod_strings['LNK_NEW_TEMPLATE'],"CreateeBayMessageTemplates", 'xeBayMessageTemplates');
+if(ACLController::checkAccess('xeBayMessageTemplates', 'list', true))$module_menu[]=Array("index.php?module=xeBayMessageTemplates&action=index&return_module=xeBayMessages&return_action=index", $mod_strings['LNK_VIEW_TEMPLATES'],"eBayMessageTemplates", 'xeBayMessageTemplates');
+// if(ACLController::checkAccess('xeBayMessages', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xeBayMessages&return_module=xeBayMessages&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBayMessages');
+if(ACLController::checkAccess('xeBayMessages', 'test', true))$module_menu[]=Array("index.php?module=xeBayMessages&action=test&return_module=xeBayMessages&return_action=index", $mod_strings['LNK_TEST'],"Test", 'xeBayMessages');

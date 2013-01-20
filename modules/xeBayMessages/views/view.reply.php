@@ -34,33 +34,48 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Xxx',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Xxx List',
-  'LBL_MODULE_NAME' => 'Xxx',
-  'LBL_MODULE_TITLE' => 'Xxx',
-  'LBL_HOMEPAGE_TITLE' => 'My Xxx',
-  'LNK_NEW_RECORD' => 'Create Xxx',
-  'LNK_LIST' => 'View Xxx',
-  'LNK_IMPORT_XXXXS' => 'Import Xxx',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Xxx',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XXXXS_SUBPANEL_TITLE' => 'Xxx',
-  'LBL_NEW_FORM_TITLE' => 'New Xxx',
-);
+require_once('include/MVC/View/SugarView.php');
+require_once('eBayApi/AddMemberMessageAAQToPartner.php');
+
+class xeBayMessagesViewReply extends SugarView {
+
+	function xeBayMessagesViewReply()
+    {
+ 		parent::SugarView();
+	}
+	
+    function process()
+    {
+		$account = BeanFactory::getBean('xeBayAccounts', $this->bean->xebayaccount_id);
+		$subject = $_REQUEST['subject'];
+		$response = $_REQUEST['response'];
+
+		if (empty($response))
+			header("Location: index.php?module=xeBayMessages&action=index");
+
+		$x = new AddMemberMessageAAQToPartner();
+		$res = $x->addMemberMessage(array(
+			'AccountID' => $account->id,
+			'AuthToken' => $account->ebay_auth_token,
+			'ItemID' => $this->bean->item_id,
+			'Body' => $response,
+			'QuestionType' => $this->bean->question_type,
+			'RecipientID' => $this->bean->sender_id,
+			'Subject' => $subject,
+			)
+		);
+		if ($res == true) {
+			if ($this->bean->replied != true)
+				$this->bean->replied_status_update($this->bean->id, 1);
+			header("Location: index.php?module=xeBayMessages&action=index");
+		}
+		parent::process();
+	}
+	
+	function display()
+	{
+		// sugar_cleanup(true);
+	}
+}
+
+?>

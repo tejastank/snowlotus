@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,33 +36,56 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Xxx',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Xxx List',
-  'LBL_MODULE_NAME' => 'Xxx',
-  'LBL_MODULE_TITLE' => 'Xxx',
-  'LBL_HOMEPAGE_TITLE' => 'My Xxx',
-  'LNK_NEW_RECORD' => 'Create Xxx',
-  'LNK_LIST' => 'View Xxx',
-  'LNK_IMPORT_XXXXS' => 'Import Xxx',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Xxx',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XXXXS_SUBPANEL_TITLE' => 'Xxx',
-  'LBL_NEW_FORM_TITLE' => 'New Xxx',
-);
+
+require_once('include/MVC/View/views/view.detail.php');
+
+class xeBayMessagesViewDetail extends ViewDetail
+{
+	function xeBayMessagesViewDetail()
+	{
+ 		parent::ViewDetail();
+ 	}
+
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+	function display()
+	{
+		global $app_strings, $app_list_strings;
+		global $mod_strings;
+
+		parent::display();
+
+		$smarty = new Sugar_Smarty();
+		$smarty->assign('APP', $app_strings);
+		$smarty->assign('MOD', $mod_strings);
+		$smarty->assign('RECORD', $this->bean->id);
+
+		$popup_request_data = array(
+			'call_back_function' => 'set_return',
+			'form_name' => 'xeBayMessageReply',
+			'field_to_name_array' => array(
+				'description' => 'response',
+			),
+		);
+		$json = getJSONobj();
+		$smarty->assign('ENCODED_TEMPLATES_POPUP_REQUEST_DATA', $json->encode($popup_request_data));
+		$smarty->assign("TEMPLATE_SELECT", SugarThemeRegistry::current()->getImage('id-ff-select','',null,null,'.png',$mod_strings['LBL_SELECT']));
+		$smarty->assign("TEMPLATE_CLEAR", SugarThemeRegistry::current()->getImage('id-ff-clear','',null,null,'.gif',$mod_strings['LBL_ID_FF_CLEAR']));
+
+		$smarty->assign('SUBJECT', $this->bean->title);
+		$smarty->assign('SALUTATION', str_replace("\n", "<br>", $this->bean->get_salutation()));
+		$smarty->assign('RESPONSE', $this->bean->get_template());
+		$smarty->assign('SIGNATURE', str_replace("\n", "<br>", $this->bean->get_signature()));
+		$smarty->display("modules/xeBayMessages/tpls/reply.tpl");
+
+		$this->bean->read_status_update($this->bean->id, true);
+ 	}
+}
+
+?>

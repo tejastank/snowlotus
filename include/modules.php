@@ -325,6 +325,18 @@ $moduleList[] = 'xeBayListings';
 $beanList['xeBayListings'] = 'xeBayListing';
 $beanFiles['xeBayListing'] = 'modules/xeBayListings/xeBayListing.php';
 
+$moduleList[] = 'xeBayMessages';
+$beanList['xeBayMessages'] = 'xeBayMessage';
+$beanFiles['xeBayMessage'] = 'modules/xeBayMessages/xeBayMessage.php';
+
+$moduleList[] = 'xeBayMessageTemplates';
+$beanList['xeBayMessageTemplates'] = 'xeBayMessageTemplate';
+$beanFiles['xeBayMessageTemplate'] = 'modules/xeBayMessageTemplates/xeBayMessageTemplate.php';
+
+$moduleList[] = 'xeBayMyMessages';
+$beanList['xeBayMyMessages'] = 'xeBayMyMessage';
+$beanFiles['xeBayMyMessage'] = 'modules/xeBayMyMessages/xeBayMyMessage.php';
+
 $moduleList[] = 'xeBayOrders';
 $beanList['xeBayOrders'] = 'xeBayOrder';
 $beanFiles['xeBayOrder'] = 'modules/xeBayOrders/xeBayOrder.php';

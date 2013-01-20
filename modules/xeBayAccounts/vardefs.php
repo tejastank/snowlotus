@@ -51,6 +51,12 @@ $dictionary['xeBayAccount'] = array(
 			'vname' => 'LBL_HARD_EXPIRATION_TIME',
 	    	'type'=>'datetime',
 		),
+		'my_messages_summary'=>
+		array (
+			'name' => 'my_messages_summary',
+			'vname' => 'LBL_MY_MESSAGES_SUMMARY',
+			'type' => 'text',
+		),
 		// Use GeteBayDetails to retrieve the available meta-data for the specified eBay site.
 		'ebay_details'=>
 		array (

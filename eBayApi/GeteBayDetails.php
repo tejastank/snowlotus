@@ -48,37 +48,35 @@ class GeteBayDetails extends eBayApiEnvironment
     }
 
 
-	public function fill_ebay_details($bean, $res, $xml)
+	public function fill_ebay_details($res)
 	{
 		$xmlString = "<?xml version='1.0' standalone='yes'?><eBayDetails></eBayDetails>";
 		$xml = simplexml_load_string($xmlString);
-		$this->fill_buyer_requirement_details($bean, $res, $xml);
-		$this->fill_country_details($bean, $res, $xml);
-		$this->fill_currency_details($bean, $res, $xml);
-		$this->fill_dipatch_time_max_details($bean, $res, $xml);
-		$this->fill_exclude_shipping_location_details($bean, $res, $xml);
-		$this->fill_item_specific_details($bean, $res, $xml);
-		$this->fill_listing_feature_details($bean, $res, $xml);
-		$this->fill_listing_start_price_details($bean, $res, $xml);
-		$this->fill_payment_option_details($bean, $res, $xml);
-		$this->fill_recoupment_policy_details($bean, $res, $xml);
-		$this->fill_region_details($bean, $res, $xml);
-		$this->fill_region_of_origin_details($bean, $res, $xml);
-		$this->fill_return_policy_details($bean, $res, $xml);
-		$this->fill_shipping_carrier_details($bean, $res, $xml);
-		$this->fill_shipping_category_details($bean, $res, $xml);
-		$this->fill_shipping_location_details($bean, $res, $xml);
-		$this->fill_shipping_service_details($bean, $res, $xml);
-		$this->fill_site_details($bean, $res, $xml);
-		$this->fill_url_details($bean, $res, $xml);
-		$this->fill_variation_details($bean, $res, $xml);
+		$this->fill_buyer_requirement_details($res, $xml);
+		$this->fill_country_details($res, $xml);
+		$this->fill_currency_details($res, $xml);
+		$this->fill_dipatch_time_max_details($res, $xml);
+		$this->fill_exclude_shipping_location_details($res, $xml);
+		$this->fill_item_specific_details($res, $xml);
+		$this->fill_listing_feature_details($res, $xml);
+		$this->fill_listing_start_price_details($res, $xml);
+		$this->fill_payment_option_details($res, $xml);
+		$this->fill_recoupment_policy_details($res, $xml);
+		$this->fill_region_details($res, $xml);
+		$this->fill_region_of_origin_details($res, $xml);
+		$this->fill_return_policy_details($res, $xml);
+		$this->fill_shipping_carrier_details($res, $xml);
+		$this->fill_shipping_category_details($res, $xml);
+		$this->fill_shipping_location_details($res, $xml);
+		$this->fill_shipping_service_details($res, $xml);
+		$this->fill_site_details($res, $xml);
+		$this->fill_url_details($res, $xml);
+		$this->fill_variation_details($res, $xml);
 
-        // $file = "modules/xeBayAccounts/xmls/" . $bean->id . ".xml";
-        // file_put_contents($file, $xml->asXML());
         return htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
 	}
 
-	public function fill_buyer_requirement_details($bean, $res, $xml)
+	public function fill_buyer_requirement_details($res, $xml)
 	{
 		$details = $res->getBuyerRequirementDetails();
 		if (empty($details))
@@ -143,7 +141,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_country_details($bean, $res, $xml)
+	public function fill_country_details($res, $xml)
 	{
 		$details = $res->getCountryDetails();
 		if (empty($details))
@@ -155,7 +153,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_currency_details($bean, $res, $xml)
+	public function fill_currency_details($res, $xml)
 	{
 		$details = $res->getCurrencyDetails();
 		if (empty($details))
@@ -167,7 +165,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_dipatch_time_max_details($bean, $res, $xml)
+	public function fill_dipatch_time_max_details($res, $xml)
 	{
 		$details = $res->getDispatchTimeMaxDetails();
 		if (empty($details))
@@ -181,7 +179,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_exclude_shipping_location_details($bean, $res, $xml)
+	public function fill_exclude_shipping_location_details($res, $xml)
 	{
 		$details = $res->getExcludeShippingLocationDetails();
 		if (empty($details))
@@ -197,7 +195,7 @@ class GeteBayDetails extends eBayApiEnvironment
 
 	}
 
-	public function fill_item_specific_details($bean, $res, $xml)
+	public function fill_item_specific_details($res, $xml)
 	{
 		$details = $res->getItemSpecificDetails();
 		if (empty($details))
@@ -213,7 +211,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_listing_feature_details($bean, $res, $xml)
+	public function fill_listing_feature_details($res, $xml)
 	{
 		$details = $res->getListingFeatureDetails();
 		if (empty($details))
@@ -233,7 +231,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_listing_start_price_details($bean, $res, $xml)
+	public function fill_listing_start_price_details($res, $xml)
 	{
 		$details = $res->getListingStartPriceDetails();
 		if (empty($details))
@@ -250,7 +248,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_payment_option_details($bean, $res, $xml)
+	public function fill_payment_option_details($res, $xml)
 	{
 		$details = $res->getPaymentOptionDetails();
 		if (empty($details))
@@ -264,7 +262,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_recoupment_policy_details($bean, $res, $xml)
+	public function fill_recoupment_policy_details($res, $xml)
 	{
 		$details = $res->getRecoupmentPolicyDetails();
 
@@ -279,7 +277,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_region_details($bean, $res, $xml)
+	public function fill_region_details($res, $xml)
 	{
 		$details = $res->getRegionDetails();
 
@@ -294,7 +292,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_region_of_origin_details($bean, $res, $xml)
+	public function fill_region_of_origin_details($res, $xml)
 	{
 		$details = $res->getRegionOfOriginDetails();
 
@@ -309,7 +307,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_return_policy_details($bean, $res, $xml)
+	public function fill_return_policy_details($res, $xml)
 	{
 		$details = $res->getReturnPolicyDetails();
 
@@ -383,7 +381,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_shipping_carrier_details($bean, $res, $xml)
+	public function fill_shipping_carrier_details($res, $xml)
 	{
 		$details = $res->getShippingCarrierDetails();
 		if (empty($details))
@@ -398,7 +396,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_shipping_category_details($bean, $res, $xml)
+	public function fill_shipping_category_details($res, $xml)
 	{
 		$details = $res->getShippingCategoryDetails();
 		if (empty($details))
@@ -410,7 +408,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_shipping_location_details($bean, $res, $xml)
+	public function fill_shipping_location_details($res, $xml)
 	{
 		$details = $res->getShippingLocationDetails();
 		if (empty($details))
@@ -422,7 +420,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_shipping_service_details($bean, $res, $xml)
+	public function fill_shipping_service_details($res, $xml)
 	{
 		$details = $res->getShippingServiceDetails();
 		if (empty($details))
@@ -465,7 +463,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_site_details($bean, $res, $xml)
+	public function fill_site_details($res, $xml)
 	{
 		$siteDetails = $res->getSiteDetails();
 		if (empty($siteDetails))
@@ -477,7 +475,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_url_details($bean, $res, $xml)
+	public function fill_url_details($res, $xml)
 	{
 		$urlDetails = $res->getURLDetails();
 		if (empty($urlDetails))
@@ -490,7 +488,7 @@ class GeteBayDetails extends eBayApiEnvironment
 		}
 	}
 
-	public function fill_variation_details($bean, $res, $xml)
+	public function fill_variation_details($res, $xml)
 	{
 		$variationDetails = $res->getVariationDetails();
 		if (empty($variationDetails))
@@ -517,7 +515,7 @@ class GeteBayDetails extends eBayApiEnvironment
 
         $res = $this->proxy->GeteBayDetails($req);
         if ($this->testValid($res)) {
-			$bean->ebay_details = $this->fill_ebay_details($bean, $res, $xml);
+			$bean->ebay_details = $this->fill_ebay_details($res);
 			$bean->ebay_detail_update_time = $res->getUpdateTime();
 			$bean->save();
             return (true);

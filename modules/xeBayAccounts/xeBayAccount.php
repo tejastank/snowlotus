@@ -63,6 +63,8 @@ class xeBayAccount extends Basic {
 
 	var $additional_column_fields = Array('session_id');
 
+	var $my_messages_summary;
+
 	// Use GeteBayDetails to retrieve the available meta-data for the specified eBay site.
 	var $ebay_details;
 	var $ebay_detail_update_time;

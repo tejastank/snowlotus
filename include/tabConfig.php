@@ -112,6 +112,7 @@ $GLOBALS['tabStructure'] = array(
 			"xeBayAccounts",
 			"xeBayCategories",
 			"xeBayListings",
+			"xeBayMessages",
 			"xeBayOrders",
 			"xeBaySellerLists",
         )

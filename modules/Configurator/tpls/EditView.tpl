@@ -336,7 +336,6 @@
 </table>
 
 <table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-{if $logger_visible}
     <tr>
         <th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_EBAY_SETTINGS}</h4></th>
     </tr>
@@ -360,6 +359,7 @@
 </table>
 
 <table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+{if $logger_visible}
 <tr>
 <th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_LOGGER}</h4></th>
 </tr>

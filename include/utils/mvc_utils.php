@@ -98,7 +98,7 @@ function ajaxBannedModules(){
         'Relationships',
         'Employees',
         'Import',
-        'OAuthKeys'
+        'OAuthKeys',
     );
 
     if(!empty($GLOBALS['sugar_config']['addAjaxBannedModules'])){

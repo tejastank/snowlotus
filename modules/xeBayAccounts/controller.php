@@ -96,9 +96,6 @@ class xeBayAccountsController extends SugarController
 	{
 		$accounts = array();
 
-		// for debug
-		$_REQUEST['ebay_account_name'] = "xlongfeng";
-
 		if (!empty($_REQUEST['ebay_account_name'])) {
 			$name = $_REQUEST['ebay_account_name'];
 			$bean = BeanFactory::getBean('xeBayAccounts');

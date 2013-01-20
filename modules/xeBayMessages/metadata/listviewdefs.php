@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,33 +35,50 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Xxx',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_FORM_TITLE' => 'Xxx List',
-  'LBL_MODULE_NAME' => 'Xxx',
-  'LBL_MODULE_TITLE' => 'Xxx',
-  'LBL_HOMEPAGE_TITLE' => 'My Xxx',
-  'LNK_NEW_RECORD' => 'Create Xxx',
-  'LNK_LIST' => 'View Xxx',
-  'LNK_IMPORT_XXXXS' => 'Import Xxx',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Xxx',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_XXXXS_SUBPANEL_TITLE' => 'Xxx',
-  'LBL_NEW_FORM_TITLE' => 'New Xxx',
+
+
+
+$listViewDefs['xeBayMessages'] = array(
+	'FLAGGED' => array(
+		'width' => '6',
+		'label' => 'LBL_FLAGGED',
+		'default' => true,
+	),
+	'REPLIED' => array(
+		'width' => '6',
+		'label' => 'LBL_REPLIED',
+		'default' => true,
+	),
+	'SENDER_ID' => array(
+		'width' => '10', 
+		'label' => 'LBL_SENDER_ID', 
+		'default' => true,
+        'link' => true),
+	'READ_STATUS' => array(
+		'width' => '48',
+		'label' => 'LBL_NAME',
+		'customCode' => '{$SUBJECT_CUSTOM}',
+		'related_fields' => 
+		array (
+			0 => 'name',
+		),
+		'default' => true,
+	),
+	'CREATION_DATE' => array(
+		'width' => '10',
+		'label' => 'LBL_CREATION_DATE',
+		'default' => true,
+	),
+	'XEBAYACCOUNT_NAME' => array (
+		'width' => '10',
+		'label' => 'LBL_EBAY_ACCOUNT',
+		'module' => 'xeBayAccounts',
+		'id' => 'XEBAYACCOUNT_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'xebayaccount_id',
+		),
+	),
 );
+?>
