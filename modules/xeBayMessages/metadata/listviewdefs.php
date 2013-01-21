@@ -42,11 +42,13 @@ $listViewDefs['xeBayMessages'] = array(
 	'FLAGGED' => array(
 		'width' => '6',
 		'label' => 'LBL_FLAGGED',
+		'customCode' => '{$FLAGGED_ICON}',
 		'default' => true,
 	),
-	'REPLIED' => array(
+	'MESSAGE_STATUS' => array(
 		'width' => '6',
 		'label' => 'LBL_REPLIED',
+		'customCode' => '{$REPLIED_ICON}',
 		'default' => true,
 	),
 	'SENDER_ID' => array(

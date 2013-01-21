@@ -134,4 +134,5 @@ $mod_strings = array (
   'LBL_QUESTION_TYPE_MULTIPLEITEMSHIPPING' => 'MultipleItemShipping',
   'LBL_QUESTION_TYPE_PAYMENT' => 'Payment',
   'LBL_QUESTION_TYPE_SHIPPING' => 'Shipping',
+  'LBL_CONTACT_BUYER_TIPS' => 'Select a transaction to contact buyer',
 );

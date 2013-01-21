@@ -46,6 +46,11 @@ class xeBayMessagesViewDetail extends ViewDetail
  		parent::ViewDetail();
  	}
 
+    public function preDisplay()
+	{
+		parent::preDisplay();
+	}
+
  	/**
  	 * display
  	 * Override the display method to support customization for the buttons that display
@@ -58,6 +63,8 @@ class xeBayMessagesViewDetail extends ViewDetail
 	{
 		global $app_strings, $app_list_strings;
 		global $mod_strings;
+
+		$this->dv->ss->assign('RESPONSES', $this->bean->get_responses());
 
 		parent::display();
 

@@ -53,7 +53,7 @@ class xeBayOrdersViewSend extends SugarView {
         $itemID = $_REQUEST['item_id'];
 
 		if (empty($message) || empty($subject) || empty($itemID))
-			header("Location: index.php?module=xeBayOrders&action=index");
+			header("Location: index.php?module=xeBayOrders&action=DetailView&record={$this->bean->id}");
 
         $x = new AddMemberMessageAAQToPartner();
         $res = $x->addMemberMessage(array(
@@ -66,6 +66,10 @@ class xeBayOrdersViewSend extends SugarView {
             'Subject' => $subject,
             )
         );
+
+		if ($res == true)
+			header("Location: index.php?module=xeBayOrders&action=DetailView&record={$this->bean->id}");
+
 		parent::process();
 	}
 	

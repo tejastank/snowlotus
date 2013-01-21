@@ -165,7 +165,7 @@ OO.toggle_check = function (){
 					<input type="hidden" name="message_status" value="">
 			        <select name='message_status' id='message_status' title=''>
 				        <option value=''></option>
-				        <option value='Unanswered'>{$mod_strings['LBL_UNANSWERED']}</option>
+				        <option value='Unanswered' selected>{$mod_strings['LBL_UNANSWERED']}</option>
 				        <option value='Answered'>{$mod_strings['LBL_ANSWERED']}</option>
 			        </select>
 				</td>

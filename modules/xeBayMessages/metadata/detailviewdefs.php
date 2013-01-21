@@ -92,7 +92,10 @@ $viewdefs['xeBayMessages']['DetailView'] = array(
 			'',
 		),
 		array (
-			'responses',
+			array(
+				'name' => 'responses',
+				'customCode' => '{$RESPONSES}',
+			),
 		),
 	)
 );

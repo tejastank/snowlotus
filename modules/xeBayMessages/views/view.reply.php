@@ -54,18 +54,20 @@ class xeBayMessagesViewReply extends SugarView {
 			header("Location: index.php?module=xeBayMessages&action=index");
 
         $x = new AddMemberMessageRTQ();
-        $res = $x->addMemberMessage(array(
-            'AccountID' => $account->id,
-            'AuthToken' => $account->ebay_auth_token,
-            'ItemID' => $this->bean->item_id,
-            'Body' => $response,
-            'ParentMessageID' => $this->bean->message_id,
-            'RecipientID' => $this->bean->sender_id,
-            )
-        );
+		$res = $x->addMemberMessage(array(
+			'AccountID' => $account->id,
+			'AuthToken' => $account->ebay_auth_token,
+			'ItemID' => $this->bean->item_id,
+			'Body' => $response,
+			'ParentMessageID' => $this->bean->message_id,
+			'RecipientID' => $this->bean->sender_id,
+			)
+		);
+
 		if ($res == true) {
-			if ($this->bean->replied != true)
-				$this->bean->replied_status_update($this->bean->id, 1);
+			$this->bean->insert_response($response);
+			$this->message_status = 'Answered';
+			$this->bean->save();
 			header("Location: index.php?module=xeBayMessages&action=index");
 		}
 		parent::process();

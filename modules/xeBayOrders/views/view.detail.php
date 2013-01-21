@@ -78,7 +78,24 @@ class xeBayOrdersViewDetail extends ViewDetail
 		$smarty->assign("TEMPLATE_SELECT", SugarThemeRegistry::current()->getImage('id-ff-select','',null,null,'.png',$mod_strings['LBL_SELECT']));
 		$smarty->assign("TEMPLATE_CLEAR", SugarThemeRegistry::current()->getImage('id-ff-clear','',null,null,'.gif',$mod_strings['LBL_ID_FF_CLEAR']));
 
-        // $smarty->assign('SUBJECT', '');
+		$itemAssociation = '';
+		$this->bean->load_relationship('xebaytransactions');
+		$transactions = $this->bean->xebaytransactions->getBeans();
+		$first = true;
+		foreach ($transactions as &$transaction) {
+			if (!empty($transaction->item_item_id)) {
+				if ($first == true) {
+					$first = false;
+					$smarty->assign('ITEM_ID', $transaction->item_item_id);
+					$smarty->assign('SUBJECT', $transaction->name);
+					$itemAssociation .= "<input name='item_assocaition' id='{$transaction->name}' type='radio' value='{$transaction->item_item_id}' checked='checked' onclick=select_item_id(this) />$transaction->name<br>";
+				} else {
+					$itemAssociation .= "<input name='item_assocaition' id='{$transaction->name}' type='radio' value='{$transaction->item_item_id}' onclick=select_item_id(this) />$transaction->name<br>";
+				}
+			}
+		}
+
+		$smarty->assign('ITEM_ASSOCIATION', $itemAssociation);
 		$smarty->assign('SALUTATION', str_replace("\n", "<br>", $this->bean->get_salutation()));
 		$smarty->assign('SIGNATURE', str_replace("\n", "<br>", $this->bean->get_signature()));
         $smarty->display("modules/xeBayOrders/tpls/send.tpl");

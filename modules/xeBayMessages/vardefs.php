@@ -190,12 +190,6 @@ $dictionary['xeBayMessage'] = array(
 			'type' => 'bool',
 			'default' => false,
 		),
-		'replied' => array (
-			'name' => 'replied',
-			'vname' => 'LBL_REPLIED',
-			'type' => 'bool',
-			'default' => false,
-		),
 
 		'date_sent' => array (
 			'name'			=> 'date_sent',

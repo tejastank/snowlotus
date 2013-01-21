@@ -80,7 +80,6 @@ class xeBayMessage extends Basic {
 
 	var $flagged;
 	var $read_status;
-	var $replied;
 	
 	var $date_sent;
 
@@ -100,6 +99,12 @@ class xeBayMessage extends Basic {
 	function get_list_view_data()
 	{
 		$field_list = $this->get_list_view_array();
+
+		if ($field_list['FLAGGED'] == true)
+			$field_list['FLAGGED_ICON'] = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('icon_red_flag.gif')."'>";
+
+		if ($field_list['MESSAGE_STATUS'] == 'Answered')
+			$field_list['REPLIED_ICON'] = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('icon_email_reply.gif')."'>";
 
 		if ($field_list['READ_STATUS'] != true) {
 			$subject = "<b>{$field_list['NAME']}</b>";
@@ -147,6 +152,9 @@ class xeBayMessage extends Basic {
 	function replied_status_update($id, $status)
 	{
 		global $current_user;
+
+		$status = ($status == true) ? 'Answered' : 'Unanswered';
+
 		$date_modified = $GLOBALS['timedate']->nowDb();
         if ( isset($this->field_defs['modified_user_id']) ) {
             if (!empty($current_user)) {
@@ -154,11 +162,55 @@ class xeBayMessage extends Basic {
             } else {
                 $this->modified_user_id = 1;
             }
-            $query = "UPDATE $this->table_name set replied='{$status}' , date_modified = '$date_modified', modified_user_id = '$this->modified_user_id' where id='$id'";
+            $query = "UPDATE $this->table_name set message_status='{$status}' , date_modified = '$date_modified', modified_user_id = '$this->modified_user_id' where id='$id'";
         } else {
-            $query = "UPDATE $this->table_name set replied='{$status}' , date_modified = '$date_modified' where id='$id'";
+            $query = "UPDATE $this->table_name set message_status='{$status}' , date_modified = '$date_modified' where id='$id'";
         }
         $this->db->query($query, true,"Error update record replied status: ");
+	}
+
+	function add_responses($responses)
+	{
+		if (!empty($this->responses)) {
+			$xml = simplexml_load_string(html_entity_decode($this->responses,ENT_COMPAT,'UTF-8'));
+			foreach ($xml->Responses->Response as $response) {
+				$responses[] = $response;
+			}
+		}
+
+		$xmlString = "<?xml version='1.0' standalone='yes'?><MemberMessages></MemberMessages>";
+		$xml = simplexml_load_string($xmlString);
+		$xmlSub = $xml->addChild('Responses');
+
+		if (!empty($responses)) {
+			foreach($responses as &$response) {
+				$child = $xmlSub->addChild('Response', $response);
+			}
+		}
+
+		$this->response = htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
+	}
+
+	function insert_response($response)
+	{
+		$xml = simplexml_load_string(html_entity_decode($this->responses,ENT_COMPAT,'UTF-8'));
+		$xml->Responses->addChild('Response', $response);
+		$this->responses = htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
+	}
+
+	function get_responses()
+	{
+		$response_html = '';
+
+		$xml = simplexml_load_string(html_entity_decode($this->responses,ENT_COMPAT,'UTF-8'));
+		foreach ($xml->Responses->Response as $response) {
+			if ($response_html != '') {
+				$response_html .= "<hr>";
+			}
+			$response_html .= str_replace("\n", "<br>", $response);
+		}
+
+		return $response_html;
 	}
 }
 ?>

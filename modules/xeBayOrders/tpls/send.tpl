@@ -43,6 +43,7 @@
 <input type='hidden' name='action' value='send'/>
 <input type='hidden' name='module' value='xeBayOrders'/>
 <input type='hidden' name='record' value='{$RECORD}'/>
+<input type='hidden' name='item_id' id="item_id" value='{$ITEM_ID}'/>
 <span class='error'>{$error.main}</span>
 <table width="100%" cellpadding="0" cellspacing="1" border="0" class="actionsContainer">
 <tr>
@@ -63,7 +64,7 @@
 <table  width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 	<tr>
 		<td scope="row"><span style="font-weight:bold">{$MOD.LBL_SUBJECT}:</span>&nbsp;&nbsp;<input title="" id="subject" name="subject" type="text" size="64" value="{$SUBJECT}"></td>
-        <td scope="row" rowspan="5">{$ITEM_ASSOCIATION}</td>
+		<td scope="row"><span style="font-weight:bold">{$MOD.LBL_CONTACT_BUYER_TIPS}:</span></td>
 	</tr>
 	<tr>
 		<td scope="row"><span style="font-weight:bold">{$MOD.LBL_QUESTION_TYPE}:</span>&nbsp;&nbsp;
@@ -75,6 +76,7 @@
             <option value="Shipping">{$MOD.LBL_QUESTION_TYPE_SHIPPING}</option>
         </select>
         </td>
+        <td scope="row" rowspan="4" align="left">{$ITEM_ASSOCIATION}</td>
 	</tr>
 	<tr>
 		<td scope="row" colspan="2" style="font-weight:bold">{$SALUTATION}</td>
@@ -94,5 +96,12 @@
 <script type='text/javascript'>
 YAHOO.util.Event.onDOMReady(function(){
 });
+function select_item_id(_select)
+{
+	var item_id = _select.value;
+	var subject = _select.id;
+	document.getElementById('item_id').value = item_id;
+	document.getElementById('subject').value = subject;
+}
 </script>
 {/literal}
