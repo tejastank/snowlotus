@@ -51,6 +51,7 @@ $viewdefs['xeBayAccounts']['DetailView'] = array(
 		),
 		array (
 			'hard_expiration_time',
+			'sandbox',
 		),
 		array (
 			array(

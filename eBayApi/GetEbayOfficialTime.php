@@ -7,8 +7,6 @@ require_once 'GeteBayOfficialTimeRequestType.php';
 
 class GeteBayOfficialTime extends eBayApiEnvironment
 {
-	public $res;
-
    /**
      * sample_GeteBayOfficialTime::dispatchCall()
      * 
@@ -20,13 +18,14 @@ class GeteBayOfficialTime extends eBayApiEnvironment
      */
     public function dispatchCall ($params)
     {
+		$this->session->setRequestToken($params['AuthToken']);
+
         $req = new GeteBayOfficialTimeRequestType();
 		
         $res = $this->proxy->GeteBayOfficialTime($req);
+		$this->dumpObject($res);
         if ($this->testValid($res))
         {
-			$this->res = $res;
-			$this->dumpObject($res);
             return (true);
         }
         else 

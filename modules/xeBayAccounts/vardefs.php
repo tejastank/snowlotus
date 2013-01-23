@@ -51,6 +51,12 @@ $dictionary['xeBayAccount'] = array(
 			'vname' => 'LBL_HARD_EXPIRATION_TIME',
 	    	'type'=>'datetime',
 		),
+		'sandbox'=>
+		array (
+			'name' => 'sandbox',
+			'vname' => 'LBL_SANDBOX',
+			'type' => 'bool',
+		),
 		'my_messages_summary'=>
 		array (
 			'name' => 'my_messages_summary',

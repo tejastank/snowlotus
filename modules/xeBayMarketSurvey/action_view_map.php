@@ -1,4 +1,5 @@
 <?php
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,8 +35,6 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_MARKET_SURVEY_TOOLS' => 'Market Survey Tools',
-  'LBL_EBAY_OFFICIAL_TIME' => 'eBay Official Time',
-  'LBL_FIND_POPULAR_SEARCHES' => 'Find Popular Searches',
-);
+
+$action_view_map['getebayofficialtime'] = 'getebayofficialtime';
+$action_view_map['findpopularsearches'] = 'findpopularsearches';

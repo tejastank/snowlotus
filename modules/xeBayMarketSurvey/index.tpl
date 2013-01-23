@@ -50,5 +50,6 @@
 </tr>
 <tr>
     <td scope="row" align="left" width="25%"><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
+    <td scope="row" align="left" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
 </tr>
 </table>

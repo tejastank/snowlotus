@@ -61,6 +61,7 @@ $viewdefs['xeBayAccounts']['EditView'] = array(
 			),
 			array (
 				'description',
+				'sandbox',
 			),
 		),
 	),

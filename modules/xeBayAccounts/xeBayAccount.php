@@ -106,12 +106,16 @@ class xeBayAccount extends Basic {
 
 	function get_accounts($name)
 	{
+		global $sugar_config;
 		$accounts = array();
 
+		$where = "sandbox={$sugar_config['ebay_app_mode_sandbox']}";
 		if ($name == 'All') {
-			$resp = $this->get_list("", "ebay_auth_token<>''", 0, -1, -1, 0, false, array('id', 'ebay_auth_token'));
+			$where .= " AND ebay_auth_token<>''";
+			$resp = $this->get_list("", $where, 0, -1, -1, 0, false, array('id', 'ebay_auth_token'));
 		} else {
-			$resp = $this->get_list("", "name='$name'", 0, -1, -1, 0, false, array('id', 'ebay_auth_token'));
+			$where .= " AND name='$name'";
+			$resp = $this->get_list("", $where, 0, -1, -1, 0, false, array('id', 'ebay_auth_token'));
 		}
 
 		if ($resp['row_count'] > 0) {

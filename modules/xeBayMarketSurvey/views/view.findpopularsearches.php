@@ -34,8 +34,21 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_MARKET_SURVEY_TOOLS' => 'Market Survey Tools',
-  'LBL_EBAY_OFFICIAL_TIME' => 'eBay Official Time',
-  'LBL_FIND_POPULAR_SEARCHES' => 'Find Popular Searches',
-);
+require_once('include/MVC/View/SugarView.php');
+require_once('eBayApi/FindPopularSearches.php');
+
+class xeBayMarketSurveyViewFindpopularsearches extends SugarView {
+
+	function xeBayMarketSurveyViewFindpopularsearches()
+    {
+ 		parent::SugarView();
+	}
+	
+	function display()
+	{
+		$x = new FindPopularSearches();
+		$x->dispatchCall(array());
+	}
+}
+
+?>

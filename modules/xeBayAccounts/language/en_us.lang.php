@@ -75,4 +75,5 @@ $mod_strings = array (
   'LBL_EBAYORDERS_SUBPANEL_TITLE' => 'Orders',
   'LBL_EBAYTRANSACTIONS_SUBPANEL_TITLE' => 'Transactions',
   'LBL_EBAYSELLERLISTS_SUBPANEL_TITLE' => 'Seller Lists',
+  'LBL_SANDBOX' => 'Sandbox',
 );
