@@ -325,6 +325,9 @@ $moduleList[] = 'xeBayListings';
 $beanList['xeBayListings'] = 'xeBayListing';
 $beanFiles['xeBayListing'] = 'modules/xeBayListings/xeBayListing.php';
 
+$moduleList[] = 'xeBayMarketSurvey';
+$beanFiles['xeBayMarketSurvey'] = 'modules/xeBayMarketSurvey/xeBayMarketSurvey.php';
+
 $moduleList[] = 'xeBayMessages';
 $beanList['xeBayMessages'] = 'xeBayMessage';
 $beanFiles['xeBayMessage'] = 'modules/xeBayMessages/xeBayMessage.php';
