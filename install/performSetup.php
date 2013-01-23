@@ -495,13 +495,10 @@ FP;
     $enabled_tabs[] = 'Prospects';
     $enabled_tabs[] = 'ProspectLists';
     $enabled_tabs[] = 'xeBayAccounts';
-    $enabled_tabs[] = 'xeBayListings';
     $enabled_tabs[] = 'xeBayMessages';
     $enabled_tabs[] = 'xeBayOrders';
-    $enabled_tabs[] = 'xeBaySellerLists';
     $enabled_tabs[] = 'xCategories';
     $enabled_tabs[] = 'xInventories';
-    $enabled_tabs[] = 'xInventoryGroups';
     $enabled_tabs[] = 'xVendors';
 
 

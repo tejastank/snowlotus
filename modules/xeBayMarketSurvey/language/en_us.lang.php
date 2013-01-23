@@ -34,49 +34,8 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once('include/MVC/View/SugarView.php');
-require_once('eBayApi/AddMemberMessageRTQ.php');
+$mod_strings = array (
+  'LBL_MARKET_SURVEY_TOOLS' => 'Market Survey Tools',
+  'LBL_EBAY_OFFICIAL_TIME' => 'eBay Official Time',
 
-class xeBayMessagesViewReply extends SugarView {
-
-	function xeBayMessagesViewReply()
-    {
- 		parent::SugarView();
-	}
-	
-    function process()
-    {
-		$account = BeanFactory::getBean('xeBayAccounts', $this->bean->xebayaccount_id);
-		$subject = $_REQUEST['subject'];
-		$response = $_REQUEST['response'];
-
-		if (empty($response))
-			header("Location: index.php?module=xeBayMessages&action=index");
-
-        $x = new AddMemberMessageRTQ();
-        $res = $x->addMemberMessage(array(
-            'AccountID' => $account->id,
-            'AuthToken' => $account->ebay_auth_token,
-            'ItemID' => $this->bean->item_id,
-            'Body' => $response,
-            'ParentMessageID' => $this->bean->message_id,
-            'RecipientID' => $this->bean->sender_id,
-            )
-        );
-
-		if ($res == true) {
-			$this->bean->insert_response($response);
-			$this->message_status = 'Answered';
-			$this->bean->save();
-			header("Location: index.php?module=xeBayMessages&action=index");
-		}
-		parent::process();
-	}
-	
-	function display()
-	{
-		// sugar_cleanup(true);
-	}
-}
-
-?>
+);

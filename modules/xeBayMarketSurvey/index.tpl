@@ -1,4 +1,4 @@
-<?php
+{* <!--
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,49 +34,21 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once('include/MVC/View/SugarView.php');
-require_once('eBayApi/AddMemberMessageRTQ.php');
+-->
 
-class xeBayMessagesViewReply extends SugarView {
 
-	function xeBayMessagesViewReply()
-    {
- 		parent::SugarView();
-	}
-	
-    function process()
-    {
-		$account = BeanFactory::getBean('xeBayAccounts', $this->bean->xebayaccount_id);
-		$subject = $_REQUEST['subject'];
-		$response = $_REQUEST['response'];
+*}
 
-		if (empty($response))
-			header("Location: index.php?module=xeBayMessages&action=index");
+<div class="moduleTitle">
+<h2>Market Survey</h2>
+<div class="clear"></div>
+</div>
 
-        $x = new AddMemberMessageRTQ();
-        $res = $x->addMemberMessage(array(
-            'AccountID' => $account->id,
-            'AuthToken' => $account->ebay_auth_token,
-            'ItemID' => $this->bean->item_id,
-            'Body' => $response,
-            'ParentMessageID' => $this->bean->message_id,
-            'RecipientID' => $this->bean->sender_id,
-            )
-        );
-
-		if ($res == true) {
-			$this->bean->insert_response($response);
-			$this->message_status = 'Answered';
-			$this->bean->save();
-			header("Location: index.php?module=xeBayMessages&action=index");
-		}
-		parent::process();
-	}
-	
-	function display()
-	{
-		// sugar_cleanup(true);
-	}
-}
-
-?>
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+<tr>
+	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
+</tr>
+<tr>
+    <td scope="row" align="left" width="25%"><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
+</tr>
+</table>
