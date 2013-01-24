@@ -162,7 +162,7 @@ class GetSellerList extends eBayTradingApi
 					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
 					$bean->xinventory_id = $item->getSKU();
-					$name = $bean->name = $item->getTitle();
+                    $bean->name = mb_convert_encoding($item->getTitle(), 'UTF-8');
 					$variations = $item->getVariations();
 					$bean->variation = !empty($variations);
 					$bean->id = create_guid();
@@ -183,9 +183,8 @@ class GetSellerList extends eBayTradingApi
 	{
 		$this->session->setRequestToken($params['AuthToken']);
 
-		$result = true;
-
 		$bean = BeanFactory::getBean('xeBaySellerSurveys');
+		$GLOBALS['db']->query("DELETE FROM xebaysellersurveys WHERE xebaysellersurveys.userid ='{$params['UserID']}'");
 
 		$outputSelector = array(
 			'HasMoreItems',
@@ -213,12 +212,14 @@ class GetSellerList extends eBayTradingApi
 		$req->setDetailLevel('ReturnAll');
 		$req->setEndTimeFrom($params['EndTimeFrom']);
 		$req->setEndTimeTo($params['EndTimeTo']);
+		$req->setUserID($params['UserID']);
 		$req->setOutputSelector($outputSelector);
 
 		$pagination = new PaginationType();
-		$pagination->setEntriesPerPage(100);
+		$pagination->setEntriesPerPage(200);
 		$pageNumber = 1;
 
+		$returnedItemCountActual = 0;
 		$hasMoreItems = false;
 		do {
 			$pagination->setPageNumber($pageNumber++);
@@ -226,7 +227,7 @@ class GetSellerList extends eBayTradingApi
         	$res = $this->proxy->GetSellerList($req);
         	if ($this->testValid($res)) {
 				$hasMoreItems = $res->getHasMoreItems();
-				$returnedItemCountActual = $res->getReturnedItemCountActual();
+				$returnedItemCountActual += $res->getReturnedItemCountActual();
 				$userID = $res->getSeller()->getUserID();
 				$itemArray = $res->getItemArray();
 				if (empty($itemArray))
@@ -234,7 +235,10 @@ class GetSellerList extends eBayTradingApi
 				foreach ($itemArray as &$item) {
 					$bean->listing_type = $item->getListingType();
                     $listingType = $item->getListingType();
-					if ($listingType != 'FixedPriceItem' || $listingType != 'FixedPriceItem')
+					if (($listingType != 'FixedPriceItem') && ($listingType != 'StoresFixedPrice'))
+						continue;
+				    $bean->quantitysold = $item->getSellingStatus()->getQuantitySold();
+					if ($bean->quantitysold  == 0)
 						continue;
 				    $bean->buyitnowprice = $item->getBuyItNowPrice()->getTypeValue();
 				    $bean->buyitnowprice_currencyid = $item->getBuyItNowPrice()->getTypeAttribute('currencyID');
@@ -248,10 +252,10 @@ class GetSellerList extends eBayTradingApi
 				    $bean->categoryid = $item->getPrimaryCategory()->getCategoryID();
 				    $bean->categoryname = $item->getPrimaryCategory()->getCategoryName();
 				    $bean->quantity = $item->getQuantity();
-				    $bean->quantitysold = $item->getSellingStatus()->QuantitySold();
+					$bean->quantitysold_permonth = $bean->quantitysold * 30 / ((time() - strtotime($bean->starttime)) / (60 * 60 * 24));
 				    $bean->startprice = $item->getStartPrice()->getTypeValue();
 				    $bean->startprice_currencyid = $item->getStartPrice()->getTypeAttribute('currencyID');
-                    $bean->name = $item->getTitle();
+                    $bean->name = mb_convert_encoding($item->getTitle(), 'UTF-8');
 					$bean->userid = $userID;
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
@@ -259,12 +263,11 @@ class GetSellerList extends eBayTradingApi
 				}
 			} else {
             	$this->dumpObject($res);
-				$result = false;
-				break;
+				return false;
 			}
 		} while ($hasMoreItems);
 
-		return $result;
+		return $returnedItemCountActual;
 	}
 }
 

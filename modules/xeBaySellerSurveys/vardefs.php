@@ -35,7 +35,7 @@
  ********************************************************************************/
 
 $dictionary['xeBaySellerSurvey'] = array(
-	'table'=>'ebaysellersurveys',
+	'table'=>'xebaysellersurveys',
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
@@ -104,7 +104,7 @@ $dictionary['xeBaySellerSurvey'] = array(
 			'name' => 'categoryname',
 			'vname' => 'LBL_CATEGORYNAME',
 			'type' => 'varchar',
-			'len' => '30',
+			'len' => '128',
 		),
 		'quantity' => array(
 			'name' => 'quantity',
@@ -114,6 +114,11 @@ $dictionary['xeBaySellerSurvey'] = array(
 		'quantitysold' => array(
 			'name' => 'quantitysold',
 			'vname' => 'LBL_QUANTITYSOLD',
+			'type' => 'int',
+		),
+		'quantitysold_permonth' => array(
+			'name' => 'quantitysold_permonth',
+			'vname' => 'LBL_QUANTITYSOLD_PERMONTH',
 			'type' => 'int',
 		),
 		'startprice' => array(

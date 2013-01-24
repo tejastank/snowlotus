@@ -65,5 +65,34 @@ class xeBaySellerSurveysController extends SugarController
 			));
 		}
     }
+
+	function action_importlist()
+	{
+		$userID = $_REQUEST['user_id'];
+		if (!empty($userID)) {
+			$bean = BeanFactory::getBean('xeBayAccounts');
+			$accounts = $bean->get_accounts('All');
+
+            require_once('eBayApi/GetSellerList.php');
+			$sellerList = new GetSellerList;
+			$endTimeFrom = date("c", time());
+			$endTimeTo = date("c", time() + 60 * 60 * 24 * 30);
+
+			set_time_limit(60*10);
+
+			$res = $sellerList->retrieveSellerSurveyList(array(
+				'UserID' => $userID,
+				'EndTimeFrom' => $endTimeFrom,
+				'EndTimeTo' => $endTimeTo,
+				'AuthToken' => current($accounts),
+			));
+
+			if ($res === false) {
+				sugar_cleanup(true);
+			} else {
+				$this->redirect_url = "index.php?module=xeBaySellerSurveys&action=index";
+			}
+		}
+	}
 }
 ?>

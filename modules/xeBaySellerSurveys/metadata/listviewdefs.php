@@ -39,17 +39,51 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['xeBaySellerSurveys'] = array(
+	'ITEMID' => array(
+		'width' => '4', 
+		'label' => 'LBL_DUMMY', 
+		'default' => true,
+		'customCode' => '<a title="{$ITEMID}" href="{$VIEWITEMURL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEMID}6464.jpg" alt="" /></a>',
+		'sortable' => false,
+    	'related_fields' => array(
+			'0' => 'viewitemurl',
+		)),
 	'NAME' => array(
 		'width' => '32', 
 		'label' => 'LBL_NAME', 
 		'default' => true,
-        'link' => true),         
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-	
+        'link' => true),
+	'CATEGORYNAME' => array(
+		'width' => '24', 
+		'label' => 'LBL_CATEGORYNAME', 
+		'default' => false),
+	'STARTPRICE' => array(
+		'width' => '8', 
+		'label' => 'LBL_PRICE', 
+		'default' => true,
+		'customCode' => '{$STARTPRICE_CURRENCYID}&nbsp{$STARTPRICE}',
+    	'related_fields' => array(
+			'0' => 'startprice_currencyid',
+		),
+	),
+	'STARTTIME' => array(
+		'width' => '8', 
+		'label' => 'LBL_STARTTIME', 
+		'default' => true,
+	),
+	'QUANTITYSOLD' => array(
+		'width' => '8', 
+		'label' => 'LBL_QUANTITYSOLD', 
+		'default' => true,
+	),
+	'QUANTITYSOLD_PERMONTH' => array(
+		'width' => '8',
+		'label' => 'LBL_QUANTITYSOLD_PERMONTH',
+		'default' => true,
+	),
+	'USERID' => array(
+		'width' => '8',
+		'label' => 'LBL_USERID',
+		'default' => true),
 );
 ?>

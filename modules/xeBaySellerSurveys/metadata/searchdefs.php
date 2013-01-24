@@ -43,7 +43,7 @@ $searchdefs['xeBaySellerSurveys'] = array(
 	'layout' => array(
 		'basic_search' => array(
 			'name',
-			array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
+			'userid',
 		),
 		'advanced_search' => array(
 			'name',

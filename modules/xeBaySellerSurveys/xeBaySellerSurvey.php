@@ -38,7 +38,7 @@ class xeBaySellerSurvey extends Basic {
 	var $new_schema = true;
 	var $module_dir = 'xeBaySellerSurveys';
 	var $object_name = 'xeBaySellerSurvey';
-	var $table_name = 'ebaysellersurveys';
+	var $table_name = 'xebaysellersurveys';
 	var $importable = true;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 	var $id;
@@ -71,6 +71,7 @@ class xeBaySellerSurvey extends Basic {
 	var $categoryname;
 	var $quantity;
 	var $quantitysold;
+	var $quantitysold_permonth;
 	var $startprice;
 	var $startprice_currencyid;
 
@@ -85,6 +86,13 @@ class xeBaySellerSurvey extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+	function get_list_view_data()
+	{
+		$field_list = $this->get_list_view_array();
+
+		return $field_list;
 	}
 }
 ?>
