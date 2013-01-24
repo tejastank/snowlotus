@@ -79,6 +79,19 @@ class GetSellerList extends eBayTradingApi
         }
     }
 
+	function fill_picture_details(&$item)
+	{
+		$xmlString = "<?xml version='1.0' standalone='yes'?><PictureDetails></PictureDetails>";
+		$xml = simplexml_load_string($xmlString);
+
+		$pictureURL = $item->getPictureDetails()->getPictureURL();
+		foreach ($pictureURL as &$url) {
+			$xml->addChild('PictureURL', $url);
+		}
+
+        return htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
+	}
+
 	public function retrieveSellerList($params)
 	{
 		$account_id = $params['AccountID'];
@@ -91,7 +104,6 @@ class GetSellerList extends eBayTradingApi
 		$outputSelector = array(
 			'HasMoreItems',
 			'ItemArray.Item.ApplicationData',
-			'ItemArray.Item.HitCount', /* may be not set */
 			// 'ItemArray.Item.BuyItNowPrice',
 			// 'ItemArray.Item.Currency',
 			'ItemArray.Item.HitCount', /* may be not set */
@@ -167,17 +179,92 @@ class GetSellerList extends eBayTradingApi
 		return $result;
 	}
 
-	function fill_picture_details(&$item)
+	public function retrieveSellerSurveyList($params)
 	{
-		$xmlString = "<?xml version='1.0' standalone='yes'?><PictureDetails></PictureDetails>";
-		$xml = simplexml_load_string($xmlString);
+		$this->session->setRequestToken($params['AuthToken']);
 
-		$pictureURL = $item->getPictureDetails()->getPictureURL();
-		foreach ($pictureURL as &$url) {
-			$xml->addChild('PictureURL', $url);
-		}
+		$result = true;
 
-        return htmlentities($xml->asXML(), ENT_QUOTES, 'UTF-8');
+		$bean = BeanFactory::getBean('xeBaySellerSurveys');
+
+		$outputSelector = array(
+			'HasMoreItems',
+            'ItemArray.Item.BuyItNowPrice',
+			// 'ItemArray.Item.Currency',
+			'ItemArray.Item.ItemID',
+			'ItemArray.Item.ListingDetails.ConvertedStartPrice',
+			'ItemArray.Item.ListingDetails.StartTime',
+			'ItemArray.Item.ListingDetails.EndTime',
+			'ItemArray.Item.ListingDetails.ViewItemURL',
+			'ItemArray.Item.ListingType',
+			'ItemArray.Item.PictureDetails.PictureURL',
+			'ItemArray.Item.PrimaryCategory',
+			'ItemArray.Item.Quantity',
+			'ItemArray.Item.SellingStatus.QuantitySold',
+			'ItemArray.Item.StartPrice',
+			'ItemArray.Item.Title',
+			'Seller.UserID',
+			'ItemsPerPage',
+			'PageNumber',
+			'ReturnedItemCountActual',
+		);
+
+        $req = new GetSellerListRequestType();
+		$req->setDetailLevel('ReturnAll');
+		$req->setEndTimeFrom($params['EndTimeFrom']);
+		$req->setEndTimeTo($params['EndTimeTo']);
+		$req->setOutputSelector($outputSelector);
+
+		$pagination = new PaginationType();
+		$pagination->setEntriesPerPage(100);
+		$pageNumber = 1;
+
+		$hasMoreItems = false;
+		do {
+			$pagination->setPageNumber($pageNumber++);
+			$req->setPagination($pagination);
+        	$res = $this->proxy->GetSellerList($req);
+        	if ($this->testValid($res)) {
+				$hasMoreItems = $res->getHasMoreItems();
+				$returnedItemCountActual = $res->getReturnedItemCountActual();
+				$userID = $res->getSeller()->getUserID();
+				$itemArray = $res->getItemArray();
+				if (empty($itemArray))
+					break;
+				foreach ($itemArray as &$item) {
+					$bean->listing_type = $item->getListingType();
+                    $listingType = $item->getListingType();
+					if ($listingType != 'FixedPriceItem' || $listingType != 'FixedPriceItem')
+						continue;
+				    $bean->buyitnowprice = $item->getBuyItNowPrice()->getTypeValue();
+				    $bean->buyitnowprice_currencyid = $item->getBuyItNowPrice()->getTypeAttribute('currencyID');
+				    $bean->itemid = $item->getItemID();
+				    $bean->convertedstartprice = $item->getListingDetails()->getConvertedStartPrice()->getTypeValue();
+				    $bean->convertedstartprice_currencyid = $item->getListingDetails()->getConvertedStartPrice()->getTypeAttribute('currencyID');
+				    $bean->starttime = $item->getListingDetails()->getStartTime();
+				    $bean->endtime = $item->getListingDetails()->getEndTime();
+				    $bean->viewitemurl = $item->getListingDetails()->getViewItemURL();
+				    $bean->picturedetails = $this->fill_picture_details($item);
+				    $bean->categoryid = $item->getPrimaryCategory()->getCategoryID();
+				    $bean->categoryname = $item->getPrimaryCategory()->getCategoryName();
+				    $bean->quantity = $item->getQuantity();
+				    $bean->quantitysold = $item->getSellingStatus()->QuantitySold();
+				    $bean->startprice = $item->getStartPrice()->getTypeValue();
+				    $bean->startprice_currencyid = $item->getStartPrice()->getTypeAttribute('currencyID');
+                    $bean->name = $item->getTitle();
+					$bean->userid = $userID;
+					$bean->id = create_guid();
+					$bean->new_with_id = true;
+					$bean->save();
+				}
+			} else {
+            	$this->dumpObject($res);
+				$result = false;
+				break;
+			}
+		} while ($hasMoreItems);
+
+		return $result;
 	}
 }
 

@@ -1,4 +1,5 @@
-{* <!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +35,36 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
 
+$subpanel_layout = array(
+	'top_buttons' => array(
+		array('widget_class' => 'SubPanelTopCreateButton'),
+		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'xeBaySellerSurveys'),
+	),
 
-*}
+	'where' => '',
 
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
+	'list_fields' => array(
+		'name'=>array(
+	 		'vname' => 'LBL_NAME',
+			'widget_class' => 'SubPanelDetailViewLink',
+	 		'width' => '45%',
+		),
+		'date_modified'=>array(
+	 		'vname' => 'LBL_DATE_MODIFIED',
+	 		'width' => '45%',
+		),
+		'edit_button'=>array(
+			'widget_class' => 'SubPanelEditButton',
+		 	'module' => 'xeBaySellerSurveys',
+	 		'width' => '4%',
+		),
+		'remove_button'=>array(
+			'widget_class' => 'SubPanelRemoveButton',
+		 	'module' => 'xeBaySellerSurveys',
+			'width' => '5%',
+		),
+	),
+);
 
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+?>

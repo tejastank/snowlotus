@@ -1,4 +1,5 @@
-{* <!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +35,18 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
-
-
-*}
-
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+$searchFields['xeBaySellerSurveys'] = array (
+	'name' => array( 'query_type'=>'default'),
+	'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+	'assigned_user_id'=> array('query_type'=>'default'),
+	    
+	//Range Search Support 
+	'range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	'start_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	'end_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	'range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	'start_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+    'end_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),	
+	 //Range Search Support 		
+);
+?>

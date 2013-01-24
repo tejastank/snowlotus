@@ -116,6 +116,7 @@ $app_list_strings = array (
     'xeBayMyMessages' => 'My Messages',
     'xeBayOrders' => 'Orders',
     'xeBaySellerLists' => 'Seller Lists',
+    'xeBaySellerSurveys' => 'Seller Survey',
     'xeBayTransactions' => 'Order Transactions',
     'xInventories' => 'Inventories',
     'xInventoryGroups' => 'Inventory Groups',

@@ -348,6 +348,10 @@ $moduleList[] = 'xeBaySellerLists';
 $beanList['xeBaySellerLists'] = 'xeBaySellerList';
 $beanFiles['xeBaySellerList'] = 'modules/xeBaySellerLists/xeBaySellerList.php';
 
+$moduleList[] = 'xeBaySellerSurveys';
+$beanList['xeBaySellerSurveys'] = 'xeBaySellerSurvey';
+$beanFiles['xeBaySellerSurvey'] = 'modules/xeBaySellerSurveys/xeBaySellerSurvey.php';
+
 $moduleList[] = 'xeBayTransactions';
 $beanList['xeBayTransactions'] = 'xeBayTransaction';
 $beanFiles['xeBayTransaction'] = 'modules/xeBayTransactions/xeBayTransaction.php';

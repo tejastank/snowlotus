@@ -1,4 +1,4 @@
-{* <!--
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +34,36 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
+$viewdefs['xeBaySellerSurveys']['DetailView'] = array(
+	'templateMeta' => array(
+		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
+		'maxColumns' => '2',
+		'widths' => array(
+			array('label' => '10', 'field' => '30'),
+			array('label' => '10', 'field' => '30')
+		 ),
+	),
 
-
-*}
-
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+	'panels' =>array (
+		array (
+			'name',
+			'assigned_user_name',
+		),
+		array (
+			array (
+				'name' => 'date_entered',
+				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+				'label' => 'LBL_DATE_ENTERED',
+			),
+			array (
+				'name' => 'date_modified',
+				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+				'label' => 'LBL_DATE_MODIFIED',
+			),
+		),
+		array (
+			'description',
+		),
+	)
+);
+?>

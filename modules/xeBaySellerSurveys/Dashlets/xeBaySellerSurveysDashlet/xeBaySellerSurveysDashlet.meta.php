@@ -1,4 +1,5 @@
-{* <!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +35,19 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
+/*********************************************************************************
 
+ * Description:  Defines the English language pack for the base application.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+ 
+global $app_strings;
 
-*}
-
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+$dashletMeta['xeBaySellerSurveysDashlet'] = array(
+	'module'      => 'xeBaySellerSurveys',
+	'title'       => translate('LBL_HOMEPAGE_TITLE', 'xeBaySellerSurveys'), 
+    'description' => 'A customizable view into xeBaySellerSurveys',
+    'icon'        => 'icon_xeBaySellerSurveys_32.gif',
+    'category'    => 'Module Views');

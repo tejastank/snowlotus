@@ -1,4 +1,5 @@
-{* <!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +35,10 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
 
-
-*}
-
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+global $mod_strings, $app_strings, $sugar_config;
+ 
+// if(ACLController::checkAccess('xeBaySellerSurveys', 'edit', true))$module_menu[]=Array("index.php?module=xeBaySellerSurveys&action=EditView&return_module=xeBaySellerSurveys&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBaySellerSurveys", 'xeBaySellerSurveys');
+if(ACLController::checkAccess('xeBaySellerSurveys', 'list', true))$module_menu[]=Array("index.php?module=xeBaySellerSurveys&action=index&return_module=xeBaySellerSurveys&return_action=DetailView", $mod_strings['LNK_LIST'],"eBaySellerSurveys", 'xeBaySellerSurveys');
+// if(ACLController::checkAccess('xeBaySellerSurveys', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xeBaySellerSurveys&return_module=xeBaySellerSurveys&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBaySellerSurveys');
+if(ACLController::checkAccess('xeBaySellerSurveys', 'test', true))$module_menu[]=Array("index.php?module=xeBaySellerSurveys&action=test&return_module=xeBaySellerSurveys&return_action=index", $mod_strings['LNK_TEST'],"Test", 'xeBaySellerSurveys');

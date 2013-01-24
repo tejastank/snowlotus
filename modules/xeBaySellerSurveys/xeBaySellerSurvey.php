@@ -1,4 +1,4 @@
-{* <!--
+<?PHP
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +34,57 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
+class xeBaySellerSurvey extends Basic {
+	var $new_schema = true;
+	var $module_dir = 'xeBaySellerSurveys';
+	var $object_name = 'xeBaySellerSurvey';
+	var $table_name = 'ebaysellersurveys';
+	var $importable = true;
+	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+	var $id;
+	var $name;
+	var $date_entered;
+	var $date_modified;
+	var $modified_user_id;
+	var $modified_by_name;
+	var $created_by;
+	var $created_by_name;
+	var $description;
+	var $deleted;
+	var $created_by_link;
+	var $modified_user_link;
+	var $assigned_user_id;
+	var $assigned_user_name;
+	var $assigned_user_link;
 
+    var $userid;
+	var $buyitnowprice;
+	var $buyitnowprice_currencyid;
+	var $itemid;
+	var $convertedstartprice;
+	var $convertedstartprice_currencyid;
+	var $starttime;
+	var $endtime;
+	var $viewitemurl;
+	var $picturedetails;
+	var $categoryid;
+	var $categoryname;
+	var $quantity;
+	var $quantitysold;
+	var $startprice;
+	var $startprice_currencyid;
 
-*}
-
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+	function xeBaySellerSurvey()
+	{
+		parent::Basic();
+	}
+	
+	function bean_implements($interface)
+	{
+		switch ($interface) {
+			case 'ACL': return true;
+		}
+		return false;
+	}
+}
+?>

@@ -1,4 +1,5 @@
-{* <!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,30 +35,34 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
--->
 
 
-*}
 
-<div class="moduleTitle">
-<h2>Market Survey</h2>
-<div class="clear"></div>
-</div>
+global $current_user;
 
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
-</tr>
-<tr>
-    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
-    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
-    <td scope="row" width="25%">&nbsp;</td>
-    <td scope="row" width="25%">&nbsp;</td>
-</tr>
-<tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
-</tr>
-<tr>
-    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-</tr>
-</table>
+$dashletData['xeBaySellerSurveysDashlet']['searchFields'] = array(
+	'date_entered'  => array('default' => ''),
+	'date_modified' => array('default' => ''),
+	'assigned_user_id'=> array('type' => 'assigned_user_name',
+	'default' => $current_user->name));
+
+$dashletData['xeBaySellerSurveysDashlet']['columns'] = array(
+	'name' => array(
+		'width'   => '40',
+		'label'   => 'LBL_LIST_NAME',
+		'link'    => true,
+		'default' => true),
+	'date_entered' => array(
+		'width'   => '15',
+		'label'   => 'LBL_DATE_ENTERED',
+		'default' => true),
+	'date_modified' => array(
+		'width'   => '15',
+		'label'   => 'LBL_DATE_MODIFIED'),
+	'created_by' => array(
+		'width'   => '8',
+		'label'   => 'LBL_CREATED'),
+	'assigned_user_name' => array(
+		'width'   => '8',
+		'label'   => 'LBL_LIST_ASSIGNED_USER'),
+);
