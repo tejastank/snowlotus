@@ -2,10 +2,10 @@
 /**
  * sources
  */
-require_once 'eBayApiEnvironment.php';
+require_once 'eBayTradingApi.php';
 require_once 'GeteBayOfficialTimeRequestType.php';
 
-class GeteBayOfficialTime extends eBayApiEnvironment
+class GeteBayOfficialTime extends eBayTradingApi
 {
    /**
      * sample_GeteBayOfficialTime::dispatchCall()

@@ -9,7 +9,7 @@ require_once 'EbatNs_Environment.php';
  * Prepares an environment for testing ebatNs calls
  *
  */
-class eBayApiEnvironment extends EbatNs_Environment
+class eBayTradingApi extends EbatNs_Environment
 {
     var $authentication_helper;
     var $sandbox_mode = true;

@@ -36,7 +36,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once('eBayApi/eBayApiEnvironment.php');
+require_once('eBayApi/eBayTradingApi.php');
 
 class xeBayAccountsViewEdit extends ViewEdit
 {
@@ -74,7 +74,7 @@ function connect_now()
 EOQ;
 		echo $javascript;
 		if (!empty($this->bean->session_id)) {
-			$ebay = new eBayApiEnvironment();
+			$ebay = new eBayTradingApi();
 			$url = $ebay->getSignInURL($this->bean->session_id);
 			echo "<iframe class='teamNoticeBox' title='{$url}' src='{$url}' width='100%' height='480px'></iframe>";
 		}

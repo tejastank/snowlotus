@@ -2,7 +2,7 @@
 /**
  * sources
  */
-require_once 'eBayApiEnvironment.php';
+require_once 'eBayTradingApi.php';
 require_once 'AddMemberMessageAAQToPartnerRequestType.php';
 
 /**
@@ -17,7 +17,7 @@ require_once 'AddMemberMessageAAQToPartnerRequestType.php';
  * @version $Id: sample_AddMemberMessageAAQToPartner.php,v 1.107 2012-09-10 11:01:19 michaelcoslar Exp $
  * @access public 
  */
-class AddMemberMessageAAQToPartner extends eBayApiEnvironment
+class AddMemberMessageAAQToPartner extends eBayTradingApi
 {
 
     /**

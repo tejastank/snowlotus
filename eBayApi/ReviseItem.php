@@ -2,10 +2,10 @@
 /**
  * sources
  */
-require_once 'eBayApiEnvironment.php';
+require_once 'eBayTradingApi.php';
 require_once 'ReviseItemRequestType.php';
 
-class ReviseItem extends eBayApiEnvironment
+class ReviseItem extends eBayTradingApi
 {
    /**
      * sample_ReviseItem::dispatchCall()

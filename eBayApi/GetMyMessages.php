@@ -2,7 +2,7 @@
 /**
  * sources
  */
-require_once 'eBayApiEnvironment.php';
+require_once 'eBayTradingApi.php';
 require_once 'GetMyMessagesRequestType.php';
 
 /**
@@ -17,7 +17,7 @@ require_once 'GetMyMessagesRequestType.php';
  * @version $Id: sample_GetMyMessagess.php,v 1.107 2012-09-10 11:01:21 michaelcoslar Exp $
  * @access public
  */
-class GetMyMessages extends eBayApiEnvironment
+class GetMyMessages extends eBayTradingApi
 {
 
    /**

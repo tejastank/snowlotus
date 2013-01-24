@@ -2,10 +2,10 @@
 /**
  * sources
  */
-require_once 'eBayApiEnvironment.php';
+require_once 'eBayTradingApi.php';
 require_once 'ReviseFixedPriceItemRequestType.php';
 
-class ReviseFixedPriceItem extends eBayApiEnvironment
+class ReviseFixedPriceItem extends eBayTradingApi
 {
    /**
      * sample_ReviseItem::dispatchCall()
