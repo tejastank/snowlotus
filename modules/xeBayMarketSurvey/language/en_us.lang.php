@@ -37,5 +37,7 @@
 $mod_strings = array (
   'LBL_MARKET_SURVEY_TOOLS' => 'Market Survey Tools',
   'LBL_EBAY_OFFICIAL_TIME' => 'eBay Official Time',
+  'LBL_FIND_POPULAR_ITEMS' => 'Find Popular Items',
   'LBL_FIND_POPULAR_SEARCHES' => 'Find Popular Searches',
+  'LBL_SELLER_SURVEY' => 'Seller Survey',
 );

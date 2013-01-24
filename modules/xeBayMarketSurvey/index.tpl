@@ -49,7 +49,15 @@
 	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_MARKET_SURVEY_TOOLS}</h4></th>
 </tr>
 <tr>
-    <td scope="row" align="left" width="25%"><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
-    <td scope="row" align="left" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
+    <td scope="row" width="25%"><a id="findpopularitems" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularitems" target="_blank">{$MOD.LBL_FIND_POPULAR_ITEMS}</a></td>
+    <td scope="row" width="25%"><a id="findpopularsearches" title="" href="index.php?module=xeBayMarketSurvey&action=findpopularsearches" target="_blank">{$MOD.LBL_FIND_POPULAR_SEARCHES}</a></td>
+    <td scope="row" width="25%">&nbsp;</td>
+    <td scope="row" width="25%">&nbsp;</td>
+</tr>
+<tr>
+    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurvey&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
+</tr>
+<tr>
+    <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>
 </tr>
 </table>

@@ -32,6 +32,18 @@ class FindPopularSearches extends eBayShoppingApi
 	public function dispatchCall ($params)
     {
 		$req = new FindPopularSearchesRequestType();
+		if (!empty($params['CategoryID']))
+            $req->setCategoryID($params['CategoryID']);
+		if (!empty($params['IncludeChildCategories']))
+            $req->setIncludeChildCategories($params['IncludeChildCategories']);
+		if (!empty($params['MaxKeywords']))
+            $req->setMaxKeywords($params['MaxKeywords']);
+        if (!empty($params['MaxResultsPerPage']))
+            $req->setMaxResultsPerPage($params['MaxResultsPerPage']);
+		if (!empty($params['PageNumber']))
+            $req->setPageNumber($params['PageNumber']);
+		if (!empty($params['QueryKeywords']))
+            $req->setQueryKeywords($params['QueryKeywords']);
 
 		$res = $this->proxy->FindPopularSearches($req);
 		if ($this->testValid($res))
