@@ -118,6 +118,14 @@ $GLOBALS['tabStructure'] = array(
 			"xeBaySellerLists",
         )
 	),
+	'LBL_TABGROUP_PHOTOBUCKET'=>array(
+        'label' => 'LBL_TABGROUP_PHOTOBUCKET',
+        'modules' => array(
+            "Home",
+			"xPhotobucketAccounts",
+			"xPhotobucketMedias",
+        )
+	),
 );
 
 if(file_exists('custom/include/tabConfig.php')){

@@ -374,6 +374,14 @@ $moduleList[] = 'xInventoryRecords';
 $beanList['xInventoryRecords'] = 'xInventoryRecord';
 $beanFiles['xInventoryRecord'] = 'modules/xInventoryRecords/xInventoryRecord.php';
 
+$moduleList[] = 'xPhotobucketAccounts';
+$beanList['xPhotobucketAccounts'] = 'xPhotobucketAccount';
+$beanFiles['xPhotobucketAccount'] = 'modules/xPhotobucketAccounts/xPhotobucketAccount.php';
+
+$moduleList[] = 'xPhotobucketMedias';
+$beanList['xPhotobucketMedias'] = 'xPhotobucketMedia';
+$beanFiles['xPhotobucketMedia'] = 'modules/xPhotobucketMedias/xPhotobucketMedia.php';
+
 $moduleList[] = 'xVendors';
 $beanList['xVendors'] = 'xVendor';
 $beanFiles['xVendor'] = 'modules/xVendors/xVendor.php';

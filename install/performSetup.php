@@ -499,6 +499,8 @@ FP;
     $enabled_tabs[] = 'xeBayOrders';
     $enabled_tabs[] = 'xCategories';
     $enabled_tabs[] = 'xInventories';
+    $enabled_tabs[] = 'xPhotobucketAccounts';
+    $enabled_tabs[] = 'xPhotobucketMedias';
     $enabled_tabs[] = 'xVendors';
 
 
