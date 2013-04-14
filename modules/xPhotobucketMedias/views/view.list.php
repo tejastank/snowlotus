@@ -1,7 +1,8 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,25 +35,23 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xPhotobucketMedias']['QuickCreate'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2',
-		'widths' => array(
-			array('label' => '10', 'field' => '30'),
-			array('label' => '10', 'field' => '30')
-		),
-	),
-	'panels' =>array (
-		'default' => array (
-			array (
-				'name',
-				'xphotobucketaccount_name',
-			),
-			array (
-				'filename',
-				'assigned_user_name',
-			),
-		),
-	),
-);
-?>
+
+require_once('include/MVC/View/views/view.list.php');
+
+class xPhotobucketMediasViewList extends ViewList
+{
+ 	/**
+	 * @see SugarView::preDisplay()
+	 */
+	public function preDisplay()
+ 	{
+ 	    global $current_user;
+        
+        if ( !is_admin($current_user) && !is_admin_for_module($current_user,'Campaigns') )
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']); 
+ 	    
+ 		$this->lv = new ListViewSmarty();
+ 		$this->lv->export = false;
+ 		$this->lv->quickViewLinks = false;
+ 	}
+}

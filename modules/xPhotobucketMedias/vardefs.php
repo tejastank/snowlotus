@@ -39,8 +39,72 @@ $dictionary['xPhotobucketMedia'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
+		'xphotobucketaccount_id'=>
+		array(
+			'name'=>'xphotobucketaccount_id',
+			'vname'=>'LBL_PHOTOBUCKET_ACCOUNT_ID',
+			'type' => 'id',
+		),
+		'xphotobucketaccount_name'=>
+		array(
+			'name'=>'xphotobucketaccount_name',
+			'rname' => 'name',
+			'vname'=>'LBL_PHOTOBUCKET_ACCOUNT',
+			'id_name'=>'xphotobucketaccount_id',
+			'type'=>'relate',
+			'link'=>'xphotobucketaccount_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xphotobucketaccounts',
+			'module' => 'xPhotobucketAccounts',
+			'required' => true,
+		),
+		'xphotobucketaccount_link'=>
+		array(
+			'name' => 'xphotobucketaccount_link',
+			'type' => 'link',
+			'relationship' => 'xphotobucketmedias_xphotobucketaccount',
+			'vname' => 'LBL_PHOTOBUCKET_ACCOUNT',
+			'source'=>'non-db',
+		),
+		'filename'=>
+		array (
+			'name' => 'filename',
+			'vname' => 'LBL_FILENAME',
+			'type' => 'file',
+			'dbType' => 'varchar',
+			'len' => '255',
+			'reportable' => true,
+			'importable' => false,
+		),
+		'browse_url'=>
+		array (
+			'name' => 'browse_url',
+			'vname' => 'LBL_BROWSE_URL',
+			'type' => 'url',
+			'len' => '255',
+		),
+		'image_url'=>
+		array (
+			'name' => 'image_url',
+			'vname' => 'LBL_IMAGE_URL',
+			'type' => 'url',
+			'len' => '255',
+		),
+		'thumb_url'=>
+		array (
+			'name' => 'thumb_url',
+			'vname' => 'LBL_THUMB_URL',
+			'type' => 'url',
+			'len' => '255',
+		),
 	),
 	'relationships'=>array (
+		'xphotobucketmedias_xphotobucketaccount' => array(
+			'lhs_module'=> 'xPhotobucketAccounts', 'lhs_table'=> 'xphotobucketaccounts', 'lhs_key' => 'id',
+			'rhs_module'=> 'xPhotobucketMedias', 'rhs_table'=> 'xphotobucketmedias', 'rhs_key' => 'xphotobucketaccount_id',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

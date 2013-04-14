@@ -66,4 +66,5 @@ $mod_strings = array (
   'LBL_LOGIN' => 'Photobucket Login',
   'LBL_MISS_NAME' => 'Missing required field: Name',
   'LBL_AUTH_TOKEN' => 'Auth Token',
+  'LBL_MEDIA_SUBPANEL_TITLE' => 'Media'
 );

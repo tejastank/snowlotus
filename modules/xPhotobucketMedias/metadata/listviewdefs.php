@@ -40,16 +40,43 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $listViewDefs['xPhotobucketMedias'] = array(
 	'NAME' => array(
-		'width' => '32', 
+		'width' => '24', 
 		'label' => 'LBL_NAME', 
 		'default' => true,
         'link' => true),         
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
+	'THUMB_URL'=> array(
+		'width' => '24',
+		'label' => 'LBL_THUMB_URL',
+		'sortable' => false,
+    	'related_fields' => array(
+			'0' => 'browse_url',
+		),
+		'default' => true,
+	),
+	'IMAGE_URL'=> array(
+		'width' => '32',
+		'label' => 'LBL_IMAGE_URL',
+		'customCode' => '<textarea rows="3" cols="64" readonly>{$IMAGE_URL}</textarea>',
+		'sortable' => false,
+		'default' => true,
+	),
+	'XPHOTOBUCKETACCOUNT_NAME' => array (
+		'width' => '24',
+		'label' => 'LBL_PHOTOBUCKET_ACCOUNT',
+		'module' => 'xPhotobucketAccounts',
+		'id' => 'XPHOTOBUCKETACCOUNT_ID',
+		'default' => true,
+		'related_fields' => 
+		array (
+			0 => 'xphotobucketaccount_id',
+		),
+	),
+	// 'ASSIGNED_USER_NAME' => array(
+		// 'width' => '9', 
+		// 'label' => 'LBL_ASSIGNED_TO_NAME',
+		// 'module' => 'Employees',
+		// 'id' => 'ASSIGNED_USER_ID',
+		// 'default' => true),
 	
 );
 ?>

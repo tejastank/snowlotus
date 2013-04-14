@@ -57,6 +57,15 @@ class xPhotobucketMedia extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
+	var $xphotobucketaccount_id;
+	var $xphotobucketaccount_name;
+	var $xphotobucketaccount_link;
+	var $filename;
+	var $file_ext;
+	var $browse_url;
+	var $image_url;
+	var $thumb_url;
+
 	function xPhotobucketMedia()
 	{
 		parent::Basic();
@@ -68,6 +77,26 @@ class xPhotobucketMedia extends Basic {
 			case 'ACL': return true;
 		}
 		return false;
+	}
+
+	function get_list_view_data()
+	{
+        global $mod_strings;
+
+		$field_list = $this->get_list_view_array();
+
+		$thumb_url = $field_list['THUMB_URL'];
+		$browse_url = $field_list['BROWSE_URL'];
+        $field_list['THUMB_URL'] = "<a title='' href='{$browse_url}' target='_blank'><img src='{$thumb_url}' alt='' /></a>";
+
+		return $field_list;
+	}
+
+	function mark_deleted($id)
+	{
+		$account = BeanFactory::getBean('xPhotobucketAccounts', $this->xphotobucketaccount_id);
+		$account->delete_media($this->image_url);
+		parent::mark_deleted($id);
 	}
 }
 ?>

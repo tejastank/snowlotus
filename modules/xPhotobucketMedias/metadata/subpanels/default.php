@@ -45,6 +45,14 @@ $subpanel_layout = array(
 	'where' => '',
 
 	'list_fields' => array(
+		'thumb_url' => array(
+	 		'vname' => 'LBL_THUMB_URL',
+			'type' => 'varchar',
+	 		'width' => '35%',
+		),
+		'browse_url'=>array(
+			'usage'=>'query_only',
+		),
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
@@ -53,11 +61,6 @@ $subpanel_layout = array(
 		'date_modified'=>array(
 	 		'vname' => 'LBL_DATE_MODIFIED',
 	 		'width' => '45%',
-		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xPhotobucketMedias',
-	 		'width' => '4%',
 		),
 		'remove_button'=>array(
 			'widget_class' => 'SubPanelRemoveButton',

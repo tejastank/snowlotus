@@ -36,21 +36,26 @@
 
 $viewdefs['xPhotobucketMedias']['EditView'] = array(
 	'templateMeta' => array(
+    	'form' => array('enctype'=> 'multipart/form-data'),
 		'maxColumns' => '2', 
 		'widths' => array(
 						array('label' => '10', 'field' => '30'), 
 						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
+					),
 	),
  
 	'panels' => array (
 		'default' => array (
 			array (
 				'name',
-				'assigned_user_name',
+				'xphotobucketaccount_name',
+			),
+			array (
+				'filename',
 			),
 			array (
 				'description',
+				'assigned_user_name',
 			),
 		),
 	),

@@ -64,6 +64,16 @@ $dictionary['xPhotobucketAccount'] = array(
 			'vname' => 'LBL_SUBDOMAIN',
 			'type' => 'text',
 		),
+		'xphotobucketmedias'=>
+		array(
+			'name'=>'xphotobucketmedias',
+			'vname'=>'LBL_PHOTOBUCKETMEDIAS',
+			'type'=>'link',
+			'relationship' => 'xphotobucketmedias_xphotobucketaccount',
+			'module'=>'xPhotobucketAccounts',
+			'bean_name'=>'xPhotobucketAccount',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
 	),

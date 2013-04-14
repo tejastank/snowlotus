@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,25 +36,39 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xPhotobucketMedias']['QuickCreate'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2',
-		'widths' => array(
-			array('label' => '10', 'field' => '30'),
-			array('label' => '10', 'field' => '30')
-		),
-	),
-	'panels' =>array (
-		'default' => array (
-			array (
-				'name',
-				'xphotobucketaccount_name',
-			),
-			array (
-				'filename',
-				'assigned_user_name',
-			),
-		),
-	),
-);
+
+require_once('include/MVC/View/views/view.detail.php');
+
+class xPhotobucketMediasViewDetail extends ViewDetail
+{
+ 	function xPhotobucketMediasViewDetail(){
+ 		parent::ViewDetail();
+ 	}
+
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+ 	function display(){
+		global $mod_strings;
+				
+		if(empty($this->bean->id)){
+			global $app_strings;
+			sugar_die($app_strings['ERROR_NO_RECORD']);
+		}
+
+      	$javascript = <<<EOQ
+EOQ;
+		echo $javascript;
+
+		$this->dv->process();
+
+		echo $this->dv->display();
+ 	}
+}
+
 ?>

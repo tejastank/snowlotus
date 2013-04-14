@@ -63,5 +63,6 @@ Desktop.ini
 
 # Ignore PHPExcel directory
 /PHPExcel
+/PhotobucketApi
 #MindManager
 ~*

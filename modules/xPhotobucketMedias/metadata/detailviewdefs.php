@@ -36,7 +36,7 @@
 
 $viewdefs['xPhotobucketMedias']['DetailView'] = array(
 	'templateMeta' => array(
-		'form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
+		'form' => array('buttons'=>array('DELETE', 'FIND_DUPLICATES',)),
 		'maxColumns' => '2',
 		'widths' => array(
 			array('label' => '10', 'field' => '30'),
@@ -50,6 +50,15 @@ $viewdefs['xPhotobucketMedias']['DetailView'] = array(
 			'assigned_user_name',
 		),
 		array (
+			array(
+				'name' => 'image_url',
+				'customCode' => '<a href="{$fields.browse_url.value}" target="_blank"><img id="photobucket-image-url" src="{$fields.image_url.value}" border="0" alt="" style="max-width:800px" /></a>',
+			),
+		),
+		array (
+			'description',
+		),
+		array (
 			array (
 				'name' => 'date_entered',
 				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
@@ -60,9 +69,6 @@ $viewdefs['xPhotobucketMedias']['DetailView'] = array(
 				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
 				'label' => 'LBL_DATE_MODIFIED',
 			),
-		),
-		array (
-			'description',
 		),
 	)
 );

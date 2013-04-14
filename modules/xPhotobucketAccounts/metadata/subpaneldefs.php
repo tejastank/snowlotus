@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,23 +35,23 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xPhotobucketMedias']['QuickCreate'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2',
-		'widths' => array(
-			array('label' => '10', 'field' => '30'),
-			array('label' => '10', 'field' => '30')
-		),
-	),
-	'panels' =>array (
-		'default' => array (
-			array (
-				'name',
-				'xphotobucketaccount_name',
-			),
-			array (
-				'filename',
-				'assigned_user_name',
+
+
+$layout_defs['xPhotobucketAccounts'] = array(
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
+
+		'xphotobucketmedias' => array(
+			'order' => 100,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xPhotobucketMedias',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xphotobucketmedias',
+			'add_subpanel_data' => 'xphotobucketaccount_id',
+			'title_key' => 'LBL_MEDIA_SUBPANEL_TITLE',
+			'top_buttons' => array(
+				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
 			),
 		),
 	),

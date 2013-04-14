@@ -101,6 +101,20 @@ class xPhotobucketAccount extends Basic {
 		return false;
 	}
 
+    function retrieve($id = -1, $encode=true,$deleted=true)
+    {
+		$res = parent::retrieve($id, $encode, $deleted);
+
+		if (!empty($res)) {
+			if (!empty($this->auth_token) && !empty($this->auth_token_secret)) {
+				$this->api->setOAuthToken($this->auth_token, $this->auth_token_secret, $this->username);
+				$this->api->setSubdomain($this->subdomain);
+			}
+		}
+
+		return $res;
+	}
+
 	function fill_in_additional_detail_fields()
 	{
 		if (!empty($_REQUEST['name']))
@@ -138,5 +152,46 @@ class xPhotobucketAccount extends Basic {
             $this->subdomain = $this->api->getSubdomain();
         }
     }
+
+	function upload_media($type, $uploadfile, $filename = null, $title = null)
+	{
+		$params = array(
+			'type' => $type,
+			'uploadfile' => $uploadfile,
+		);
+
+		if (!empty($filename))
+			$params['filename'] = $filename;
+
+		if (!empty($title))
+			$params['title'] = $title;
+
+		// return $this->api->album($this->username, array('media' => 'images'))->get()->getParsedResponse(true);
+		// return $this->api->album($this->username)->upload($params)->post()->getResponseString();
+		try {
+			return $this->api->album($this->username)->upload($params)->post()->getParsedResponse(true);
+		} catch (PBAPI_Exception_Response $e) {
+			echo "RESPONSE $e";
+		} catch (PBAPI_Exception $e) {
+			echo "EX $e";
+		}
+		sugar_cleanup(true);
+	}
+
+	function delete_media($url)
+	{
+		$resp = null;
+		try {
+			$resp = $this->api->media($url)->delete()->getParsedResponse(true);
+			return $resp;
+		} catch (PBAPI_Exception_Response $e) {
+			echo "<pre>";
+			echo "RESPONSE $e";
+		} catch (PBAPI_Exception $e) {
+			echo "<pre>";
+			echo "EX $e";
+			sugar_cleanup(true);
+		}
+	}
 }
 ?>
