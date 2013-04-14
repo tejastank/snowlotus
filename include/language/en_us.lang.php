@@ -118,6 +118,7 @@ $app_list_strings = array (
     'xeBaySellerLists' => 'Seller Lists',
     'xeBaySellerSurveys' => 'Seller Survey',
     'xeBayTransactions' => 'Order Transactions',
+    'xeBayUsers' => 'eBay Users',
     'xInventories' => 'Inventories',
     'xInventoryGroups' => 'Inventory Groups',
     'xInventoryRecords' => 'Inventory Records',

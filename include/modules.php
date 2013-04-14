@@ -353,6 +353,10 @@ $moduleList[] = 'xeBaySellerSurveys';
 $beanList['xeBaySellerSurveys'] = 'xeBaySellerSurvey';
 $beanFiles['xeBaySellerSurvey'] = 'modules/xeBaySellerSurveys/xeBaySellerSurvey.php';
 
+$moduleList[] = 'xeBayUsers';
+$beanList['xeBayUsers'] = 'xeBayUser';
+$beanFiles['xeBayUser'] = 'modules/xeBayUsers/xeBayUser.php';
+
 $GLOBALS['moduleTabMap']['xeBayTransactions'] = 'xeBayOrders';
 $moduleList[] = 'xeBayTransactions';
 $beanList['xeBayTransactions'] = 'xeBayTransaction';
