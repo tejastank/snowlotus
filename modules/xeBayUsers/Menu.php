@@ -40,4 +40,5 @@ global $mod_strings, $app_strings, $sugar_config;
  
 if(ACLController::checkAccess('xeBayUsers', 'edit', true))$module_menu[]=Array("index.php?module=xeBayUsers&action=EditView&return_module=xeBayUsers&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayUsers", 'xeBayUsers');
 if(ACLController::checkAccess('xeBayUsers', 'list', true))$module_menu[]=Array("index.php?module=xeBayUsers&action=index&return_module=xeBayUsers&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayUsers", 'xeBayUsers');
-if(ACLController::checkAccess('xeBayUsers', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xeBayUsers&return_module=xeBayUsers&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBayUsers');
+if(ACLController::checkAccess('xeBaySellerSurveys', 'list', true))$module_menu[]=Array("index.php?module=xeBaySellerSurveys&action=index&return_module=xeBaySellerSurveys&return_action=DetailView", $mod_strings['LNK_ITEMSURVEY'],"eBaySellerSurveys", 'xeBaySellerSurveys');
+// if(ACLController::checkAccess('xeBayUsers', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xeBayUsers&return_module=xeBayUsers&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBayUsers');

@@ -55,7 +55,7 @@
     <td scope="row" width="25%">&nbsp;</td>
 </tr>
 <tr>
-    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBaySellerSurveys&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
+    <td scope="row" ><a id="sellersurvey" title="" href="index.php?module=xeBayUsers&action=index" target="_blank">{$MOD.LBL_SELLER_SURVEY}</a></td>
 </tr>
 <tr>
     <td scope="row" ><a id="getofficialtime" title="" href="index.php?module=xeBayMarketSurvey&action=getebayofficialtime" target="_blank">{$MOD.LBL_EBAY_OFFICIAL_TIME}</a></td>

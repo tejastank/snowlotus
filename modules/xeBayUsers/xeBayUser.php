@@ -62,6 +62,7 @@ class xeBayUser extends Basic {
 	var $registrationdate;
 	var $selleritemsurl;
 	var $sellerlevel;
+	var $site;
 	var $storename;
 	var $storeurl;
 

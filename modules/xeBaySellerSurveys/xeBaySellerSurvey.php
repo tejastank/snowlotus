@@ -57,7 +57,10 @@ class xeBaySellerSurvey extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 
-    var $userid;
+	var $xebayuser_id;
+	var $xebayuser_name;
+	var $xebayuser_link;
+
 	var $buyitnowprice;
 	var $buyitnowprice_currencyid;
 	var $itemid;
@@ -91,6 +94,10 @@ class xeBaySellerSurvey extends Basic {
 	function get_list_view_data()
 	{
 		$field_list = $this->get_list_view_array();
+
+		$itemid = $field_list['ITEMID'];
+		$viewitemurl = $field_list['VIEWITEMURL'];
+		$field_list['ITEMID'] = "<a title=\"{$itemid}\" href=\"{$viewitemurl}\" target=\"_blank\"><img src=\"http://thumbs3.ebaystatic.com/pict/{$itemid}6464.jpg\" alt=\"\" /></a>";
 
 		return $field_list;
 	}

@@ -44,6 +44,7 @@ class GetUser extends eBayTradingApi
 			$res['FeedbackScore'] = $user->getFeedbackScore();
 			$res['FeedbackRatingStar'] = $user->getFeedbackRatingStar();
 			$res['RegistrationDate'] = $user->getRegistrationDate();
+			$res['Site'] = $user->getSite();
 			$res['StoreURL'] = $user->getSellerInfo()->getStoreURL();
 
             return $res;

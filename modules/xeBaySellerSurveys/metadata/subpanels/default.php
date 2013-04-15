@@ -45,24 +45,38 @@ $subpanel_layout = array(
 	'where' => '',
 
 	'list_fields' => array(
+		'itemid' => array(
+			'width' => '10%', 
+			'vname' => 'LBL_DUMMY', 
+			'customCode' => '<a title="{$ITEMID}" href="{$VIEWITEMURL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEMID}6464.jpg" alt="" /></a>',
+			'sortable' => false,
+		),
+		'viewitemurl'=>array(
+			'usage' => 'query_only',
+		),
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
 	 		'width' => '45%',
 		),
-		'date_modified'=>array(
-	 		'vname' => 'LBL_DATE_MODIFIED',
-	 		'width' => '45%',
+		'startprice' => array(
+			'width' => '30%', 
+			'vname' => 'LBL_PRICE', 
 		),
-		'edit_button'=>array(
-			'widget_class' => 'SubPanelEditButton',
-		 	'module' => 'xeBaySellerSurveys',
-	 		'width' => '4%',
+		'startprice_currencyid'=>array(
+			'usage' => 'query_only',
 		),
-		'remove_button'=>array(
-			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => 'xeBaySellerSurveys',
-			'width' => '5%',
+		'starttime' => array(
+			'vname' => 'LBL_STARTTIME', 
+			'width' => '30%', 
+		),
+		'quantitysold' => array(
+			'vname' => 'LBL_QUANTITYSOLD', 
+			'width' => '30%', 
+		),
+		'quantitysold_permonth' => array(
+			'vname' => 'LBL_QUANTITYSOLD_PERMONTH',
+			'width' => '30%',
 		),
 	),
 );

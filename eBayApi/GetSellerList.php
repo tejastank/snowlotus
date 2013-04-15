@@ -182,9 +182,10 @@ class GetSellerList extends eBayTradingApi
 	public function retrieveSellerSurveyList($params)
 	{
 		$this->session->setRequestToken($params['AuthToken']);
+		$xebayuser_id = $params['xeBayUserID'];
 
 		$bean = BeanFactory::getBean('xeBaySellerSurveys');
-		$GLOBALS['db']->query("DELETE FROM xebaysellersurveys WHERE xebaysellersurveys.userid ='{$params['UserID']}'");
+		$GLOBALS['db']->query("DELETE FROM xebaysellersurveys WHERE xebaysellersurveys.xebayuser_id ='{$params['xeBayUserID']}'");
 
 		$outputSelector = array(
 			'HasMoreItems',
@@ -256,7 +257,7 @@ class GetSellerList extends eBayTradingApi
 				    $bean->startprice = $item->getStartPrice()->getTypeValue();
 				    $bean->startprice_currencyid = $item->getStartPrice()->getTypeAttribute('currencyID');
                     $bean->name = mb_convert_encoding($item->getTitle(), 'UTF-8');
-					$bean->userid = $userID;
+					$bean->xebayuser_id = $xebayuser_id;
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
 					$bean->save();

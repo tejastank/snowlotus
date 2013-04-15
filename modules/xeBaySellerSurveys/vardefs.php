@@ -39,12 +39,43 @@ $dictionary['xeBaySellerSurvey'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-        'userid' => array(
-			'name' => 'userid',
-			'vname' => 'LBL_USERID',
-			'type' => 'varchar',
-			'len' => '32',
+		'xebayuser_id'=>
+		array(
+			'name'=>'xebayuser_id',
+			'vname'=>'LBL_USERID',
+			'type' => 'id',
+			'required' => false,
+			'audited' => true,
+			'reportable'=>false,
 		),
+		'xebayuser_name'=>
+		array(
+			'name'=>'xebayuser_name',
+			'rname' => 'name',
+			'vname'=>'LBL_USERID',
+			'id_name'=>'xebayuser_id',
+			'type'=>'relate',
+			'link'=>'xebayuser_link',
+			'reportable'=>false,
+			'source'=>'non-db',
+			'dbType' => 'varchar',
+			'table' => 'xebayusers',
+			'module' => 'xeBayUsers',
+		),
+		'xebayuser_link'=>
+		array(
+			'name' => 'xebayuser_link',
+			'type' => 'link',
+			'relationship' => 'xebaysellersurveys_xebayuser',
+			'vname' => 'LBL_USERID',
+			'source'=>'non-db',
+		),
+		// 'userid' => array(
+			// 'name' => 'userid',
+			// 'vname' => 'LBL_USERID',
+			// 'type' => 'varchar',
+			// 'len' => '32',
+		// ),
 		'buyitnowprice' => array(
 			'name' => 'buyitnowprice',
 			'vname' => 'LBL_BUYITNOWPRICE',
@@ -134,6 +165,10 @@ $dictionary['xeBaySellerSurvey'] = array(
 		),
 	),
 	'relationships'=>array (
+		'xebaysellersurveys_xebayuser' => array(
+			'lhs_module'=> 'xeBayUsers', 'lhs_table'=> 'xebayusers', 'lhs_key' => 'id',
+			'rhs_module' => 'xeBaySellerSurveys', 'rhs_table'=> 'xebaysellersurveys', 'rhs_key' => 'xebayuser_id',
+			'relationship_type'=>'one-to-many'),
 	),
 	'optimistic_locking'=>true,
 	'unified_search'=>true,

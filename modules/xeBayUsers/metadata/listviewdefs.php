@@ -42,12 +42,8 @@ $listViewDefs['xeBayUsers'] = array(
 	'NAME' => array(
 		'width' => '24', 
 		'label' => 'LBL_NAME', 
-		'customCode' => '{$NAME} ({$FEEDBACKSCORE})',
 		'sortable' => false,
 		'default' => true,
-    	'related_fields' => array(
-			'0' => 'feedbackscore',
-		),
         'link' => true),
 	'SELLERLEVEL' => array( 
 		'width' => '16', 
@@ -56,11 +52,16 @@ $listViewDefs['xeBayUsers'] = array(
 	'STORENAME' => array( 
 		'width' => '32', 
 		'label' => 'LBL_STORENAME', 
-		'customCode' => '<a href="{$STOREURL}" title="" target="_blank">Visit my store</a>',
+		'customCode' => '<a href="{$STOREURL}" title="" target="_blank">Visit my store ({$FEEDBACKSCORE})</a>',
     	'related_fields' => array(
 			'0' => 'storeurl',
+			'1' => 'feedbackscore',
 		),
 		'sortable' => false,
+		'default' => true,),
+	'SITE' => array( 
+		'width' => '16', 
+		'label' => 'LBL_SITE', 
 		'default' => true,),
 	'REGISTRATIONDATE' => array( 
 		'width' => '16', 

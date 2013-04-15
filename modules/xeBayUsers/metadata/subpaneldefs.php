@@ -37,59 +37,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
+$layout_defs['xeBayUsers'] = array(
+	// list of what Subpanels to show in the DetailView
+	'subpanel_setup' => array(
 
-$listViewDefs['xeBaySellerSurveys'] = array(
-	'ITEMID' => array(
-		'width' => '4', 
-		'label' => 'LBL_DUMMY', 
-		'default' => true,
-		// 'customCode' => '<a title="{$ITEMID}" href="{$VIEWITEMURL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEMID}6464.jpg" alt="" /></a>',
-		'sortable' => false,
-    	'related_fields' => array(
-			'0' => 'viewitemurl',
-		)),
-	'NAME' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => true),
-	'CATEGORYNAME' => array(
-		'width' => '24', 
-		'label' => 'LBL_CATEGORYNAME', 
-		'default' => false),
-	'STARTPRICE' => array(
-		'width' => '8', 
-		'label' => 'LBL_PRICE', 
-		'default' => true,
-		'customCode' => '{$STARTPRICE_CURRENCYID}&nbsp{$STARTPRICE}',
-    	'related_fields' => array(
-			'0' => 'startprice_currencyid',
+		'xinventories' => array(
+			'order' => 100,
+			'sort_order' => 'desc',
+			'sort_by' => 'name',
+			'module' => 'xeBaySellerSurveys',
+			'subpanel_name' => 'default',
+			'get_subpanel_data' => 'xebaysellersurveys',
+			'add_subpanel_data' => 'xebayuser_id',
+			'title_key' => 'LBL_SELLITEMS_SUBPANEL_TITLE',
+			'top_buttons' => array(
+			),
 		),
 	),
-	'STARTTIME' => array(
-		'width' => '8', 
-		'label' => 'LBL_STARTTIME', 
-		'default' => true,
-	),
-	'QUANTITYSOLD' => array(
-		'width' => '8', 
-		'label' => 'LBL_QUANTITYSOLD', 
-		'default' => true,
-	),
-	'QUANTITYSOLD_PERMONTH' => array(
-		'width' => '8',
-		'label' => 'LBL_QUANTITYSOLD_PERMONTH',
-		'default' => true,
-	),
-	'XEBAYUSER_NAME' => array(
-		'width' => '8',
-		'label' => 'LBL_USERID',
-		'module' => 'xeBayUsers',
-        'id' => 'XEBAYUSER_ID',
-		'related_fields' => 
-		array (
-			0 => 'xebayuser_id',
-		),
-		'default' => true),
 );
 ?>

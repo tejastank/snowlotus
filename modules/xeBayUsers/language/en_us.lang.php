@@ -57,6 +57,7 @@ $mod_strings = array (
   'LBL_HOMEPAGE_TITLE' => 'My eBayUser',
   'LNK_NEW_RECORD' => 'Create eBayUser',
   'LNK_LIST' => 'View eBayUser',
+  'LNK_ITEMSURVEY' => 'View Sell Items',
   'LNK_IMPORT_XEBAYUSERS' => 'Import eBayUser',
   'LBL_SEARCH_FORM_TITLE' => 'Search eBayUser',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
@@ -68,7 +69,9 @@ $mod_strings = array (
   'LBL_REGISTRATIONDATE' => 'Registration Date',
   'LBL_SELLERITEMSURL' => 'Seller Items URL',
   'LBL_SELLERLEVEL' => 'Seller Level',
+  'LBL_SITE' => 'Site',
   'LBL_STORENAME' => 'Store Name',
   'LBL_STOREURL' => 'Store URL',
   'LBL_SYNC' => 'Sync',
+  'LBL_SELLITEMS_SUBPANEL_TITLE' => 'Sell Items',
 );

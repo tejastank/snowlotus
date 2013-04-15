@@ -55,27 +55,56 @@ class xeBayUsersController extends SugarController
 
 		$user = BeanFactory::getBean('xeBayUsers', $id);
 		if (!empty($user)) {
+			require_once('eBayApi/GetUser.php');
+            require_once('eBayApi/GetSellerList.php');
+			// require_once('eBayApi/GetUserProfile.php');
+
 			$bean = BeanFactory::getBean('xeBayAccounts');
 			$accounts = $bean->get_accounts('All');
-			require_once('eBayApi/GetUser.php');
+
 			$x = new GetUser();
-			// require_once('eBayApi/GetUserProfile.php');
 			// $x = new GetUserProfile();
+
 			$res = $x->dispatchCall(array(
 				'UserID' => $user->name,
 				'AuthToken' => current($accounts),
 			));
+
 			if ($res !== false) {
 				$user->feedbackscore = $res['FeedbackScore'];
 				$user->registrationdate = $res['RegistrationDate'];
 				// $user->selleritemsurl = $res[''];
 				$user->sellerlevel = $res['FeedbackRatingStar'];
 				// $user->storename = $res[''];
+				$user->site = $res['Site'];
 				$user->storeurl = $res['StoreURL'];
 				$user->save();
+			} else {
+				sugar_cleanup(true);
+			}
+
+			if ($res !== false) {
+				$sellerList = new GetSellerList();
+				$endTimeFrom = date("c", time());
+				$endTimeTo = date("c", time() + 60 * 60 * 24 * 30);
+
+				set_time_limit(60*10);
+
+				$res = $sellerList->retrieveSellerSurveyList(array(
+					'UserID' => $user->name,
+					'xeBayUserID' => $user->id,
+					'EndTimeFrom' => $endTimeFrom,
+					'EndTimeTo' => $endTimeTo,
+					'AuthToken' => current($accounts),
+				));
+
+				if ($res === false) {
+					sugar_cleanup(true);
+				}
 			}
 		}
-        SugarApplication::redirect("index.php?module=xeBayUsers&action=index");
+
+		$this->redirect_url = "index.php?module=xeBayUsers&action=DetailView&record={$user->id}";
     }
 }
 ?>

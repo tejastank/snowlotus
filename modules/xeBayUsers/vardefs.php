@@ -92,6 +92,13 @@ $dictionary['xeBayUser'] = array(
 			'len' => '32',
 		),
 
+		'site' => array(
+			'name' => 'site',
+			'vname' => 'LBL_SITE',
+			'type' => 'varchar',
+			'len' => '32',
+		),
+
 		// <Status> UserStatusCodeType </Status>
 
 		// <StoreName> string </StoreName>
@@ -113,6 +120,17 @@ $dictionary['xeBayUser'] = array(
 
 		// <TopRatedSeller> boolean </TopRatedSeller>
 		// <UserID> string </UserID>
+
+		'xebaysellersurveys'=>
+		array(
+			'name'=>'xinventories',
+			'vname'=>'LBL_SELLITEMS',
+			'type'=>'link',
+			'relationship' => 'xebaysellersurveys_xebayuser',
+			'module'=>'xeBaySellerSurveys',
+			'bean_name'=>'xebaysellersurvey',
+			'source'=>'non-db',
+		),
 	),
 	'relationships'=>array (
 	),

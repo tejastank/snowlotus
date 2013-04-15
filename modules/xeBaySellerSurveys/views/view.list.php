@@ -138,7 +138,7 @@ OO.toggle_importlist = function (){
 <br/>
 <br/>
 EOF;
-		echo $shortcuts;
+		// echo $shortcuts;
  		parent::display();
 	}
 }
