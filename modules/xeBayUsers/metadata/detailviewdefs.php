@@ -46,8 +46,15 @@ $viewdefs['xeBayUsers']['DetailView'] = array(
 
 	'panels' =>array (
 		array (
-			'name',
+            array(
+                'name' => 'name',
+                'customCode' => '<a href="{$fields.storeurl.value}" title="Visit my store" target="_blank">{$fields.name.value}</a> ({$fields.feedbackscore.value}) {$SYNC_URL}',
+            ),
 			'assigned_user_name',
+		),
+		array (
+            'site',
+			'registrationdate',
 		),
 		array (
 			array (

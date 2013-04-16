@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -36,48 +37,53 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+require_once('include/MVC/View/views/view.detail.php');
 
+class xeBayUsersViewDetail extends ViewDetail
+{
+	function xeBayUsersViewDetail()
+	{
+ 		parent::ViewDetail();
+ 	}
 
-$listViewDefs['xeBayUsers'] = array(
-	'NAME' => array(
-		'width' => '24', 
-		'label' => 'LBL_NAME', 
-		'sortable' => false,
-		'default' => true,
-        'link' => true),
-	'FEEDBACKSCORE' => array( 
-		'width' => '16', 
-		'label' => 'LBL_FEEDBACKSCORE', 
-		'default' => true,),
-	'SELLERLEVEL' => array( 
-		'width' => '16', 
-		'label' => 'LBL_SELLERLEVEL', 
-		'default' => false,),
-	'STORENAME' => array( 
-		'width' => '32', 
-		'label' => 'LBL_STORENAME', 
-		'customCode' => '<a href="{$STOREURL}" title="" target="_blank">Visit my store</a>',
-    	'related_fields' => array(
-			'0' => 'storeurl',
-		),
-		'sortable' => false,
-		'default' => true,),
-	'SITE' => array( 
-		'width' => '16', 
-		'label' => 'LBL_SITE', 
-		'default' => true,),
-	'REGISTRATIONDATE' => array( 
-		'width' => '16', 
-		'label' => 'LBL_REGISTRATIONDATE', 
-		'default' => true,),
-	'DATE_MODIFIED' => array( 
-		'width' => '16', 
-		'label' => 'LBL_DATE_MODIFIED', 
-		'default' => true,),
-	'SYNC_USER_DATA' => array(
-		'width' => '8',
-		'label' => 'LBL_SYNC',
-		'sortable' => false,
-		'default' => true,),
-);
+ 	/**
+ 	 * display
+ 	 * Override the display method to support customization for the buttons that display
+ 	 * a popup and allow you to copy the account's address into the selected contacts.
+ 	 * The custom_code_billing and custom_code_shipping Smarty variables are found in
+ 	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
+ 	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
+ 	 */
+ 	function display(){
+		global $mod_strings;
+				
+		if(empty($this->bean->id)){
+			global $app_strings;
+			sugar_die($app_strings['ERROR_NO_RECORD']);
+		}
+
+      	$javascript = <<<EOQ
+<script>
+function  sync_sell_listings()
+{
+	if (confirm("Do you want to sync {$this->bean->name}'s listings now ?")) {
+		window.location = "index.php?module=xeBayUsers&action=sync&xebayuser_id={$this->bean->id}&return_module=xeBayUsers&return_action=index";
+	}
+	return false;
+}
+</script>
+EOQ;
+		echo $javascript;
+
+        $sync = "<a href='index.php?module=xeBayUsers&action=sync&xebayuser_id={$id}&return_module=xeBayUsers&return_action=index' title='{$mod_strings['LBL_SYNC']}'>{$sync_icon}</a>";
+
+		$this->dv->process();
+
+		$sync_url = "<input title='{$mod_strings['LBL_SYNC']}' class='button' type='submit' name='button' value='{$mod_strings['LBL_SYNC']}' id='sync_url' onclick='return sync_sell_listings();'>";
+		$this->ss->assign("SYNC_URL", $sync_url);
+
+		echo $this->dv->display();
+ 	} 	
+}
+
 ?>
