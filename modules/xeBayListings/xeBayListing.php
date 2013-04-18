@@ -113,6 +113,12 @@ class xeBayListing extends Basic {
 	var $xinventory_name;
 	var $xinventory_link;
 
+	var $xinventory_id_used = array();
+
+	const shopwindow_stick_limit = 6;
+	const shopwindow_correlation_limit = 10;
+	const shopwindow_random_limit = 12;
+
 	function xeBayListing()
 	{
 		parent::Basic();
@@ -126,8 +132,54 @@ class xeBayListing extends Basic {
 		return false;
 	}
 
+	function get_list_view_data()
+	{
+		$field_list = $this->get_list_view_array();
+
+
+        $preview_icon = "<img alt='' border='0' src='".SugarThemeRegistry::current()->getImageURL('Preview-icon.png')."'>";
+		$preview_url = "<a href=\"javascript:open_popup_preview('{$field_list['ID']}')\">{$preview_icon}</a>";
+		$field_list['PREVIEW_URL'] = $preview_url;
+
+		return $field_list;
+	}
+
 	function get_description()
 	{
+		$desc = $this->name;
+
+		$inner_html = $this->description;
+		if (!empty($inner_html))
+			$desc = html_entity_decode($inner_html);
+
+		return $desc;
+	}
+
+	function preview_description()
+	{
+		$strips = array(
+			"\t" => "",
+			"\n" => "",
+			"\r" => "",
+			"\0" => "",
+			"\x0B" => "",
+		);
+ 
+        $ss = new Sugar_Smarty();
+        $ss->left_delimiter = '{{';
+        $ss->right_delimiter = '}}';
+		$ss->assign("TITLE", $this->name);
+		// $ss->assign("GALLERY", $this->build_image_gallery());
+		$ss->assign("DESCRIPTION", $this->get_description());
+		$ss->assign("PACKAGE_INCLUDED", "");
+		// $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_topmost());
+		// $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
+		// $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
+        $desc = $ss->fetch("modules/xeBayListings/tpls/default.html");
+		$desc = strtr($desc, $strips);
+ 
+        unset($ss);
+
         return $desc;
 	}
 

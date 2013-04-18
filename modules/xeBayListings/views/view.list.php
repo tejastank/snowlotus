@@ -36,41 +36,75 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+require_once('include/MVC/View/views/view.list.php');
 
+class xeBayListingsViewList extends ViewList
+{
+	function xeBayListingsViewList()
+	{
+        parent:: ViewList();
+    }
 
-$listViewDefs['xeBayListings'] = array(
-	'NAME' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => true),         
-	'SHORT_TITLE' => array(
-		'width' => '24', 
-		'label' => 'LBL_SHORT_TITLE', 
-		'default' => true),         
-	'XINVENTORY_NAME' => array(
-		'width' => '24', 
-		'label' => 'LBL_INVENTORY', 
-		'module' => 'xInventories',
-        'id' => 'XINVENTORY_ID',
-		'default' => true,
-		'related_fields' => 
-		array (
-			0 => 'xinventory_id',
-		),
-	),
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-	'PREVIEW' => array(
-		'width' => '1', 
-		'label' => 'LBL_PREVIEW', 
-		'customCode' => '{$PREVIEW_URL}',
-		'default' => true,
-		'sortable' => false,
-	),
-);
-?>
+	function listViewPrepare()
+	{
+		parent::listViewPrepare();
+	}
+
+	function listViewProcess()
+ 	{
+		parent::listViewProcess();
+	}
+
+ 	function preDisplay()
+ 	{
+ 		parent::preDisplay();
+		$this->showMassupdateFields = false;
+ 	}
+
+	function display()
+	{
+		global $mod_strings;
+
+		$javascript = <<<EOF
+<script>
+function open_popup_preview(id)
+{
+	if (typeof(popupCount) == "undefined" || popupCount == 0)
+	   popupCount = 1;
+
+	//globally changing width and height of standard pop up window from 600 x 400 to 800 x 800
+	width = 1024;
+	height = 600;
+
+	// launch the popup
+	URL = 'index.php?'
+		+ 'module=xeBayListings'
+		+ '&action=preview'
+		+ '&record=' + id;
+
+	windowName = 'Seller List Preview' + '_popup_window' + popupCount;
+	popupCount++;
+
+	windowFeatures = 'width=' + width
+		+ ',height=' + height
+		+ ',resizable=1,scrollbars=1';
+
+	win = SUGAR.util.openWindow(URL, windowName, windowFeatures);
+
+	if(window.focus)
+	{
+		// put the focus on the popup if the browser supports the focus() method
+		win.focus();
+	}
+
+	win.popupCount = popupCount;
+
+	return win;
+}
+</script> 
+EOF;
+		echo $javascript;
+
+ 		parent::display();
+	}
+}

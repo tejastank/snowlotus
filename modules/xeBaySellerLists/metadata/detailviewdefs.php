@@ -96,6 +96,24 @@ $viewdefs['xeBaySellerLists']['DetailView'] = array(
 			'variation',
 			'assigned_user_name',
 		),
+		array (
+			array(
+				'name' => 'description',
+				'customCode' => '
+<script type="text/javascript">
+{literal}
+function calcHeight()
+{
+//find the height of the internal page
+var the_height=document.getElementById("description_frame").contentWindow.document.body.scrollHeight;
+//change the height of the iframe
+document.getElementById("description_frame").height=the_height;
+}
+{/literal}
+</script>
+<iframe id="description_frame" onLoad="calcHeight();" src="index.php?module=xeBaySellerLists&action=preview&record={$fields.id.value}"  frameborder="0" width="100%"></iframe>',
+			),
+		),
 	)
 );
 ?>

@@ -74,4 +74,5 @@ $mod_strings = array (
   'LBL_CONDITIONID' => 'Condition',
   'LBL_CONDITIONDESCRIPTION' => 'Condition<br/>Description',
   'LBL_PICTUREDETAILS' => 'Pictures',
+  'LBL_PREVIEW' => ' ',
 );

@@ -1,5 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,42 +36,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+/*********************************************************************************
 
+ * Description: Controller for the Import module
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ ********************************************************************************/
 
+require_once("include/MVC/Controller/SugarController.php");
 
-$listViewDefs['xeBayListings'] = array(
-	'NAME' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
-		'default' => true,
-        'link' => true),         
-	'SHORT_TITLE' => array(
-		'width' => '24', 
-		'label' => 'LBL_SHORT_TITLE', 
-		'default' => true),         
-	'XINVENTORY_NAME' => array(
-		'width' => '24', 
-		'label' => 'LBL_INVENTORY', 
-		'module' => 'xInventories',
-        'id' => 'XINVENTORY_ID',
-		'default' => true,
-		'related_fields' => 
-		array (
-			0 => 'xinventory_id',
-		),
-	),
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
-	'PREVIEW' => array(
-		'width' => '1', 
-		'label' => 'LBL_PREVIEW', 
-		'customCode' => '{$PREVIEW_URL}',
-		'default' => true,
-		'sortable' => false,
-	),
-);
+class xeBayListingsController extends SugarController
+{
+	function action_preview()
+	{
+		echo $this->bean->preview_description();
+		sugar_cleanup(true);
+	}
+
+}
 ?>
