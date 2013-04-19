@@ -405,11 +405,11 @@ class xeBaySellerList extends Basic {
 
 	function revise()
 	{
-		// static $ebayAccount = BeanFactory::getBean('xeBayAccounts');
-		// static $accounts = $ebayAccount->get_accounts('All');
-		// static $ri = new ReviseItem;
-		// static $rfpi = new ReviseFixedPriceItem;
-		static $scope = array('description', 'sku');
+		$ebayAccount = BeanFactory::getBean('xeBayAccounts');
+		$accounts = $ebayAccount->get_accounts('All');
+		$ri = new ReviseItem();
+		$rfpi = new ReviseFixedPriceItem();
+		$scope = array('description', 'sku');
 
 		$authToken = $accounts[$this->xebayaccount_id];
 		if (empty($this->variation)) {

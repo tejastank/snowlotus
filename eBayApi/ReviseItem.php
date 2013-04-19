@@ -57,18 +57,30 @@ class ReviseItem extends eBayTradingApi
 			$item->setSKU($params['SKU']);
 		}
 
+		$item->setHitCounter("HiddenStyle");
+
         $req->setItem($item);
 		
         $res = $this->proxy->ReviseItem($req);
-        if ($this->testValid($res))
-        {
-            return (true);
-        }
-        else 
-        {
+
+		switch ($res->getAck()) {
+		case AckCodeType::CodeType_Success:
+            return true;
+			break;
+
+		case AckCodeType::CodeType_Warning:
+			echo "Item ID: {$params['ItemID']}<br>";
+            echo $this->proxy->getErrorsToString($res, true);
+            return true;
+			break;
+
+		default:
+			echo "Item ID: {$params['ItemID']}<br>";
+            echo $this->proxy->getErrorsToString($res, true);
             $this->dumpObject($res);
-            return (false);
-        }
+            return false;
+			break;
+		}
 	}
 }
 

@@ -47,5 +47,5 @@ if (isset($_REQUEST['uid'])) {
 	}
 }
 
-$url = "index.php?module=xeBaySellerListing&action=index";
+$url = "index.php?module=xeBaySellerLists&action=index";
 SugarApplication::redirect($url);
