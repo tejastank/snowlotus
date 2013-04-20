@@ -168,6 +168,9 @@ class xPhotobucketAccount extends Basic {
 
 		// return $this->api->album($this->username, array('media' => 'images'))->get()->getParsedResponse(true);
 		// return $this->api->album($this->username)->upload($params)->post()->getResponseString();
+
+		set_time_limit(60*5);
+
 		try {
 			return $this->api->album($this->username)->upload($params)->post()->getParsedResponse(true);
 		} catch (PBAPI_Exception_Response $e) {

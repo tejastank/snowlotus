@@ -88,7 +88,7 @@ class xeBayUsersController extends SugarController
 				$endTimeFrom = date("c", time());
 				$endTimeTo = date("c", time() + 60 * 60 * 24 * 30);
 
-				set_time_limit(60*10);
+				set_time_limit(60*30);
 
 				$res = $sellerList->retrieveSellerSurveyList(array(
 					'UserID' => $user->name,
