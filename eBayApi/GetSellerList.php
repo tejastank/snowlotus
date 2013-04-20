@@ -239,8 +239,8 @@ class GetSellerList extends eBayTradingApi
 					if (($listingType != 'FixedPriceItem') && ($listingType != 'StoresFixedPrice'))
 						continue;
 				    $bean->quantitysold = $item->getSellingStatus()->getQuantitySold();
-					if ($bean->quantitysold  == 0)
-						continue;
+					// if ($bean->quantitysold  == 0)
+						// continue;
 				    $bean->buyitnowprice = $item->getBuyItNowPrice()->getTypeValue();
 				    $bean->buyitnowprice_currencyid = $item->getBuyItNowPrice()->getTypeAttribute('currencyID');
 				    $bean->itemid = $item->getItemID();
