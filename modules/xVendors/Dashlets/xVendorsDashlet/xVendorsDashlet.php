@@ -42,17 +42,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 
 
-class MyxVendorsDashlet extends DashletGeneric { 
-    function MyxVendorsDashlet($id, $def = null) {
+class xVendorsDashlet extends DashletGeneric { 
+    function xVendorsDashlet($id, $def = null) {
 		global $current_user, $app_strings;
-		require('modules/xVendors/Dashlets/MyxVendorsDashlet/MyxVendorsDashlet.data.php');
+		require('modules/xVendors/Dashlets/xVendorsDashlet/xVendorsDashlet.data.php');
 
         parent::DashletGeneric($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'xVendors');
 
-        $this->searchFields = $dashletData['MyxVendorsDashlet']['searchFields'];
-        $this->columns = $dashletData['MyxVendorsDashlet']['columns'];
+        $this->searchFields = $dashletData['xVendorsDashlet']['searchFields'];
+        $this->columns = $dashletData['xVendorsDashlet']['columns'];
 
         $this->seedBean = new xVendor();        
     }

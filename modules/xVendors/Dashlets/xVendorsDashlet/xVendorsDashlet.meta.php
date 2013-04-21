@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $app_strings;
 
-$dashletMeta['MyxVendorsDashlet'] = array('module'		=> 'xVendors',
+$dashletMeta['xVendorsDashlet'] = array('module'		=> 'xVendors',
 										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'xVendors'), 
                                           'description' => 'A customizable view into xVendors',
                                           'category'    => 'Module Views');

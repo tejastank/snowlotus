@@ -40,14 +40,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $current_user;
 
-$dashletData['MyxVendorsDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
+$dashletData['xVendorsDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
                                                           'xvendor_type'    => array('default' => ''),
  														  'industry'    => array('default' => ''),
 														  'billing_address_country' => array('default'=>''),
                                                           'assigned_user_id' => array('type'    => 'assigned_user_name', 
                                                                                       'default' => $current_user->name,
 																					  'label' => 'LBL_ASSIGNED_TO'));
-$dashletData['MyxVendorsDashlet']['columns'] =  array('name' => array('width'   => '40', 
+$dashletData['xVendorsDashlet']['columns'] =  array('name' => array('width'   => '40', 
                                                                       'label'   => 'LBL_LIST_XVENDOR_NAME',
                                                                       'link'    => true,
                                                                       'default' => true),
