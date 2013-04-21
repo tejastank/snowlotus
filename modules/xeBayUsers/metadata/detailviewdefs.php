@@ -57,6 +57,25 @@ $viewdefs['xeBayUsers']['DetailView'] = array(
 			'registrationdate',
 		),
 		array (
+			array(
+				'name' => 'monthly_sales',
+				'label' => 'LBL_MONTHLY_SALES',
+				'customCode' => '{$MONTHLY_SALES}',
+			),
+			array(
+				'name' => 'monthly_sales_amount',
+				'label' => 'LBL_MONTHLY_SALES_AMOUNT',
+				'customCode' => '{$MONTHLY_SALES_AMOUNT}',
+			),
+		),
+		array (
+			array(
+				'name' => 'not_selling_rate',
+				'label' => 'LBL_NOT_SELLING_RATE',
+				'customCode' => '{$NOT_SELLING_RATE}',
+			),
+		),
+		array (
 			array (
 				'name' => 'date_entered',
 				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',

@@ -123,7 +123,7 @@ $dictionary['xeBayUser'] = array(
 
 		'xebaysellersurveys'=>
 		array(
-			'name'=>'xinventories',
+			'name'=>'xebaysellersurveys',
 			'vname'=>'LBL_SELLITEMS',
 			'type'=>'link',
 			'relationship' => 'xebaysellersurveys_xebayuser',

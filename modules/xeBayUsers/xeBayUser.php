@@ -66,6 +66,8 @@ class xeBayUser extends Basic {
 	var $storename;
 	var $storeurl;
 
+	var $xebaysellersurveys;
+
 	function xeBayUser()
 	{
 		parent::Basic();
@@ -91,6 +93,45 @@ class xeBayUser extends Basic {
         $field_list['SYNC_USER_DATA'] = $sync;
 
 		return $field_list;
+	}
+
+	function mark_deleted($id)
+	{
+		$GLOBALS['db']->query("DELETE FROM xebaysellersurveys WHERE xebaysellersurveys.xebayuser_id ='{$this->id}'");
+		parent::mark_deleted($id);
+	}
+
+	function get_sale_status()
+	{
+		$sale_status = array();
+
+		// set_time_limit(60 * 3);
+		// $this->load_relationship('xebaysellersurveys');
+		// $listings = $this->xebaysellersurveys->getBeans();
+
+		$bean = BeanFactory::getBean('xeBaySellerSurveys');
+		$where = "xebayuser_id='{$this->id}'";
+		$resp = $bean->get_list("", $where, 0, -99, -99, 0, false, array('quantitysold', 'convertedstartprice'));
+		$listings = $resp['list'];
+
+		$monthly_sales = 0;
+		$monthly_sales_amount = 0;
+		$not_selling = 0;
+		foreach ($listings as &$listing) {
+			if ($listing->quantitysold > 0) {
+				$monthly_sales_amount += $listing->quantitysold * $listing->convertedstartprice;
+				$monthly_sales += $listing->quantitysold;
+			} else {
+				$not_selling++;
+			}
+		}
+
+		$sale_status['monthly_sales'] = $monthly_sales;
+		$sale_status['monthly_sales_amount'] = "USD {$monthly_sales_amount}";
+		$listings_count = count($listings);
+		$sale_status['not_selling_rate'] = "{$not_selling} / {$listings_count}";
+
+		return $sale_status;
 	}
 }
 ?>

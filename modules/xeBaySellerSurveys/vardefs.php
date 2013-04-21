@@ -102,7 +102,8 @@ $dictionary['xeBaySellerSurvey'] = array(
 		'convertedstartprice_currencyid' => array(
 			'name' => 'convertedstartprice_currencyid',
 			'vname' => 'LBL_CONVERTEDSTARTPRICE_CURRENCYID',
-			'type' => 'double',
+			'type' => 'varchar',
+			'len' => '3',
 		),
 		'starttime' => array(
 			'name' => 'starttime',

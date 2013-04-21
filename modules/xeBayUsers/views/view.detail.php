@@ -82,6 +82,11 @@ EOQ;
 		$sync_url = "<input title='{$mod_strings['LBL_SYNC']}' class='button' type='submit' name='button' value='{$mod_strings['LBL_SYNC']}' id='sync_url' onclick='return sync_sell_listings();'>";
 		$this->ss->assign("SYNC_URL", $sync_url);
 
+		$sale_status = $this->bean->get_sale_status();
+		$this->ss->assign("MONTHLY_SALES", $sale_status['monthly_sales']);
+		$this->ss->assign("MONTHLY_SALES_AMOUNT", $sale_status['monthly_sales_amount']);
+		$this->ss->assign("NOT_SELLING_RATE", $sale_status['not_selling_rate']);
+
 		echo $this->dv->display();
  	} 	
 }
