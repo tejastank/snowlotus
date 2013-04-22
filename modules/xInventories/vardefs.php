@@ -56,7 +56,7 @@ $dictionary['xInventory'] = array(
 	    	'vname'=> 'LBL_NAME_EN',
 	    	'type'=>'name',
 			'dbType' => 'varchar',
-	    	'len'=>55,
+	    	'len'=>25,
 		),
 		'xcategory_id'=>
 		array(

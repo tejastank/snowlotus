@@ -61,6 +61,7 @@ class xeBayOrder extends Basic {
 	var $checked_out;
 	var $redeliver_count;
     var $shipping_service;
+	var $source_type;
 
 	var $xebayaccount_id;
 	var $xebayaccount_name;
@@ -442,6 +443,7 @@ class xeBayOrder extends Basic {
             $total_weight = $weight;
 
             $orders[] = array(
+				'type' => $bean->source_type,
                 'buyer_user_id' => $bean->buyer_user_id,
                 'sales_record_number' => $bean->sales_record_number,
                 'name' => $bean->name,
@@ -672,27 +674,50 @@ function getHandledStatusDropDown()
 function getShippingServiceDropDown()
 {
     $list = array(
-        'HKBAM' => '香港邮政平邮小包',
-        'HKBRAM' => '香港邮政挂号小包',
-        'SWBAM' => '瑞士邮政平邮小包',
-        'SWBRAM' => '瑞士邮政挂号小包',
-        'DEAM' => '德国邮政平邮小包',
-        'DERAM' => '德国邮政挂号小包',
-        'RM1' => '英国邮政平邮小包',
-        'RM1R' => '英国邮政挂号小包',
-        'CNAM' => '中国邮政平邮小包',
-        'CNRAM' => '中国邮政挂号小包',
-        'SGAM' => '新加坡邮政平邮小包(只限三态速递)',
-        'SGRAM' => '新加坡邮政挂号小包',
-        'WWAM' => '中国邮政外围平邮小包(只限三态速递)',
-        'WWRAM' => '中国邮政外围挂号小包(只限三态速递)',
-        'BPAM' => '比利时邮政平邮小包(只限三态速递)',
+        'HKBAM' => '香港小包平邮',
+        'HKBRAM' => '香港小包挂号',
+        'SWBAM' => '瑞士小包平邮',
+        'SWBRAM' => '瑞士小包挂号',
+        'DEAM' => '德国小包平邮',
+        'DERAM' => '德国小包挂号',
+        'RM1' => '英国小包平邮',
+        'RM1R' => '英国小包挂号',
+        'CNAM' => '中国小包平邮',
+        'CNRAM' => '中国小包挂号',
+        'SGAM' => '新加坡小包平邮',
+        'SGRAM' => '新加坡小包挂号',
+        'WWAM' => '中国邮政小包(上海)',
+        'WWRAM' => '中国邮政小包挂号(上海)',
+        'BPAM' => '比利时小包平邮',
     );
 
     return $list;
 }
 
-function getPfcShippingService($express)
+function map4pxShippingService($express)
+{
+	static $_4px = array(
+        'HKBAM' => 'B3',
+        'HKBRAM' => 'B4',
+        'SWBAM' => '',
+        'SWBRAM' => '',
+        'DEAM' => '',
+        'DERAM' => '',
+        'RM1' => '',
+        'RM1R' => '',
+        'CNAM' => 'ZP',
+        'CNRAM' => 'ZG',
+        'SGAM' => 'B1',
+        'SGRAM' => 'B2',
+        'WWAM' => 'B9',
+        'WWRAM' => '',
+        'BPAM' => '',
+	);
+	
+	return $_4px[$express];
+}
+
+function mapPfcShippingService($express)
 {
 	static $pfc = array(
         'HKBAM' => '香港邮政小包挂号',

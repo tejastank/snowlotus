@@ -109,47 +109,37 @@ class xeBayOrdersViewExportAll extends SugarView {
         							 ->setCategory("订单批量导入");
         
         $column_head_import = array(
-        	'Customer Number',
-        	'4px Product',
-        	'Sales Record Number',
-        	'User Id',
-        	'Buyer Fullname',
-        	'Buyer Phone Number',
-        	'Buyer Email',
-        	'Buyer Address 1',
-        	'Buyer Address 2',
-        	'Buyer City',
-        	'Buyer State',
-        	'Buyer Zip',
-        	'Buyer Country',
-        	'Item Number',
-        	'Item Title',
-        	'Custom Label',
-        	'isreturn',
-        	'category',
-			'Quantity',
-			'Sale Price',
-			'Shipping and Handling',
-			'US Tax',
-			'Insurance',
-			'Total Price',
-			'Payment Method',
-			'Sale Date',
-			'Checkout Date',
-			'Paid on Date',
-			'Shipped on Date',
-			'Feedback left',
-			'Feedback received',
-			'Notes to yourself',
-			'Listed On',
-			'Sold On',
-			'PayPal Transaction ID',
-			'Shipping Service',
-			'Transaction ID',
-			'Order ID',
-			'declared value',
-			'weight',
-			'isreturn',
+        	'客户单号',
+        	'服务商单号',
+        	'运输方式',
+        	'目的国家',
+        	'寄件人公司名',
+        	'寄件人姓名',
+        	'寄件人地址',
+        	'寄件人电话',
+        	'寄件人邮编',
+        	'寄件人传真',
+        	'收件人公司名',
+        	'收件人姓名',
+        	'州 \ 省',
+        	'城市',
+        	'联系地址',
+        	'收件人电话',
+        	'收件人邮箱',
+        	'收件人邮编',
+			'收件人传真',
+			'买家ID',
+			'交易ID',
+			'保险类型',
+			'保险价值',
+			'订单备注',
+			'重量',
+			'是否退件',
+			'海关报关品名1','配货信息1','申报价值1','申报品数量1','配货备注1',
+			'海关报关品名2','配货信息2','申报价值2','申报品数量2','配货备注2',
+			'海关报关品名3','配货信息3','申报价值3','申报品数量3','配货备注3',
+			'海关报关品名4','配货信息4','申报价值4','申报品数量4','配货备注4',
+			'海关报关品名5','配货信息5','申报价值5','申报品数量5','配货备注5',
         );
         
         $this->set_column_head($objPHPExcel, 0, $column_head_import, 'ebay批量上传模版');
@@ -157,57 +147,69 @@ class xeBayOrdersViewExportAll extends SugarView {
         $row = 2;
         
         foreach ($orders as &$order) {
-        	$orderLine['Customer Number'] = '';
-        	$orderLine['4px Product'] = $order['shipping_service'];
-			$orderLine['Sales Record Number'] = $order['sales_record_number'];
-        	$orderLine['User Id'] = $order['buyer_user_id'];
-        	$orderLine['Buyer Fullname'] = $order['name'];
-        	$orderLine['Buyer Phone Number'] = $order['phone'];
-        	$orderLine['Buyer Email'] = '';
-        	$orderLine['Buyer Address 1'] = $order['street1'];
-        	$orderLine['Buyer Address 2'] = $order['street2'];
-        	$orderLine['Buyer City'] = $order['city'];
-        	$orderLine['Buyer State'] = $order['state'];
-        	$orderLine['Buyer Zip'] = $order['postal_code'];
-        	$orderLine['Buyer Country'] = $order['country_name'];
-        	$orderLine['Item Number'] = '';
-			$item_title = '';
-            $custom_label = '';
-            foreach($order['order_details'] as &$detail) {
-                if (!empty($item_title))
-                    $item_title .= '<br>';
-                $item_title .= "{$detail['location']} {$detail['declaration_name']} x{$detail['quantity']}) ";
-                if (!empty($custom_label))
-                    $custom_label .= '<br>';
-                $custom_label .= "{$detail['location']} {$detail['inventory_name']} x{$detail['quantity']}) ";
+			$orderLine['客户单号'] = "{$order['type']}{$order['sales_record_number']}";
+			$orderLine['服务商单号'] = '';
+        	$orderLine['运输方式'] = map4pxShippingService($order['shipping_service']);
+			$orderLine['目的国家'] = $order['country'];
+			$orderLine['寄件人公司名'] = '';
+        	$orderLine['寄件人姓名'] = '';
+        	$orderLine['寄件人地址'] = '';
+        	$orderLine['寄件人电话'] = '';
+        	$orderLine['寄件人邮编'] = '';
+        	$orderLine['寄件人传真'] = '';
+        	$orderLine['收件人公司名'] = '';
+        	$orderLine['收件人姓名'] = $order['name'];
+			$orderLine['州 \ 省'] = $order['state'];
+			$orderLine['城市'] = $order['city'];
+			$orderLine['联系地址'] = "{$order['street1']}";
+			if (!empty($order['street2']))
+				$orderLine['联系地址'] .= " {$order['street2']}";
+        	$orderLine['收件人电话'] = $order['phone'];
+        	$orderLine['收件人邮箱'] = '';
+			$orderLine['收件人邮编'] = $order['postal_code'];
+			$orderLine['收件人传真'] = '';
+			$orderLine['买家ID'] = $order['buyer_user_id'];
+			$orderLine['交易ID'] = '';
+			$orderLine['保险类型'] = '';
+			$orderLine['保险价值'] = '';
+			$orderLine['订单备注'] = '';
+			$orderLine['重量'] = $order['total_weight'];
+			$orderLine['是否退件'] = '';
+			
+			for ($i = 1; $i < 6; $i++) {
+				$orderLine["海关报关品名{$i}"] = "";
+				$orderLine["配货信息{$i}"] = "";
+				$orderLine["申报价值{$i}"] = "";
+				$orderLine["申报品数量{$i}"] = "";
+				$orderLine["配货备注{$i}"] = "";
             }
-        	$orderLine['Item Title'] = $item_title;
-        	$orderLine['Custom Label'] = $custom_label;
-        	$orderLine['isreturn'] = '';
-        	$orderLine['category'] = '';
-			$orderLine['Quantity'] = $order['quantity'];
-			$orderLine['Sale Price'] = "{$order['subtotal_currency']} {$order['subtotal_value']}";
-			$orderLine['Shipping and Handling'] = '';
-			$orderLine['US Tax'] = '';
-			$orderLine['Insurance'] = '';
-			$orderLine['Total Price'] = "{$order['total_currency']} {$order['total_value']}";
-			$orderLine['Payment Method'] = '';
-			$orderLine['Sale Date'] = '';
-			$orderLine['Checkout Date'] = '';
-			$orderLine['Paid on Date'] = '';
-			$orderLine['Shipped on Date'] = '';
-			$orderLine['Feedback left'] = '';
-			$orderLine['Feedback received'] = '';
-			$orderLine['Notes to yourself'] = '';
-			$orderLine['Listed On'] = '';
-			$orderLine['Sold On'] = '';
-			$orderLine['PayPal Transaction ID'] = '';
-			$orderLine['Shipping Service'] = '';
-			$orderLine['Transaction ID'] = '';
-			$orderLine['Order ID'] = '';
-			$orderLine['declared value'] = "{$order['total_currency']} {$order['total_value']}";
-			$orderLine['weight'] = $order['total_weight'];
-			$orderLine['isreturn'] = '';
+			
+			$index = 1;
+			$isfive = false;
+			if (count($order['order_details']) == 5)
+				$isfive = true;
+            foreach($order['order_details'] as &$detail) {
+				if ($index < 5) {
+					$orderLine["海关报关品名{$index}"] = "{$detail['declaration_name']} ({$detail['quantity']}";
+					$orderLine["配货信息{$index}"] = "{$detail['location']} {$detail['inventory_name']}";
+					$orderLine["申报价值{$index}"] = $detail['value'];
+					$orderLine["申报品数量{$index}"] = $detail['quantity'];
+					$orderLine["配货备注{$index}"] = "";
+					$index++;
+				} else {
+					if (!empty($orderLine["配货信息5"])) {
+						$orderLine["配货信息5"] .= '<br>';
+					} else {
+						$orderLine["海关报关品名5"] = "{$detail['declaration_name']} ({$detail['quantity']}";
+						$orderLine["配货信息5"] = '';
+						$orderLine["申报价值5"] = $detail['value'];
+						$orderLine["申报品数量5"] = 0;
+						$orderLine["配货备注5"] = "";
+					}
+					$orderLine["配货信息5"] .= "{$detail['location']} {$detail['inventory_name']} * {$detail['quantity']})";
+					$orderLine["申报品数量5"] += $detail['quantity'];
+				}
+            }
         
         	$this->set_row_data($objPHPExcel, 0, $orderLine, $row);
         
@@ -381,7 +383,7 @@ class xeBayOrdersViewExportAll extends SugarView {
         foreach ($orders as &$order) {
 			$orderLine = array();
         	$orderLine['客户参考编号'] = $order['sales_record_number'];
-        	$orderLine['运输方式'] = getPfcShippingService($order['shipping_service']);
+        	$orderLine['运输方式'] = mapPfcShippingService($order['shipping_service']);
         	$orderLine['投保易网邮保险服务'] = 'N';
         	$orderLine['Buyer Fullname'] = $order['name'];
         	$orderLine['Buyer Phone Number'] = $order['phone'];

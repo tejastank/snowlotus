@@ -46,11 +46,23 @@ $viewdefs['xInventories']['EditView'] = array(
 	'panels' => array (
 		'default' => array (
 			array (
-				'name',
+				array(
+					'name' => 'name',
+					'displayParams' => array(
+						'maxlength' => 32,
+						'size' => 78,
+					),
+				),
 				'assigned_user_name',
 			),
 			array (
-				'name_en',
+				array(
+					'name' => 'name_en',
+					'displayParams' => array(
+						'maxlength' => 24,
+						'size' => 78,
+					),
+				),
 				'xcategory_name',
 			),
 			array (

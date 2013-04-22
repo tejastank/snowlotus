@@ -50,7 +50,7 @@ class GetOrders extends eBayTradingApi
 	public function retrieveOrders($params)
 	{
         global $sugar_config;
-        $shipping_service = empty($sugar_config['ebay_shipping_service']) ? 'HKBAM' : $sugar_config['ebay_shipping_service'];
+        $shipping_service = $sugar_config['ebay_shipping_service'];
 
 		$result = true;
 		$account_id = $params['AccountID'];
@@ -96,6 +96,8 @@ class GetOrders extends eBayTradingApi
 
                     if (empty($duplicated))
                         $bean->shipping_service = $shipping_service;
+
+					$bean->source_type = 'ebay';
 
 					$bean->xebayaccount_id = $account_id;
 					$bean->buyer_checkout_message = mb_convert_encoding($order->getBuyerCheckoutMessage(), 'UTF-8');;

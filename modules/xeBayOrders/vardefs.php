@@ -78,6 +78,16 @@ $dictionary['xeBayOrder'] = array(
 			'len'=>'32',
             'default'=>'HKBAM',
         ),
+		'source_type'=>
+		array(
+			'name'=>'source_type',
+	    	'vname'=> 'LBL_SOURCE_TYPE',
+            'type'=>'enum',
+            'function'=>'getOrderSourceType',
+	    	'len'=>12,
+			'default'=>'manual',
+			'comment' => 'values: manual, ebay',
+		),
 		'xebayaccount_id'=>
 		array(
 			'name'=>'xebayaccount_id',
