@@ -90,6 +90,143 @@ class xeBayOrdersViewExportAll extends SugarView {
 	function default_export($orders)
 	{
 	}
+	
+	function _4px_export($orders)
+	{
+        ini_set('zlib.output_compression', 'Off');
+        ob_start();
+ 
+        // Create new PHPExcel object
+        $objPHPExcel = new PHPExcel();
+        
+        // Set document properties
+        $objPHPExcel->getProperties()->setCreator("xlongfeng")
+        							 ->setLastModifiedBy("xlongfeng")
+        							 ->setTitle("订单批量导入")
+        							 ->setSubject("订单批量导入")
+        							 ->setDescription("订单批量导入")
+        							 ->setKeywords("订单批量导入")
+        							 ->setCategory("订单批量导入");
+        
+        $column_head_import = array(
+        	'Customer Number',
+        	'4px Product',
+        	'Sales Record Number',
+        	'User Id',
+        	'Buyer Fullname',
+        	'Buyer Phone Number',
+        	'Buyer Email',
+        	'Buyer Address 1',
+        	'Buyer Address 2',
+        	'Buyer City',
+        	'Buyer State',
+        	'Buyer Zip',
+        	'Buyer Country',
+        	'Item Number',
+        	'Item Title',
+        	'Custom Label',
+        	'isreturn',
+        	'category',
+			'Quantity',
+			'Sale Price',
+			'Shipping and Handling',
+			'US Tax',
+			'Insurance',
+			'Total Price',
+			'Payment Method',
+			'Sale Date',
+			'Checkout Date',
+			'Paid on Date',
+			'Shipped on Date',
+			'Feedback left',
+			'Feedback received',
+			'Notes to yourself',
+			'Listed On',
+			'Sold On',
+			'PayPal Transaction ID',
+			'Shipping Service',
+			'Transaction ID',
+			'Order ID',
+			'declared value',
+			'weight',
+			'isreturn',
+        );
+        
+        $this->set_column_head($objPHPExcel, 0, $column_head_import, 'ebay批量上传模版');
+
+        $row = 2;
+        
+        foreach ($orders as &$order) {
+        	$orderLine['Customer Number'] = '';
+        	$orderLine['4px Product'] = $order['shipping_service'];
+			$orderLine['Sales Record Number'] = $order['sales_record_number'];
+        	$orderLine['User Id'] = $order['buyer_user_id'];
+        	$orderLine['Buyer Fullname'] = $order['name'];
+        	$orderLine['Buyer Phone Number'] = $order['phone'];
+        	$orderLine['Buyer Email'] = '';
+        	$orderLine['Buyer Address 1'] = $order['street1'];
+        	$orderLine['Buyer Address 2'] = $order['street2'];
+        	$orderLine['Buyer City'] = $order['city'];
+        	$orderLine['Buyer State'] = $order['state'];
+        	$orderLine['Buyer Zip'] = $order['postal_code'];
+        	$orderLine['Buyer Country'] = $order['country_name'];
+        	$orderLine['Item Number'] = '';
+			$item_title = '';
+            $custom_label = '';
+            foreach($order['order_details'] as &$detail) {
+                if (!empty($item_title))
+                    $item_title .= '<br>';
+                $item_title .= "{$detail['location']} {$detail['declaration_name']} x{$detail['quantity']}) ";
+                if (!empty($custom_label))
+                    $custom_label .= '<br>';
+                $custom_label .= "{$detail['location']} {$detail['inventory_name']} x{$detail['quantity']}) ";
+            }
+        	$orderLine['Item Title'] = $item_title;
+        	$orderLine['Custom Label'] = $custom_label;
+        	$orderLine['isreturn'] = '';
+        	$orderLine['category'] = '';
+			$orderLine['Quantity'] = $order['quantity'];
+			$orderLine['Sale Price'] = "{$order['subtotal_currency']} {$order['subtotal_value']}";
+			$orderLine['Shipping and Handling'] = '';
+			$orderLine['US Tax'] = '';
+			$orderLine['Insurance'] = '';
+			$orderLine['Total Price'] = "{$order['total_currency']} {$order['total_value']}";
+			$orderLine['Payment Method'] = '';
+			$orderLine['Sale Date'] = '';
+			$orderLine['Checkout Date'] = '';
+			$orderLine['Paid on Date'] = '';
+			$orderLine['Shipped on Date'] = '';
+			$orderLine['Feedback left'] = '';
+			$orderLine['Feedback received'] = '';
+			$orderLine['Notes to yourself'] = '';
+			$orderLine['Listed On'] = '';
+			$orderLine['Sold On'] = '';
+			$orderLine['PayPal Transaction ID'] = '';
+			$orderLine['Shipping Service'] = '';
+			$orderLine['Transaction ID'] = '';
+			$orderLine['Order ID'] = '';
+			$orderLine['declared value'] = "{$order['total_currency']} {$order['total_value']}";
+			$orderLine['weight'] = $order['total_weight'];
+			$orderLine['isreturn'] = '';
+        
+        	$this->set_row_data($objPHPExcel, 0, $orderLine, $row);
+        
+        	$row++;
+        }
+
+        $objPHPExcel->setActiveSheetIndex(0);
+        
+        date_default_timezone_set("Asia/Shanghai");
+        $filename = "4px_递四方速递_" . date("Ymd");
+
+        // Redirect output to a client’s web browser
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename={$filename}.xls");
+        header('Cache-Control: max-age=0');
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+	}
 
 	function sfc_export($orders)
 	{

@@ -1,4 +1,6 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -34,69 +36,33 @@
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-$viewdefs['xeBayOrders']['EditView'] = array(
-	'templateMeta' => array(
-		'maxColumns' => '2', 
-		'widths' => array(
-						array('label' => '10', 'field' => '30'), 
-						array('label' => '10', 'field' => '30')
-					),                                                                                                                                    
-	),
- 
-	'panels' => array (
-		'default' => array (
-			array (
-				'buyer_user_id',
-				'xebayaccount_name',
-			),
-			array (
-				'name',
-                'shipping_service',
-			),
-			array (
-				'street1',
-				'handled_status',
-			),
-			array (
-				'street2',
-				'print_status',
-			),
-			array (
-				'city_name',
-				array (
-					'name' => 'subtotal_value',
-					'customCode' => '{$fields.subtotal_currency_id.value}&nbsp;{$fields.subtotal_value.value}',
-				),
-			),
-			array (
-				'state_or_province',
-				array (
-					'name' => 'total_value',
-					'customCode' => '{$fields.total_currency_id.value}&nbsp;{$fields.total_value.value}',
-				),
-			),
-			array (
-				'postal_code',
-			),
-			array (
-                array(
-                    'name' => 'country',
-                    'customCode' => '{$CUSTOM_COUNTRY}',
-                ),
-			),
-			array (
-				'phone',
-			),
-			array (
-				array (
-					'name' => 'buyer_checkout_message',
-					'customCode' => '{$fields.buyer_checkout_message.value}',
-				),
-			),
-			array (
-				'description',
-			),
-		),
-	),
-);
-?>
+require_once('eBayApi/eBayTradingApi.php');
+
+class xeBayOrdersViewEdit extends ViewEdit
+{
+    function display($showTitle = true, $ajaxSave = false)
+ 	{
+        global $mod_strings, $app_list_strings, $app_strings;
+
+        $countires = array();
+		$nationality = require_once('modules/xeBayOrders/nationality.php');
+		foreach($nationality as $i => $value) {
+			$country_name = $value['en'];
+            if (empty($country_name))
+                continue;
+            if (!empty($value['cn']))
+                $country_name .= "&nbsp({$value['cn']})";
+            $countires[$i] = $country_name;
+		}
+
+        asort($countires);
+
+        $country_options = "<select name='country' id='country' title=''>";
+		$country_options .= get_select_options_with_id($countires, $this->bean->country);
+        $country_options .=  "</select>";
+
+		$this->ev->ss->assign("CUSTOM_COUNTRY", $country_options);
+
+ 		parent::display($showTitle, $ajaxSave);
+	}
+}

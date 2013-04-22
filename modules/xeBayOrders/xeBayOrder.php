@@ -112,6 +112,27 @@ class xeBayOrder extends Basic {
 		return false;
 	}
 
+    function save($check_notify = FALSE)
+    {
+        $isUpdate = true;
+        if(empty($this->id))
+        {
+            $isUpdate = false;
+        }
+
+		if ( $this->new_with_id == true )
+		{
+			$isUpdate = false;
+		}
+        if ($isUpdate || (($isUpdate == false) && empty($this->country_name))) {
+		    $nationality = require_once('modules/xeBayOrders/nationality.php');
+            $country_name = $nationality[$this->country];
+            if (!empty($country_name))
+                $this->country_name = $country_name['en'];
+        }
+		parent::save($check_notify);
+    }
+
 	function mark_deleted($id)
 	{
 		global $current_user;
@@ -698,6 +719,7 @@ function getExpressCarrierDropDown()
 {
     $list = array(
 		'default' => 'Default',
+		'_4px' => '递四方速递',
 		'sfc' => '三态速递',
 		'pfc' => '皇家物流',
     );

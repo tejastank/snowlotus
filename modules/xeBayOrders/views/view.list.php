@@ -123,7 +123,7 @@ EOF;
 		}
         $ebay_account_options .=  "</select>";
 
-		$express_carrier_options = get_select_options_with_id(getExpressCarrierDropDown(), isset($sugar_config['ebay_express_carrier']) ? $sugar_config['ebay_express_carrier'] : 'sfc');
+		$express_carrier_options = get_select_options_with_id(getExpressCarrierDropDown(), isset($sugar_config['ebay_express_carrier']) ? $sugar_config['ebay_express_carrier'] : 'default');
 
 		$shortcuts_unhandled = <<<EOF
 <script>
