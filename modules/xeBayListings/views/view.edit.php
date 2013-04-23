@@ -60,7 +60,7 @@ EOQ;
         $tiny = new SugarTinyMCE();
         $tiny->defaultConfig['cleanup_on_startup']=true;
         $tiny->defaultConfig['width']=800;
-        $tiny->defaultConfig['height']=600;
+        $tiny->defaultConfig['height']=1600;
         $tiny->defaultConfig['plugins'].=",fullpage";
         echo $tiny->getInstance();
 

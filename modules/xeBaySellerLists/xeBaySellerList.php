@@ -337,16 +337,16 @@ class xeBaySellerList extends Basic {
 		$xml = simplexml_load_string(html_entity_decode($this->picture_details,ENT_COMPAT,'UTF-8'));
 		$html = '';
 		$html .= CHtml::openTag('div', array('id'=>'gallery'));
-		$html .= CHtml::image($xml->PictureURL[0], '', array("class"=>"default", 'width'=>450, 'height'=>450));
+		$html .= CHtml::image($xml->PictureURL[0], '', array("class"=>"default", 'width'=>450));
 		$html .= CHtml::openTag('ul');
 		foreach ($xml->PictureURL as $url) {
 			$html .= CHtml::openTag('li');
-			$linkBody = CHtml::image($url, '', array('width'=>50, 'height'=>50));
+			$linkBody = CHtml::image($url, '', array('width'=>50));
 			$linkBody .= CHtml::openTag('b');
 			$linkBody .= CHtml::openTag('span');
 			$linkBody .= CHtml::closeTag('span');
 			$linkBody .= CHtml::openTag('i');
-			$linkBody .= CHtml::image($url, '', array('width'=>450, 'height'=>450));
+			$linkBody .= CHtml::image($url, '', array('width'=>450));
 			$linkBody .= CHtml::closeTag('i');
 			$linkBody .= CHtml::closeTag('b');
 			$html .= CHtml::link($linkBody, '#x');
@@ -397,8 +397,6 @@ class xeBaySellerList extends Basic {
 		$desc = strtr($desc, $strips);
  
         unset($ss);
-
-		// file_put_contents("{$this->name}.html", $desc);
  
         return $desc;
 	}
@@ -416,7 +414,7 @@ class xeBaySellerList extends Basic {
 			if ($this->bid_count > 0)
 				continue;
 			$ri->ryi(array(
-				'ItemID' => $this->this_id,
+				'ItemID' => $this->item_id,
 				'Description' => $this->get_description(),
 				'ApplicationData' => xeBayListing::guid_to_uuid($this->xebaylisting_id),
 				'SKU' => $this->xinventory_id,
@@ -426,7 +424,7 @@ class xeBaySellerList extends Basic {
 			$count++;
 		} else {
 			$rfpi->ryi(array(
-				'ItemID' => $this->this_id,
+				'ItemID' => $this->item_id,
 				'Description' => $this->get_description(),
 				'ApplicationData' => xeBayListing::guid_to_uuid($this->xebaylisting_id),
 				'SKU' => $this->xinventory_id,

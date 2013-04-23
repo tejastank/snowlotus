@@ -671,6 +671,16 @@ function getHandledStatusDropDown()
     return $list;
 }
 
+function getOrderSourceType()
+{
+	$type = array(
+		'manual' => 'manual',
+		'ebay' => 'ebay',
+	);
+
+	return $type;
+}
+
 function getShippingServiceDropDown()
 {
     $list = array(

@@ -47,5 +47,5 @@ if (isset($_REQUEST['uid'])) {
 	}
 }
 
-$url = "index.php?module=xeBaySellerLists&action=index";
-SugarApplication::redirect($url);
+echo "<br>";
+echo "<a href=\"index.php?module=xeBaySellerLists&action=index\">Return to Seller Lists</a>";
