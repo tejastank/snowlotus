@@ -123,15 +123,15 @@ class GetOrders extends eBayTradingApi
 					$bean->payment_hold_status = $order->getPaymentHoldStatus();
 
 					$shippingAddress = $order->getShippingAddress();
-        			$bean->name = mb_convert_encoding($shippingAddress->getName(), 'UTF-8');
-					$bean->street1 = mb_convert_encoding($shippingAddress->getStreet1(), 'UTF-8');
-					$bean->street2 = mb_convert_encoding($shippingAddress->getStreet2(), 'UTF-8');
-					$bean->city_name = mb_convert_encoding($shippingAddress->getCityName(), 'UTF-8');
-					$bean->state_or_province = mb_convert_encoding($shippingAddress->getStateOrProvince(), 'UTF-8');
-					$bean->country = mb_convert_encoding($shippingAddress->getCountry(), 'UTF-8');
-					$bean->country_name = mb_convert_encoding($shippingAddress->getCountryName(), 'UTF-8');
+        			$bean->name = $shippingAddress->getName();
+					$bean->street1 = $shippingAddress->getStreet1();
+					$bean->street2 = $shippingAddress->getStreet2();
+					$bean->city_name = $shippingAddress->getCityName();
+					$bean->state_or_province = $shippingAddress->getStateOrProvince();
+					$bean->country = $shippingAddress->getCountry();
+					$bean->country_name = $shippingAddress->getCountryName();
 					$bean->phone = $shippingAddress->getPhone();
-					$bean->postal_code = mb_convert_encoding($shippingAddress->getPostalCode(), 'UTF-8');
+					$bean->postal_code = $shippingAddress->getPostalCode();
 					$bean->address_id = $shippingAddress->getAddressID();
 					$bean->address_owner = $shippingAddress->getAddressOwner();
 					$bean->external_address_id = $shippingAddress->getExternalAddressID();

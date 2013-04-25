@@ -707,8 +707,8 @@ function getShippingServiceDropDown()
 function map4pxShippingService($express)
 {
 	static $_4px = array(
-        'HKBAM' => 'B3',
-        'HKBRAM' => 'B4',
+        'HKBAM' => 'B4',
+        'HKBRAM' => 'B3',
         'SWBAM' => '',
         'SWBRAM' => '',
         'DEAM' => '',
@@ -730,10 +730,10 @@ function map4pxShippingService($express)
 function mapPfcShippingService($express)
 {
 	static $pfc = array(
-        'HKBAM' => '香港邮政小包挂号',
-        'HKBRAM' => '香港邮政小包平邮',
-        'SWBAM' => '瑞士邮政小包挂号',
-        'SWBRAM' => '瑞士邮政小包平邮',
+        'HKBAM' => '香港邮政小包平邮',
+        'HKBRAM' => '香港邮政小包挂号',
+        'SWBAM' => '瑞士邮政小包平邮',
+        'SWBRAM' => '瑞士邮政小包挂号',
         'DEAM' => '德国邮政小包平邮',
         'DERAM' => '德国邮政小包挂号',
         'RM1' => '英国皇家邮政小包平邮',
