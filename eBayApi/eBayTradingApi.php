@@ -39,7 +39,7 @@ class eBayTradingApi extends EbatNs_Environment
         $this->session->setAppMode($this->app_mode);
         $this->session->setSiteId($this->site_id);
 		$this->setup();
-		$this->proxy = new EbatNs_ServiceProxy($this->session, 'EbatNs_DataConverterUtf8');
+		$this->proxy = new EbatNs_ServiceProxy($this->session);
 
         if ($this->logger)
 	        $this->proxy->attachLogger($this->logger);

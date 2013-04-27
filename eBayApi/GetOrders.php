@@ -100,7 +100,7 @@ class GetOrders extends eBayTradingApi
 					$bean->source_type = 'ebay';
 
 					$bean->xebayaccount_id = $account_id;
-					$bean->buyer_checkout_message = mb_convert_encoding($order->getBuyerCheckoutMessage(), 'UTF-8');;
+					$bean->buyer_checkout_message = $order->getBuyerCheckoutMessage();;
 					$bean->order_id = $order->getOrderID();
 					$bean->order_status = $order->getOrderStatus();
 					$bean->buyer_user_id = $order->getBuyerUserID();

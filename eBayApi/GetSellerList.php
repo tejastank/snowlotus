@@ -162,7 +162,7 @@ class GetSellerList extends eBayTradingApi
 					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
 					$bean->xinventory_id = $item->getSKU();
-                    $bean->name = mb_convert_encoding($item->getTitle(), 'UTF-8');
+                    $bean->name = $item->getTitle();
 					$variations = $item->getVariations();
 					$bean->variation = !empty($variations);
 					$bean->id = create_guid();
@@ -256,7 +256,7 @@ class GetSellerList extends eBayTradingApi
 					$bean->quantitysold_permonth = $bean->quantitysold * 30 / ((time() - strtotime($bean->starttime)) / (60 * 60 * 24));
 				    $bean->startprice = $item->getStartPrice()->getTypeValue();
 				    $bean->startprice_currencyid = $item->getStartPrice()->getTypeAttribute('currencyID');
-                    $bean->name = mb_convert_encoding($item->getTitle(), 'UTF-8');
+                    $bean->name = $item->getTitle();
 					$bean->xebayuser_id = $xebayuser_id;
 					$bean->id = create_guid();
 					$bean->new_with_id = true;
