@@ -111,16 +111,16 @@ class xeBayUser extends Basic {
 
 		$bean = BeanFactory::getBean('xeBaySellerSurveys');
 		$where = "xebayuser_id='{$this->id}'";
-		$resp = $bean->get_list("", $where, 0, -99, -99, 0, false, array('quantitysold', 'convertedstartprice'));
+		$resp = $bean->get_list("", $where, 0, -99, -99, 0, false, array('quantitysold_permonth', 'convertedstartprice'));
 		$listings = $resp['list'];
 
 		$monthly_sales = 0;
 		$monthly_sales_amount = 0;
 		$not_selling = 0;
 		foreach ($listings as &$listing) {
-			if ($listing->quantitysold > 0) {
-				$monthly_sales_amount += $listing->quantitysold * $listing->convertedstartprice;
-				$monthly_sales += $listing->quantitysold;
+			if ($listing->quantitysold_permonth > 0) {
+				$monthly_sales_amount += $listing->quantitysold_permonth * $listing->convertedstartprice;
+				$monthly_sales += $listing->quantitysold_permonth;
 			} else {
 				$not_selling++;
 			}
