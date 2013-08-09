@@ -61,6 +61,7 @@ $mod_strings = array (
   'LNK_LIST' => 'View Seller List',
   'LNK_IMPORT_XEBAYSELLERLISTS' => 'Import Seller List',
   'LNK_UPDATE_XEBAYSELLERLISTS' => 'Update Seller List',
+  'LNK_RSS_XEBAYSELLERLISTS' => 'Export RSS',
   'LNK_TEST_XEBAYSELLERLISTS' => 'Test',
   'LBL_SEARCH_FORM_TITLE' => 'Search Seller List',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',

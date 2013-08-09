@@ -191,5 +191,64 @@ class xeBaySellerListsController extends SugarController
 
 		$this->view = 'updatefinal';
 	}
+	
+	function action_exportrss()
+	{
+		//Bug 30094, If zlib is enabled, it can break the calls to header() due to output buffering. This will only work php5.2+
+		ini_set('zlib.output_compression', 'Off');
+
+		ob_start();
+
+		$tmpfname = tempnam(sys_get_temp_dir(), "kitten");
+		
+		$zip = new ZipArchive;
+
+		$res = $zip->open($tmpfname, ZipArchive::CREATE);
+		if ($res === TRUE) {
+			$bean = BeanFactory::getBean('xeBaySellerLists');
+			$auction_list = $bean->get_full_list("", "listing_type='Chinese'");
+			$fixedprice_list = $bean->get_full_list("", "listing_type='FixedPriceItem'");
+			if (empty($auction_list))
+				$auction_list = array();
+				
+			if (empty($fixedprice_list))
+				$fixedprice_list = array();
+				
+			$item_list = array_merge($auction_list, $fixedprice_list);
+			
+			foreach ($item_list as &$item) {
+				if (empty($item->xebaylisting_id))
+					continue;
+				$rss = $item->build_shopwindow_topmost(true);
+				if (!empty($rss))
+					$zip->addFromString("{$item->xebaylisting_id}-topmost.xml", $rss);
+				
+				$rss = $item->build_shopwindow_correlation(true);
+				if (!empty($rss))
+					$zip->addFromString("{$item->xebaylisting_id}-correlation.xml", $rss);
+				
+				$rss = $item->build_shopwindow_random(true);
+				if (!empty($rss))
+					$zip->addFromString("{$item->xebaylisting_id}-random.xml", $rss);
+			}
+		    
+		    $zip->close();
+			$zipContent = file_get_contents($tmpfname);
+			unlink($tmpfname);
+			ob_clean();
+			header("Pragma: cache");
+			header('Content-Type: application/octet-stream');
+			header("Content-Disposition: attachment; filename=rss.zip");
+			header("Content-transfer-encoding: binary");
+			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+			header("Last-Modified: " . TimeDate::httpTime() );
+			header("Cache-Control: post-check=0, pre-check=0", false );
+			header("Content-Length: " . strlen($zipContent));
+			print $zipContent;
+		} else {
+		    echo 'Export RSS failed';
+		}
+		sugar_cleanup(true);
+	}
 }
 ?>

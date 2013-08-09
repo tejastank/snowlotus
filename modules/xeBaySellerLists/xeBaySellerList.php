@@ -209,12 +209,38 @@ class xeBaySellerList extends Basic {
 		return $shop_window_items;
 	}
 
-    function build_shopwindow_html($items, $row, $column)
+    function build_shopwindow_html($items, $row, $column, $rss)
     {
         $count = count($items);
 
 		if ($count == 0)
 			return "";
+		
+		if ($rss) {
+			$oXMLout = new XMLWriter();
+			$oXMLout->openMemory();
+			$oXMLout->startDocument();
+			$oXMLout->startElement("rss");
+			$oXMLout->writeAttribute("version", "2.0");
+			$oXMLout->startElement("channel");
+			$oXMLout->writeElement("title", "Shop Window");
+			$oXMLout->writeElement("link", "http://stores.ebay.com/xlongfeng");
+			$oXMLout->writeElement("description", "http://stores.ebay.com/xlongfeng");
+			foreach ($items as &$item) {
+				$oXMLout->startElement("item");
+				$oXMLout->writeElement("title", $item['title']);
+				$oXMLout->writeElement("link", $item['viewItemUrl']);
+				$oXMLout->writeElement("description", "http://stores.ebay.com/xlongfeng");
+				$oXMLout->writeElement("itemID", $item['itemID']);
+				$oXMLout->writeElement("currency", $item['currencyID']);
+				$oXMLout->writeElement("price", $item['price']);
+				$oXMLout->endElement();
+			}
+			$oXMLout->endElement();
+			$oXMLout->endElement();
+			$oXMLout->endDocument();
+			return $oXMLout->outputMemory();
+		}
 
 		$html = CHtml::openTag("table", array('class'=>'shopwindow'));
 
@@ -271,7 +297,7 @@ class xeBaySellerList extends Basic {
         return $html;
     }
 
-	function build_shopwindow_topmost()
+	function build_shopwindow_topmost($rss = false)
 	{
 		$shop_window_items = array();
 		$count = 0;
@@ -293,10 +319,10 @@ class xeBaySellerList extends Basic {
 		$padding = $this->get_shop_window_items_random(self::shopwindow_stick_limit - $count);
 		$shop_window_items = array_merge($shop_window_items, $padding);
 
-        return $this->build_shopwindow_html($shop_window_items, 1, self::shopwindow_stick_limit);
+        return $this->build_shopwindow_html($shop_window_items, 1, self::shopwindow_stick_limit, $rss);
 	}
 
-	function build_shopwindow_correlation()
+	function build_shopwindow_correlation($rss = false)
 	{
 		$shop_window_items = array();
 		$count = 0;
@@ -324,12 +350,12 @@ class xeBaySellerList extends Basic {
 		$padding = $this->get_shop_window_items_random(self::shopwindow_correlation_limit - $count);
 		$shop_window_items = array_merge($shop_window_items, $padding);
 
-        return $this->build_shopwindow_html($shop_window_items, self::shopwindow_correlation_limit, 1);
+        return $this->build_shopwindow_html($shop_window_items, self::shopwindow_correlation_limit, 1, $rss);
 	}
 
-	function build_shopwindow_random()
+	function build_shopwindow_random($rss = false)
 	{
-        return $this->build_shopwindow_html($this->get_shop_window_items_random(self::shopwindow_random_limit), 3, 4);
+        return $this->build_shopwindow_html($this->get_shop_window_items_random(self::shopwindow_random_limit), 3, 4, $rss);
 	}
 
 	function build_image_gallery()
@@ -413,7 +439,7 @@ class xeBaySellerList extends Basic {
 		$authToken = $accounts[$this->xebayaccount_id];
 		if (empty($this->variation)) {
 			if ($this->bid_count > 0)
-				continue;
+				return;
 			$ri->ryi(array(
 				'ItemID' => $this->item_id,
 				'Description' => $this->get_description(),
