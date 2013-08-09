@@ -47,19 +47,7 @@ $viewdefs['xeBayListings']['DetailView'] = array(
 	'panels' =>array (
 		array (
 			'name',
-			'assigned_user_name',
-		),
-		array (
-			array (
-				'name' => 'date_entered',
-				'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-				'label' => 'LBL_DATE_ENTERED',
-			),
-			array (
-				'name' => 'date_modified',
-				'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-				'label' => 'LBL_DATE_MODIFIED',
-			),
+			'xinventory_name',
 		),
 		array (
 			array(
@@ -78,6 +66,18 @@ document.getElementById("description_frame").height=the_height;
 </script>
 <iframe id="description_frame" onLoad="calcHeight();" src="index.php?module=xeBayListings&action=preview&record={$fields.id.value}"  frameborder="0" width="100%"></iframe>',
 			),
+		),
+		array (
+				array (
+						'name' => 'date_entered',
+						'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+						'label' => 'LBL_DATE_ENTERED',
+				),
+				array (
+						'name' => 'date_modified',
+						'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+						'label' => 'LBL_DATE_MODIFIED',
+				),
 		),
 	)
 );

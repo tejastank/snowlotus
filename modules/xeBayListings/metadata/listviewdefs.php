@@ -59,12 +59,6 @@ $listViewDefs['xeBayListings'] = array(
 			0 => 'xinventory_id',
 		),
 	),
-	'ASSIGNED_USER_NAME' => array(
-		'width' => '9', 
-		'label' => 'LBL_ASSIGNED_TO_NAME',
-		'module' => 'Employees',
-		'id' => 'ASSIGNED_USER_ID',
-        'default' => true),
 	'PREVIEW' => array(
 		'width' => '1', 
 		'label' => 'LBL_PREVIEW', 
