@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{{$TITLE}}</title>
+<title>Item Description Template</title>
 <style type="text/css">
 body {
 	font-family: 'Arial';
@@ -34,7 +34,7 @@ a img {
 	clear: both;
 }
 .container {
-	width: 960px;
+	width: 1024px;
 	margin: 0 auto;
 }
 .sidebar-right {
@@ -43,21 +43,14 @@ a img {
 	width: 180px;
 }
 .content {
-	padding: 10px 10px 10px 0px;
-	width: 770px;
-	float: left;
-}
-.content-header-sidebar-left {
-	float: left;
-	width: 180px;
-}
-.content-header-gallery {
-	width: 590px;
+	padding: 0px, 0px;
+	width: 844px;
 	float: left;
 }
 .content-misc {
-	padding: 10px 0px 0px 0px;
-	clear:both;}
+	padding: 10px 0px 0px 10px;
+	width: 824px;
+	float: left;}
 .keyword {
 	color: red;
 	font-weight: bold;
@@ -122,14 +115,8 @@ a img {
 	height:26px;
 	background:#2c2c2c;;
 	text-align:center;}
-#shopwindow-right {
-	min-height: 1024px;
-}
-#navigation {
-	min-height: 400px;
-}
 #description {
-	min-height: 160px;
+	min-height: 240px;
 }
 ul.nav {
 	list-style: none;
@@ -143,7 +130,7 @@ ul.nav li {
 ul.nav a, ul.nav a:visited {
 	padding: 5px 5px 5px 15px;
 	display: block;
-	width: 138px;
+	width: 198px;
 	text-decoration: none;
 	background: #e2e2e2;
 }
@@ -151,143 +138,157 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
 	background: #2dc3f6;
 	color: #FFF;
 }
-#gallery a, a:visited, a:hover, a:active {}
-#gallery { text-align:center; width:560px; height:450px; position:relative;}
-#gallery .default {position:absolute; left:5px; top:5px;border:0;}
-#gallery ul {list-style:none; padding:0; margin:0; width:80px; float:right;}
-#gallery ul li {display:inline; width:60px; height:60px; float:left;}
-#gallery ul li a {display:block; width:50px; height:50px; text-decoration:none; padding:4px; border:1px solid #fff;}
-#gallery ul li a img {border:0;}
-#gallery ul li a b {position:absolute; left:-9999px; display:block; width:470px; height:360px; background:#fff;}
-#gallery ul li a:hover,
-#gallery ul li a:active,
-#gallery ul li a:focus {white-space:normal; border-color:#000; outline:0;}
-#gallery ul li a:hover b {position:absolute; left:5px; top:5px; z-index:100;}
-#gallery ul li a:active b,
-#gallery ul li a:focus b {position:absolute; left:5px; top:5px;}
-#gallery ul li a b i {display:block; display:table-cell;}
-#gallery ul li a b i img {}
-.galleryclear {clear:both;}
-#shopwindow-top .shopwindow tr td {padding: 0px 6px;}
-#shopwindow-right .shopwindow tr td {padding: 6px 0px;}
-#shopwindow-content .shopwindow tr td {padding: 6px 6px;}
-.shopwindow {font-size:12px; padding:0px 0px;}
-.shopwindow tr td {width:160px; text-align:center;}
-.item a:link {color: #000000; text-decoration:none}
-.item a:visited {color: #000000; text-decoration:none}
-.item a:hover {color: Blue; text-decoration: none;}
-.item a:hover .item-image {position:relative; top:3px; left:3px;}
-.item a ul {padding: 0px 0px; list-style-type:none;}
-.item a ul li {text-align:center;}
-.item-price {font-weight:bold; color: MidnightBlue; padding: 0px 0px;}
-.item-price li {display:inline; padding:2px}
-.item-price li img {position:relative; top:4px;}
-.item-title {line-height:1.2;min-height: 24px;}
 </style>
 </head>
 <body>
 <div class="container">
 	<div class="header">
-		<b class="round"><b class="round1"></b><b class="round2"></b><b class="round3"></b><b class="round4"></b><b class="round5"></b></b>
-		<div class="roundContent" id="shopwindow-top">{{$SHOPWINDOW_STICK}}</div>
-		<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
+		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="1024" height="240" id="shopwindow" align="middle">
+			<param name="movie" value="http://www.echainstores.com/xlongfeng/shopwindow/shopwindow.swf" />
+			<param name="quality" value="high" />
+			<param name="bgcolor" value="#ffffff" />
+			<param name="play" value="true" />
+			<param name="loop" value="true" />
+			<param name="wmode" value="window" />
+			<param name="scale" value="showall" />
+			<param name="menu" value="true" />
+			<param name="devicefont" value="false" />
+			<param name="salign" value="" />
+			<param name="allowScriptAccess" value="sameDomain" />
+			<param name=FlashVars value="id={{$ID}}" />
+			<!--[if !IE]>-->
+			<object type="application/x-shockwave-flash" data="http://www.echainstores.com/xlongfeng/shopwindow/shopwindow.swf" width="1024" height="240">
+				<param name="movie" value="shopwindow.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#ffffff" />
+				<param name="play" value="true" />
+				<param name="loop" value="true" />
+				<param name="wmode" value="window" />
+				<param name="scale" value="showall" />
+				<param name="menu" value="true" />
+				<param name="devicefont" value="false" />
+				<param name="salign" value="" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<param name=FlashVars value="id={{$ID}}" />
+			<!--<![endif]-->
+				<a href="http://www.adobe.com/go/getflash">
+					<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="获得 Adobe Flash Player" />
+				</a>
+			<!--[if !IE]>-->
+			</object>
+			<!--<![endif]-->
+		</object>
 	</div><!-- end .header -->
 	<div class="sidebar-right">
-		<b class="round"><b class="round1"></b><b class="round2"></b><b class="round3"></b><b class="round4"></b><b class="round5"></b></b>
-		<div class="roundContent" id="shopwindow-right">{{$SHOPWINDOW_CORRELATION}}</div>
-		<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
+		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="180" height="1440" id="shopwindow" align="middle">
+			<param name="movie" value="http://www.echainstores.com/xlongfeng/shopwindow/shopwindowcorrelation.swf" />
+			<param name="quality" value="high" />
+			<param name="bgcolor" value="#ffffff" />
+			<param name="play" value="true" />
+			<param name="loop" value="true" />
+			<param name="wmode" value="window" />
+			<param name="scale" value="showall" />
+			<param name="menu" value="true" />
+			<param name="devicefont" value="false" />
+			<param name="salign" value="" />
+			<param name="allowScriptAccess" value="sameDomain" />
+			<param name=FlashVars value="id={{$ID}}" />
+			<!--[if !IE]>-->
+			<object type="application/x-shockwave-flash" data="http://www.echainstores.com/xlongfeng/shopwindow/shopwindowcorrelation.swf" width="180" height="1440">
+				<param name="movie" value="shopwindowcorrelation.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#ffffff" />
+				<param name="play" value="true" />
+				<param name="loop" value="true" />
+				<param name="wmode" value="window" />
+				<param name="scale" value="showall" />
+				<param name="menu" value="true" />
+				<param name="devicefont" value="false" />
+				<param name="salign" value="" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<param name=FlashVars value="id={{$ID}}" />
+			<!--<![endif]-->
+				<a href="http://www.adobe.com/go/getflash">
+					<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="获得 Adobe Flash Player" />
+				</a>
+			<!--[if !IE]>-->
+			</object>
+			<!--<![endif]-->
+		</object>
 	</div><!-- end .sidebar1 -->
 	<div class="content">
 		<div>
-			<div class="content-header-sidebar-left">
+			<div class="content-misc">
 				<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-				<div class="panel-header">Shop Categories</div>
-				<div class="roundContent" id="navigation">
-					<ul class="nav">
-						<!-- <li><a href="http://www.ebay.com/sch/Consumer-Electronics-/293/i.html?_ipg=50&_from=&_nkw=&_armrs=1&_ssn=xlongfeng" target=_blank>Consumer Electronics</a></li> -->
-						<li><a href="http://stores.ebay.com/estivalrose" target=_blank>Visit Store <img src="http://q.ebaystatic.com/aw/pics/icon/iconStoresNW_20x20.gif" alt="estivalrose" /></a></li>
-						<li><a href="http://my.ebay.com/ws/eBayISAPI.dll?AcceptSavedSeller&amp;sellerid=xlongfeng&amp;sspageName=DB:FavList" target=_blank>Save this seller</a></li>
-						<li><a href="http://cgi6.ebay.com/ws/eBayISAPI.dll?ViewSellersOtherItems&amp;userid=xlongfeng&amp;include=0&amp;since=-1&amp;sort=3&amp;rows=50&amp;sspageName=DB:OtherItems" target=_blank>See other items</a></li>
+				<div class="panel-header">Description</div>
+				<div class="roundContent" id="description">
+					<div>{{$DESCRIPTION}}</div>
+				</div>
+				<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
+			</div>
+			<div class="content-misc">
+			</div>
+			<div class="content-misc">
+				<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
+				<div class="panel-header">Payment</div>
+				<div class="roundContent">
+					<ul>
+						<li>We accept <span class="keyword">PayPal</span> only.</li>
+						<li>Please sign up for <a href="http://www.ebay.com/paypal/buyer" target=_blank>PayPal</a>; the fast, easy, and secure way to pay online.</li>
+						<li>In order to reduce your costs and support the environmental protection, all products are simple packaging.</li>
 					</ul>
 				</div>
 				<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
 			</div>
-			<div class="content-header-gallery">
-				{{$GALLERY}}
+			<div class="content-misc">
+				<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
+				<div class="panel-header">Shipping</div>
+				<div class="roundContent">
+					<ul>
+						<li><span class="keyword">We only ship the items to the address placed on certificated paypal account</span>.<br />So please make sure your leave the right address on paypal when you make the payment!</li>
+						<li>All orders will be sent out within 48 hours once we get your payment.</li>
+						<li>Parcels will be sent by HongKong air mail, and it may take about <span class="keyword">7~15 days</span> to arrive, sometimes it may be delayed by unexpected reason like holiday, custom`s process, weather condition etc... It may be delayed up to <span class="keyword">35</span> days to arrive, so if you have any question about your order, please feel free to contact us by ebay message.</li>
+					</ul>
+				</div>
+				<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
 			</div>
-		</div>
-		<div class="content-misc">
-			<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-			<div class="panel-header">Description</div>
-			<div class="roundContent" id="description">
-				<div>{{$DESCRIPTION}}</div>
-				<div>{{$PACKAGE_INCLUDED}}</div>
+			<div class="content-misc">
+				<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
+				<div class="panel-header">Warranty</div>
+				<div class="roundContent">
+					<ul>
+						<li>All products are final sale.</li>
+						<li>We check every item before we send it out, so we guarantee the genuineness and quality of our items.</li>
+						<li>We will pack the item very carefully to protect the item, if the item is damaged when you get it, please notify us within 24 hrs of receipt to arrange for credit, replacement or refund (minus shipping costs).</li>
+					</ul>
+				</div>
+				<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
 			</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
-		</div>
-		<div class="content-misc">
-			<b class="round"><b class="round1"></b><b class="round2"></b><b class="round3"></b><b class="round4"></b><b class="round5"></b></b>
-			<div class="roundContent" id="shopwindow-content">{{$SHOPWINDOW_RANDOM}}</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
-		</div>
-		<div class="content-misc">
-			<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-			<div class="panel-header">Payment</div>
-			<div class="roundContent">
-				<ul>
-					<li>We accept <span class="keyword">PayPal</span> only.</li>
-					<li>Please sign up for <a href="http://www.ebay.com/paypal/buyer" target=_blank>PayPal</a>; the fast, easy, and secure way to pay online.</li>
-					<li>In order to reduce your costs and support the environmental protection, all products are simple packaging.</li>
-				</ul>
+			<div class="content-misc">
+				<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
+				<div class="panel-header">Contact us</div>
+				<div class="roundContent">
+					<ul>
+						<li>If you have any questions, please feel free to Email me by ebay message (<span class="keyword">RECOMMENDED</span>).</li>
+						<li>Due to time difference and my schedule, I may not respond your questions at once, but I will try my best to answer your questions as soon as possible! Note: Feedback is very importmant for both of us, it is very importmant to contact us to solve the issue (if there is one) before you leave any negative feedback! We always want to solove the problem when it happens!</li>
+					</ul>
+				</div>
+				<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
 			</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
-		</div>
-		<div class="content-misc">
-			<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-			<div class="panel-header">Shipping</div>
-			<div class="roundContent">
-				<ul>
-					<li><span class="keyword">We only ship the items to the address placed on certificated paypal account</span>.<br />So please make sure your leave the right address on paypal when you make the payment!</li>
-					<li>All orders will be sent out within 48 hours once we get your payment.</li>
-					<li>Parcels will be sent by HongKong air mail, and it may take about <span class="keyword">7~15 days</span> to arrive, sometimes it may be delayed by unexpected reason like holiday, custom`s process, weather condition etc... It may be delayed up to <span class="keyword">35</span> days to arrive, so if you have any question about your order, please feel free to contact us by ebay message.</li>
-				</ul>
+			<div class="content-misc">
+				<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
+				<div class="panel-header">About us</div>
+				<div class="roundContent">
+					<ul>
+						<li>We are the electronic wholesaler in China, our business are over the world, more and more retailers build their business with us, looking forward to do business with you!</li>
+						<li>Thank you and enjoy your shopping here!</li>
+					</ul>
+				</div>
+				<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
 			</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
-		</div>
-		<div class="content-misc">
-			<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-			<div class="panel-header">Warranty</div>
-			<div class="roundContent">
-				<ul>
-					<li>All products are final sale.</li>
-					<li>We check every item before we send it out, so we guarantee the genuineness and quality of our items.</li>
-					<li>We will pack the item very carefully to protect the item, if the item is damaged when you get it, please notify us within 24 hrs of receipt to arrange for credit, replacement or refund (minus shipping costs).</li>
-				</ul>
-			</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
-		</div>
-		<div class="content-misc">
-			<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-			<div class="panel-header">Contact us</div>
-			<div class="roundContent">
-				<ul>
-					<li>If you have any questions, please feel free to Email me by ebay message (<span class="keyword">RECOMMENDED</span>).</li>
-					<li>Due to time difference and my schedule, I may not respond your questions at once, but I will try my best to answer your questions as soon as possible! Note: Feedback is very importmant for both of us, it is very importmant to contact us to solve the issue (if there is one) before you leave any negative feedback! We always want to solove the problem when it happens!</li>
-				</ul>
-			</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
 		</div>
 	</div><!-- end .content -->
 	<div class="footer">
-			<b class="round"><b class="roundFill1"></b><b class="roundFill2"></b><b class="roundFill3"></b><b class="roundFill4"></b><b class="roundFill5"></b></b>
-			<div class="panel-header">About us</div>
-			<div class="roundContent">
-				<ul>
-					<li>We are the electronic wholesaler in China, our business are over the world, more and more retailers build their business with us, looking forward to do business with you!</li>
-					<li>Thank you and enjoy your shopping here!</li>
-				</ul>
-			</div>
-			<b class="round"><b class="round5"></b><b class="round4"></b><b class="round3"></b><b class="round2"></b><b class="round1"></b></b>
  	</div><!-- end .footer -->
 </div><!-- end .container -->
 </body>

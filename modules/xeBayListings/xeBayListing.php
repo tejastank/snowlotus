@@ -168,6 +168,7 @@ class xeBayListing extends Basic {
         $ss = new Sugar_Smarty();
         $ss->left_delimiter = '{{';
         $ss->right_delimiter = '}}';
+		$ss->assign("ID", $this->id);
 		$ss->assign("TITLE", $this->name);
 		// $ss->assign("GALLERY", $this->build_image_gallery());
 		$ss->assign("DESCRIPTION", $this->get_description());

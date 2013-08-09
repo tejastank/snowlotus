@@ -386,13 +386,14 @@ class xeBaySellerList extends Basic {
         $ss = new Sugar_Smarty();
         $ss->left_delimiter = '{{';
         $ss->right_delimiter = '}}';
-		$ss->assign("TITLE", $this->name);
-		$ss->assign("GALLERY", $this->build_image_gallery());
+		$ss->assign("ID", $this->xebaylisting_id);
+		//$ss->assign("TITLE", $this->name);
+		//$ss->assign("GALLERY", $this->build_image_gallery());
 		$ss->assign("DESCRIPTION", $this->_get_description());
-		$ss->assign("PACKAGE_INCLUDED", "");
-        $ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_topmost());
-        $ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
-        $ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
+		//$ss->assign("PACKAGE_INCLUDED", "");
+        //$ss->assign("SHOPWINDOW_STICK", $this->build_shopwindow_topmost());
+        //$ss->assign("SHOPWINDOW_CORRELATION", $this->build_shopwindow_correlation());
+        //$ss->assign("SHOPWINDOW_RANDOM", $this->build_shopwindow_random());
         $desc = $ss->fetch("modules/xeBayListings/tpls/default.html");
 		$desc = strtr($desc, $strips);
  
