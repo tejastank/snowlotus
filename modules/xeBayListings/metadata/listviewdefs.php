@@ -51,7 +51,7 @@ $listViewDefs['xeBayListings'] = array(
 		'width' => '8',
 		'label' => 'LBL_PICTURE',
 		'default' => true,
-		'customCode' => '<a title="{$ITEM_ID}" href="{$VIEW_ITEM_URL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEM_ID}6060.jpg" alt="" width="60" height="60"/></a>',
+		'customCode' => '<a title="{$ITEM_ID}" href="{$VIEW_ITEM_URL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEM_ID}8080.jpg" alt="" width="80" height="80"/></a>',
 		'sortable' => false,
 		'related_fields' => array(
 				'0' => 'view_item_url',
