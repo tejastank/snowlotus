@@ -92,6 +92,7 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'description',
 			'vname' => 'LBL_DESCRIPTION',
 			'type' => 'html',
+			'default' => 'default description'
 		),
 		'disablebuyerrequirements' => array(
 			'name' => 'disablebuyerrequirements',
@@ -311,6 +312,34 @@ $dictionary['xeBayListing'] = array(
 			'vname' => 'LBL_SECONDARYCATEGORY',
 			'source'=>'non-db',
 		),
+		'xebayaccount_id'=>
+		array(
+				'name'=>'xebayaccount_id',
+				'vname'=>'LBL_EBAY_ACCOUNT_ID',
+				'type' => 'id',
+		),
+		'xebayaccount_name'=>
+		array(
+				'name'=>'xebayaccount_name',
+				'rname' => 'name',
+				'vname'=>'LBL_EBAY_ACCOUNT',
+				'id_name'=>'xebayaccount_id',
+				'type'=>'relate',
+				'link'=>'xebayaccount_link',
+				'reportable'=>false,
+				'source'=>'non-db',
+				'dbType' => 'varchar',
+				'table' => 'xebayaccounts',
+				'module' => 'xeBayAccounts',
+		),
+		'xebayaccount_link'=>
+		array(
+				'name' => 'xebayaccount_link',
+				'type' => 'link',
+				'relationship' => 'xebaylistings_xebayaccount',
+				'vname' => 'LBL_EBAY_ACCOUNT',
+				'source'=>'non-db',
+		),
 		'xinventory_id' => array(
 			'name' => 'xinventory_id',
 			'vname' => 'LBL_XINVENTORY_ID',
@@ -340,6 +369,54 @@ $dictionary['xeBayListing'] = array(
 			'vname' => 'LBL_INVENTORY',
 			'source'=>'non-db',
 		),
+		'bid_count' => array(
+				'name' => 'bid_count',
+				'vname' => 'LBL_BID_COUNT',
+				'type' => 'int',
+				'default' => 0,
+		),
+		'endtime' => array(
+				'name' => 'endtime',
+				'vname' => 'LBL_ENDTIME',
+				'type' => 'datetime',
+		),
+		'hitcount' => array(
+				'name' => 'hitcount',
+				'vname' => 'LBL_HITCOUNT',
+				'type' => 'int',
+		),
+		'item_id' => array(
+				'name' => 'item_id',
+				'vname' => 'LBL_ITEM_ID',
+				'type' => 'varchar',
+				'len' => '20',
+				'required' => true
+		),
+		'listing_type' => array(
+				'name' => 'listing_type',
+				'vname' => 'LBL_LISTING_TYPE',
+				'type' => 'varchar',
+				'len' => '32',
+				'required' => true
+		),
+		'view_item_url' => array(
+				'name' => 'view_item_url',
+				'vname' => 'LBL_VIEW_ITEM_URL',
+				'type' => 'url',
+				'len' => '255',
+		),
+		'listing_status' => array(
+				'name' => 'listing_status',
+				'vname' => 'LBL_LISTING_STATUS',
+				'type' => 'varchar',
+				'len' => '16',
+		),
+		'association' => array(
+				'name' => 'association',
+				'vname' => 'LBL_ASSOCIATION',
+				'type' => 'bool',
+				'default' => false,
+		),
 	),
 	'relationships'=>array (
 		'xprimarycategories_xebaycategory' => array(
@@ -350,6 +427,10 @@ $dictionary['xeBayListing'] = array(
 			'lhs_module'=> 'xeBayCategories', 'lhs_table'=> 'xebaycategories', 'lhs_key' => 'id',
 			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'secondarycategoryid',
 			'relationship_type'=>'one-to-many'),
+		'xebaylistings_xebayaccount' => array(
+				'lhs_module'=> 'xeBayAccounts', 'lhs_table'=> 'xebayaccounts', 'lhs_key' => 'id',
+				'rhs_module' => 'xeBayListing', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'xebayaccount_id',
+				'relationship_type'=>'one-to-many'),
 		'xebaylistings_xinventory' => array(
 			'lhs_module'=> 'xInventories', 'lhs_table'=> 'xinventories', 'lhs_key' => 'id',
 			'rhs_module' => 'xeBayListings', 'rhs_table'=> 'xebaylistings', 'rhs_key' => 'xinventory_id',

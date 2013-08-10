@@ -1,5 +1,5 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -35,11 +35,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+/*********************************************************************************
 
-global $mod_strings, $app_strings, $sugar_config;
- 
-if(ACLController::checkAccess('xeBayListings', 'edit', true))$module_menu[]=Array("index.php?module=xeBayListings&action=EditView&return_module=xeBayListings&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateeBayListings", 'xeBayListings');
-if(ACLController::checkAccess('xeBayListings', 'list', true))$module_menu[]=Array("index.php?module=xeBayListings&action=index&return_module=xeBayListings&return_action=DetailView", $mod_strings['LNK_LIST'],"eBayListings", 'xeBayListings');
-if(ACLController::checkAccess('xeBayListings', 'getsellerlists', true))$module_menu[]=Array("index.php?module=xeBayListings&action=getsellerlists&return_module=xeBayListings&return_action=index", $mod_strings['LNK_IMPORT_XEBAYLISTINGS'], "GetSellerList", 'xeBayListings');
-if(ACLController::checkAccess('xeBayListings', 'exportrss', true))$module_menu[]=Array("index.php?module=xeBayListings&action=exportrss&return_module=xeBayListings&return_action=index", $mod_strings['LNK_EXPORT_RSS'], "GetSellerList", 'xeBayListings');
-if(ACLController::checkAccess('xeBayListings', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=xeBayListings&return_module=xeBayListings&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'xeBayListings');
+ * Description:  Defines the English language pack for the base application.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+
+$entry_point_registry['getsellerlists'] = array('file' => 'modules/xeBayListings/GetSellerLists.php', 'auth' => true);
+$entry_point_registry['updatesellerlists'] = array('file' => 'modules/xeBayListings/UpdateSellerLists.php', 'auth' => true);
+
+?>

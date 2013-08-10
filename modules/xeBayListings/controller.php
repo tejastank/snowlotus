@@ -49,9 +49,67 @@ class xeBayListingsController extends SugarController
 {
 	function action_preview()
 	{
-		echo $this->bean->preview_description();
+		echo $this->bean->description_html();
 		sugar_cleanup(true);
 	}
-
+	
+	function action_exportrss()
+	{
+		//Bug 30094, If zlib is enabled, it can break the calls to header() due to output buffering. This will only work php5.2+
+		ini_set('zlib.output_compression', 'Off');
+		date_default_timezone_set("Asia/Shanghai");
+		$filename = "kittenrss_" . date("YmdHis");
+		
+		ob_start();
+		
+		$bean = BeanFactory::getBean('xeBayListings');
+		$item_list = $bean->get_full_list("", "(listing_type='Chinese' OR listing_type='FixedPriceItem')");
+		if (count($item_list) == 0) {
+			echo "Export RSS failed: No item";
+			ob_end_flush();
+			sugar_cleanup(true);
+		}
+		
+		$tmpfname = tempnam(sys_get_temp_dir(), "kitten");
+		
+		$zip = new ZipArchive;
+		
+		$res = $zip->open($tmpfname, ZipArchive::CREATE);
+		if ($res === TRUE) {
+			foreach ($item_list as &$item) {
+				if (empty($item->item_id))
+					continue;
+				$rss = $item->build_shopwindow_topmost(true);
+				if (!empty($rss))
+					$zip->addFromString("rss/{$item->id}-head.xml", $rss);
+		
+				$rss = $item->build_shopwindow_correlation(true);
+				if (!empty($rss))
+					$zip->addFromString("rss/{$item->id}-correlation.xml", $rss);
+		
+				$rss = $item->build_shopwindow_random(true);
+				if (!empty($rss))
+					$zip->addFromString("rss/{$item->id}-random.xml", $rss);
+			}
+		
+			$zip->close();
+			$zipContent = file_get_contents($tmpfname);
+			unlink($tmpfname);
+			ob_clean();
+			header("Pragma: cache");
+			header('Content-Type: application/octet-stream');
+			header("Content-Disposition: attachment; filename={$filename}.zip");
+			header("Content-transfer-encoding: binary");
+			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+			header("Last-Modified: " . TimeDate::httpTime() );
+			header("Cache-Control: post-check=0, pre-check=0", false );
+			header("Content-Length: " . strlen($zipContent));
+			print $zipContent;
+		} else {
+			echo 'Export RSS failed: Open zip file';
+			ob_end_flush();
+		}
+		sugar_cleanup(true);
+	}
 }
 ?>

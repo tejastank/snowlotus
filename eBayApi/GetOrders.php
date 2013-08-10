@@ -189,7 +189,14 @@ class GetOrders extends eBayTradingApi
 			$orderTransaction->item_site = $transaction->getItem()->getSite();
 			$orderTransaction->name =  $transaction->getItem()->getTitle();
 			$orderTransaction->item_view_item_url = 'http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=' . $orderTransaction->item_item_id;
-			$orderTransaction->xinventory_id = $transaction->getItem()->getSKU();
+			$sku = $transaction->getItem()->getSKU();
+			if (!empty($sku)) {
+				$listingBean = BeanFactory::getBean('xeBayListings', $sku);
+				if ($listingBean !== false)
+				$orderTransaction->xinventory_id = $listingBean->xinventory_id;
+			} else {
+				$orderTransaction->xinventory_id = '';
+			}
 			$orderTransaction->orderline_item_id = $transaction->getOrderLineItemID();
 			$orderTransaction->quantity_purchased = $transaction->getQuantityPurchased();
 			$orderTransaction->transaction_id = $transaction->getTransactionID();
@@ -199,7 +206,9 @@ class GetOrders extends eBayTradingApi
 
 			$variation = $transaction->getVariation();
 			if (!empty($variation) && is_array($variation)) {
-				$orderTransaction->xinventory_id = $variation->getSKU();
+				$sku = $variation->getSKU(); /* real sku */
+				if (!empty($sku))
+					$orderTransaction->xinventory_id = $sku;
 				$orderTransaction->name = $variation->getVariationTitle();
 				$orderTransaction->item_view_item_url = $variation->getVariationViewItemURL();
 			}

@@ -178,6 +178,110 @@ class GetSellerList extends eBayTradingApi
 
 		return $result;
 	}
+	
+	public function getListing($params)
+	{
+		$account_id = $params['AccountID'];
+		$this->session->setRequestToken($params['AuthToken']);
+	
+		$result = true;
+	
+		$bean = BeanFactory::getBean('xeBayListings');
+	
+		$outputSelector = array(
+				'HasMoreItems',
+				'ItemArray.Item.ApplicationData',
+				// 'ItemArray.Item.BuyItNowPrice',
+				// 'ItemArray.Item.Currency',
+				'ItemArray.Item.HitCount', /* may be not set */
+				'ItemArray.Item.ItemID',
+				'ItemArray.Item.ListingDetails.ConvertedStartPrice',
+				'ItemArray.Item.ListingDetails.EndTime',
+				'ItemArray.Item.ListingDetails.ViewItemURL',
+				'ItemArray.Item.ListingType',
+				'ItemArray.Item.PictureDetails.PictureURL',
+				'ItemArray.Item.Quantity',
+				'ItemArray.Item.SellingStatus.BidCount',
+				'ItemArray.Item.SellingStatus.ListingStatus',
+				'ItemArray.Item.SKU', /* may be not set */
+				'ItemArray.Item.Title',
+				'ItemArray.Item.Variations',
+				
+				'ItemsPerPage',
+				'PageNumber',
+				'ReturnedItemCountActual',
+		);
+	
+		$req = new GetSellerListRequestType();
+		// $req->setErrorLanguage('zh_HK');
+		$req->setDetailLevel('ReturnAll');
+		$req->setIncludeVariations(true);
+		$req->setEndTimeFrom($params['EndTimeFrom']);
+		$req->setEndTimeTo($params['EndTimeTo']);
+		$req->setOutputSelector($outputSelector);
+	
+		$pagination = new PaginationType();
+		$pagination->setEntriesPerPage(100);
+		$pageNumber = 1;
+	
+		$hasMoreItems = false;
+		do {
+			$pagination->setPageNumber($pageNumber++);
+			$req->setPagination($pagination);
+			$res = $this->proxy->GetSellerList($req);
+			if ($this->testValid($res)) {
+				$hasMoreItems = $res->getHasMoreItems();
+				$returnedItemCountActual = $res->getReturnedItemCountActual();
+				$itemArray = $res->getItemArray();
+				if (empty($itemArray))
+					break;
+				foreach ($itemArray as &$item) {
+					$bean->populateDefaultValues();
+					$new_item = false;
+					$sku = $item->getSKU();
+					$item_id = $item->getItemID();
+					$title = $item->getTitle();
+					if (!empty($sku) && ($bean->retrieve($sku) !== NULL)) {
+						$new_item = false;
+					} else {
+						if ($bean->retrieve_by_string_fields(array('item_id'=>$item_id, 'association'=>'0')) === NULL)
+							$new_item = true;
+						else
+							$new_item = false;
+					}
+					$bean->xebayaccount_id = $account_id;
+					//$bean->xebaylisting_id = xeBayListing::uuid_to_guid($item->getApplicationData());
+					$bean->hitcount = $item->getHitCount();;
+					$bean->item_id = $item_id;
+					$bean->currency = $item->getListingDetails()->getConvertedStartPrice()->getTypeAttribute('currencyID');
+					$bean->startprice = $item->getListingDetails()->getConvertedStartPrice()->getTypeValue();
+					$bean->endtime = $item->getListingDetails()->getEndTime();
+					$bean->view_item_url = $item->getListingDetails()->getViewItemURL();
+					$bean->listing_type = $item->getListingType();
+					if ($bean->listing_type == 'PersonalOffer')
+						continue;
+					//$bean->picture_details = $this->fill_picture_details($item);
+					$bean->bid_count = $item->getSellingStatus()->getBidCount();
+					$bean->quantity = $item->getQuantity();
+					$bean->name = $title;
+					$bean->listing_status = $item->getSellingStatus()->getListingStatus();
+					//$variations = $item->getVariations();
+					//$bean->variation = !empty($variations);
+					if ($new_item) {
+						$bean->id = create_guid();
+						$bean->new_with_id = true;
+					}
+					$bean->save();
+				}
+			} else {
+				$this->dumpObject($res);
+				$result = false;
+				break;
+			}
+		} while ($hasMoreItems);
+	
+		return $result;
+	}
 
 	public function retrieveSellerSurveyList($params)
 	{

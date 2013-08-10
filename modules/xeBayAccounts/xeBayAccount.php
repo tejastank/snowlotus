@@ -104,7 +104,7 @@ class xeBayAccount extends Basic {
 		parent::fill_in_additional_detail_fields();
 	}
 
-	function get_accounts($name)
+	function get_accounts($name = 'All')
 	{
 		global $sugar_config;
 		$accounts = array();

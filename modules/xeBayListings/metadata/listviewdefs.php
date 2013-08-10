@@ -39,9 +39,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['xeBayListings'] = array(
+	'ASSOCIATION' => array(
+		'width' => '12',
+		'label' => 'LBL_ASSOCIATION',
+		'default' => true),
+	'LISTING_STATUS' => array(
+		'width' => '14',
+		'label' => 'LBL_LISTING_STATUS',
+		'default' => true),
+	'ITEM_ID' => array(
+		'width' => '8',
+		'label' => 'LBL_PICTURE',
+		'default' => true,
+		'customCode' => '<a title="{$ITEM_ID}" href="{$VIEW_ITEM_URL}" target="_blank"><img src="http://thumbs3.ebaystatic.com/pict/{$ITEM_ID}6060.jpg" alt="" width="60" height="60"/></a>',
+		'sortable' => false,
+		'related_fields' => array(
+				'0' => 'view_item_url',
+		),
+	),
 	'NAME' => array(
-		'width' => '32', 
-		'label' => 'LBL_NAME', 
+		'width' => '32',
+		'label' => 'LBL_NAME',
 		'default' => true,
         'link' => true),         
 	'SHORT_TITLE' => array(
@@ -59,6 +77,38 @@ $listViewDefs['xeBayListings'] = array(
 			0 => 'xinventory_id',
 		),
 	),
+	'LISTING_TYPE' => array(
+		'width' => '12',
+		'label' => 'LBL_LISTING_TYPE',
+		'default' => true,
+		'customCode' => '{$LISTING_TYPE_ICON}',
+	),
+	'STARTPRICE' => array(
+		'width' => '12',
+		'label' => 'LBL_PRICE',
+		'default' => true,
+		'customCode' => 'USD&nbsp{$STARTPRICE}',
+	),
+	'QUANTITY' => array(
+		'width' => '12',
+		'label' => 'LBL_QUANTITY',
+		'default' => true,
+	),
+	'HITCOUNT' => array(
+		'width' => '12',
+		'label' => 'LBL_HITCOUNT',
+		'default' => true,
+	),
+	'DATE_MODIFIED' => array (
+		'width' => '14',
+		'label' => 'LBL_DATE_MODIFIED',
+		'default' => true,
+	),
+	'DATE_ENTERED' => array (
+	    'width' => '14',
+	    'label' => 'LBL_DATE_ENTERED',
+	    'default' => true,
+	), 
 	'PREVIEW' => array(
 		'width' => '1', 
 		'label' => 'LBL_PREVIEW', 

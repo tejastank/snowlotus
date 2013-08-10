@@ -54,11 +54,31 @@ class xeBayListingsViewList extends ViewList
  	{
 		parent::listViewProcess();
 	}
+	
+	function buildLinks($confirmation, $entryPoint, $label)
+	{
+		global $app_strings, $mod_strings;
+	
+		$js = <<<EOF
+if (confirm('{$mod_strings[$confirmation]}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
+	return sListView.send_form(true, 'xeBayListings', 'index.php?entryPoint={$entryPoint}', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
+}
+return false;
+EOF;
+	
+		$js = str_replace(array("\r","\n"),'',$js);
+	
+		return "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings[$label]}</a>";
+	}
 
  	function preDisplay()
  	{
  		parent::preDisplay();
 		$this->showMassupdateFields = false;
+		
+		$items = array();
+		$items[] = $this->buildLinks('LBL_UPDATE_CONFIRMATION', 'updatesellerlists', 'LBL_UPDATE');
+		$this->lv->actionsMenuExtraItems = $items;
  	}
 
 	function display()
