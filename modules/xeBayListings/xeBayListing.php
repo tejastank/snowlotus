@@ -334,7 +334,7 @@ class xeBayListing extends Basic {
 		$count = 0;
 	
 		$listingBean = BeanFactory::getBean('xeBayListings');
-		$where = "listing_type='FixedPriceItem' AND listing_status='active' AND item_id<>'$this->item_id'";
+		$where = "listing_type='FixedPriceItem' AND listing_status='Active' AND item_id<>'$this->item_id'";
 		$listings = $listingBean->get_list("", $where, 0, -99, -99, 0, false, array('id', 'item_id', 'name', 'short_title', 'listing_type', 'currency', 'startprice', 'view_item_url'));
 		shuffle($listings['list']);
 	

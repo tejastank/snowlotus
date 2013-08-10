@@ -237,10 +237,12 @@ class GetSellerList extends eBayTradingApi
 				if (empty($itemArray))
 					break;
 				foreach ($itemArray as &$item) {
+					
 					$bean->populateDefaultValues();
 					$new_item = false;
-					$sku = $item->getSKU();
 					$item_id = $item->getItemID();
+					$listing_status = $item->getSellingStatus()->getListingStatus();
+					$sku = $item->getSKU();
 					$title = $item->getTitle();
 					if (!empty($sku) && ($bean->retrieve($sku) !== NULL)) {
 						$new_item = false;
@@ -271,10 +273,12 @@ class GetSellerList extends eBayTradingApi
 					$bean->bid_count = $item->getSellingStatus()->getBidCount();
 					$bean->quantity = $item->getQuantity();
 					$bean->name = $title;
-					$bean->listing_status = $item->getSellingStatus()->getListingStatus();
+					$bean->listing_status = $listing_status;
 					//$variations = $item->getVariations();
 					//$bean->variation = !empty($variations);
 					if ($new_item) {
+						if ($listing_status != 'Active')
+							continue;
 						$bean->id = create_guid();
 						$bean->new_with_id = true;
 					}
