@@ -50,12 +50,14 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'autopay',
 			'vname' => 'LBL_AUTOPAY',
 			'type' => 'bool',
+			'massupdate' => false,
 			'default' => false,
 		),
 		'bestofferenabled' => array(
 			'name' => 'bestofferenabled',
 			'vname' => 'LBL_BESTOFFERENABLED',
 			'type' => 'bool',
+			'massupdate' => false,
 			'default' => false,
 		),
 		'conditiondescription' => array(
@@ -92,12 +94,14 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'description',
 			'vname' => 'LBL_DESCRIPTION',
 			'type' => 'html',
+			'massupdate' => true,
 			'default' => 'default description'
 		),
 		'disablebuyerrequirements' => array(
 			'name' => 'disablebuyerrequirements',
 			'vname' => 'LBL_DISABLEBUYERREQUIREMENTS',
 			'type' => 'bool',
+			'massupdate' => false,
 			'default' => false,
 			'comment' => 'If true: all buyer requirements (from Item.BuyerRequirementDetails or Buyer requirements preferences in My eBay) are ignored.',
 		),
@@ -191,6 +195,7 @@ $dictionary['xeBayListing'] = array(
 			'name'=>'scheduletime',
 	    	'vname'=> 'LBL_SCHEDULETIME',
 	    	'type'=>'datetime',
+			'massupdate' => false,
 		),
 		'secondarycategoryid' => array(
 			'name' => 'secondarycategoryid',
@@ -379,6 +384,7 @@ $dictionary['xeBayListing'] = array(
 				'name' => 'endtime',
 				'vname' => 'LBL_ENDTIME',
 				'type' => 'datetime',
+				'massupdate' => false,
 		),
 		'hitcount' => array(
 				'name' => 'hitcount',
@@ -415,6 +421,7 @@ $dictionary['xeBayListing'] = array(
 				'name' => 'association',
 				'vname' => 'LBL_ASSOCIATION',
 				'type' => 'bool',
+				'massupdate' => false,
 				'default' => false,
 		),
 	),

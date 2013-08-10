@@ -74,7 +74,6 @@ EOF;
  	function preDisplay()
  	{
  		parent::preDisplay();
-		$this->showMassupdateFields = false;
 		
 		$items = array();
 		$items[] = $this->buildLinks('LBL_UPDATE_CONFIRMATION', 'updatesellerlists', 'LBL_UPDATE');
