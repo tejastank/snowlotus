@@ -312,21 +312,20 @@ function export($type, $records = null, $members = false, $sample=false) {
                             $value = implode(",",$valueArray);
                         }
                         break;
+					case 'html':
+						$strips = array(
+							"\t" => "",
+							"\n" => "",
+							"\r" => "",
+							"\0" => "",
+							"\x0B" => "",
+						);
+						$value = htmlspecialchars(strtr($value, $strips));
+						break;
                 }
             }
-
-			if ($key == 'description') {
-				$strips = array(
-					"\t" => "",
-					"\n" => "",
-					"\r" => "",
-					"\0" => "",
-					"\x0B" => "",
-				);
-				array_push($new_arr, preg_replace("/\"/","\"\"", htmlentities(strtr($value, $strips))));
-			} else {
-				array_push($new_arr, preg_replace("/\"/","\"\"", $value));
-			}
+			
+			array_push($new_arr, preg_replace("/\"/","\"\"", $value));
         }
         $line = implode("\"".getDelimiter()."\"", $new_arr);
         $line = "\"" .$line;

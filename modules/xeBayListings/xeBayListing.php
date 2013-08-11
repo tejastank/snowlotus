@@ -346,7 +346,7 @@ class xeBayListing extends Basic {
 						'title' => empty($listing->short_title) ? $listing->name : $listing->short_title,
 						'listingType' => $listing->listing_type,
 						'currencyID' => $listing->currency,
-						'price' => $listing->price,
+						'price' => $listing->startprice,
 						'viewItemUrl' => $listing->view_item_url,
 				);
 	

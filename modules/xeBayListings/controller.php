@@ -81,15 +81,15 @@ class xeBayListingsController extends SugarController
 					continue;
 				$rss = $item->build_shopwindow_topmost(true);
 				if (!empty($rss))
-					$zip->addFromString("rss/{$item->id}-head.xml", $rss);
+					$zip->addFromString("rss/{$item->id}/head.xml", $rss);
 		
 				$rss = $item->build_shopwindow_correlation(true);
 				if (!empty($rss))
-					$zip->addFromString("rss/{$item->id}-correlation.xml", $rss);
+					$zip->addFromString("rss/{$item->id}/correlation.xml", $rss);
 		
 				$rss = $item->build_shopwindow_random(true);
 				if (!empty($rss))
-					$zip->addFromString("rss/{$item->id}-random.xml", $rss);
+					$zip->addFromString("rss/{$item->id}/random.xml", $rss);
 			}
 		
 			$zip->close();
