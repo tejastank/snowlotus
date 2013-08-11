@@ -77,6 +77,7 @@ EOF;
 		
 		$items = array();
 		$items[] = $this->buildLinks('LBL_UPDATE_CONFIRMATION', 'updatesellerlists', 'LBL_UPDATE');
+		$items[] = $this->buildLinks('LBL_EXPORT_FILE_EXCHANGE_FORMAT_CONFIRMATION', 'exportfileexchangeformat', 'LBL_EXPORT_FILE_EXCHANGE_FORMAT');
 		$this->lv->actionsMenuExtraItems = $items;
  	}
 

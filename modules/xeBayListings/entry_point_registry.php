@@ -45,5 +45,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $entry_point_registry['getsellerlists'] = array('file' => 'modules/xeBayListings/GetSellerLists.php', 'auth' => true);
 $entry_point_registry['updatesellerlists'] = array('file' => 'modules/xeBayListings/UpdateSellerLists.php', 'auth' => true);
+$entry_point_registry['exportfileexchangeformat'] = array('file' => 'modules/xeBayListings/exportfileexchangeformat.php', 'auth' => true);
 
 ?>

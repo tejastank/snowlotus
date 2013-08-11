@@ -35,15 +35,61 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+require_once('include/MVC/View/views/view.list.php');
 
-$entry_point_registry['PurchaseOrders'] = array('file' => 'modules/xInventories/PurchaseOrders.php', 'auth' => true);
-$entry_point_registry['createebaylisting'] = array('file' => 'modules/xInventories/createebaylisting.php', 'auth' => true);
+class xInventoriesViewList extends ViewList
+{
+	function xInventoriesViewList()
+	{
+        parent:: ViewList();
+    }
 
-?>
+	function listViewPrepare()
+	{
+		parent::listViewPrepare();
+	}
+
+	function listViewProcess()
+ 	{
+		parent::listViewProcess();
+	}
+	
+	function buildLinks($confirmation, $entryPoint, $label)
+	{
+		global $app_strings, $mod_strings;
+	
+		$js = <<<EOF
+if (confirm('{$mod_strings[$confirmation]}' + sugarListView.get_num_selected() + '{$app_strings['NTC_DELETE_SELECTED_RECORDS']}')) {
+	return sListView.send_form(true, 'xInventories', 'index.php?entryPoint={$entryPoint}', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}');
+}
+return false;
+EOF;
+	
+		$js = str_replace(array("\r","\n"),'',$js);
+	
+		return "<a href='javascript:void(0)' id=\"suspend_listview\" onclick=\"$js\">{$mod_strings[$label]}</a>";
+	}
+
+ 	function preDisplay()
+ 	{
+ 		parent::preDisplay();
+		
+		$items = array();
+		$items[] = $this->buildLinks('LBL_CREATE_EBAY_LISTING_CONFIRMATION', 'createebaylisting', 'LBL_CREATE_EBAY_LISTING');
+		$this->lv->actionsMenuExtraItems = $items;
+ 	}
+
+	function display()
+	{
+		global $mod_strings;
+
+		$javascript = <<<EOF
+<script>
+</script> 
+EOF;
+		echo $javascript;
+
+ 		parent::display();
+	}
+}

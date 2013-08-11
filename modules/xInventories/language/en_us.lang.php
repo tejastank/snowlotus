@@ -96,4 +96,6 @@ $mod_strings = array (
   'LBL_RECORDS_SUBPANEL_TITLE' => 'Records',
   'LBL_XVENDORS_SUBPANEL_TITLE' => 'Vendors',
   'LBL_DOWNLOAD_PURCHASE_ORDERS' => 'Download Purchase Orders',
+  'LBL_CREATE_EBAY_LISTING_CONFIRMATION' => 'Are you sure you want to create ebay listing from the ',
+  'LBL_CREATE_EBAY_LISTING' => 'Create eBay Listing',
 );

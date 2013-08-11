@@ -186,8 +186,6 @@ class GetSellerList extends eBayTradingApi
 	
 		$result = true;
 	
-		$bean = BeanFactory::getBean('xeBayListings');
-	
 		$outputSelector = array(
 				'HasMoreItems',
 				'ItemArray.Item.ApplicationData',
@@ -237,8 +235,7 @@ class GetSellerList extends eBayTradingApi
 				if (empty($itemArray))
 					break;
 				foreach ($itemArray as &$item) {
-					
-					$bean->populateDefaultValues();
+					$bean = BeanFactory::getBean('xeBayListings');
 					$new_item = false;
 					$item_id = $item->getItemID();
 					$listing_status = $item->getSellingStatus()->getListingStatus();
@@ -254,11 +251,13 @@ class GetSellerList extends eBayTradingApi
 					}
 					$bean->xebayaccount_id = $account_id;
 					//$bean->xebaylisting_id = xeBayListing::uuid_to_guid($item->getApplicationData());
-					$description = $item->getDescription();
-					$startpos = strpos($description, "<!-- DESCRIPTION START -->");
-					$endpos = strrpos($description, "<!-- DESCRIPTION END -->");
-					if ($startpos !== false && $endpos !== false) {
-						$bean->description = substr($description, $startpos, $endpos-$startpos+1);
+					if ($new_item) {
+						$description = $item->getDescription();
+						$startpos = strpos($description, "<!-- DESCRIPTION START -->");
+						$endpos = strrpos($description, "<!-- DESCRIPTION END -->");
+						if ($startpos !== false && $endpos !== false) {
+							$bean->description = substr($description, $startpos, $endpos-$startpos+1);
+						}
 					}
 					$bean->hitcount = $item->getHitCount();
 					$bean->item_id = $item_id;

@@ -88,4 +88,6 @@ $mod_strings = array (
   'LBL_LISTING_STATUS' => 'Listing Status',
   'LBL_UPDATE' => 'Update',
   'LBL_UPDATE_CONFIRMATION' => 'Are you sure you want to update the ',
+  'LBL_EXPORT_FILE_EXCHANGE_FORMAT' => 'Export File Exchange Format',
+  'LBL_EXPORT_FILE_EXCHANGE_FORMAT_CONFIRMATION' => 'Are you sure you want to export file exchange format the ',
 );
