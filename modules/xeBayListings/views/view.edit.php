@@ -49,26 +49,19 @@ class xeBayListingsViewEdit extends ViewEdit {
         $description = $this->bean->description;
         $description = <<<EOQ
 <div id='description_text_div'>
-    <textarea id='description_text' tabindex='0' name='description' cols="100" rows="40">{$description}</textarea>
+    <textarea class = 'ckeditor' id='editor1' tabindex='0' name='description' cols="100" rows="40">{$description}</textarea>
 </div>
 EOQ;
 		$this->ev->ss->assign("CUSTOM_DISCRIPTION", $description);
 
  		parent::display();
-
-        require_once("include/SugarTinyMCE.php");
-        $tiny = new SugarTinyMCE();
-        $tiny->defaultConfig['cleanup_on_startup']=true;
-        $tiny->defaultConfig['width']=800;
-        $tiny->defaultConfig['height']=1600;
-        $tiny->defaultConfig['plugins'].=",fullpage";
-        echo $tiny->getInstance();
+		
+		require_once("include/SugarCKEditor.php");
+		$ckeditor = new SugarCKEditor();
+		echo $ckeditor->getInstance();
 
         $javascript = <<<EOQ
 <script type="text/javascript" language="Javascript">
-setTimeout("tinyMCE.execCommand('mceAddControl', false, 'description_text');", 500);
-var tiny = tinyMCE.getInstanceById('description_text');
-document.getElementById('description_text_div').style.display = 'inline';
 </script>
 EOQ;
         echo $javascript;
