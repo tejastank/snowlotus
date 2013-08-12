@@ -94,7 +94,6 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'description',
 			'vname' => 'LBL_DESCRIPTION',
 			'type' => 'html',
-			'massupdate' => true,
 			'default' => 'default description'
 		),
 		'disablebuyerrequirements' => array(

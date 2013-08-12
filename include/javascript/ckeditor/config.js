@@ -5,7 +5,7 @@
 
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
-	config.height = '768px';
+	config.height = '480px';
 	config.language = 'zh-cn';
 	// config.uiColor = '#AADC6E';
 	config.removePlugins = 'about,a11yhelp,bidi,filebrowser,forms,iframe,newpage,preview,print,save,scayt,smiley,templates,wsc';

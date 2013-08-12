@@ -456,6 +456,11 @@ eoq;
 						$even = !$even; $newhtml .= $this->addDatetime($displayname,  $field["name"]); break;
 						case "datetime":
 						case "date":$even = !$even; $newhtml .= $this->addDate($displayname,  $field["name"]); break;
+						case "html":
+							if (!$even) {
+								$newhtml .="</tr>";
+							}
+							$even = true; $newhtml .= $this->addHtml($displayname,  $field["name"]); break;
                         default:
                             $newhtml .= $this->addDefault($displayname,  $field, $even); break;
                             break;
@@ -1042,6 +1047,25 @@ EOQ;
 EOQ;
 		return $html;
 
+	}
+	
+	function addHtml($displayname, $varname){
+		global $timedate;
+		//letrium ltd
+		$displayname = addslashes($displayname);
+		$userformat = '('. $timedate->get_user_date_format().')';
+		$cal_dateformat = $timedate->get_cal_date_format();
+		global $app_strings, $app_list_strings, $theme;
+
+		require_once("include/SugarCKEditor.php");
+		$ckeditor = new SugarCKEditor();
+		$javascript = $ckeditor->getInstance();
+
+		$html = <<<EOQ
+	<tr><td scope="row" width="20%"">$displayname</td></tr>
+	<tr><td class='dataField' colspan="4">$javascript<textarea class = 'ckeditor' id='editor1' tabindex='0' name='$varname' cols="100" rows="40">{$description}</textarea></td>
+EOQ;
+		return $html;
 	}
 
 	function addRadioenumItem($name, $value, $output) {
