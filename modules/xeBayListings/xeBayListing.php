@@ -211,7 +211,7 @@ class xeBayListing extends Basic {
 		
 		if (empty($skus)) {
 			$bean = BeanFactory::getBean('xeBayAccounts');
-			$endTimeFrom = date("c", time() - 1 * 24 * 60 * 60);
+			$endTimeFrom = date("c", time() - 30 * 24 * 60 * 60);
 			$endTimeTo = date("c", time() + 45 * 24 * 60 * 60);
 			$accounts = $bean->get_accounts();
 			$sellerList = new GetSellerList();
@@ -543,4 +543,26 @@ class xeBayListing extends Basic {
 		return $guid;
 	}
 }
+
+function get_listing_status_array($add_blank=true)
+{
+	return array(
+		'' => '',
+		'Active' => 'Active',
+		'Completed' => 'Completed',
+		'Ended' => 'Ended',
+	);
+}
+
+function get_listing_type_array($add_blank=true)
+{
+	return array(
+		'' => '',
+		'AdType' => 'AdType',
+		'Chinese' => 'Chinese',
+		'FixedPriceItem' => 'FixedPriceItem',
+		'LeadGeneration' => 'LeadGeneration',
+	);
+}
+
 ?>

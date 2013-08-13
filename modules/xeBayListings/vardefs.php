@@ -291,7 +291,7 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'primarycategory_link',
 			'type' => 'link',
 			'relationship' => 'xprimarycategoriess_xebaycategory',
-			'vname' => 'LBL_PRIMARYCATEGORY',
+			'vname' => 'LBL_PRIMARYCATEGORIES',
 			'source'=>'non-db',
 		),
 		'secondarycategory_name'=>
@@ -313,7 +313,7 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'secondarycategory_link',
 			'type' => 'link',
 			'relationship' => 'xsecondarycategories_xebaycategory',
-			'vname' => 'LBL_SECONDARYCATEGORY',
+			'vname' => 'LBL_SECONDARYCATEGORIES',
 			'source'=>'non-db',
 		),
 		'xebayaccount_id'=>
@@ -341,7 +341,7 @@ $dictionary['xeBayListing'] = array(
 				'name' => 'xebayaccount_link',
 				'type' => 'link',
 				'relationship' => 'xebaylistings_xebayaccount',
-				'vname' => 'LBL_EBAY_ACCOUNT',
+				'vname' => 'LBL_EBAY_ACCOUNTS',
 				'source'=>'non-db',
 		),
 		'xinventory_id' => array(
@@ -370,7 +370,7 @@ $dictionary['xeBayListing'] = array(
 			'name' => 'xinventory_link',
 			'type' => 'link',
 			'relationship' => 'xebaylistings_xinventory',
-			'vname' => 'LBL_INVENTORY',
+			'vname' => 'LBL_INVENTORIES',
 			'source'=>'non-db',
 		),
 		'bid_count' => array(

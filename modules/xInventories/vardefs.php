@@ -61,7 +61,7 @@ $dictionary['xInventory'] = array(
 		'xcategory_id'=>
 		array(
 			'name'=>'xcategory_id',
-			'vname'=>'LBL_CATEGORY',
+			'vname'=>'LBL_XCATEGORY_ID',
 			'type' => 'id',
 			'required' => false,
 			'audited' => true,
@@ -71,7 +71,7 @@ $dictionary['xInventory'] = array(
 		array(
 			'name'=>'xcategory_name',
 			'rname' => 'name',
-			'vname'=>'LBL_CATEGORY',
+			'vname'=>'LBL_XCATEGORY',
 			'id_name'=>'xcategory_id',
 			'type'=>'relate',
 			'link'=>'xcategory_link',
@@ -86,7 +86,7 @@ $dictionary['xInventory'] = array(
 			'name' => 'xcategory_link',
 			'type' => 'link',
 			'relationship' => 'xinventories_xcategory',
-			'vname' => 'LBL_CATEGORY',
+			'vname' => 'LBL_INVENTORIES',
 			'source'=>'non-db',
 		),
 		'price'=>

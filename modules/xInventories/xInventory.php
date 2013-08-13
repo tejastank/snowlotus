@@ -125,4 +125,40 @@ function getInventoryStrategyDropDown()
 	return $list;
 }
 
+function get_category_array($add_blank=true, $from_cache = false)
+{
+	if($from_cache) {
+        $key_name = "xinventory xcategory";
+		$category_array = get_register_value('category_array', $key_name);
+    }
+
+	if(empty($category_array)) {
+		$db = DBManagerFactory::getInstance();
+		$temp_result = Array();
+		// Including deleted users for now.
+		$query = "SELECT id, name from xcategories WHERE deleted='0'";
+		$query = $query.' ORDER BY name ASC';
+		$GLOBALS['log']->debug("get_category_array query: $query");
+		$result = $db->query($query, true, "Error filling in category array: ");
+
+		if ($add_blank==true) {
+			// Add in a blank row
+			$temp_result[''] = '';
+		}
+
+		// Get the id and the name.
+		while($row = $db->fetchByAssoc($result)) {
+			$temp_result[$row['id']] = $row['name'];
+		}
+
+		$category_array = $temp_result;
+		if($from_cache)
+        {
+			set_register_value('category_array', $key_name, $temp_result);
+        }
+	}
+
+	return $category_array;
+}
+
 ?>

@@ -43,15 +43,22 @@ $searchdefs['xeBayListings'] = array(
 	'layout' => array(
 		'basic_search' => array(
 			'name',
-			array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
 		),
 		'advanced_search' => array(
 			'name',
+			'association',
+			'',
 			array(
-				'name' => 'assigned_user_id',
-				'label' => 'LBL_ASSIGNED_TO',
+				'name' => 'listing_status',
+				'label' => 'LBL_LISTING_STATUS',
 				'type' => 'enum',
-				'function' => array('name' => 'get_user_array', 'params' => array(false))
+				'function' => array('name' => 'get_listing_status_array', 'params' => array(true))
+			),
+			array(
+				'name' => 'listing_type',
+				'label' => 'LBL_LISTING_TYPE',
+				'type' => 'enum',
+				'function' => array('name' => 'get_listing_type_array', 'params' => array(true))
 			),
 		),
 	),
