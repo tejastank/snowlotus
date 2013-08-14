@@ -210,11 +210,26 @@ class xeBayListing extends Basic {
 		require_once('eBayApi/GetSellerList.php');
 		
 		if (empty($skus)) {
+			date_default_timezone_set("America/Los_Angeles");
+			set_time_limit(60*30);
+			
 			$bean = BeanFactory::getBean('xeBayAccounts');
-			$endTimeFrom = date("c", time() - 30 * 24 * 60 * 60);
-			$endTimeTo = date("c", time() + 45 * 24 * 60 * 60);
 			$accounts = $bean->get_accounts();
 			$sellerList = new GetSellerList();
+			
+			$endTimeFrom = date("c", time() - 15 * 24 * 60 * 60);
+			$endTimeTo = date("c", time() + 1 * 1 * 30 * 60);
+			foreach ($accounts as $id => $authToken) {
+				$result = $sellerList->getListing(array(
+						'EndTimeFrom' => $endTimeFrom,
+						'EndTimeTo' => $endTimeTo,
+						'AccountID' => $id,
+						'AuthToken' => $authToken,
+				));
+			}
+			
+			$endTimeFrom = date("c", time());
+			$endTimeTo = date("c", time() + 45 * 24 * 60 * 60);
 			foreach ($accounts as $id => $authToken) {
 				$result = $sellerList->getListing(array(
 						'EndTimeFrom' => $endTimeFrom,

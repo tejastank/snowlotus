@@ -63,7 +63,8 @@ class xeBayListingsController extends SugarController
 		ob_start();
 		
 		$bean = BeanFactory::getBean('xeBayListings');
-		$item_list = $bean->get_full_list("", "(listing_type='Chinese' OR listing_type='FixedPriceItem')");
+		//$item_list = $bean->get_full_list("", "(listing_type='Chinese' OR listing_type='FixedPriceItem')");
+		$item_list = $bean->get_full_list();
 		if (count($item_list) == 0) {
 			echo "Export RSS failed: No item";
 			ob_end_flush();
