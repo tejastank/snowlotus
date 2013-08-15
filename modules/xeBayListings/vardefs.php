@@ -385,6 +385,12 @@ $dictionary['xeBayListing'] = array(
 				'type' => 'datetime',
 				'massupdate' => false,
 		),
+		'starttime' => array(
+				'name' => 'starttime',
+				'vname' => 'LBL_STARTTIME',
+				'type' => 'datetime',
+				'massupdate' => false,
+		),
 		'hitcount' => array(
 				'name' => 'hitcount',
 				'vname' => 'LBL_HITCOUNT',

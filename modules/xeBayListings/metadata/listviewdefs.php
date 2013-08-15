@@ -58,7 +58,7 @@ $listViewDefs['xeBayListings'] = array(
 		),
 	),
 	'NAME' => array(
-		'width' => '32',
+		'width' => '24',
 		'label' => 'LBL_NAME',
 		'default' => true,
         'link' => true),         
@@ -97,6 +97,11 @@ $listViewDefs['xeBayListings'] = array(
 	'HITCOUNT' => array(
 		'width' => '12',
 		'label' => 'LBL_HITCOUNT',
+		'default' => true,
+	),
+	'STARTTIME' => array(
+		'width' => '14',
+		'label' => 'LBL_STARTTIME',
 		'default' => true,
 	),
 	'DATE_MODIFIED' => array (

@@ -77,6 +77,7 @@ $mod_strings = array (
   'LBL_EBAY_ACCOUNT' => 'eBay Account',
   'LBL_BID_COUNT' => 'Bit Count',
   'LBL_ENDTIME' => 'End Time',
+  'LBL_STARTTIME' => 'Start Time',
   'LBL_HITCOUNT' => 'Hit Count',
   'LBL_ITEM_ID' => 'Item ID',
   'LBL_LISTING_TYPE' => 'Listing Type',

@@ -183,6 +183,7 @@ class GetSellerList extends eBayTradingApi
 	{
 		$account_id = $params['AccountID'];
 		$this->session->setRequestToken($params['AuthToken']);
+		$sku_duplicated = array();
 	
 		$result = true;
 	
@@ -196,6 +197,7 @@ class GetSellerList extends eBayTradingApi
 				'ItemArray.Item.ItemID',
 				'ItemArray.Item.ListingDetails.ConvertedStartPrice',
 				'ItemArray.Item.ListingDetails.EndTime',
+				'ItemArray.Item.ListingDetails.StartTime',
 				'ItemArray.Item.ListingDetails.ViewItemURL',
 				'ItemArray.Item.ListingType',
 				'ItemArray.Item.PictureDetails.PictureURL',
@@ -218,6 +220,7 @@ class GetSellerList extends eBayTradingApi
 		$req->setEndTimeFrom($params['EndTimeFrom']);
 		$req->setEndTimeTo($params['EndTimeTo']);
 		$req->setOutputSelector($outputSelector);
+		$req->setSort(1);
 	
 		$pagination = new PaginationType();
 		$pagination->setEntriesPerPage(100);
@@ -235,11 +238,14 @@ class GetSellerList extends eBayTradingApi
 				if (empty($itemArray))
 					break;
 				foreach ($itemArray as &$item) {
+					$sku = $item->getSKU();
+					if (in_array($sku, $sku_duplicated))
+						continue;
+					$sku_duplicated[] = $sku;
 					$bean = BeanFactory::getBean('xeBayListings');
 					$new_item = false;
 					$item_id = $item->getItemID();
 					$listing_status = $item->getSellingStatus()->getListingStatus();
-					$sku = $item->getSKU();
 					$title = $item->getTitle();
 					if (!empty($sku) && ($bean->retrieve($sku) !== NULL)) {
 						$new_item = false;
@@ -264,6 +270,7 @@ class GetSellerList extends eBayTradingApi
 					$bean->currency = $item->getListingDetails()->getConvertedStartPrice()->getTypeAttribute('currencyID');
 					$bean->startprice = $item->getListingDetails()->getConvertedStartPrice()->getTypeValue();
 					$bean->endtime = $item->getListingDetails()->getEndTime();
+					$bean->starttime = $item->getListingDetails()->getStartTime();
 					$bean->view_item_url = $item->getListingDetails()->getViewItemURL();
 					$bean->listing_type = $item->getListingType();
 					if ($bean->listing_type == 'PersonalOffer')

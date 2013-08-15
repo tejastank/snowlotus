@@ -120,6 +120,7 @@ class xeBayListing extends Basic {
 	
 	var $bid_count;
 	var $endtime;
+	var $starttime;
 	var $hitcount;
 	var $item_id;
 	var $listing_type;
@@ -218,17 +219,6 @@ class xeBayListing extends Basic {
 			$sellerList = new GetSellerList();
 			
 			$endTimeFrom = date("c", time() - 15 * 24 * 60 * 60);
-			$endTimeTo = date("c", time() + 1 * 1 * 30 * 60);
-			foreach ($accounts as $id => $authToken) {
-				$result = $sellerList->getListing(array(
-						'EndTimeFrom' => $endTimeFrom,
-						'EndTimeTo' => $endTimeTo,
-						'AccountID' => $id,
-						'AuthToken' => $authToken,
-				));
-			}
-			
-			$endTimeFrom = date("c", time());
 			$endTimeTo = date("c", time() + 45 * 24 * 60 * 60);
 			foreach ($accounts as $id => $authToken) {
 				$result = $sellerList->getListing(array(
