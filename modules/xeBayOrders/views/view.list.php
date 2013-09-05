@@ -40,21 +40,13 @@ require_once('include/MVC/View/views/view.list.php');
 
 class xeBayOrdersViewList extends ViewList
 {
-	var $filter;
-
 	function xeBayOrdersViewList()
 	{
-		$this->filter = $_REQUEST['filter'];
-		if (empty($this->filter))
-			$this->filter = 'unhandled';
-
         parent:: ViewList();
     }
 
 	function listViewPrepare()
 	{
-		$this->where = "handled_status='{$this->filter}'";
-
 		parent::listViewPrepare();
 	}
 
@@ -388,7 +380,7 @@ function automessage()
 <br/>
 <br/>
 EOF;
-		switch ($this->filter) {
+		switch ($_REQUEST['handled_status_advanced'][0]) {
 		case 'unhandled':
 			echo $shortcuts_unhandled;
 			break;
@@ -398,6 +390,40 @@ EOF;
 		default:
 			break;
 		}
+		
+		$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'unhandled' AND deleted = 0");
+		$assoc = $GLOBALS['db']->fetchByAssoc($result);
+		$lbl_list_unhandled = $mod_strings['LNK_LIST_UNHANDLED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+		
+		$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'handled' AND deleted = 0");
+		$assoc = $GLOBALS['db']->fetchByAssoc($result);
+		$lbl_list_handled = $mod_strings['LNK_LIST_HANDLED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+		
+		$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'suspended' AND deleted = 0");
+		$assoc = $GLOBALS['db']->fetchByAssoc($result);
+		$lbl_list_suspended = $mod_strings['LNK_LIST_SUSPENDED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+		
+		$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'deleted' AND deleted = 0");
+		$assoc = $GLOBALS['db']->fetchByAssoc($result);
+		$lbl_list_deleted = $mod_strings['LNK_LIST_DELETED'] . '(<span style="color:red">' . $assoc['c'] . '</span>)';
+		
+		switch ($_REQUEST['handled_status_advanced'][0]) {
+		case 'handled':
+			$lbl_list_handled = "<b>$lbl_list_handled</b>";
+			break;
+		case 'suspended':
+			$lbl_list_suspended = "<b>$lbl_list_suspended</b>";
+			break;
+		case 'deleted':
+			$lbl_list_deleted = "<b>$lbl_list_deleted</b>";
+			break;
+		case 'unhandled':
+		default:
+			$lbl_list_unhandled = "<b>$lbl_list_unhandled</b>";
+			break;
+		}
+		
+		echo "{$lbl_list_unhandled}&nbsp{$lbl_list_handled}&nbsp{$lbl_list_suspended}&nbsp{$lbl_list_deleted}";
 
  		parent::display();
 	}

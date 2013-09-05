@@ -42,17 +42,17 @@ $searchdefs['xeBayOrders'] = array(
 	),
 	'layout' => array(
 		'basic_search' => array(
-			'name',
-			array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
+			'buyer_user_id',
 		),
 		'advanced_search' => array(
-			'name',
 			array(
-				'name' => 'assigned_user_id',
-				'label' => 'LBL_ASSIGNED_TO',
+				'name' => 'handled_status',
+				'label' => 'LBL_HANDLED_STATUS',
 				'type' => 'enum',
-				'function' => array('name' => 'get_user_array', 'params' => array(false))
+				'function' => array('name' => 'getHandledStatusDropDown', 'params' => array(true))
 			),
+			'buyer_user_id',
+			'name',
 		),
 	),
 );
