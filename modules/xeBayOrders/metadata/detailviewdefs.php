@@ -77,6 +77,7 @@ $viewdefs['xeBayOrders']['DetailView'] = array(
 		),
 		array (
 			'postal_code',
+			'shipped_time',
 		),
 		array (
 			'country_name',
