@@ -73,15 +73,13 @@ class xeBayOrdersViewExportAll extends SugarView {
     
         foreach ($data as &$cell) {
             if (is_array($cell)) {
-        	    $excel->setActiveSheetIndex($index)
-        	                ->setCellValue($column.$row, $cell['value']);
+        	    $excel->setActiveSheetIndex($index)->setCellValueExplicit($column.$row, $cell['value'], PHPExcel_Cell_DataType::TYPE_STRING);
                 if (!empty($cell['autosize'])) {
                     $excel->setActiveSheetIndex($index)->getStyle($column.$row)->getAlignment()->setWrapText(true);
                     $excel->setActiveSheetIndex($index)->getRowDimension($row)->setRowHeight(-1);
                 }
             } else {
-        	    $excel->setActiveSheetIndex($index)
-        	                ->setCellValue($column.$row, $cell);
+        	    $excel->setActiveSheetIndex($index)->setCellValueExplicit($column.$row, $cell, PHPExcel_Cell_DataType::TYPE_STRING);
             }
             $column++;
         }
@@ -147,7 +145,7 @@ class xeBayOrdersViewExportAll extends SugarView {
         $row = 2;
         
         foreach ($orders as &$order) {
-			$orderLine['客户单号'] = "{$order['type']}{$order['sales_record_number']}";
+			$orderLine['客户单号'] = "{$order['type']}X{$order['sales_record_number']}";
 			$orderLine['服务商单号'] = '';
         	$orderLine['运输方式'] = map4pxShippingService($order['shipping_service']);
 			$orderLine['目的国家'] = $order['country'];

@@ -77,6 +77,11 @@ $listViewDefs['xeBayListings'] = array(
 			0 => 'xinventory_id',
 		),
 	),
+	'ID' => array(
+		'width' => '24',
+		'label' => 'LBL_ID',
+		'default' => true,
+	),
 	'LISTING_TYPE' => array(
 		'width' => '12',
 		'label' => 'LBL_LISTING_TYPE',

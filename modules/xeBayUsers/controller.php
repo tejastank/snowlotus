@@ -84,11 +84,12 @@ class xeBayUsersController extends SugarController
 			}
 
 			if ($res !== false) {
+				date_default_timezone_set("America/Los_Angeles");
+				set_time_limit(60*30);
+				
 				$sellerList = new GetSellerList();
 				$endTimeFrom = date("c", time());
 				$endTimeTo = date("c", time() + 60 * 60 * 24 * 30);
-
-				set_time_limit(60*30);
 
 				$res = $sellerList->retrieveSellerSurveyList(array(
 					'UserID' => $user->name,

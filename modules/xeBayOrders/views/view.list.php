@@ -78,20 +78,25 @@ EOF;
 		$this->showMassupdateFields = false;
 
 		$items = array();
-
-		if ($this->filter == 'unhandled') {
+		
+		switch ($_REQUEST['handled_status_advanced'][0]) {
+		case 'handled':
+			$items[] = $this->buildLinks('LBL_REDELIVER_CONFIRMATION', 'redeliver', 'LBL_REDELIVER');
+			$items[] = $this->buildLinks('LBL_UNHANDLED_MARK_CONFIRMATION', 'unhandledMark', 'LBL_MARK_AS_UNHANDLED');
+			break;
+		case 'suspended':
+			$items[] = $this->buildLinks('LBL_RESUME_CONFIRMATION', 'resume', 'LBL_RESUME');
+			break;
+		case 'deleted':
+			$lbl_list_deleted = "<b>$lbl_list_deleted</b>";
+			break;
+		case 'unhandled':
 			$items[] = $this->buildLinks('LBL_SHIPPING_MARK_CONFIRMATION', 'shippingMark', 'LBL_SHIPPING_MARK');
 			$items[] = $this->buildLinks('LBL_PRINT_CONFIRMATION', 'print', 'LBL_PRINT_SELECT');
 			$items[] = $this->buildLinks('LBL_SUSPEND_CONFIRMATION', 'suspend', 'LBL_SUSPEND');
-		}
-
-		if ($this->filter == 'handled') {
-			$items[] = $this->buildLinks('LBL_REDELIVER_CONFIRMATION', 'redeliver', 'LBL_REDELIVER');
-			$items[] = $this->buildLinks('LBL_UNHANDLED_MARK_CONFIRMATION', 'unhandledMark', 'LBL_MARK_AS_UNHANDLED');
-		}
-
-		if ($this->filter == 'suspended') {
-			$items[] = $this->buildLinks('LBL_RESUME_CONFIRMATION', 'resume', 'LBL_RESUME');
+			break;
+		default:
+			break;
 		}
 
 		$this->lv->actionsMenuExtraItems = $items;
@@ -205,6 +210,11 @@ OO.toggle_completeall = function (){
 	OO.completeallDialog.render();
 	OO.completeallDialog.show();
 }
+function automessage()
+{
+   var href="index.php?module=xeBayOrders&action=automessage&eturn_module=xeBayOrders&return_action=index";
+   window.location.href=href;
+}
 </script> 
 <div id="importorder_dialog" style="width: 450px; display: none;">
 	<div class="hd">{$mod_strings['LBL_IMPORT_TITLE']}</div>
@@ -314,7 +324,7 @@ OO.toggle_completeall = function (){
 				</td>
 				<td>	
 					<input type="hidden" name="printed_order_included" value="">
-					<input type="checkbox" id="printed_order_included" name="printed_order_included" value="1" tabindex="">
+					<input type="checkbox" id="printed_order_included" name="printed_order_included" checked value="1" tabindex="">
 				</td>
 			</tr>
 			<tr>
@@ -345,7 +355,7 @@ OO.toggle_completeall = function (){
 					</td>
 					<td width="45%">	
 						<input type="hidden" name="unprinted_order_included" value="">
-						<input type="checkbox" id="unprinted_order_included" name="unprinted_order_included" value="1" tabindex="">
+						<input type="checkbox" id="unprinted_order_included" name="unprinted_order_included" checked value="1" tabindex="">
 					</td>
 				</tr>
 		</table>
@@ -364,32 +374,11 @@ OO.toggle_completeall = function (){
 <input title="{$mod_strings['LBL_EXPORT_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_EXPORT_ALL']}" id="export_all" onclick="OO.toggle_exportall()">
 &nbsp;&nbsp;
 <input title="{$mod_strings['LBL_COMPLERE_ALL_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_COMPLERE_ALL']}" id="complete_all" onclick="OO.toggle_completeall()">
-<br/>
-<br/>
-EOF;
-
-		$shortcuts_handled = <<<EOF
-<script>
-function automessage()
-{
-   var href="index.php?module=xeBayOrders&action=automessage&eturn_module=xeBayOrders&return_action=index";
-   window.location.href=href;
-}
-</script> 
+&nbsp;&nbsp;
 <input title="{$mod_strings['LBL_AUTO_MESSAGE_TIPS']}"  class="button" type="submit" name="button" value="{$mod_strings['LBL_AUTO_MESSAGE']}" id="auto_message" onclick="return automessage()">
 <br/>
 <br/>
 EOF;
-		switch ($_REQUEST['handled_status_advanced'][0]) {
-		case 'unhandled':
-			echo $shortcuts_unhandled;
-			break;
-		case 'handled':
-			echo $shortcuts_handled;
-			break;
-		default:
-			break;
-		}
 		
 		$result = $GLOBALS['db']->query("SELECT count(*) c FROM xeBayOrders WHERE handled_status = 'unhandled' AND deleted = 0");
 		$assoc = $GLOBALS['db']->fetchByAssoc($result);
@@ -418,12 +407,16 @@ EOF;
 			$lbl_list_deleted = "<b>$lbl_list_deleted</b>";
 			break;
 		case 'unhandled':
-		default:
 			$lbl_list_unhandled = "<b>$lbl_list_unhandled</b>";
+			break;
+		default:
 			break;
 		}
 		
-		echo "{$lbl_list_unhandled}&nbsp{$lbl_list_handled}&nbsp{$lbl_list_suspended}&nbsp{$lbl_list_deleted}";
+		if(isset($this->options['show_title']) && $this->options['show_title']) {
+			echo $shortcuts_unhandled;
+			echo "{$lbl_list_unhandled}&nbsp{$lbl_list_handled}&nbsp{$lbl_list_suspended}&nbsp{$lbl_list_deleted}<br/>";
+		}
 
  		parent::display();
 	}
