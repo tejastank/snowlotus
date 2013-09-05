@@ -58,15 +58,16 @@ class xeBayOrdersViewAutomessage extends SugarView {
  		parent::SugarView();
 	}
 	
-	function send_comfort_message($bean, $duration)
+	function send_comfort_message($bean, $duration, $passdays)
 	{
+		$xebayaccount_id = $bean->xebayaccount_id;
 		$bean->load_relationship('xebaytransactions');
 		$transactions = $bean->xebaytransactions->getBeans();
 		foreach ($transactions as &$transaction) {
 			$buyer_user_id = $bean->buyer_user_id;
-			$xebayaccount_id = $transaction->xebayaccount_id;
+			
 			$subject = $transaction->name;
-			$message = "abc";
+			$message = "";
 			$questionType = 'Shipping';
 			$itemID = $transaction->item_item_id;
 			$message = '';
@@ -74,39 +75,58 @@ class xeBayOrdersViewAutomessage extends SugarView {
 			case '25th Day':
 				$message = <<<EOF
 Hi friend.
-  Your item has been shipped on {$bean->shipped_time} by HongKong air mail, and it may take about 7~15 days to arrive,
-  sometimes it may be delayed by unexpected reason like holiday, custom`s process, weather condition etc.
-  It may be delayed up to 35 days to arrive. If you have any question, feel free to contact us asap.
+  Your item has been shipped on {$bean->shipped_time} by air mail.
+  If you haven't received your item and this situation lasts to the 35th day, please do contact us.
+  A FULL REFUND will be issued to you with NO EXCUSE. 
+  We do not want to give you a bad buying experience even when the shipping is out of our control.
+  But if you receive it, we sincerely hope you can leave us a positive comment if you like it and
+  appreciate our customer services.
+  Thanks once more for your purchase.
+
+  Yours Sincerely
 EOF;
+  			break;
 			case '15th Day':
 				$message = <<<EOF
 Hi friend.
-  Your item has been shipped on {$bean->shipped_time} by HongKong air mail, and it may take about 7~15 days to arrive,
-  sometimes it may be delayed by unexpected reason like holiday, custom`s process, weather condition etc.
-  It may be delayed up to 35 days to arrive. If you have any question, feel free to contact us asap.
+  Your item has been shipped on {$bean->shipped_time} by air mail.
+  {$passdays} days have passed since your item was shipped,
+  When you receive it, we sincerely hope that you will like it and appreciate our customer services.
+  If there is anything you feel unsatisfied with, please do tell us. 
+  This will help us know what we should do to help you as well as how we should improve.
+  If you are satisfied, we sincerely hope that you can leave us a positive comment, 
+  which is of vital importance to the growth of our small company.
+  PLEASE DO NOT leaves us negative feedback. If you are not satisfied in any regard, please tell us.
+  Thanks once more for your purchase.
+  
+  Yours Sincerely
 EOF;
 				break;
 			default:
 				$message = <<<EOF
 Hi friend.
-  Your item has been shipped on {$bean->shipped_time} by HongKong air mail, and it may take about 7~15 days to arrive,
+  Your item has been shipped on {$bean->shipped_time} by air mail, and it may take about 7~20 days to arrive,
   sometimes it may be delayed by unexpected reason like holiday, custom`s process, weather condition etc.
-  It may be delayed up to 35 days to arrive. If you have any question, feel free to contact us asap.
+  It may be delayed up to 35 days to arrive. We will be very appreciated for your patient.
+  If you have any question, feel free to contact us asap.
+  Thanks for your purchase.
+  
+  Yours Sincerely
 EOF;
 				break;
 			}
-			echo "<pre>$message</pre>";
+			//echo "<pre>$message</pre>";
 			$api = new AddMemberMessageAAQToPartner();
-        	//$res = $api->addMemberMessage(array(
-            	//'AccountID' => $xebayaccount_id,
-            	//'AuthToken' => $this->accounts[$xebayaccount_id],
-            	//'ItemID' => $itemID,
-            	//'Body' => $message,
-            	//'QuestionType' => $questionType,
-            	//'RecipientID' => $buyer_user_id,
-            	//'Subject' => $subject,
-            //));
-            //$bean->buyer_comfort_status_update($bean->id, $duration);
+        	$res = $api->addMemberMessage(array(
+            	'AccountID' => $xebayaccount_id,
+            	'AuthToken' => $this->accounts[$xebayaccount_id],
+            	'ItemID' => $itemID,
+            	'Body' => $message,
+            	'QuestionType' => $questionType,
+            	'RecipientID' => $buyer_user_id,
+            	'Subject' => $subject,
+            ));
+            $bean->buyer_comfort_status_update($bean->id, $duration);
 			break;
 		}
 	}
@@ -115,9 +135,9 @@ EOF;
     {
 		$api = new GetFeedback();
     	foreach ($this->accounts as $id => $authToken) {
-			$result = $api->retrieveFeedback(array(
-				'AuthToken' => $authToken,
-			));
+			//$result = $api->retrieveFeedback(array(
+				//'AuthToken' => $authToken,
+			//));
 		}
 
     	$bean = BeanFactory::getBean('xeBayOrders');
@@ -128,20 +148,20 @@ EOF;
 			foreach($beans as &$bean) {
 				$shipped_time = strtotime($bean->shipped_time);
 				$current_time = strtotime($GLOBALS['timedate']->nowDb());
-				$diff_time = $current_time - $shipped_time;
-				if ($diff_time > 25 * 3600 * 24) {
+				$diff_time = intval(($current_time - $shipped_time) / 3600 / 24);
+				if ($diff_time > 22) {
 					if ($bean->buyer_comfort_status != '25th Day') {
-						$this->send_comfort_message($bean, '25th Day');
+						$this->send_comfort_message($bean, '25th Day', $diff_time);
 						$this->lessThan30Days[] = $bean->sales_record_number;
 					}
-				} else if ($diff_time > 15 * 3600 * 24) {
+				} else if ($diff_time > 15) {
 					if ($bean->buyer_comfort_status != '15th Day') {
-						$this->send_comfort_message($bean, '15th Day');
+						$this->send_comfort_message($bean, '15th Day', $diff_time);
 						$this->lessThan25Days[] = $bean->sales_record_number;
 					}
-				} else if ($diff_time > 7 * 3600 * 24) {
+				} else if ($diff_time > 7) {
 					if ($bean->buyer_comfort_status != '7th Day') {
-						$this->send_comfort_message($bean, '7th Day');
+						$this->send_comfort_message($bean, '7th Day', $diff_time);
 						$this->lessThan15Days[] = $bean->sales_record_number;
 					}
 				} else {
