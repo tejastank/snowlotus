@@ -70,6 +70,9 @@ class xeBayOrdersViewImportorder extends SugarView
 			$bean = BeanFactory::getBean('xeBayAccounts');
 			$accounts = $bean->get_accounts($name);
 		}
+		
+		date_default_timezone_set("America/Los_Angeles");
+		set_time_limit(60*30);
 
 		foreach ($accounts as $id => $authToken) {
 			$result = $orders->retrieveOrders(array(

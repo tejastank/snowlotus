@@ -94,6 +94,9 @@ class xeBayOrder extends Basic {
 	var $address_id;
 	var $address_owner;
 	var $external_address_id;
+	
+	var $feedback_received;
+	var $buyer_comfort_status;
 
 	var $xebaytransactions;
 
@@ -218,6 +221,22 @@ class xeBayOrder extends Basic {
             $query = "UPDATE $this->table_name set handled_status='{$status}' , date_modified = '$date_modified' where id='$id'";
         }
         $this->db->query($query, true,"Error marking record deleted: ");
+	}
+	
+	function feedback_received_update($id)
+	{
+		$status = true;
+		$date_modified = $GLOBALS['timedate']->nowDb();
+        $query = "UPDATE $this->table_name set feedback_received='{$status}' , date_modified = '$date_modified' where id='$id'";
+        $this->db->query($query, true,"Error marking feedback received: ");
+	}
+	
+	function buyer_comfort_status_update($id, $duration)
+	{
+		$status = true;
+		$date_modified = $GLOBALS['timedate']->nowDb();
+        $query = "UPDATE $this->table_name set buyer_comfort_status='{$duration}' , date_modified = '$date_modified' where id='$id'";
+        $this->db->query($query, true,"Error marking buyer comfort received: ");
 	}
 
 	function get_list_view_data()

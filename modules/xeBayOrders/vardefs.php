@@ -316,6 +316,23 @@ $dictionary['xeBayOrder'] = array(
 			'dbType' => 'varchar',
 	    	'len'=>16,
 		),
+		'feedback_received'=>
+		array(
+			'name'=>'feedback_received',
+	    	'vname'=> 'LBL_FEEDBACK_RECEIVED',
+	    	'type'=>'bool',
+			'default'=>false,
+		),
+		'buyer_comfort_status'=>
+		array(
+			'name'=>'buyer_comfort_status',
+	    	'vname'=> 'LBL_BUYER_COMFORT_STATUS',
+	    	'type'=>'name',
+			'dbType' => 'varchar',
+	    	'len'=>12,
+			'default'=>'0th day',
+			'comment' => 'values: 0th day, 7th day, 15th day, 25th Day',
+		),
 		// TransactionArray
 		'xebaytransactions'=>
 		array(

@@ -135,4 +135,6 @@ $mod_strings = array (
   'LBL_QUESTION_TYPE_PAYMENT' => 'Payment',
   'LBL_QUESTION_TYPE_SHIPPING' => 'Shipping',
   'LBL_CONTACT_BUYER_TIPS' => 'Select a transaction to contact buyer',
+  'LBL_FEEDBACK_RECEIVED' => 'Feedback<br>Received',
+  'LBL_BUYER_COMFORT_STATUS' => 'Comfort<br>status',
 );
