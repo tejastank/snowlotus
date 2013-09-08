@@ -78,8 +78,8 @@ class xeBayListingsController extends SugarController
 		$res = $zip->open($tmpfname, ZipArchive::CREATE);
 		if ($res === TRUE) {
 			foreach ($item_list as &$item) {
-				if (empty($item->item_id))
-					continue;
+				// if (empty($item->item_id))
+					//continue;
 				$rss = $item->build_shopwindow_topmost(true);
 				if (!empty($rss))
 					$zip->addFromString("rss/{$item->id}/head.xml", $rss);

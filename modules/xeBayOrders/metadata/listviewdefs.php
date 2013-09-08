@@ -94,6 +94,11 @@ $listViewDefs['xeBayOrders'] = array(
 		'width' => '4', 
 		'label' => 'LBL_PRINT_STATUS', 
 		'customCode' => '{$PRINT_STATUS_ICON}',
-		'default' => true),         
+		'default' => true),
+	'PAID_TIME' => array(
+		'type' => 'datetime',
+		'width' => '4',
+		'label' => 'LBL_PAID_TIME',
+		'default' => true),
 );
 ?>

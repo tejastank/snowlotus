@@ -71,6 +71,13 @@ function  sync_sell_listings()
 	}
 	return false;
 }
+function view_feedback_details()
+{
+	if (confirm("Do you want to view {$this->bean->name}'s feedback details now ?")) {
+		window.location = "index.php?module=xeBayUsers&action=feedback&xebayuser_id={$this->bean->id}&return_module=xeBayUsers&return_action=index";
+	}
+	return false;
+}
 </script>
 EOQ;
 		echo $javascript;
@@ -80,6 +87,8 @@ EOQ;
 		$this->dv->process();
 
 		$sync_url = "<input title='{$mod_strings['LBL_SYNC']}' class='button' type='submit' name='button' value='{$mod_strings['LBL_SYNC']}' id='sync_url' onclick='return sync_sell_listings();'>";
+		$sync_url .= "&nbsp;&nbsp;";
+		$sync_url .= "<input title='{$mod_strings['LBL_FEEDBACK']}' class='button' type='submit' name='button' value='{$mod_strings['LBL_FEEDBACK']}' id='feedback_url' onclick='return view_feedback_details();'>";
 		$this->ss->assign("SYNC_URL", $sync_url);
 
 		$sale_status = $this->bean->get_sale_status();

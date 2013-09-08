@@ -138,4 +138,5 @@ $mod_strings = array (
   'LBL_FEEDBACK_RECEIVED' => 'Feedback<br>Received',
   'LBL_BUYER_COMFORT_STATUS' => 'Comfort<br>status',
   'LBL_SHIPPED_TIME' => 'Shipped Time',
+  'LBL_PAID_TIME' => 'Paid Time',
 );

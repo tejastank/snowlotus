@@ -135,9 +135,9 @@ EOF;
     {
 		$api = new GetFeedback();
     	foreach ($this->accounts as $id => $authToken) {
-			//$result = $api->retrieveFeedback(array(
-				//'AuthToken' => $authToken,
-			//));
+			$result = $api->retrieveFeedback(array(
+				'AuthToken' => $authToken,
+			));
 		}
 
     	$bean = BeanFactory::getBean('xeBayOrders');

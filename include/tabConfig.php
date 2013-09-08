@@ -115,7 +115,7 @@ $GLOBALS['tabStructure'] = array(
             "xeBayMarketSurvey",
 			"xeBayMessages",
 			"xeBayOrders",
-			"xeBaySellerLists",
+			"xeBayUsers",
         )
 	),
 	'LBL_TABGROUP_PHOTOBUCKET'=>array(

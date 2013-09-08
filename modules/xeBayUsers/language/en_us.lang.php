@@ -77,4 +77,5 @@ $mod_strings = array (
   'LBL_MONTHLY_SALES' => 'Monthly Sales',
   'LBL_MONTHLY_SALES_AMOUNT' => 'Monthly Sales Amount',
   'LBL_NOT_SELLING_RATE' => 'Not Selling Rate',
+  'LBL_FEEDBACK' => 'Feedback',
 );

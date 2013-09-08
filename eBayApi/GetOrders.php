@@ -94,8 +94,10 @@ class GetOrders extends eBayTradingApi
 
 					$duplicated = $bean->retrieve_by_string_fields(array('order_id'=>$orderId));
 
-                    if (empty($duplicated))
+                    if (empty($duplicated)) {
                         $bean->shipping_service = $shipping_service;
+                        $bean->populateDefaultValues(true);
+                    }
 
 					$bean->source_type = 'ebay';
 

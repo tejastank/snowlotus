@@ -455,6 +455,7 @@ class xeBayListing extends Basic {
 	
 	function build_shopwindow_topmost($rss = false)
 	{
+		$this->ebaylisting_id_used[] = $this->id;
 		$shop_window_items = array();
 		$count = 0;
 	

@@ -125,6 +125,34 @@ class GetFeedback extends eBayTradingApi
 	
 		return $result;
 	}
+	
+	public function dumpUserFeedback($params)
+	{
+		$this->session->setRequestToken($params['AuthToken']);
+	
+		$result = true;
+	
+		$req = new GetFeedbackRequestType();
+		$req->setUserID($params['UserID']);
+		// $req->setDetailLevel('ReturnAll');
+	
+		$pagination = new PaginationType();
+		$pagination->setEntriesPerPage(25);
+		$pageNumber = 1;
+	
+		$pagination->setPageNumber($pageNumber++);
+		$req->setPagination($pagination);
+		$res = $this->proxy->GetFeedback($req);
+		if ($this->testValid($res)) {
+			$this->dumpObject($res);
+			$result = true;
+		} else {
+			$this->dumpObject($res);
+			$result = false;
+		}
+	
+		return $result;
+	}
 }
 
 ?>

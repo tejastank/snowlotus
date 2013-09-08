@@ -107,5 +107,28 @@ class xeBayUsersController extends SugarController
 
 		$this->redirect_url = "index.php?module=xeBayUsers&action=DetailView&record={$user->id}";
     }
+    
+    function action_feedback()
+    {
+    	$id = $_REQUEST['xebayuser_id'];
+    	if (empty($id))
+    		return;
+    
+    	$user = BeanFactory::getBean('xeBayUsers', $id);
+    	if (!empty($user)) {
+    		require_once('eBayApi/GetFeedback.php');
+    
+    		$bean = BeanFactory::getBean('xeBayAccounts');
+    		$accounts = $bean->get_accounts('All');
+    		
+    		$api = new GetFeedback();
+    
+    		$res = $api->dumpUserFeedback(array(
+    				'UserID' => $user->name,
+    				'AuthToken' => current($accounts),
+    		));
+    	}
+    	sugar_cleanup(true);
+    }
 }
 ?>
